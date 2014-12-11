@@ -1,0 +1,1 @@
+https://github.com/yiminghe/modulex-web-worker

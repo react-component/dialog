@@ -1,0 +1,19 @@
+{
+    "name": "modulex",
+    "version": "1.0.0",
+    "authors": [
+        "yiminghe <yiminghe@gmail.com>"
+    ],
+    "description": "A module registration and load library",
+    "keywords": [
+        "javascript",
+        "module",
+        "library"
+    ],
+    "main": "build/modulex.js",
+    "license": "MIT",
+    "ignore": [
+        "**/*",
+        "!build/**/*"
+    ]
+}
