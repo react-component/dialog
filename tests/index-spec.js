@@ -65,14 +65,25 @@ describe('second dialog',function() {
       document.getElementById('t2')
   );
 
+  it('show',function(done) {
+    dialog.setProps({'visible' : true});
+    setTimeout(function(){
+      expect($('#t2 .rc-dialog').css('display')).to.be('block');
+      done();
+    },1000);
+     
+  });
+
+  it('hide',function(done) {
+    dialog.setProps({'visible' : false});
+    setTimeout(function(){
+      expect($('#t2 .rc-dialog').css('display')).to.be('none');
+      done();
+    },1000);
+  });
+
   it('show',function() {
      dialog.setProps({'visible' : true});
      expect($('#t2 .rc-dialog').css('display')).to.be('block');
-  });
-
-  it('hide',function() {
-    dialog.setProps({'visible' : false});
-    expect($('#t2 .rc-dialog').css('display')).to.be('none');
-
   });
 });

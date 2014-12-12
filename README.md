@@ -1,6 +1,6 @@
-# rc-tmp
+# rc-dialog
 
-react tmp component
+react dialog component
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -9,29 +9,52 @@ react tmp component
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
 
-[npm-image]: http://img.shields.io/npm/v/rc-tmp.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-tmp
-[travis-image]: https://img.shields.io/travis/react-component/tmp.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/tmp
-[coveralls-image]: https://img.shields.io/coveralls/react-component/tmp.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/tmp?branch=master
-[gemnasium-image]: http://img.shields.io/gemnasium/react-component/tmp.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/react-component/tmp
+[npm-image]: http://img.shields.io/npm/v/rc-dialog.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/rc-dialog
+[travis-image]: https://img.shields.io/travis/react-component/dialog.svg?style=flat-square
+[travis-url]: https://travis-ci.org/react-component/dialog
+[coveralls-image]: https://img.shields.io/coveralls/react-component/dialog.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/dialog?branch=master
+[gemnasium-image]: http://img.shields.io/gemnasium/react-component/dialog.svg?style=flat-square
+[gemnasium-url]: https://gemnasium.com/react-component/dialog
 [node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/rc-tmp.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-tmp
+[download-image]: https://img.shields.io/npm/dm/rc-dialog.svg?style=flat-square
+[download-url]: https://npmjs.org/package/rc-dialog
 
 ## install
 
-[![rc-tmp](https://nodei.co/npm/rc-tmp.png)](https://npmjs.org/package/rc-tmp)
+[![rc-dialog](https://nodei.co/npm/rc-dialog.png)](https://npmjs.org/package/rc-dialog)
 
 ## Usage
 
 ```js
-var tmp = require('rc-tmp');
-// use tmp
+var Dialog = require('rc-dialog');
+
+  React.renderComponent(
+      (<Dialog title={title} onClose={callback1} onShow={callback2}>
+        <p>first dialog</p>
+      </Dialog>),
+      document.getElementById('t1')
+  );
+  
+// use dialog
 ```
+## API 
+
+### property
+
+#### visible 
+  * The dialog whether or not shown,default false
+
+#### title
+  * Title of the dialog
+
+#### onShow 
+  * When the dialog shown , the callback was called.
+
+#### onClose 
+  * When the dialog closed, the callback was called.
 
 ## Development
 
@@ -48,6 +71,9 @@ http://localhost:8004/tests/runner.html?coverage
 
 http://localhost:8004/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8004/tests/runner.html?coverage
 
+
+
+
 ## License
 
-rc-tmp is released under the MIT license.
+rc-dialog is released under the MIT license.
