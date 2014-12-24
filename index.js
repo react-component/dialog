@@ -1,2 +1,1 @@
-var Dialog = require('./lib/dialog');
-module.exports = Dialog;
+module.exports = require('./lib/Dialog');

@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 
+var dialog = require('../');
+var React = require('react');
 
-require(['../','/node_modules/react/react'],function(tmp,React){
-});
+// TODO with dialog

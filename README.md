@@ -26,6 +26,13 @@ react dialog component
 
 [![rc-dialog](https://nodei.co/npm/rc-dialog.png)](https://npmjs.org/package/rc-dialog)
 
+
+## Development
+
+```
+npm install
+npm start
+```
 ## Usage
 
 ```js
@@ -56,23 +63,13 @@ var Dialog = require('rc-dialog');
 #### onClose 
   * When the dialog closed, the callback was called.
 
-## Development
-
-```
-npm install
-npm start
-```
-
 ## Test Case
 
-http://localhost:8004/tests/runner.html?coverage
+http://localhost:8000/tests/runner.html?coverage
 
 ## Coverage
 
-http://localhost:8004/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8004/tests/runner.html?coverage
-
-
-
+http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8000/tests/runner.html?coverage
 
 ## License
 

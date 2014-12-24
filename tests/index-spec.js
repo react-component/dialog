@@ -6,6 +6,7 @@ var Dialog = require('../index');
 var React = require('react');
 var sinon = require('sinon');
 
+require('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css');
 var $ = require('jquery');
 var simulateDomEvent = require('simulate-dom-event');
 
