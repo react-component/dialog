@@ -1,4 +1,5 @@
 # rc-dialog
+---
 
 react dialog component
 
@@ -8,6 +9,9 @@ react dialog component
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
+[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-dialog)](https://saucelabs.com/u/rc-dialog)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-dialog.svg)](https://saucelabs.com/u/rc-dialog)
 
 [npm-image]: http://img.shields.io/npm/v/rc-dialog.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-dialog
@@ -22,10 +26,13 @@ react dialog component
 [download-image]: https://img.shields.io/npm/dm/rc-dialog.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-dialog
 
-## install
+## Screenshot
+
+<img src="http://gtms04.alicdn.com/tps/i4/TB1dp5lHXXXXXbmXpXXyVug.FXX-664-480.png" />
+
+## Install
 
 [![rc-dialog](https://nodei.co/npm/rc-dialog.png)](https://npmjs.org/package/rc-dialog)
-
 
 ## Development
 
@@ -49,7 +56,10 @@ var Dialog = require('rc-dialog');
 ```
 ## API 
 
-### property
+### props
+
+#### prefixCls
+  * The dialog dom node's prefixCls. Defaults to `rc-dialog`
 
 #### visible 
   * The dialog whether or not shown,default false
@@ -62,6 +72,14 @@ var Dialog = require('rc-dialog');
 
 #### onClose 
   * When the dialog closed, the callback was called.
+
+### methods (not recommended)
+
+#### show
+  * make dialog show and trigger onShow if current visible is false
+
+#### close
+  * make dialog hide and trigger onClose if current visible is true
 
 ## Test Case
 

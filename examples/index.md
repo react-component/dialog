@@ -1,16 +1,21 @@
-# rc-dialog@1.0.0
+# rc-dialog@2.x
 
 ---
 
-dialog
 
----
+<link href="https://a.alipayobjects.com/bootstrap/3.3.1/css/bootstrap.css" rel="stylesheet" />
+<link href="../assets/bootstrap.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script>
+if(!window.console){
+  window.console = {
+    log:function(){}
+  };
+}
+</script>
 
 
-
-## show dialog
+## call methods
 
 ````html
 
@@ -19,28 +24,34 @@ dialog
 ````
 
 ````js
+/** @jsx React.DOM */
 
-require(['../','react'],function(Dialog,React){
+var React = require('react');
+var Dialog = require('../');
 
-  function close(){
-    console.log('close');
-  }
+function close(){
+  console.log('close');
+}
 
-  function show(){
-    console.log('show');
-  }
+function show(){
+  console.log('show');
+}
 
-  var dialog = React.renderComponent(
-      (<Dialog title="第一个弹框" onClose={close} onShow={show} visible={true}>
-        <p>第一个dialog</p>
-      </Dialog>),
-      document.getElementById('d1')
-  );
-});
+var dialog = React.render(
+    (<Dialog title="第一个弹框" onClose={close} onShow={show}
+    style={{width:500}}
+    >
+      <p>第一个dialog</p>
+    </Dialog>),
+    document.getElementById('d1')
+);
 
+setTimeout(function(){
+  dialog.show();
+},100);
 ````
 
-## with trigger
+## use props
 
 
 ````html
@@ -50,64 +61,75 @@ require(['../','react'],function(Dialog,React){
 ````
 
 ````js
+/** @jsx React.DOM */
 
-require(['../','react'],function(Dialog,React){
+var React = require('react');
+var Dialog = require('../');
 
-  var MyControl = React.createClass({
+var MyControl = React.createClass({
+  getInitialState: function () {
+    return {
+      showDialog : false
+    };
+  },
 
-    getInitialState: function () {
-      return {
-        showDialog : false
-      };
-    },
-    _show : function(){
-      this.setState({
-        showDialog : true
-      });
-    },
-    _hide : function(){
-      this.setState({
-        showDialog : false
-      });
-    },
-    handleTrigger : function(){
-      this._show();
-    },
-    handleSave : function(){
-      
-      this._hide();
-    },
-    handleClose : function(){
-      
-      this._hide();
-    },
-    render : function(){
-      return (
-        <div>
-          <button className="btn btn-primary" onClick={this.handleTrigger}>show dialog</button>
-          <Dialog title="第二个弹框" visible={this.state.showDialog}>
-            <p>第二个弹出框内容</p>
-            <p>第二个弹出框内容</p>
-            <p>第二个弹出框内容</p>
-            <p>第二个弹出框内容</p>
-            <p>第二个弹出框内容</p>
-            <p>第二个弹出框内容</p>
-            <p>第二个弹出框内容</p>
-            <div className="modal-footer">
-              <button className="btn" onClick={this.handleClose} >Close</button>
-              <button className="btn btn-primary" onClick={this.handleSave}>Save changes</button>
-            </div>
-          </Dialog>
-        </div>
-      );
-    }
+  _show : function(){
+    this.setState({
+      showDialog : true
+    });
+  },
 
-  });
+  _hide : function(){
+    this.setState({
+      showDialog : false
+    });
+  },
 
-  React.renderComponent(
-    <MyControl/>,
-    document.getElementById('d2')
-  );
+  handleTrigger : function(){
+    this._show();
+  },
+
+  handleSave : function(){
+    this._hide();
+  },
+
+  handleClose : function(){
+    this._hide();
+  },
+
+  onShow:function(){
+    console.log(document.activeElement);
+  },
+
+  render : function(){
+    return (
+      <div>
+        <button className="btn btn-primary" onClick={this.handleTrigger}>show dialog</button>
+        <Dialog title="第二个弹框" visible={this.state.showDialog}
+        onClose={this.handleClose}
+        onShow={this.onShow}
+        style={{width:600}}
+         >
+          <input/>
+          <p>第二个弹出框内容</p>
+          <p>第二个弹出框内容</p>
+          <p>第二个弹出框内容</p>
+          <p>第二个弹出框内容</p>
+          <p>第二个弹出框内容</p>
+          <p>第二个弹出框内容</p>
+          <p>第二个弹出框内容</p>
+          <div className="modal-footer">
+            <button className="btn" onClick={this.handleClose} >Close</button>
+            <button className="btn btn-primary" onClick={this.handleSave}>Save changes</button>
+          </div>
+        </Dialog>
+      </div>
+    );
+  }
 });
 
+React.render(
+  <MyControl/>,
+  document.getElementById('d2')
+);
 ````
