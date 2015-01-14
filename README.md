@@ -34,12 +34,6 @@ react dialog component
 
 [![rc-dialog](https://nodei.co/npm/rc-dialog.png)](https://npmjs.org/package/rc-dialog)
 
-## Development
-
-```
-npm install
-npm start
-```
 ## Usage
 
 ```js
@@ -54,6 +48,7 @@ var Dialog = require('rc-dialog');
   
 // use dialog
 ```
+
 ## API 
 
 ### props
@@ -80,6 +75,19 @@ var Dialog = require('rc-dialog');
 
 #### close
   * make dialog hide and trigger onClose if current visible is true
+
+## Development
+
+```
+npm install
+npm start
+```
+
+## Example
+
+http://localhost:8000/examples/index.md
+
+online example: http://spmjs.io/docs/rc-dialog/examples/
 
 ## Test Case
 
