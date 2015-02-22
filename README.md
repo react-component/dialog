@@ -87,7 +87,7 @@ npm start
 
 http://localhost:8000/examples/index.md
 
-online example: http://spmjs.io/docs/rc-dialog/examples/
+online example: http://react-component.github.io/dialog/build/examples/
 
 ## Test Case
 
