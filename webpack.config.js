@@ -3,8 +3,8 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    'method': ['./examples/method.js'],
-    'prop': ['./examples/prop.js']
+    'simple': ['./examples/simple.js'],
+    'standalone': ['./examples/standalone.js']
   },
 
   output: {

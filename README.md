@@ -62,6 +62,12 @@ var Dialog = require('rc-dialog');
 #### title
   * Title of the dialog
 
+#### closable
+  * whether show close button and click mask to close
+
+#### onBeforeClose
+  * called by requestClose or click close button or mask
+
 #### onShow 
   * When the dialog shown , the callback was called.
 
@@ -75,6 +81,9 @@ var Dialog = require('rc-dialog');
 
 #### close
   * make dialog hide and trigger onClose if current visible is true
+
+#### requestClose
+  * run props.beforeClose first, if beforeClose does not return false then call close()
 
 ## Development
 
