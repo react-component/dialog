@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -11,8 +11,8 @@
   ],
   "homepage": "http://github.com/react-component/dialog",
   "maitainers": [
-    "dxq613@gmail.com",
-    "yiminghe@gmail.com"
+    "yiminghe@gmail.com",
+    "dxq613@gmail.com"
   ],
   "repository": {
     "type": "git",
@@ -32,8 +32,9 @@
     "port": 8000
   },
   "scripts": {
-    "example": "rm -rf build && webpack -d && rc-tools run jsx2html",
+    "build": "rc-tools run build",
     "less": "rc-tools run less",
+    "gh-pages": "rc-tools run gh-pages",
     "history": "rc-tools run history",
     "start": "node --harmony node_modules/.bin/rc-server",
     "publish": "rc-tools run tag && spm publish",
@@ -46,19 +47,13 @@
   "devDependencies": {
     "async": "^0.9.0",
     "bootstrap": "^3.3.2",
-    "css-loader": "^0.9.1",
     "expect.js": "~0.3.1",
-    "file-loader": "^0.8.1",
     "jquery": "^1.11.2",
-    "jsx-loader": "^0.12.2",
     "precommit-hook": "^1.0.7",
     "rc-server": "^2.0.0",
-    "rc-tools": "^1.1.0",
-    "react": "~0.12.1",
-    "sinon": "^1.12.2",
-    "style-loader": "^0.8.3",
-    "url-loader": "^0.5.5",
-    "webpack": "~1.5.3"
+    "rc-tools": "2.x",
+    "react": "~0.13.0",
+    "sinon": "^1.12.2"
   },
   "precommit": [
     "lint",

@@ -21,17 +21,14 @@ describe('dialog', function () {
   var callback1;
   var callback2;
 
-  beforeEach(function (done) {
+  beforeEach(function () {
     callback1 = sinon.spy();
     callback2 = sinon.spy();
-    React.render((<Dialog
-      style={{width:600}}
+    dialog = React.render((<Dialog
+      style={{width: 600}}
       title={title} onClose={callback1} onShow={callback2}>
       <p>第一个dialog</p>
-    </Dialog>), container, function () {
-      dialog = this;
-      done();
-    });
+    </Dialog>), container);
   });
 
   afterEach(function () {
@@ -39,7 +36,7 @@ describe('dialog', function () {
   });
 
   it('show', function (done) {
-    dialog.setProps({'visible': true});
+    dialog.show();
     setTimeout(function () {
       expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-hidden')).not.to.be.ok();
       done();
@@ -48,7 +45,7 @@ describe('dialog', function () {
   });
 
   it('hide', function (done) {
-    dialog.setProps({'visible': false});
+    dialog.hide();
     setTimeout(function () {
       expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
       done();
@@ -69,7 +66,7 @@ describe('dialog', function () {
   });
 
   it('show', function (done) {
-    dialog.setProps({'visible': true});
+    dialog.show();
     setTimeout(function () {
       expect(callback2.called).to.be(true);
       expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
@@ -79,7 +76,7 @@ describe('dialog', function () {
 
   it('click close', function (done) {
     async.series([function (done) {
-      dialog.setProps({'visible': true});
+      dialog.show();
       setTimeout(done, 10);
     }, function (done) {
       var btn = $('#t1 .rc-dialog-header a')[0];
