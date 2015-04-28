@@ -174,87 +174,42 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
     <![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.min.js"></script>
 </head>
 <body>
 <div id="__react-content"></div>
 <script src="common.js?nowrap"></script>
-<script src="prop.js?nowrap"></script>
+<script src="simple.js?nowrap"></script>
 <div class="highlight">
 <pre>
 <span class="hljs-comment">/** @jsx React.DOM */</span>
 
-require(<span class="hljs-string">'bootstrap/dist/css/bootstrap.css'</span>);
-require(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">'react'</span>);
-<span class="hljs-keyword">var</span> Dialog = require(<span class="hljs-string">'rc-dialog'</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
+<span class="hljs-keyword">var</span> Dialog = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog'</span>);
 
-<span class="hljs-keyword">var</span> MyControl = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> {
-      showDialog : <span class="hljs-literal">false</span>
-    };
-  },
+<span class="hljs-keyword">function</span> close() {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'close'</span>);
+}
 
-  _show : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">this</span>.setState({
-      showDialog : <span class="hljs-literal">true</span>
-    });
-  },
+<span class="hljs-keyword">function</span> show() {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'show'</span>);
+}
 
-  _hide : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">this</span>.setState({
-      showDialog : <span class="hljs-literal">false</span>
-    });
-  },
+React.render(&lt;div&gt;&lt;h1&gt;render&lt;/h1&gt;
+  &lt;p&gt;does <span class="hljs-keyword">not</span> support render visible <span class="hljs-literal">on</span> server!&lt;/p&gt;
+  &lt;Dialog
+    title=<span class="hljs-string">"第一个弹框"</span>
+    width=<span class="hljs-string">"500"</span>
+    zIndex={<span class="hljs-number">100</span>}
+    visible={<span class="hljs-literal">true</span>}
+    onClose={close}
+    onShow={show}
+  &gt;
+    &lt;p&gt;第一个dialog&lt;/p&gt;
+  &lt;/Dialog&gt;
 
-  handleTrigger : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">this</span>._show();
-  },
-
-  handleSave : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">this</span>._hide();
-  },
-
-  handleClose : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">this</span>._hide();
-  },
-
-  onShow:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    console.log(document.activeElement);
-  },
-
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div&gt;
-        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleTrigger}&gt;show dialog&lt;/button&gt;
-        &lt;Dialog title=<span class="hljs-string">"第二个弹框"</span> visible={<span class="hljs-keyword">this</span>.state.showDialog}
-          onClose={<span class="hljs-keyword">this</span>.handleClose}
-          onShow={<span class="hljs-keyword">this</span>.onShow}
-          style={{width:<span class="hljs-number">600</span>}}
-        &gt;
-          &lt;input/&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;p&gt;第二个弹出框内容&lt;/p&gt;
-          &lt;div className=<span class="hljs-string">"modal-footer"</span>&gt;
-            &lt;button className=<span class="hljs-string">"btn"</span> onClick={<span class="hljs-keyword">this</span>.handleClose} &gt;Close&lt;/button&gt;
-            &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleSave}&gt;Save changes&lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/Dialog&gt;
-      &lt;/div&gt;
-    );
-  }
-});
-
-React.render(
-  &lt;div&gt;&lt;h1&gt;<span class="hljs-keyword">use</span> props&lt;/h1&gt;&lt;MyControl/&gt;&lt;/div&gt;,
-  document.getElementById(<span class="hljs-string">'__react-content'</span>)
-);
+&lt;/div&gt;,<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'__react-content'</span>));
 
 </pre>
 </div>
