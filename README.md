@@ -81,8 +81,8 @@ var Dialog = require('rc-dialog');
 ```js
 {
   node: // defaults to window,
-  points: // defaults to ['cc','cc'],
-  offset: //
+  points: ['tc', 'tc'],
+  offset: [0, 100]
 }
 ```
 
