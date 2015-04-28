@@ -1,14 +1,12 @@
-webpackJsonp([1],[
+webpackJsonp([2],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(3);
+	module.exports = __webpack_require__(1);
 
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -19,31 +17,21 @@ webpackJsonp([1],[
 	var Dialog = __webpack_require__(5);
 	var container;
 
-	function showDialog(content, props) {
-	  if (!container) {
-	    container = document.createElement('div');
-	    document.body.appendChild(container);
-	  }
-	  var dialog = React.render(React.createElement(Dialog, React.__spread({},  props), content), container);
-	  dialog.show();
-	  return dialog;
-	}
-
 	var DialogContent = React.createClass({displayName: "DialogContent",
-	  getInitialState: function () {
+	  getInitialState:function() {
 	    return {
 	      value: ''
 	    };
 	  },
 
-	  onChange: function (e) {
+	  onChange:function(e) {
 	    this.props.onChange(e.target.value);
 	    this.setState({
 	      value: e.target.value
 	    });
 	  },
 
-	  render: function () {
+	  render:function() {
 	    return React.createElement("div", null, 
 	      React.createElement("input", {onChange: this.onChange, value: this.state.value}), 
 	      React.createElement("p", null, "第二个弹出框内容"), 
@@ -62,35 +50,48 @@ webpackJsonp([1],[
 	});
 
 	var MyControl = React.createClass({displayName: "MyControl",
-	  onChange: function (v) {
+	  getInitialState:function() {
+	    return {
+	      visible: false
+	    };
+	  },
+
+	  onChange:function(v) {
 	    this.dialogContentInput = v;
 	  },
 
-	  beforeClose: function () {
-	    if (!this.dialogContentInput) {
-	      if (!confirm('input is empty, decide to close?')) {
-	        return false;
-	      }
-	    }
-	  },
-
-	  requestClose: function () {
-	    this.d.requestClose();
-	  },
-
-	  handleTrigger: function () {
-	    this.d = showDialog(React.createElement(DialogContent, {onChange: this.onChange, handleClose: this.requestClose, handleSave: this.requestClose}), {
-	      title: "第二个弹框",
-	      onBeforeClose: this.beforeClose,
-	      style: {width: 600}
+	  handleClose:function() {
+	    this.setState({
+	      visible: false
 	    });
 	  },
 
+	  handleTrigger:function() {
+	    this.setState({
+	      visible: true
+	    });
 
-	  render: function () {
+	    // test rerender
+	    setTimeout(function() {
+	      this.setState({
+	        visible: true
+	      });
+	    }.bind(this), 100);
+	  },
+
+	  render:function() {
 	    return (
 	      React.createElement("div", null, 
-	        React.createElement("button", {className: "btn btn-primary", onClick: this.handleTrigger}, "show dialog")
+	        React.createElement("button", {className: "btn btn-primary", onClick: this.handleTrigger}, "show dialog"), 
+	        React.createElement(Dialog, {
+	          ref: "dialog", 
+	          title: "第二个弹框", 
+	          visible: this.state.visible, 
+	          onClose: this.handleClose, 
+	          style: {width: 600}
+	        }, 
+	          React.createElement(DialogContent, {onChange: this.onChange, handleClose: this.handleClose, handleSave: this.handleClose})
+	        )
 	      )
 	    );
 	  }
@@ -98,7 +99,7 @@ webpackJsonp([1],[
 
 	React.render(
 	  React.createElement("div", null, 
-	    React.createElement("h1", null, "render dialog standalone"), 
+	    React.createElement("h1", null, "render dialog inside component"), 
 	    React.createElement(MyControl, null)
 	  ),
 	  document.getElementById('__react-content')
@@ -106,6 +107,8 @@ webpackJsonp([1],[
 
 
 /***/ },
+/* 2 */,
+/* 3 */,
 /* 4 */,
 /* 5 */,
 /* 6 */,

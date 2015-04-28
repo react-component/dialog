@@ -1,19 +1,20 @@
-webpackJsonp([1],[
+webpackJsonp([0],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(2);
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 
-	__webpack_require__(5);
-	var React = __webpack_require__(3);
-	var Dialog = __webpack_require__(4);
+	__webpack_require__(6);
+	var React = __webpack_require__(4);
+	var Dialog = __webpack_require__(5);
 
 	function close() {
 	  console.log('close');

@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		2:0
+/******/ 		3:0
 /******/ 	};
 
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"standalone","1":"simple"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"simple","1":"standalone","2":"inline"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -95,29 +95,30 @@
 /* 0 */,
 /* 1 */,
 /* 2 */,
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = React;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(7);
+	module.exports = __webpack_require__(10);
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(6);
+	var content = __webpack_require__(7);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(10)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
@@ -131,20 +132,22 @@
 	}
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(11)();
+	exports = module.exports = __webpack_require__(12)();
 	exports.push([module.id, ".rc-dialog {\n  position: absolute;\n  left: -9999px;\n  top: -9999px;\n}\n.rc-dialog-title {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  font-size: 18px;\n}\n.rc-dialog-content {\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\n  position: relative;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  border-radius: 6px;\n  outline: 0;\n}\n.rc-dialog-wrap-hidden {\n  display: none;\n}\n.rc-dialog-close {\n  cursor: pointer;\n  outline: none;\n  margin-top: -2px;\n  float: right;\n  font-size: 21px;\n  font-weight: 700;\n  line-height: 1;\n  color: #000;\n  text-shadow: 0 1px 0 #fff;\n  filter: alpha(opacity=20);\n  opacity: .2;\n  text-decoration: none;\n}\n.rc-dialog-close:hover {\n  opacity: 1;\n  filter: alpha(opacity=100);\n  text-decoration: none;\n}\n.rc-dialog-header {\n  min-height: 16.43px;\n  padding: 15px;\n  border-bottom: 1px solid #e5e5e5;\n}\n.rc-dialog-body {\n  overflow-y: auto;\n  padding: 15px;\n}\n.rc-dialog-mask {\n  position: fixed;\n  top: 0;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  background-color: #000;\n  height: 100%;\n  opacity: .5;\n  filter: alpha(opacity=50);\n}\n", ""]);
 
 /***/ },
-/* 7 */
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 
-	var React = __webpack_require__(3);
-	var Dialog = __webpack_require__(12);
+	var React = __webpack_require__(4);
+	var Dialog = __webpack_require__(13);
 
 	function noop() {
 	}
@@ -184,6 +187,13 @@
 	        this.close();
 	      }
 	    }
+	  }});
+
+	  Object.defineProperty(DialogWrap.prototype,"shouldComponentUpdate",{writable:true,configurable:true,value:function(nextProps, nextState) {"use strict";
+	    if (!this.state.visible && !nextState.visible) {
+	      return false;
+	    }
+	    return true;
 	  }});
 
 	  Object.defineProperty(DialogWrap.prototype,"show",{writable:true,configurable:true,value:function() {"use strict";
@@ -254,7 +264,8 @@
 	DialogWrap.defaultProps = {
 	  className: '',
 	  align: {
-	    points: ['cc', 'cc']
+	    points: ['tc', 'tc'],
+	    offset: [0, 100]
 	  },
 	  closable: true,
 	  prefixCls: 'rc-dialog',
@@ -268,9 +279,7 @@
 
 
 /***/ },
-/* 8 */,
-/* 9 */,
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -466,7 +475,7 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function() {
@@ -487,14 +496,14 @@
 	}
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 
-	var React = __webpack_require__(3);
-	var domAlign = __webpack_require__(18);
-	var RcUtil = __webpack_require__(19);
+	var React = __webpack_require__(4);
+	var domAlign = __webpack_require__(19);
+	var RcUtil = __webpack_require__(21);
 	var Dom = RcUtil.Dom;
 	var assign = __webpack_require__(20);
 
@@ -508,6 +517,16 @@
 	  }).join(' ');
 	}
 
+	function buffer(fn, ms) {
+	  var timer;
+	  return function () {
+	    if (timer) {
+	      clearTimeout(timer);
+	    }
+	    timer = setTimeout(fn, ms);
+	  };
+	}
+
 	var Dialog = React.createClass({displayName: "Dialog",
 	  align:function() {
 	    var align = this.props.align;
@@ -516,7 +535,7 @@
 
 	  monitorWindowResize:function() {
 	    if (!this.resizeHandler) {
-	      this.resizeHandler = Dom.addEventListener(window, 'resize', this.align);
+	      this.resizeHandler = Dom.addEventListener(window, 'resize', buffer(this.align, 80));
 	    }
 	  },
 
@@ -529,19 +548,26 @@
 
 	  componentDidMount:function() {
 	    this.componentDidUpdate();
-	    if (this.props.visible) {
-	      React.findDOMNode(this.refs.dialog).focus();
-	    }
 	  },
 
 	  componentDidUpdate:function() {
 	    var props = this.props;
 	    if (props.visible) {
-	      this.align();
 	      this.monitorWindowResize();
+	      // first show
+	      if (!this.lastVisible) {
+	        this.align();
+	        React.findDOMNode(this.refs.dialog).focus();
+	      } else {
+	        if (props.align !== this.lastAlign) {
+	          this.align();
+	        }
+	      }
 	    } else {
 	      this.unMonitorWindowResize();
 	    }
+	    this.lastVisible = props.visible;
+	    this.lastAlign = props.align;
 	  },
 
 	  componentWillUnmount:function() {
@@ -554,13 +580,10 @@
 	    var prefixCls = props.prefixCls;
 	    var className = [prefixClsFn(prefixCls, 'wrap')];
 	    var closable = props.closable;
-
 	    if (!visible) {
 	      className.push(prefixClsFn(prefixCls, 'wrap-hidden'));
 	    }
-
 	    var dest = {};
-
 	    if (props.width !== undefined) {
 	      dest.width = props.width;
 	    }
@@ -581,8 +604,8 @@
 	      maskProps.style = {zIndex: style.zIndex};
 	    }
 	    return (React.createElement("div", {className: className.join(' ')}, 
-	      React.createElement("div", React.__spread({},  maskProps, {className: prefixClsFn(prefixCls, 'mask')})), 
-	      React.createElement("div", {className: [prefixClsFn(prefixCls), props.className].join(' '), tabIndex: "0", role: "dialog", ref: "dialog", style: style}, 
+	    props.mask !== false ? React.createElement("div", React.__spread({},  maskProps, {className: prefixClsFn(prefixCls, 'mask')})) : null, 
+	      React.createElement("div", {className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: "0", role: "dialog", ref: "dialog", style: style}, 
 	        React.createElement("div", {className: prefixClsFn(prefixCls, 'content')}, 
 	          React.createElement("div", {className: prefixClsFn(prefixCls, 'header')}, 
 	            closable ?
@@ -603,12 +626,12 @@
 
 
 /***/ },
-/* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -616,7 +639,7 @@
 	 * @author yiminghe@gmail.com
 	 */
 
-	var utils = __webpack_require__(21);
+	var utils = __webpack_require__(22);
 
 	// http://yiminghe.iteye.com/blog/1124720
 
@@ -988,28 +1011,6 @@
 
 
 /***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-	  guid: __webpack_require__(22),
-	  classSet: __webpack_require__(23),
-	  joinClasses: __webpack_require__(24),
-	  KeyCode: __webpack_require__(25),
-	  PureRenderMixin: __webpack_require__(26),
-	  shallowEqual: __webpack_require__(27),
-	  createChainedFunction: __webpack_require__(28),
-	  Dom: {
-	    addEventListener: __webpack_require__(29),
-	    contains: __webpack_require__(30)
-	  },
-	  Children: {
-	    toArray: __webpack_require__(31)
-	  }
-	};
-
-
-/***/ },
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1043,6 +1044,28 @@
 
 /***/ },
 /* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = {
+	  guid: __webpack_require__(23),
+	  classSet: __webpack_require__(24),
+	  joinClasses: __webpack_require__(25),
+	  KeyCode: __webpack_require__(26),
+	  PureRenderMixin: __webpack_require__(27),
+	  shallowEqual: __webpack_require__(28),
+	  createChainedFunction: __webpack_require__(29),
+	  Dom: {
+	    addEventListener: __webpack_require__(30),
+	    contains: __webpack_require__(31)
+	  },
+	  Children: {
+	    toArray: __webpack_require__(32)
+	  }
+	};
+
+
+/***/ },
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
@@ -1458,7 +1481,7 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var seed = 0;
@@ -1468,7 +1491,7 @@
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1513,7 +1536,7 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1560,7 +1583,7 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2087,7 +2110,7 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2103,7 +2126,7 @@
 
 	"use strict";
 
-	var shallowEqual = __webpack_require__(27);
+	var shallowEqual = __webpack_require__(28);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -2140,7 +2163,7 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2188,7 +2211,7 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2215,7 +2238,7 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (target, eventType, callback) {
@@ -2238,7 +2261,7 @@
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (root, node) {
@@ -2254,10 +2277,10 @@
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(3);
+	var React = __webpack_require__(4);
 
 	module.exports = function (children) {
 	  var ret = [];
