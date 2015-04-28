@@ -12,17 +12,17 @@ function show() {
   console.log('show');
 }
 
-React.render(<div><h1>call method</h1><div id="d1"></div></div>,document.getElementById('__react-content'));
-
-var dialog = React.render(
-  (<Dialog title="第一个弹框" onClose={close} onShow={show}
-    style={{width: 500}}
+React.render(<div><h1>render</h1>
+  <p>does not support render visible on server!</p>
+  <Dialog
+    title="第一个弹框"
+    width="500"
+    zIndex={100}
+    visible={true}
+    onClose={close}
+    onShow={show}
   >
     <p>第一个dialog</p>
-  </Dialog>),
-  document.getElementById('d1')
-);
+  </Dialog>
 
-setTimeout(function () {
-  dialog.show();
-}, 100);
+</div>,document.getElementById('__react-content'));

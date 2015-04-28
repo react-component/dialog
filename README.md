@@ -74,6 +74,18 @@ var Dialog = require('rc-dialog');
 #### onClose 
   * When the dialog closed, the callback was called.
 
+#### align
+
+  * align config. see https://github.com/yiminghe/dom-align
+
+```js
+{
+  node: // defaults to window,
+  points: // defaults to ['cc','cc'],
+  offset: //
+}
+```
+
 ### methods (not recommended)
 
 #### show

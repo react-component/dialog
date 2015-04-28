@@ -26,7 +26,8 @@ describe('dialog', function () {
     callback2 = sinon.spy();
     dialog = React.render((<Dialog
       style={{width: 600}}
-      title={title} onClose={callback1} onShow={callback2}>
+      title={title} 
+      onClose={callback1} onShow={callback2}>
       <p>第一个dialog</p>
     </Dialog>), container);
   });
@@ -38,38 +39,36 @@ describe('dialog', function () {
   it('show', function (done) {
     dialog.show();
     setTimeout(function () {
-      expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-hidden')).not.to.be.ok();
+      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
       done();
     }, 10);
 
   });
 
-  it('hide', function (done) {
-    dialog.hide();
+  it('close', function (done) {
+    dialog.show();
+    dialog.close();
     setTimeout(function () {
-      expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
       done();
     }, 10);
   });
 
   it('create', function () {
-    expect($('#t1 .rc-dialog').length).to.be(1);
-    expect($('#t1 .rc-dialog-title').text()).to.be(title);
+    expect($('.rc-dialog').length).to.be(0);
   });
 
   it('mask', function () {
-    expect($('#t1 .rc-dialog-mask').length).to.be(1);
+    dialog.show();
+    expect($('.rc-dialog-mask').length).to.be(1);
 
-  });
-  it('default visible false', function () {
-    expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
   });
 
   it('show', function (done) {
     dialog.show();
     setTimeout(function () {
       expect(callback2.called).to.be(true);
-      expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
+      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
       done();
     }, 10);
   });
@@ -79,12 +78,12 @@ describe('dialog', function () {
       dialog.show();
       setTimeout(done, 10);
     }, function (done) {
-      var btn = $('#t1 .rc-dialog-header a')[0];
+      var btn = $('.rc-dialog-header a')[0];
       Simulate.click(btn);
       setTimeout(done, 10);
     }, function (done) {
       expect(callback1.called).to.be(true);
-      expect($('#t1 .rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
       done();
     }], done)
   });

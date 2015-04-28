@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -58,5 +58,10 @@
   "precommit": [
     "lint",
     "less"
-  ]
+  ],
+  "dependencies": {
+    "dom-align": "~1.0.3",
+    "object-assign": "~2.0.0",
+    "rc-util": "~2.0.2"
+  }
 }
