@@ -2,7 +2,6 @@
 
 var expect = require('expect.js');
 var Dialog = require('../index');
-var sinon = require('sinon');
 require('/assets/bootstrap.css');
 var $ = require('jquery');
 var React = require('react/addons');
@@ -22,12 +21,18 @@ describe('dialog', function () {
   var callback2;
 
   beforeEach(function () {
-    callback1 = sinon.spy();
-    callback2 = sinon.spy();
+    function onClose(){
+      callback1=1;
+    }
+    function onShow(){
+      callback2=1;
+    }
+    callback1 = 0;
+    callback2 = 0;
     dialog = React.render((<Dialog
       style={{width: 600}}
       title={title} 
-      onClose={callback1} onShow={callback2}>
+      onClose={onClose} onShow={onShow}>
       <p>第一个dialog</p>
     </Dialog>), container);
   });
@@ -67,7 +72,7 @@ describe('dialog', function () {
   it('show', function (done) {
     dialog.show();
     setTimeout(function () {
-      expect(callback2.called).to.be(true);
+      expect(callback2).to.be(1);
       expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
       done();
     }, 10);
@@ -82,7 +87,7 @@ describe('dialog', function () {
       Simulate.click(btn);
       setTimeout(done, 10);
     }, function (done) {
-      expect(callback1.called).to.be(true);
+      expect(callback1).to.be(1);
       expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
       done();
     }], done)

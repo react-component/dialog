@@ -52,8 +52,7 @@
     "precommit-hook": "^1.0.7",
     "rc-server": "^2.0.0",
     "rc-tools": "2.x",
-    "react": "~0.13.0",
-    "sinon": "^1.12.2"
+    "react": "~0.13.0"
   },
   "precommit": [
     "lint",
