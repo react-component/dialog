@@ -1,19 +1,36 @@
 language: node_js
+
 notifications:
   email:
   - yiminghe@gmail.com
+
 node_js:
-- 0.11
-before_script:
-- npm start &
-- npm install mocha-phantomjs -g
-- phantomjs --version
+- 0.12
+
+before_install:
+- |
+    if ! git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(\.md$)|(^(docs|examples))/'
+    then
+      echo "Only docs were updated, stopping build process."
+      exit
+    fi
+    npm install mocha-phantomjs -g
+    phantomjs --version
+
 script:
-- npm test
-- npm run-script browser-test
-- npm run-script browser-test-cover
-- npm run saucelabs
+- |
+    if [ "$TEST_TYPE" = test ]; then
+      npm test
+    else
+      npm run $TEST_TYPE
+    fi
+
 env:
+  matrix:
+  - TEST_TYPE=lint
+  - TEST_TYPE=browser-test
+  - TEST_TYPE=browser-test-cover
+  - TEST_TYPE=saucelabs
   global:
   - secure: AIznpvfiUue2ou/Fc9Clyt31kR+fmPx3t70Mwzw7Ny8a26Qd9kuGGjTsuH2W9CbltCuGOY51FNsouKg/PPkaZ2pipkX5kVtIqQbXs6Xe+MiOfj/bsyyLJud28ltAfD1uDWl3XJ0Zd6N7aPpqqF//3LOZMDl6Gc/ca4HueoesqTM=
   - secure: XbXaTD27jWtCNw0dO/k0UEnm1ay5TDBXCc5tUtUEr/Z0BwBV6tK1U85vzK0mCtf9ydaEv+PNr7pJGmBhShEqMyc82gBtfXPCHC+ZA0wGOSxlAqCjIhtRSFJNKUEcev+IF4MCzXXqshOkP4B6sROG/fWVKJjgirPPxWujocNoZtQ=

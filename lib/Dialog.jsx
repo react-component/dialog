@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var domAlign = require('dom-align');
 var RcUtil = require('rc-util');
