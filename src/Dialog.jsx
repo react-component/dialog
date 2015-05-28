@@ -1,3 +1,5 @@
+'use strict';
+
 var React = require('react');
 var domAlign = require('dom-align');
 var RcUtil = require('rc-util');
@@ -55,10 +57,8 @@ var Dialog = React.createClass({
       if (!this.lastVisible) {
         this.align();
         React.findDOMNode(this.refs.dialog).focus();
-      } else {
-        if (props.align !== this.lastAlign) {
-          this.align();
-        }
+      } else if (props.align !== this.lastAlign) {
+        this.align();
       }
     } else {
       this.unMonitorWindowResize();

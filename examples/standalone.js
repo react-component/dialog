@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+'use strict';
 
 require('bootstrap/dist/css/bootstrap.css');
 require('rc-dialog/assets/bootstrap.css');
