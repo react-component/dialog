@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"simple","1":"standalone","2":"inline","3":"ant-design"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"standalone","1":"simple","2":"inline","3":"ant-design"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -117,7 +117,12 @@
 	}
 
 /***/ },
-/* 5 */
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -313,21 +318,23 @@
 
 
 /***/ },
-/* 6 */
+/* 11 */,
+/* 12 */,
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = React;
 
 /***/ },
-/* 7 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(15);
 
 /***/ },
-/* 8 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -384,8 +391,8 @@
 	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
 	}
 	
-	var React = __webpack_require__(6);
-	var Dialog = __webpack_require__(9);
+	var React = __webpack_require__(13);
+	var Dialog = __webpack_require__(16);
 	
 	function noop() {}
 	
@@ -475,7 +482,7 @@
 	    key: 'renderDialog',
 	    value: function renderDialog() {
 	      var props = this.props;
-	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'animation', 'maskAnimation', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
+	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'animation', 'maskAnimation', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
 	      var dialogElement = React.createElement(Dialog, _extends({
 	        visible: this.state.visible
 	      }, dialogProps, {
@@ -531,7 +538,7 @@
 	module.exports = DialogWrap;
 
 /***/ },
-/* 9 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -546,12 +553,12 @@
 	  }return target;
 	};
 	
-	var React = __webpack_require__(6);
-	var domAlign = __webpack_require__(10);
-	var RcUtil = __webpack_require__(12);
+	var React = __webpack_require__(13);
+	var domAlign = __webpack_require__(17);
+	var RcUtil = __webpack_require__(19);
 	var Dom = RcUtil.Dom;
-	var assign = __webpack_require__(23);
-	var anim = __webpack_require__(24);
+	var assign = __webpack_require__(30);
+	var anim = __webpack_require__(31);
 	
 	function prefixClsFn(prefixCls) {
 	  var args = Array.prototype.slice.call(arguments, 1);
@@ -669,14 +676,18 @@
 	    if (style.zIndex) {
 	      maskProps.style = { zIndex: style.zIndex };
 	    }
-	    return React.createElement('div', { className: className.join(' ') }, props.mask !== false ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', { className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: '0', role: 'dialog', ref: 'dialog', style: style }, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') }, '×')) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title)), React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children))));
+	    var footer;
+	    if (props.footer) {
+	      footer = React.createElement('div', { className: prefixClsFn(prefixCls, 'footer') }, props.footer);
+	    }
+	    return React.createElement('div', { className: className.join(' ') }, props.mask !== false ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', { className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: '0', role: 'dialog', ref: 'dialog', style: style }, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') }, '×')) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title)), React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer)));
 	  }
 	});
 	
 	module.exports = Dialog;
 
 /***/ },
-/* 10 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -686,7 +697,7 @@
 	
 	'use strict';
 	
-	var utils = __webpack_require__(11);
+	var utils = __webpack_require__(18);
 	
 	// http://yiminghe.iteye.com/blog/1124720
 	
@@ -1041,7 +1052,7 @@
 	// document.documentElement, so check for that too.
 
 /***/ },
-/* 11 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1458,29 +1469,29 @@
 	mix(utils, domUtils);
 
 /***/ },
-/* 12 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(14),
-	  classSet: __webpack_require__(15),
-	  joinClasses: __webpack_require__(16),
-	  KeyCode: __webpack_require__(17),
-	  PureRenderMixin: __webpack_require__(18),
-	  shallowEqual: __webpack_require__(13),
-	  createChainedFunction: __webpack_require__(19),
+	  guid: __webpack_require__(21),
+	  classSet: __webpack_require__(22),
+	  joinClasses: __webpack_require__(23),
+	  KeyCode: __webpack_require__(24),
+	  PureRenderMixin: __webpack_require__(25),
+	  shallowEqual: __webpack_require__(20),
+	  createChainedFunction: __webpack_require__(26),
 	  Dom: {
-	    addEventListener: __webpack_require__(20),
-	    contains: __webpack_require__(21)
+	    addEventListener: __webpack_require__(27),
+	    contains: __webpack_require__(28)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(22)
+	    toArray: __webpack_require__(29)
 	  }
 	};
 
 
 /***/ },
-/* 13 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1528,7 +1539,7 @@
 
 
 /***/ },
-/* 14 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var seed = 0;
@@ -1538,7 +1549,7 @@
 
 
 /***/ },
-/* 15 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1583,7 +1594,7 @@
 
 
 /***/ },
-/* 16 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1630,7 +1641,7 @@
 
 
 /***/ },
-/* 17 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2157,7 +2168,7 @@
 
 
 /***/ },
-/* 18 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2173,7 +2184,7 @@
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(13);
+	var shallowEqual = __webpack_require__(20);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -2210,7 +2221,7 @@
 
 
 /***/ },
-/* 19 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2237,7 +2248,7 @@
 
 
 /***/ },
-/* 20 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (target, eventType, callback) {
@@ -2260,7 +2271,7 @@
 
 
 /***/ },
-/* 21 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (root, node) {
@@ -2276,10 +2287,10 @@
 
 
 /***/ },
-/* 22 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(6);
+	var React = __webpack_require__(13);
 	
 	module.exports = function (children) {
 	  var ret = [];
@@ -2291,7 +2302,7 @@
 
 
 /***/ },
-/* 23 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2323,13 +2334,13 @@
 
 
 /***/ },
-/* 24 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(25);
-	var Css = __webpack_require__(26);
+	var Event = __webpack_require__(32);
+	var Css = __webpack_require__(33);
 	
 	module.exports = function (node, transitionName, callback) {
 	  var className = transitionName;
@@ -2373,7 +2384,7 @@
 	};
 
 /***/ },
-/* 25 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2460,7 +2471,7 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 26 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2491,12 +2502,12 @@
 	};
 
 /***/ },
-/* 27 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
 		"name": "rc-dialog",
-		"version": "4.1.0",
+		"version": "4.1.2",
 		"description": "dialog ui component for react",
 		"keywords": [
 			"react",
