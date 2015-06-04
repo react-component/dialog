@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
     <style>
         .hljs {
             display: block;
@@ -182,35 +183,36 @@
 <script src="simple.js?nowrap"></script>
 <div class="highlight">
 <pre>
-<span class="hljs-comment">/** @jsx React.DOM */</span>
+<span class="hljs-pi">'use strict'</span>;
 
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
 <span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
 <span class="hljs-keyword">var</span> Dialog = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog'</span>);
+<span class="hljs-keyword">var</span> packageJson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../package.json'</span>);
 
-<span class="hljs-keyword">function</span> close() {
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">close</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'close'</span>);
 }
 
-<span class="hljs-keyword">function</span> show() {
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'show'</span>);
 }
 
-React.render(&lt;div&gt;&lt;h1&gt;render&lt;/h1&gt;
-  &lt;p&gt;does <span class="hljs-keyword">not</span> support render visible <span class="hljs-literal">on</span> server!&lt;/p&gt;
-  &lt;Dialog
-    title=<span class="hljs-string">"第一个弹框"</span>
-    width=<span class="hljs-string">"500"</span>
-    zIndex={<span class="hljs-number">100</span>}
-    visible={<span class="hljs-literal">true</span>}
-    onClose={close}
-    onShow={show}
-  &gt;
-    &lt;p&gt;第一个dialog&lt;/p&gt;
-  &lt;/Dialog&gt;
+React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>render {packageJson.name}@{packageJson.version}<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>does not support render visible on server!<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span>
+    <span class="hljs-attribute">title</span>=<span class="hljs-value">"第一个弹框"</span>
+    <span class="hljs-attribute">width</span>=<span class="hljs-value">"500"</span>
+    <span class="hljs-attribute">zIndex</span>=<span class="hljs-value">{100}</span>
+    <span class="hljs-attribute">visible</span>=<span class="hljs-value">{true}</span>
+    <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{close}</span>
+    <span class="hljs-attribute">onShow</span>=<span class="hljs-value">{show}</span>
+  &gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第一个dialog<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
 
-&lt;/div&gt;,<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'__react-content'</span>));
-
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,document.getElementById('__react-content'));
+</span>
 </pre>
 </div>
 </body>

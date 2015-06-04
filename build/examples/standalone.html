@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
     <style>
         .hljs {
             display: block;
@@ -182,13 +183,14 @@
 <script src="standalone.js?nowrap"></script>
 <div class="highlight">
 <pre>
-<span class="hljs-comment">/** @jsx React.DOM */</span>
+<span class="hljs-string">'use strict'</span>;
 
 require(<span class="hljs-string">'bootstrap/dist/css/bootstrap.css'</span>);
 require(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
 <span class="hljs-keyword">var</span> React = require(<span class="hljs-string">'react'</span>);
 <span class="hljs-keyword">var</span> Dialog = require(<span class="hljs-string">'rc-dialog'</span>);
 <span class="hljs-keyword">var</span> container;
+<span class="hljs-keyword">var</span> packageJson = require(<span class="hljs-string">'../package.json'</span>);
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showDialog</span><span class="hljs-params">(content, props)</span> </span>{
   <span class="hljs-keyword">if</span> (!container) {
@@ -269,7 +271,7 @@ require(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
 
 React.render(
   &lt;div&gt;
-    &lt;h1&gt;render dialog standalone&lt;/h1&gt;
+    &lt;h1&gt;render dialog standalone {packageJson.name}@{packageJson.version}&lt;/h1&gt;
     &lt;MyControl/&gt;
   &lt;/div&gt;,
   document.getElementById(<span class="hljs-string">'__react-content'</span>)
