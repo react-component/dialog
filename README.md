@@ -59,8 +59,17 @@ var Dialog = require('rc-dialog');
 #### visible 
   * The dialog whether or not shown,default false
 
+#### animation
+  * part of dialog animation css class name
+
+#### maskAnimation
+  * part of dialog's mask animation css class name
+
 #### title
   * Title of the dialog
+
+#### footer
+  * footer of the dialog
 
 #### closable
   * whether show close button and click mask to close

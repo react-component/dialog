@@ -1,7 +1,6 @@
 'use strict';
 
-require('bootstrap/dist/css/bootstrap.css');
-require('rc-dialog/assets/bootstrap.css');
+require('rc-dialog/assets/index.css');
 var React = require('react');
 var Dialog = require('rc-dialog');
 var container;
@@ -24,51 +23,19 @@ var DialogContent = React.createClass({
     };
   },
 
-  onChange: function (e) {
-    this.props.onChange(e.target.value);
-    this.setState({
-      value: e.target.value
-    });
-  },
-
   render: function () {
     return <div>
-      <input onChange={this.onChange} value={this.state.value}/>
-      <p>第二个弹出框内容</p>
-      <p>第二个弹出框内容</p>
-      <p>第二个弹出框内容</p>
-      <p>第二个弹出框内容</p>
-      <p>第二个弹出框内容</p>
-      <p>第二个弹出框内容</p>
-      <p>第二个弹出框内容</p>
-      <div className="modal-footer">
-        <button className="btn" onClick={this.props.handleClose} >Close</button>
-        <button className="btn btn-primary" onClick={this.props.handleSave}>Save changes</button>
-      </div>
+      <p>basic modal</p>
     </div>;
   }
 });
 
 var MyControl = React.createClass({
-  onChange: function (v) {
-    this.dialogContentInput = v;
-  },
-
-  beforeClose: function () {
-    if (!this.dialogContentInput) {
-      if (!confirm('input is empty, decide to close?')) {
-        return false;
-      }
-    }
-  },
-
-  requestClose: function () {
-    this.d.requestClose();
-  },
-
   handleTrigger: function () {
     this.d = showDialog(<DialogContent onChange={this.onChange} handleClose={this.requestClose} handleSave={this.requestClose}/>, {
       title: "第二个弹框",
+      animation: 'zoom',
+      maskAnimation: 'fade',
       onBeforeClose: this.beforeClose,
       style: {width: 600}
     });

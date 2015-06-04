@@ -5,6 +5,7 @@ var domAlign = require('dom-align');
 var RcUtil = require('rc-util');
 var Dom = RcUtil.Dom;
 var assign = require('object-assign');
+var anim = require('css-animation');
 
 function prefixClsFn(prefixCls) {
   var args = Array.prototype.slice.call(arguments, 1);
@@ -49,22 +50,42 @@ var Dialog = React.createClass({
     this.componentDidUpdate();
   },
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     var props = this.props;
+    var dialogDomNode, maskNode;
     if (props.visible) {
       this.monitorWindowResize();
+      prevProps = prevProps || {};
       // first show
-      if (!this.lastVisible) {
+      if (!prevProps.visible) {
         this.align();
-        React.findDOMNode(this.refs.dialog).focus();
-      } else if (props.align !== this.lastAlign) {
+        dialogDomNode = React.findDOMNode(this.refs.dialog);
+        if (props.animation) {
+          // dialogDomNode.style.visibility = 'hidden';
+          anim(dialogDomNode, prefixClsFn(props.prefixCls, props.animation + '-enter'));
+          // dialogDomNode.style.visibility = '';
+        }
+        if (props.maskAnimation) {
+          maskNode = React.findDOMNode(this.refs.mask);
+          anim(maskNode, prefixClsFn(props.prefixCls, props.maskAnimation + '-enter'));
+        }
+        dialogDomNode.focus();
+      } else if (props.align !== prevProps.align) {
         this.align();
       }
     } else {
+      if (prevProps.visible) {
+        dialogDomNode = React.findDOMNode(this.refs.dialog);
+        if (props.animation) {
+          anim(dialogDomNode, prefixClsFn(props.prefixCls, props.animation + '-leave'));
+        }
+        if (props.maskAnimation) {
+          maskNode = React.findDOMNode(this.refs.mask);
+          anim(maskNode, prefixClsFn(props.prefixCls, props.maskAnimation + '-leave'));
+        }
+      }
       this.unMonitorWindowResize();
     }
-    this.lastVisible = props.visible;
-    this.lastAlign = props.align;
   },
 
   componentWillUnmount() {
@@ -100,8 +121,12 @@ var Dialog = React.createClass({
     if (style.zIndex) {
       maskProps.style = {zIndex: style.zIndex};
     }
+    var footer;
+    if (props.footer) {
+      footer = <div className={prefixClsFn(prefixCls, 'footer')}>{props.footer}</div>;
+    }
     return (<div className={className.join(' ')}>
-    {props.mask !== false ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')}/> : null}
+    {props.mask !== false ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
       <div className={[prefixClsFn(prefixCls, ''), props.className].join(' ')} tabIndex="0" role="dialog" ref='dialog' style={style}>
         <div className={prefixClsFn(prefixCls, 'content')}>
           <div className={prefixClsFn(prefixCls, 'header')}>
@@ -113,6 +138,7 @@ var Dialog = React.createClass({
             <div className={prefixClsFn(prefixCls, 'title')}>{props.title}</div>
           </div>
           <div className={prefixClsFn(prefixCls, 'body')}>{props.children}</div>
+        {footer}
         </div>
       </div>
     </div>);

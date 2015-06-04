@@ -5,6 +5,7 @@ require('rc-dialog/assets/bootstrap.css');
 var React = require('react');
 var Dialog = require('rc-dialog');
 var container;
+var packageJson = require('../package.json');
 
 var DialogContent = React.createClass({
   getInitialState() {
@@ -88,7 +89,7 @@ var MyControl = React.createClass({
 
 React.render(
   <div>
-    <h1>render dialog inside component</h1>
+    <h1>render dialog inside component {packageJson.name}@{packageJson.version}</h1>
     <MyControl/>
   </div>,
   document.getElementById('__react-content')
