@@ -53,6 +53,7 @@ var Dialog = React.createClass({
   componentDidUpdate(prevProps) {
     var props = this.props;
     var dialogDomNode, maskNode;
+    var transitionName, maskTransitionName;
     if (props.visible) {
       this.monitorWindowResize();
       prevProps = prevProps || {};
@@ -60,14 +61,22 @@ var Dialog = React.createClass({
       if (!prevProps.visible) {
         this.align();
         dialogDomNode = React.findDOMNode(this.refs.dialog);
-        if (props.animation) {
+        transitionName = props.transitionName;
+        if (!transitionName && props.animation) {
+          transitionName = prefixClsFn(props.prefixCls, props.animation + '-enter');
+        }
+        if (transitionName) {
           // dialogDomNode.style.visibility = 'hidden';
-          anim(dialogDomNode, prefixClsFn(props.prefixCls, props.animation + '-enter'));
+          anim(dialogDomNode, transitionName);
           // dialogDomNode.style.visibility = '';
         }
-        if (props.maskAnimation) {
+        maskTransitionName = props.maskTransitionName;
+        if (!maskTransitionName && props.maskAnimation) {
+          maskTransitionName = prefixClsFn(props.prefixCls, props.maskAnimation + '-enter');
+        }
+        if (maskTransitionName) {
           maskNode = React.findDOMNode(this.refs.mask);
-          anim(maskNode, prefixClsFn(props.prefixCls, props.maskAnimation + '-enter'));
+          anim(maskNode, maskTransitionName);
         }
         dialogDomNode.focus();
       } else if (props.align !== prevProps.align) {
@@ -76,12 +85,20 @@ var Dialog = React.createClass({
     } else {
       if (prevProps.visible) {
         dialogDomNode = React.findDOMNode(this.refs.dialog);
-        if (props.animation) {
-          anim(dialogDomNode, prefixClsFn(props.prefixCls, props.animation + '-leave'));
+        transitionName = props.transitionName;
+        if (!transitionName && props.animation) {
+          transitionName = prefixClsFn(props.prefixCls, props.animation + '-leave');
         }
-        if (props.maskAnimation) {
+        if (transitionName) {
+          anim(dialogDomNode, transitionName);
+        }
+        maskTransitionName = props.maskTransitionName;
+        if (!maskTransitionName && props.maskAnimation) {
+          maskTransitionName = prefixClsFn(props.prefixCls, props.maskAnimation + '-leave');
+        }
+        if (maskTransitionName) {
           maskNode = React.findDOMNode(this.refs.mask);
-          anim(maskNode, prefixClsFn(props.prefixCls, props.maskAnimation + '-leave'));
+          anim(maskNode, maskTransitionName);
         }
       }
       this.unMonitorWindowResize();

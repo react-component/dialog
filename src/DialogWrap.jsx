@@ -82,8 +82,8 @@ class DialogWrap extends React.Component {
     var props = this.props;
     var dialogProps = copy(props, ['className', 'closable', 'align',
       'title', 'footer',
-      'animation',
-      'maskAnimation',
+      'animation', 'transitionName',
+      'maskAnimation', 'maskTransitionName',
       'prefixCls', 'style', 'width', 'height', 'zIndex']);
     var dialogElement = <Dialog
       visible={this.state.visible}

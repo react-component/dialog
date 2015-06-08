@@ -65,6 +65,12 @@ var Dialog = require('rc-dialog');
 #### maskAnimation
   * part of dialog's mask animation css class name
 
+#### transitionName
+  * dialog animation css class name
+
+#### maskTransitionName
+  * dialog's mask animation css class name
+
 #### title
   * Title of the dialog
 
