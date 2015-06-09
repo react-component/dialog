@@ -11,7 +11,14 @@ function showDialog(content, props) {
     container = document.createElement('div');
     document.body.appendChild(container);
   }
-  var dialog = React.render(<Dialog {...props}>{content}</Dialog>, container);
+  var close = props.onClose;
+  props.onClose = function () {
+    if (close) {
+      close();
+    }
+    React.unmountComponentAtNode(container);
+  };
+  var dialog = React.render(<Dialog {...props} renderToBody={false}>{content}</Dialog>, container);
   dialog.show();
   return dialog;
 }
@@ -32,7 +39,7 @@ var DialogContent = React.createClass({
 
 var MyControl = React.createClass({
   handleTrigger: function () {
-    this.d = showDialog(<DialogContent onChange={this.onChange} handleClose={this.requestClose} handleSave={this.requestClose}/>, {
+    this.d = showDialog(<DialogContent />, {
       title: "第二个弹框",
       animation: 'zoom',
       maskAnimation: 'fade',

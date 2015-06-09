@@ -59,6 +59,9 @@ var Dialog = require('rc-dialog');
 #### visible 
   * The dialog whether or not shown,default false
 
+#### renderToBody
+  * whether render dialog to body. default true
+
 #### animation
   * part of dialog animation css class name
 

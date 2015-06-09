@@ -56,6 +56,12 @@ var MyControl = React.createClass({
     });
   },
 
+  handleDestroy(){
+    this.setState({
+      destroy:true
+    });
+  },
+
   handleTrigger() {
     this.setState({
       visible: true
@@ -70,9 +76,14 @@ var MyControl = React.createClass({
   },
 
   render() {
+    if(this.state.destroy){
+      return null;
+    }
     return (
       <div>
         <button className="btn btn-primary" onClick={this.handleTrigger}>show dialog</button>
+        &nbsp;&nbsp;&nbsp;
+        <button className="btn btn-primary" onClick={this.handleDestroy}>destroy</button>
         <Dialog
           ref='dialog'
           title= "第二个弹框"

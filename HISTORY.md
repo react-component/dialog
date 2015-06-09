@@ -1,5 +1,8 @@
 # History
 ----
+## 4.2.0 / 2015-06-09
+
+add renderToBody props
 
 ## 4.0.0 / 2015-04-28
 

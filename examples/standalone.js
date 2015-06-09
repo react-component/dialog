@@ -12,7 +12,7 @@ function showDialog(content, props) {
     container = document.createElement('div');
     document.body.appendChild(container);
   }
-  var dialog = React.render(<Dialog {...props}>{content}</Dialog>, container);
+  var dialog = React.render(<Dialog {...props} renderToBody={false}>{content}</Dialog>, container);
   dialog.show();
   return dialog;
 }

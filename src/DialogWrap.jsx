@@ -17,14 +17,6 @@ function copy(obj, fields) {
 }
 
 class DialogWrap extends React.Component {
-  getDialogContainer() {
-    if (!this.dialogContainer) {
-      this.dialogContainer = document.createElement('div');
-      document.body.appendChild(this.dialogContainer);
-    }
-    return this.dialogContainer;
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -52,22 +44,16 @@ class DialogWrap extends React.Component {
 
   show() {
     if (!this.state.visible) {
-      var props = this.props;
       this.setState({
         visible: true
-      }, ()=> {
-        props.onShow();
       });
     }
   }
 
   close() {
     if (this.state.visible) {
-      var props = this.props;
       this.setState({
         visible: false
-      }, () => {
-        props.onClose();
       });
     }
   }
@@ -78,42 +64,56 @@ class DialogWrap extends React.Component {
     }
   }
 
-  renderDialog() {
+  getDialogContainer() {
+    if (!this.dialogContainer) {
+      this.dialogContainer = document.createElement('div');
+      this.dialogContainer.className = `${this.props.prefixCls}-container`;
+      document.body.appendChild(this.dialogContainer);
+    }
+    return this.dialogContainer;
+  }
+
+  getDialogElement() {
     var props = this.props;
-    var dialogProps = copy(props, ['className', 'closable', 'align',
+    var dialogProps = copy(props, [
+      'className', 'closable', 'align',
       'title', 'footer',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName',
-      'prefixCls', 'style', 'width', 'height', 'zIndex']);
-    var dialogElement = <Dialog
+      'prefixCls', 'style', 'width',
+      'height', 'zIndex'
+    ]);
+    return <Dialog
+      wrap={this}
       visible={this.state.visible}
     {...dialogProps}
       onClose={this.requestClose}>
     {props.children}
     </Dialog>;
-    this.dialogInstance = React.render(dialogElement, this.getDialogContainer());
   }
 
   render() {
-    return null;
+    if (this.state.visible) {
+      this.dialogRendered = true;
+    }
+    return this.props.renderToBody ? null : (this.dialogRendered ? this.getDialogElement() : null);
   }
 
   componentDidMount() {
     this.componentDidUpdate();
-    if (this.state.visible) {
-      this.props.onShow();
-    }
   }
 
   componentDidUpdate() {
-    if (this.dialogInstance || this.state.visible) {
-      this.renderDialog();
+    if (this.props.renderToBody && this.dialogRendered) {
+      React.render(this.getDialogElement(), this.getDialogContainer());
     }
   }
 
   componentWillUnmount() {
     if (this.dialogContainer) {
       React.unmountComponentAtNode(this.getDialogContainer());
+      document.body.removeChild(this.dialogContainer);
+      this.dialogContainer = null;
     }
   }
 }
@@ -124,6 +124,7 @@ DialogWrap.defaultProps = {
     points: ['tc', 'tc'],
     offset: [0, 100]
   },
+  renderToBody: true,
   closable: true,
   prefixCls: 'rc-dialog',
   visible: false,

@@ -21,17 +21,19 @@ describe('dialog', function () {
   var callback2;
 
   beforeEach(function () {
-    function onClose(){
-      callback1=1;
+    function onClose() {
+      callback1 = 1;
     }
-    function onShow(){
-      callback2=1;
+
+    function onShow() {
+      callback2 = 1;
     }
+
     callback1 = 0;
     callback2 = 0;
     dialog = React.render((<Dialog
       style={{width: 600}}
-      title={title} 
+      title={title}
       onClose={onClose} onShow={onShow}>
       <p>第一个dialog</p>
     </Dialog>), container);
@@ -91,5 +93,38 @@ describe('dialog', function () {
       expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
       done();
     }], done)
+  });
+
+  describe('renderToBody', function () {
+    it('defaults to true', function () {
+      var d = React.render(<Dialog>
+        <p className="renderToBody">1</p>
+      </Dialog>, container);
+      expect($('.renderToBody').length).to.be(0);
+      expect($('.rc-dialog-container').length).to.be(0);
+      d.show();
+      expect($('.rc-dialog-container').length).to.be(1);
+      expect($('.renderToBody').length).to.be(1);
+      expect($('.rc-dialog-wrap')[0].parentNode).not.to.be(container);
+      expect($('.rc-dialog-wrap')[0].parentNode.className).to.be('rc-dialog-container');
+      React.unmountComponentAtNode(container);
+      expect($('.renderToBody').length).to.be(0);
+      expect($('.rc-dialog-container').length).to.be(0);
+    });
+
+    it('can be false', function () {
+      var d = React.render(<Dialog renderToBody={false}>
+        <p className="renderToBodyFalse">1</p>
+      </Dialog>, container);
+      expect($('.renderToBodyFalse').length).to.be(0);
+      expect($('.rc-dialog-container').length).to.be(0);
+      d.show();
+      expect($('.rc-dialog-container').length).to.be(0);
+      expect($('.renderToBodyFalse').length).to.be(1);
+      expect($('.rc-dialog-wrap')[0].parentNode).to.be(container);
+      React.unmountComponentAtNode(container);
+      expect($('.renderToBodyFalse').length).to.be(0);
+      expect($('.rc-dialog-container').length).to.be(0);
+    });
   });
 });
