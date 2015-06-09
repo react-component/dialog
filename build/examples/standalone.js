@@ -66,6 +66,8 @@ webpackJsonp([1],[
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	__webpack_require__(29);
 	__webpack_require__(2);
 	var React = __webpack_require__(6);
@@ -80,7 +82,7 @@ webpackJsonp([1],[
 	  }
 	  var dialog = React.render(React.createElement(
 	    Dialog,
-	    props,
+	    _extends({}, props, { renderToBody: false }),
 	    content
 	  ), container);
 	  dialog.show();

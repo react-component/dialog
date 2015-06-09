@@ -197,7 +197,7 @@ require(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
     container = document.createElement(<span class="hljs-string">'div'</span>);
     document.body.appendChild(container);
   }
-  <span class="hljs-keyword">var</span> dialog = React.render(&lt;Dialog {...props}&gt;{content}&lt;/Dialog&gt;, container);
+  <span class="hljs-keyword">var</span> dialog = React.render(&lt;Dialog {...props} renderToBody={<span class="hljs-literal">false</span>}&gt;{content}&lt;/Dialog&gt;, container);
   dialog.show();
   <span class="hljs-keyword">return</span> dialog;
 }

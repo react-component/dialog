@@ -1,19 +1,21 @@
-webpackJsonp([2],{
+webpackJsonp([3],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(36);
+	module.exports = __webpack_require__(37);
 
 
 /***/ },
 
-/***/ 36:
+/***/ 37:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	__webpack_require__(37);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	__webpack_require__(38);
 	var React = __webpack_require__(6);
 	var Dialog = __webpack_require__(7);
 	var container;
@@ -24,9 +26,16 @@ webpackJsonp([2],{
 	    container = document.createElement('div');
 	    document.body.appendChild(container);
 	  }
+	  var close = props.onClose;
+	  props.onClose = function () {
+	    if (close) {
+	      close();
+	    }
+	    React.unmountComponentAtNode(container);
+	  };
 	  var dialog = React.render(React.createElement(
 	    Dialog,
-	    props,
+	    _extends({}, props, { renderToBody: false }),
 	    content
 	  ), container);
 	  dialog.show();
@@ -59,7 +68,7 @@ webpackJsonp([2],{
 	  displayName: 'MyControl',
 	
 	  handleTrigger: function handleTrigger() {
-	    this.d = showDialog(React.createElement(DialogContent, { onChange: this.onChange, handleClose: this.requestClose, handleSave: this.requestClose }), {
+	    this.d = showDialog(React.createElement(DialogContent, null), {
 	      title: '第二个弹框',
 	      animation: 'zoom',
 	      maskAnimation: 'fade',
@@ -97,13 +106,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 37:
+/***/ 38:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(38);
+	var content = __webpack_require__(39);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(5)(content, {});
@@ -121,7 +130,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 38:
+/***/ 39:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();

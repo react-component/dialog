@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"simple","1":"standalone","2":"ant-design","3":"inline"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"simple","1":"standalone","2":"inline","3":"ant-design"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -413,15 +413,6 @@
 	  _inherits(DialogWrap, _React$Component);
 	
 	  _createClass(DialogWrap, [{
-	    key: 'getDialogContainer',
-	    value: function getDialogContainer() {
-	      if (!this.dialogContainer) {
-	        this.dialogContainer = document.createElement('div');
-	        document.body.appendChild(this.dialogContainer);
-	      }
-	      return this.dialogContainer;
-	    }
-	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(props) {
 	      if (this.state.visible !== props.visible) {
@@ -444,11 +435,8 @@
 	    key: 'show',
 	    value: function show() {
 	      if (!this.state.visible) {
-	        var props = this.props;
 	        this.setState({
 	          visible: true
-	        }, function () {
-	          props.onShow();
 	        });
 	      }
 	    }
@@ -456,11 +444,8 @@
 	    key: 'close',
 	    value: function close() {
 	      if (this.state.visible) {
-	        var props = this.props;
 	        this.setState({
 	          visible: false
-	        }, function () {
-	          props.onClose();
 	        });
 	      }
 	    }
@@ -472,34 +457,44 @@
 	      }
 	    }
 	  }, {
-	    key: 'renderDialog',
-	    value: function renderDialog() {
+	    key: 'getDialogContainer',
+	    value: function getDialogContainer() {
+	      if (!this.dialogContainer) {
+	        this.dialogContainer = document.createElement('div');
+	        this.dialogContainer.className = '' + this.props.prefixCls + '-container';
+	        document.body.appendChild(this.dialogContainer);
+	      }
+	      return this.dialogContainer;
+	    }
+	  }, {
+	    key: 'getDialogElement',
+	    value: function getDialogElement() {
 	      var props = this.props;
 	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
-	      var dialogElement = React.createElement(Dialog, _extends({
+	      return React.createElement(Dialog, _extends({
+	        wrap: this,
 	        visible: this.state.visible
 	      }, dialogProps, {
 	        onClose: this.requestClose }), props.children);
-	      this.dialogInstance = React.render(dialogElement, this.getDialogContainer());
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return null;
+	      if (this.state.visible) {
+	        this.dialogRendered = true;
+	      }
+	      return this.props.renderToBody ? null : this.dialogRendered ? this.getDialogElement() : null;
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.componentDidUpdate();
-	      if (this.state.visible) {
-	        this.props.onShow();
-	      }
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      if (this.dialogInstance || this.state.visible) {
-	        this.renderDialog();
+	      if (this.props.renderToBody && this.dialogRendered) {
+	        React.render(this.getDialogElement(), this.getDialogContainer());
 	      }
 	    }
 	  }, {
@@ -507,6 +502,8 @@
 	    value: function componentWillUnmount() {
 	      if (this.dialogContainer) {
 	        React.unmountComponentAtNode(this.getDialogContainer());
+	        document.body.removeChild(this.dialogContainer);
+	        this.dialogContainer = null;
 	      }
 	    }
 	  }]);
@@ -520,6 +517,7 @@
 	    points: ['tc', 'tc'],
 	    offset: [0, 100]
 	  },
+	  renderToBody: true,
 	  closable: true,
 	  prefixCls: 'rc-dialog',
 	  visible: false,
@@ -551,7 +549,7 @@
 	var RcUtil = __webpack_require__(12);
 	var Dom = RcUtil.Dom;
 	var assign = __webpack_require__(23);
-	var anim = __webpack_require__(24);
+	var _anim = __webpack_require__(24);
 	
 	function prefixClsFn(prefixCls) {
 	  var args = Array.prototype.slice.call(arguments, 1);
@@ -587,6 +585,17 @@
 	    }
 	  },
 	
+	  anim: function anim(el, transitionName, animation, enter, fn) {
+	    if (!transitionName && animation) {
+	      transitionName = prefixClsFn(this.props.prefixCls, animation + (enter ? '-enter' : '-leave'));
+	    }
+	    if (transitionName) {
+	      _anim(el, transitionName, fn);
+	    } else if (fn) {
+	      fn();
+	    }
+	  },
+	
 	  unMonitorWindowResize: function unMonitorWindowResize() {
 	    if (this.resizeHandler) {
 	      this.resizeHandler.remove();
@@ -600,54 +609,29 @@
 	
 	  componentDidUpdate: function componentDidUpdate(prevProps) {
 	    var props = this.props;
-	    var dialogDomNode, maskNode;
-	    var transitionName, maskTransitionName;
+	    var wrap = props.wrap;
+	    var dialogDomNode = React.findDOMNode(this.refs.dialog);
+	    var maskNode = React.findDOMNode(this.refs.mask);
+	    prevProps = prevProps || {};
 	    if (props.visible) {
 	      this.monitorWindowResize();
-	      prevProps = prevProps || {};
 	      // first show
 	      if (!prevProps.visible) {
 	        this.align();
-	        dialogDomNode = React.findDOMNode(this.refs.dialog);
-	        transitionName = props.transitionName;
-	        if (!transitionName && props.animation) {
-	          transitionName = prefixClsFn(props.prefixCls, props.animation + '-enter');
-	        }
-	        if (transitionName) {
-	          // dialogDomNode.style.visibility = 'hidden';
-	          anim(dialogDomNode, transitionName);
-	          // dialogDomNode.style.visibility = '';
-	        }
-	        maskTransitionName = props.maskTransitionName;
-	        if (!maskTransitionName && props.maskAnimation) {
-	          maskTransitionName = prefixClsFn(props.prefixCls, props.maskAnimation + '-enter');
-	        }
-	        if (maskTransitionName) {
-	          maskNode = React.findDOMNode(this.refs.mask);
-	          anim(maskNode, maskTransitionName);
-	        }
+	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
+	        this.anim(dialogDomNode, props.transitionName, props.animation, true, function () {
+	          wrap.props.onShow();
+	        });
 	        dialogDomNode.focus();
 	      } else if (props.align !== prevProps.align) {
 	        this.align();
 	      }
 	    } else {
 	      if (prevProps.visible) {
-	        dialogDomNode = React.findDOMNode(this.refs.dialog);
-	        transitionName = props.transitionName;
-	        if (!transitionName && props.animation) {
-	          transitionName = prefixClsFn(props.prefixCls, props.animation + '-leave');
-	        }
-	        if (transitionName) {
-	          anim(dialogDomNode, transitionName);
-	        }
-	        maskTransitionName = props.maskTransitionName;
-	        if (!maskTransitionName && props.maskAnimation) {
-	          maskTransitionName = prefixClsFn(props.prefixCls, props.maskAnimation + '-leave');
-	        }
-	        if (maskTransitionName) {
-	          maskNode = React.findDOMNode(this.refs.mask);
-	          anim(maskNode, maskTransitionName);
-	        }
+	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
+	        this.anim(dialogDomNode, props.transitionName, props.animation, false, function () {
+	          wrap.props.onClose();
+	        });
 	      }
 	      this.unMonitorWindowResize();
 	    }
@@ -2517,7 +2501,7 @@
 
 	module.exports = {
 		"name": "rc-dialog",
-		"version": "4.1.3",
+		"version": "4.2.0",
 		"description": "dialog ui component for react",
 		"keywords": [
 			"react",

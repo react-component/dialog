@@ -241,6 +241,12 @@
     });
   },
 
+  handleDestroy(){
+    <span class="hljs-keyword">this</span>.setState({
+      <span class="hljs-attribute">destroy</span>:<span class="hljs-literal">true</span>
+    });
+  },
+
   handleTrigger() {
     <span class="hljs-keyword">this</span>.setState({
       <span class="hljs-attribute">visible</span>: <span class="hljs-literal">true</span>
@@ -255,9 +261,14 @@
   },
 
   render() {
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.destroy){
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+    }
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
         &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleTrigger}&gt;show dialog&lt;/button&gt;
+        &amp;nbsp;&amp;nbsp;&amp;nbsp;
+        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleDestroy}&gt;destroy&lt;/button&gt;
         &lt;Dialog
           ref=<span class="hljs-string">'dialog'</span>
           title= <span class="hljs-string">"第二个弹框"</span>

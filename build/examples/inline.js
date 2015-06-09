@@ -1,8 +1,8 @@
-webpackJsonp([3],[
+webpackJsonp([2],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(39);
+	module.exports = __webpack_require__(36);
 
 
 /***/ },
@@ -122,10 +122,7 @@ webpackJsonp([3],[
 	module.exports = __webpack_require__.p + "89889688147bd7575d6327160d64e760.svg"
 
 /***/ },
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -230,6 +227,12 @@ webpackJsonp([3],[
 	    });
 	  },
 	
+	  handleDestroy: function handleDestroy() {
+	    this.setState({
+	      destroy: true
+	    });
+	  },
+	
 	  handleTrigger: function handleTrigger() {
 	    var _this = this;
 	
@@ -246,6 +249,9 @@ webpackJsonp([3],[
 	  },
 	
 	  render: function render() {
+	    if (this.state.destroy) {
+	      return null;
+	    }
 	    return React.createElement(
 	      'div',
 	      null,
@@ -253,6 +259,12 @@ webpackJsonp([3],[
 	        'button',
 	        { className: 'btn btn-primary', onClick: this.handleTrigger },
 	        'show dialog'
+	      ),
+	      '   ',
+	      React.createElement(
+	        'button',
+	        { className: 'btn btn-primary', onClick: this.handleDestroy },
+	        'destroy'
 	      ),
 	      React.createElement(
 	        Dialog,

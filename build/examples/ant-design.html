@@ -185,18 +185,25 @@
 <pre>
 <span class="hljs-string">'use strict'</span>;
 
-require(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">'react'</span>);
-<span class="hljs-keyword">var</span> Dialog = require(<span class="hljs-string">'rc-dialog'</span>);
+<span class="hljs-keyword">require</span>(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
+<span class="hljs-keyword">var</span> React = <span class="hljs-keyword">require</span>(<span class="hljs-string">'react'</span>);
+<span class="hljs-keyword">var</span> Dialog = <span class="hljs-keyword">require</span>(<span class="hljs-string">'rc-dialog'</span>);
 <span class="hljs-keyword">var</span> container;
-<span class="hljs-keyword">var</span> packageJson = require(<span class="hljs-string">'../package.json'</span>);
+<span class="hljs-keyword">var</span> packageJson = <span class="hljs-keyword">require</span>(<span class="hljs-string">'../package.json'</span>);
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showDialog</span><span class="hljs-params">(content, props)</span> </span>{
   <span class="hljs-keyword">if</span> (!container) {
     container = document.createElement(<span class="hljs-string">'div'</span>);
     document.body.appendChild(container);
   }
-  <span class="hljs-keyword">var</span> dialog = React.render(&lt;Dialog {...props}&gt;{content}&lt;/Dialog&gt;, container);
+  <span class="hljs-keyword">var</span> close = props.onClose;
+  props.onClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">if</span> (close) {
+      close();
+    }
+    React.unmountComponentAtNode(container);
+  };
+  <span class="hljs-keyword">var</span> dialog = React.render(&lt;Dialog {...props} renderToBody={<span class="hljs-keyword">false</span>}&gt;{content}&lt;/Dialog&gt;, container);
   dialog.show();
   <span class="hljs-keyword">return</span> dialog;
 }
@@ -217,11 +224,11 @@ require(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
 
 <span class="hljs-keyword">var</span> MyControl = React.createClass({
   handleTrigger: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">this</span>.d = showDialog(&lt;DialogContent onChange={<span class="hljs-keyword">this</span>.onChange} handleClose={<span class="hljs-keyword">this</span>.requestClose} handleSave={<span class="hljs-keyword">this</span>.requestClose}/&gt;, {
+    this.d = showDialog(&lt;DialogContent /&gt;, {
       title: <span class="hljs-string">"第二个弹框"</span>,
       animation: <span class="hljs-string">'zoom'</span>,
       maskAnimation: <span class="hljs-string">'fade'</span>,
-      onBeforeClose: <span class="hljs-keyword">this</span>.beforeClose,
+      onBeforeClose: this.beforeClose,
       style: {width: <span class="hljs-number">600</span>}
     });
   },
@@ -230,7 +237,7 @@ require(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
   render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
-        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleTrigger}&gt;show dialog&lt;/button&gt;
+        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={this.handleTrigger}&gt;show dialog&lt;/button&gt;
       &lt;/div&gt;
     );
   }
