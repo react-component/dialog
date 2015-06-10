@@ -53,67 +53,74 @@ var Dialog = require('rc-dialog');
 
 ### props
 
-#### prefixCls
-  * The dialog dom node's prefixCls. Defaults to `rc-dialog`
 
-#### visible 
-  * The dialog whether or not shown,default false
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th style="width: 100px;">name</th>
+        <th style="width: 50px;">type</th>
+        <th>default</th>
+        <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>prefixCls</td>
+          <td>String</td>
+          <th>rc-dialog</th>
+          <td>The dialog dom node's prefixCls</td>
+      </tr>
+      <tr>
+          <td>visible</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td></td>
+      </tr>
+      <tr>
+          <td>renderToBody</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether render dialog to body</td>
+      </tr>
+      <tr>
+          <td>animation</td>
+          <td>String</td>
+          <th></th>
+          <td>part of dialog animation css class name</td>
+      </tr>
+      <tr>
+          <td>maskAnimation</td>
+          <td>String</td>
+          <th></th>
+          <td>part of dialog's mask animation css class name</td>
+      </tr>
+      <tr>
+          <td>title</td>
+          <td>String|React.Element</td>
+          <th></th>
+          <td>Title of the dialog</td>
+      </tr>
+      <tr>
+          <td>footer</td>
+          <td>React.Element</td>
+          <th></th>
+          <td>footer of the dialog</td>
+      </tr>
+      <tr>
+          <td>closable</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether show close button and click mask to close</td>
+      </tr>
+      <tr>
+          <td>onBeforeClose</td>
+          <td>function(close)</td>
+          <th></th>
+          <td>when click close button or mask. argument is a close function</td>
+      </tr>
+    </tbody>
+</table>
 
-#### renderToBody
-  * whether render dialog to body. default true
-
-#### animation
-  * part of dialog animation css class name
-
-#### maskAnimation
-  * part of dialog's mask animation css class name
-
-#### transitionName
-  * dialog animation css class name
-
-#### maskTransitionName
-  * dialog's mask animation css class name
-
-#### title
-  * Title of the dialog
-
-#### footer
-  * footer of the dialog
-
-#### closable
-  * whether show close button and click mask to close
-
-#### onBeforeClose
-  * called by requestClose or click close button or mask
-
-#### onShow 
-  * When the dialog shown , the callback was called.
-
-#### onClose 
-  * When the dialog closed, the callback was called.
-
-#### align
-
-  * align config. see https://github.com/yiminghe/dom-align
-
-```js
-{
-  node: // defaults to window,
-  points: ['tc', 'tc'],
-  offset: [0, 100]
-}
-```
-
-### methods (not recommended)
-
-#### show
-  * make dialog show and trigger onShow if current visible is false
-
-#### close
-  * make dialog hide and trigger onClose if current visible is true
-
-#### requestClose
-  * run props.beforeClose first, if beforeClose does not return false then call close()
 
 ## Development
 
@@ -126,7 +133,7 @@ npm start
 
 http://localhost:8000/examples/index.md
 
-online example: http://react-component.github.io/dialog/build/examples/
+online example: http://react-component.github.io/dialog/examples/
 
 ## Test Case
 
