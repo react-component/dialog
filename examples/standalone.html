@@ -239,10 +239,10 @@ require(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
     <span class="hljs-keyword">this</span>.dialogContentInput = v;
   },
 
-  beforeClose: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  beforeClose: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(close)</span> </span>{
     <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.dialogContentInput) {
-      <span class="hljs-keyword">if</span> (!confirm(<span class="hljs-string">'input is empty, decide to close?'</span>)) {
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+      <span class="hljs-keyword">if</span> (confirm(<span class="hljs-string">'input is empty, decide to close?'</span>)) {
+        close();
       }
     }
   },

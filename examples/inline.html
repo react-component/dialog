@@ -185,8 +185,7 @@
 <pre>
 <span class="hljs-string">'use strict'</span>;
 
-<span class="hljs-built_in">require</span>(<span class="hljs-string">'bootstrap/dist/css/bootstrap.css'</span>);
-<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
 <span class="hljs-reserved">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
 <span class="hljs-reserved">var</span> Dialog = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog'</span>);
 <span class="hljs-reserved">var</span> container;
@@ -208,7 +207,9 @@
 
   render() {
     <span class="hljs-keyword">return</span> &lt;div&gt;
-      &lt;input onChange={<span class="hljs-keyword">this</span>.onChange} value={<span class="hljs-keyword">this</span>.state.value}/&gt;
+      &lt;input onChange={<span class="hljs-keyword">this</span>.onChange}
+
+        value={<span class="hljs-keyword">this</span>.state.value}/&gt;
       &lt;p&gt;第二个弹出框内容&lt;/p&gt;
       &lt;p&gt;第二个弹出框内容&lt;/p&gt;
       &lt;p&gt;第二个弹出框内容&lt;/p&gt;
@@ -217,7 +218,8 @@
       &lt;p&gt;第二个弹出框内容&lt;/p&gt;
       &lt;p&gt;第二个弹出框内容&lt;/p&gt;
       &lt;div className=<span class="hljs-string">"modal-footer"</span>&gt;
-        &lt;button className=<span class="hljs-string">"btn"</span> onClick={<span class="hljs-keyword">this</span>.props.handleClose} &gt;Close&lt;/button&gt;
+        &lt;button className=<span class="hljs-string">"btn"</span> onClick={<span class="hljs-keyword">this</span>.props.onClose} &gt;Close&lt;/button&gt;
+        &lt;button className=<span class="hljs-string">"btn"</span> onClick={<span class="hljs-keyword">this</span>.props.onDestroy} &gt;destroy&lt;/button&gt;
         &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.props.handleSave}&gt;Save changes&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;;
@@ -241,9 +243,9 @@
     });
   },
 
-  handleDestroy(){
+  handleDestroy() {
     <span class="hljs-keyword">this</span>.setState({
-      <span class="hljs-attribute">destroy</span>:<span class="hljs-literal">true</span>
+      <span class="hljs-attribute">destroy</span>: <span class="hljs-literal">true</span>
     });
   },
 
@@ -261,22 +263,25 @@
   },
 
   render() {
-    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.destroy){
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.destroy) {
       <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
     }
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
         &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleTrigger}&gt;show dialog&lt;/button&gt;
-        &amp;nbsp;&amp;nbsp;&amp;nbsp;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;
         &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleDestroy}&gt;destroy&lt;/button&gt;
         &lt;Dialog
           ref=<span class="hljs-string">'dialog'</span>
           title= <span class="hljs-string">"第二个弹框"</span>
+          animation=<span class="hljs-string">"zoom"</span>
+          maskAnimation=<span class="hljs-string">"fade"</span>
           visible={<span class="hljs-keyword">this</span>.state.visible}
           onClose={<span class="hljs-keyword">this</span>.handleClose}
           style={{<span class="hljs-attribute">width</span>: <span class="hljs-number">600</span>}}
         &gt;
-          &lt;DialogContent onChange={<span class="hljs-keyword">this</span>.onChange} handleClose={<span class="hljs-keyword">this</span>.handleClose} handleSave={<span class="hljs-keyword">this</span>.handleClose}/&gt;
+          &lt;DialogContent onChange={<span class="hljs-keyword">this</span>.onChange} onClose={<span class="hljs-keyword">this</span>.handleClose}
+            onDestroy={<span class="hljs-keyword">this</span>.handleDestroy}/&gt;
         &lt;/Dialog&gt;
       &lt;/div&gt;
     );

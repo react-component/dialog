@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"simple","1":"standalone","2":"inline","3":"ant-design"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"inline","1":"simple","2":"standalone","3":"ant-design"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -332,16 +332,6 @@
 
 	'use strict';
 	
-	var _extends = Object.assign || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }return target;
-	};
-	
 	var _createClass = (function () {
 	  function defineProperties(target, props) {
 	    for (var i = 0; i < props.length; i++) {
@@ -386,6 +376,7 @@
 	
 	var React = __webpack_require__(6);
 	var Dialog = __webpack_require__(9);
+	var assign = __webpack_require__(23);
 	
 	function noop() {}
 	
@@ -401,13 +392,17 @@
 	
 	var DialogWrap = (function (_React$Component) {
 	  function DialogWrap(props) {
+	    var _this = this;
+	
 	    _classCallCheck(this, DialogWrap);
 	
 	    _get(Object.getPrototypeOf(DialogWrap.prototype), 'constructor', this).call(this, props);
 	    this.state = {
 	      visible: this.props.visible
 	    };
-	    this.requestClose = this.requestClose.bind(this);
+	    ['cleanDialogContainer', 'requestClose', 'close', 'handleClose', 'handleShow'].forEach(function (m) {
+	      _this[m] = _this[m].bind(_this);
+	    });
 	  }
 	
 	  _inherits(DialogWrap, _React$Component);
@@ -452,7 +447,9 @@
 	  }, {
 	    key: 'requestClose',
 	    value: function requestClose() {
-	      if (this.props.onBeforeClose(this) !== false) {
+	      if (this.props.onBeforeClose) {
+	        this.props.onBeforeClose(this.close);
+	      } else {
 	        this.close();
 	      }
 	    }
@@ -467,15 +464,29 @@
 	      return this.dialogContainer;
 	    }
 	  }, {
+	    key: 'handleClose',
+	    value: function handleClose() {
+	      this.props.onClose();
+	    }
+	  }, {
+	    key: 'handleShow',
+	    value: function handleShow() {
+	      this.props.onShow();
+	    }
+	  }, {
 	    key: 'getDialogElement',
-	    value: function getDialogElement() {
+	    value: function getDialogElement(extra) {
 	      var props = this.props;
 	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
-	      return React.createElement(Dialog, _extends({
-	        wrap: this,
-	        visible: this.state.visible
-	      }, dialogProps, {
-	        onClose: this.requestClose }), props.children);
+	
+	      assign(dialogProps, {
+	        onClose: this.handleClose,
+	        onShow: this.handleShow,
+	        visible: this.state.visible,
+	        onRequestClose: this.requestClose
+	      }, extra);
+	
+	      return React.createElement(Dialog, dialogProps, props.children);
 	    }
 	  }, {
 	    key: 'render',
@@ -498,12 +509,24 @@
 	      }
 	    }
 	  }, {
+	    key: 'cleanDialogContainer',
+	    value: function cleanDialogContainer() {
+	      React.unmountComponentAtNode(this.getDialogContainer());
+	      document.body.removeChild(this.dialogContainer);
+	      this.dialogContainer = null;
+	    }
+	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      if (this.dialogContainer) {
-	        React.unmountComponentAtNode(this.getDialogContainer());
-	        document.body.removeChild(this.dialogContainer);
-	        this.dialogContainer = null;
+	        if (this.state.visible) {
+	          React.render(this.getDialogElement({
+	            onClose: this.cleanDialogContainer,
+	            visible: false
+	          }), this.dialogContainer);
+	        } else {
+	          this.cleanDialogContainer();
+	        }
 	      }
 	    }
 	  }]);
@@ -521,7 +544,6 @@
 	  closable: true,
 	  prefixCls: 'rc-dialog',
 	  visible: false,
-	  onBeforeClose: noop,
 	  onShow: noop,
 	  onClose: noop
 	};
@@ -608,8 +630,9 @@
 	  },
 	
 	  componentDidUpdate: function componentDidUpdate(prevProps) {
+	    var _this = this;
+	
 	    var props = this.props;
-	    var wrap = props.wrap;
 	    var dialogDomNode = React.findDOMNode(this.refs.dialog);
 	    var maskNode = React.findDOMNode(this.refs.mask);
 	    prevProps = prevProps || {};
@@ -620,7 +643,7 @@
 	        this.align();
 	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
 	        this.anim(dialogDomNode, props.transitionName, props.animation, true, function () {
-	          wrap.props.onShow();
+	          _this.props.onShow();
 	        });
 	        dialogDomNode.focus();
 	      } else if (props.align !== prevProps.align) {
@@ -630,7 +653,7 @@
 	      if (prevProps.visible) {
 	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
 	        this.anim(dialogDomNode, props.transitionName, props.animation, false, function () {
-	          wrap.props.onClose();
+	          _this.props.onClose();
 	        });
 	      }
 	      this.unMonitorWindowResize();
@@ -665,7 +688,7 @@
 	
 	    var maskProps = {};
 	    if (closable) {
-	      maskProps.onClick = this.props.onClose;
+	      maskProps.onClick = this.props.onRequestClose;
 	    }
 	    if (style.zIndex) {
 	      maskProps.style = { zIndex: style.zIndex };
@@ -674,7 +697,11 @@
 	    if (props.footer) {
 	      footer = React.createElement('div', { className: prefixClsFn(prefixCls, 'footer') }, props.footer);
 	    }
-	    return React.createElement('div', { className: className.join(' ') }, props.mask !== false ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', { className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: '0', role: 'dialog', ref: 'dialog', style: style }, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') }, '×')) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title)), React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer)));
+	    var header;
+	    if (props.title || closable) {
+	      header = React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onRequestClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') }, '×')) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title));
+	    }
+	    return React.createElement('div', { className: className.join(' ') }, props.mask !== false ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', { className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: '0', role: 'dialog', ref: 'dialog', style: style }, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, header, React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer)));
 	  }
 	});
 	
@@ -2501,7 +2528,7 @@
 
 	module.exports = {
 		"name": "rc-dialog",
-		"version": "4.2.0",
+		"version": "4.3.0",
 		"description": "dialog ui component for react",
 		"keywords": [
 			"react",
