@@ -1,7 +1,6 @@
 'use strict';
 
-require('bootstrap/dist/css/bootstrap.css');
-require('rc-dialog/assets/bootstrap.css');
+require('rc-dialog/assets/index.css');
 var React = require('react');
 var Dialog = require('rc-dialog');
 var container;
@@ -23,7 +22,9 @@ var DialogContent = React.createClass({
 
   render() {
     return <div>
-      <input onChange={this.onChange} value={this.state.value}/>
+      <input onChange={this.onChange}
+
+        value={this.state.value}/>
       <p>第二个弹出框内容</p>
       <p>第二个弹出框内容</p>
       <p>第二个弹出框内容</p>
@@ -32,7 +33,8 @@ var DialogContent = React.createClass({
       <p>第二个弹出框内容</p>
       <p>第二个弹出框内容</p>
       <div className="modal-footer">
-        <button className="btn" onClick={this.props.handleClose} >Close</button>
+        <button className="btn" onClick={this.props.onClose} >Close</button>
+        <button className="btn" onClick={this.props.onDestroy} >destroy</button>
         <button className="btn btn-primary" onClick={this.props.handleSave}>Save changes</button>
       </div>
     </div>;
@@ -56,9 +58,9 @@ var MyControl = React.createClass({
     });
   },
 
-  handleDestroy(){
+  handleDestroy() {
     this.setState({
-      destroy:true
+      destroy: true
     });
   },
 
@@ -76,22 +78,25 @@ var MyControl = React.createClass({
   },
 
   render() {
-    if(this.state.destroy){
+    if (this.state.destroy) {
       return null;
     }
     return (
       <div>
         <button className="btn btn-primary" onClick={this.handleTrigger}>show dialog</button>
-        &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
         <button className="btn btn-primary" onClick={this.handleDestroy}>destroy</button>
         <Dialog
           ref='dialog'
           title= "第二个弹框"
+          animation="zoom"
+          maskAnimation="fade"
           visible={this.state.visible}
           onClose={this.handleClose}
           style={{width: 600}}
         >
-          <DialogContent onChange={this.onChange} handleClose={this.handleClose} handleSave={this.handleClose}/>
+          <DialogContent onChange={this.onChange} onClose={this.handleClose}
+            onDestroy={this.handleDestroy}/>
         </Dialog>
       </div>
     );

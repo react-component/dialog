@@ -54,10 +54,10 @@ var MyControl = React.createClass({
     this.dialogContentInput = v;
   },
 
-  beforeClose: function () {
+  beforeClose: function (close) {
     if (!this.dialogContentInput) {
-      if (!confirm('input is empty, decide to close?')) {
-        return false;
+      if (confirm('input is empty, decide to close?')) {
+        close();
       }
     }
   },

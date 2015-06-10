@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Dialog = require('./Dialog');
+var assign = require('object-assign');
 
 function noop() {
 }
@@ -22,7 +23,9 @@ class DialogWrap extends React.Component {
     this.state = {
       visible: this.props.visible
     };
-    this.requestClose = this.requestClose.bind(this);
+    ['cleanDialogContainer', 'requestClose', 'close', 'handleClose', 'handleShow'].forEach((m) => {
+      this[m] = this[m].bind(this);
+    });
   }
 
   componentWillReceiveProps(props) {
@@ -59,7 +62,9 @@ class DialogWrap extends React.Component {
   }
 
   requestClose() {
-    if (this.props.onBeforeClose(this) !== false) {
+    if (this.props.onBeforeClose) {
+      this.props.onBeforeClose(this.close);
+    } else {
       this.close();
     }
   }
@@ -73,7 +78,15 @@ class DialogWrap extends React.Component {
     return this.dialogContainer;
   }
 
-  getDialogElement() {
+  handleClose() {
+    this.props.onClose();
+  }
+
+  handleShow() {
+    this.props.onShow();
+  }
+
+  getDialogElement(extra) {
     var props = this.props;
     var dialogProps = copy(props, [
       'className', 'closable', 'align',
@@ -83,11 +96,15 @@ class DialogWrap extends React.Component {
       'prefixCls', 'style', 'width',
       'height', 'zIndex'
     ]);
-    return <Dialog
-      wrap={this}
-      visible={this.state.visible}
-    {...dialogProps}
-      onClose={this.requestClose}>
+
+    assign(dialogProps, {
+      onClose: this.handleClose,
+      onShow: this.handleShow,
+      visible: this.state.visible,
+      onRequestClose: this.requestClose
+    }, extra);
+
+    return <Dialog {...dialogProps}>
     {props.children}
     </Dialog>;
   }
@@ -109,11 +126,22 @@ class DialogWrap extends React.Component {
     }
   }
 
+  cleanDialogContainer() {
+    React.unmountComponentAtNode(this.getDialogContainer());
+    document.body.removeChild(this.dialogContainer);
+    this.dialogContainer = null;
+  }
+
   componentWillUnmount() {
     if (this.dialogContainer) {
-      React.unmountComponentAtNode(this.getDialogContainer());
-      document.body.removeChild(this.dialogContainer);
-      this.dialogContainer = null;
+      if (this.state.visible) {
+        React.render(this.getDialogElement({
+          onClose: this.cleanDialogContainer,
+          visible: false
+        }), this.dialogContainer);
+      } else {
+        this.cleanDialogContainer();
+      }
     }
   }
 }
@@ -128,7 +156,6 @@ DialogWrap.defaultProps = {
   closable: true,
   prefixCls: 'rc-dialog',
   visible: false,
-  onBeforeClose: noop,
   onShow: noop,
   onClose: noop
 };

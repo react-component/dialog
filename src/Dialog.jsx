@@ -63,7 +63,6 @@ var Dialog = React.createClass({
 
   componentDidUpdate(prevProps) {
     var props = this.props;
-    var wrap = props.wrap;
     var dialogDomNode = React.findDOMNode(this.refs.dialog);
     var maskNode = React.findDOMNode(this.refs.mask);
     prevProps = prevProps || {};
@@ -73,8 +72,8 @@ var Dialog = React.createClass({
       if (!prevProps.visible) {
         this.align();
         this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
-        this.anim(dialogDomNode, props.transitionName, props.animation, true, function () {
-          wrap.props.onShow();
+        this.anim(dialogDomNode, props.transitionName, props.animation, true, () => {
+          this.props.onShow();
         });
         dialogDomNode.focus();
       } else if (props.align !== prevProps.align) {
@@ -83,8 +82,8 @@ var Dialog = React.createClass({
     } else {
       if (prevProps.visible) {
         this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
-        this.anim(dialogDomNode, props.transitionName, props.animation, false, function () {
-          wrap.props.onClose();
+        this.anim(dialogDomNode, props.transitionName, props.animation, false, ()=> {
+          this.props.onClose();
         });
       }
       this.unMonitorWindowResize();
@@ -119,7 +118,7 @@ var Dialog = React.createClass({
 
     var maskProps = {};
     if (closable) {
-      maskProps.onClick = this.props.onClose;
+      maskProps.onClick = this.props.onRequestClose;
     }
     if (style.zIndex) {
       maskProps.style = {zIndex: style.zIndex};
@@ -128,20 +127,24 @@ var Dialog = React.createClass({
     if (props.footer) {
       footer = <div className={prefixClsFn(prefixCls, 'footer')}>{props.footer}</div>;
     }
+    var header;
+    if (props.title || closable) {
+      header = <div className={prefixClsFn(prefixCls, 'header')}>
+            {closable ?
+              (<a tabIndex="0" onClick={this.props.onRequestClose} className={[prefixClsFn(prefixCls, 'close')].join('')}>
+                <span className={prefixClsFn(prefixCls, 'close-x')}>×</span>
+              </a>) :
+              null}
+        <div className={prefixClsFn(prefixCls, 'title')}>{props.title}</div>
+      </div>;
+    }
     return (<div className={className.join(' ')}>
     {props.mask !== false ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
       <div className={[prefixClsFn(prefixCls, ''), props.className].join(' ')} tabIndex="0" role="dialog" ref='dialog' style={style}>
         <div className={prefixClsFn(prefixCls, 'content')}>
-          <div className={prefixClsFn(prefixCls, 'header')}>
-            {closable ?
-              (<a tabIndex="0" onClick={this.props.onClose} className={[prefixClsFn(prefixCls, 'close')].join('')}>
-                <span className={prefixClsFn(prefixCls, 'close-x')}>×</span>
-              </a>) :
-              null}
-            <div className={prefixClsFn(prefixCls, 'title')}>{props.title}</div>
-          </div>
+          {header}
           <div className={prefixClsFn(prefixCls, 'body')}>{props.children}</div>
-        {footer}
+          {footer}
         </div>
       </div>
     </div>);
