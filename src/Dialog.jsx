@@ -40,11 +40,12 @@ var Dialog = React.createClass({
   },
 
   anim(el, transitionName, animation, enter, fn) {
+    var props = this.props;
     if (!transitionName && animation) {
-      transitionName = prefixClsFn(this.props.prefixCls, animation + (enter ? '-enter' : '-leave'));
+      transitionName = `${props.prefixCls}-${animation}`;
     }
     if (transitionName) {
-      anim(el, transitionName, fn);
+      anim(el, transitionName + (enter ? '-enter' : '-leave'), fn);
     } else if (fn) {
       fn();
     }
