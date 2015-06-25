@@ -65,15 +65,17 @@ class DialogWrap extends React.Component {
     var onBeforeClose = this.props.onBeforeClose;
     var close = this.close;
     if (onBeforeClose) {
+      var ret;
       if (onBeforeClose.length) {
-        onBeforeClose(close);
+        ret = onBeforeClose(close);
       } else {
-        var ret = onBeforeClose();
-        if (ret && ret.then) {
-          ret.then(close);
-        } else {
+        ret = onBeforeClose();
+        if (!ret) {
           close();
         }
+      }
+      if (ret && ret.then) {
+        ret.then(close);
       }
     } else {
       close();
