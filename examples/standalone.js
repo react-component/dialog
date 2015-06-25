@@ -6,6 +6,7 @@ var React = require('react');
 var Dialog = require('rc-dialog');
 var container;
 var packageJson = require('../package.json');
+var Promise = require('bluebird');
 
 function showDialog(content, props) {
   if (!container) {
@@ -54,12 +55,16 @@ var MyControl = React.createClass({
     this.dialogContentInput = v;
   },
 
-  beforeClose: function (close) {
-    if (!this.dialogContentInput) {
-      if (confirm('input is empty, decide to close?')) {
-        close();
-      }
-    }
+  beforeClose: function () {
+    return new Promise((resolve) => {
+      setTimeout(()=> {
+        if (!this.dialogContentInput) {
+          if (confirm('input is empty, decide to close?')) {
+            resolve(true);
+          }
+        }
+      }, 100);
+    });
   },
 
   requestClose: function () {
