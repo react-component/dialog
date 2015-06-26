@@ -3,7 +3,6 @@
 require('rc-dialog/assets/bootstrap.css');
 var React = require('react');
 var Dialog = require('rc-dialog');
-var packageJson = require('../package.json');
 
 function close() {
   console.log('close');
@@ -13,7 +12,7 @@ function show() {
   console.log('show');
 }
 
-React.render(<div><h1>render {packageJson.name}@{packageJson.version}</h1>
+React.render(<div>
   <p>does not support render visible on server!</p>
   <Dialog
     title="第一个弹框"

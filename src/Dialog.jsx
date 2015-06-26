@@ -133,7 +133,7 @@ var Dialog = React.createClass({
       header = <div className={prefixClsFn(prefixCls, 'header')}>
             {closable ?
               (<a tabIndex="0" onClick={this.props.onRequestClose} className={[prefixClsFn(prefixCls, 'close')].join('')}>
-                <span className={prefixClsFn(prefixCls, 'close-x')}>×</span>
+                <span className={prefixClsFn(prefixCls, 'close-x')}></span>
               </a>) :
               null}
         <div className={prefixClsFn(prefixCls, 'title')}>{props.title}</div>

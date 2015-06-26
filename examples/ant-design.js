@@ -4,7 +4,6 @@ require('rc-dialog/assets/index.css');
 var React = require('react');
 var Dialog = require('rc-dialog');
 var container;
-var packageJson = require('../package.json');
 
 function showDialog(content, props) {
   if (!container) {
@@ -60,7 +59,7 @@ var MyControl = React.createClass({
 
 React.render(
   <div>
-    <h1>render dialog standalone {packageJson.name}@{packageJson.version}</h1>
+    <h2>render dialog standalone</h2>
     <MyControl/>
   </div>,
   document.getElementById('__react-content')

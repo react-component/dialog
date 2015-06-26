@@ -5,7 +5,6 @@ require('rc-dialog/assets/bootstrap.css');
 var React = require('react');
 var Dialog = require('rc-dialog');
 var container;
-var packageJson = require('../package.json');
 var Promise = require('bluebird');
 
 function showDialog(content, props) {
@@ -91,7 +90,7 @@ var MyControl = React.createClass({
 
 React.render(
   <div>
-    <h1>render dialog standalone {packageJson.name}@{packageJson.version}</h1>
+    <h1>render dialog standalone</h1>
     <MyControl/>
   </div>,
   document.getElementById('__react-content')
