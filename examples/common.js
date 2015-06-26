@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"inline","1":"simple","2":"standalone","3":"ant-design"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"ant-design","1":"inline","2":"simple","3":"standalone"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -97,7 +97,7 @@
 /* 2 */,
 /* 3 */,
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = function() {
 		var list = [];
@@ -314,7 +314,7 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = React;
 
@@ -346,7 +346,7 @@
 	  var _again = true;_function: while (_again) {
 	    var object = _x,
 	        property = _x2,
-	        receiver = _x3;desc = parent = getter = undefined;_again = false;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+	        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
 	      var parent = Object.getPrototypeOf(object);if (parent === null) {
 	        return undefined;
 	      } else {
@@ -376,7 +376,7 @@
 	
 	var React = __webpack_require__(6);
 	var Dialog = __webpack_require__(9);
-	var assign = __webpack_require__(23);
+	var assign = __webpack_require__(24);
 	
 	function noop() {}
 	
@@ -447,10 +447,23 @@
 	  }, {
 	    key: 'requestClose',
 	    value: function requestClose() {
-	      if (this.props.onBeforeClose) {
-	        this.props.onBeforeClose(this.close);
+	      var onBeforeClose = this.props.onBeforeClose;
+	      var close = this.close;
+	      if (onBeforeClose) {
+	        var ret;
+	        if (onBeforeClose.length) {
+	          ret = onBeforeClose(close);
+	        } else {
+	          ret = onBeforeClose();
+	          if (!ret) {
+	            close();
+	          }
+	        }
+	        if (ret && ret.then) {
+	          ret.then(close);
+	        }
 	      } else {
-	        this.close();
+	        close();
 	      }
 	    }
 	  }, {
@@ -458,7 +471,7 @@
 	    value: function getDialogContainer() {
 	      if (!this.dialogContainer) {
 	        this.dialogContainer = document.createElement('div');
-	        this.dialogContainer.className = '' + this.props.prefixCls + '-container';
+	        this.dialogContainer.className = this.props.prefixCls + '-container';
 	        document.body.appendChild(this.dialogContainer);
 	      }
 	      return this.dialogContainer;
@@ -570,8 +583,8 @@
 	var domAlign = __webpack_require__(10);
 	var RcUtil = __webpack_require__(12);
 	var Dom = RcUtil.Dom;
-	var assign = __webpack_require__(23);
-	var _anim = __webpack_require__(24);
+	var assign = __webpack_require__(24);
+	var _anim = __webpack_require__(25);
 	
 	function prefixClsFn(prefixCls) {
 	  var args = Array.prototype.slice.call(arguments, 1);
@@ -608,11 +621,12 @@
 	  },
 	
 	  anim: function anim(el, transitionName, animation, enter, fn) {
+	    var props = this.props;
 	    if (!transitionName && animation) {
-	      transitionName = prefixClsFn(this.props.prefixCls, animation + (enter ? '-enter' : '-leave'));
+	      transitionName = props.prefixCls + '-' + animation;
 	    }
 	    if (transitionName) {
-	      _anim(el, transitionName, fn);
+	      _anim(el, transitionName + (enter ? '-enter' : '-leave'), fn);
 	    } else if (fn) {
 	      fn();
 	    }
@@ -699,7 +713,7 @@
 	    }
 	    var header;
 	    if (props.title || closable) {
-	      header = React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onRequestClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') }, '×')) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title));
+	      header = React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onRequestClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') })) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title));
 	    }
 	    return React.createElement('div', { className: className.join(' ') }, props.mask !== false ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', { className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: '0', role: 'dialog', ref: 'dialog', style: style }, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, header, React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer)));
 	  }
@@ -1074,7 +1088,7 @@
 
 /***/ },
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 	
@@ -1494,74 +1508,27 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(14),
-	  classSet: __webpack_require__(15),
-	  joinClasses: __webpack_require__(16),
-	  KeyCode: __webpack_require__(17),
-	  PureRenderMixin: __webpack_require__(18),
-	  shallowEqual: __webpack_require__(13),
+	  guid: __webpack_require__(13),
+	  classSet: __webpack_require__(14),
+	  joinClasses: __webpack_require__(15),
+	  KeyCode: __webpack_require__(16),
+	  PureRenderMixin: __webpack_require__(17),
+	  shallowEqual: __webpack_require__(18),
 	  createChainedFunction: __webpack_require__(19),
 	  Dom: {
 	    addEventListener: __webpack_require__(20),
 	    contains: __webpack_require__(21)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(22)
+	    toArray: __webpack_require__(22),
+	    mapSelf: __webpack_require__(23)
 	  }
 	};
 
 
 /***/ },
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule shallowEqual
-	 */
-	
-	"use strict";
-	
-	/**
-	 * Performs equality by iterating through keys on an object and returning
-	 * false when any key has values which are not strictly equal between
-	 * objA and objB. Returns true when the values of all keys are strictly equal.
-	 *
-	 * @return {boolean}
-	 */
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	  var key;
-	  // Test for A's keys different from B.
-	  for (key in objA) {
-	    if (objA.hasOwnProperty(key) &&
-	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
-	      return false;
-	    }
-	  }
-	  // Test for B's keys missing from A.
-	  for (key in objB) {
-	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
-	      return false;
-	    }
-	  }
-	  return true;
-	}
-	
-	module.exports = shallowEqual;
-
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	var seed = 0;
 	module.exports = function () {
@@ -1570,8 +1537,8 @@
 
 
 /***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
+/* 14 */
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2014, Facebook, Inc.
@@ -1615,8 +1582,8 @@
 
 
 /***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
+/* 15 */
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2014, Facebook, Inc.
@@ -1662,8 +1629,8 @@
 
 
 /***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
+/* 16 */
+/***/ function(module, exports) {
 
 	/**
 	 * @ignore
@@ -2189,7 +2156,7 @@
 
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2205,7 +2172,7 @@
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(13);
+	var shallowEqual = __webpack_require__(18);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -2242,8 +2209,56 @@
 
 
 /***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule shallowEqual
+	 */
+	
+	"use strict";
+	
+	/**
+	 * Performs equality by iterating through keys on an object and returning
+	 * false when any key has values which are not strictly equal between
+	 * objA and objB. Returns true when the values of all keys are strictly equal.
+	 *
+	 * @return {boolean}
+	 */
+	function shallowEqual(objA, objB) {
+	  if (objA === objB) {
+	    return true;
+	  }
+	  var key;
+	  // Test for A's keys different from B.
+	  for (key in objA) {
+	    if (objA.hasOwnProperty(key) &&
+	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
+	      return false;
+	    }
+	  }
+	  // Test for B's keys missing from A.
+	  for (key in objB) {
+	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
+	      return false;
+	    }
+	  }
+	  return true;
+	}
+	
+	module.exports = shallowEqual;
+
+
+/***/ },
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Safe chained function
@@ -2270,7 +2285,7 @@
 
 /***/ },
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
 	  if (target.addEventListener) {
@@ -2293,7 +2308,7 @@
 
 /***/ },
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = function (root, node) {
 	  while (node) {
@@ -2326,6 +2341,22 @@
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var React = __webpack_require__(6);
+	
+	function mirror(o) {
+	  return o;
+	}
+	
+	module.exports = function (children) {
+	  // return ReactFragment
+	  return React.Children.map(children, mirror);
+	};
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
 	'use strict';
 	
 	function ToObject(val) {
@@ -2355,13 +2386,13 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(25);
-	var Css = __webpack_require__(26);
+	var Event = __webpack_require__(26);
+	var Css = __webpack_require__(27);
 	
 	module.exports = function (node, transitionName, callback) {
 	  var className = transitionName;
@@ -2405,8 +2436,8 @@
 	};
 
 /***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/* 26 */
+/***/ function(module, exports) {
 
 	
 	'use strict';
@@ -2466,7 +2497,7 @@
 	  node.removeEventListener(eventName, eventListener, false);
 	}
 	
-	var ReactTransitionEvents = {
+	var TransitionEvents = {
 	  addEndEventListener: function addEndEventListener(node, eventListener) {
 	    if (endEvents.length === 0) {
 	      window.setTimeout(eventListener, 0);
@@ -2489,11 +2520,11 @@
 	  }
 	};
 	
-	module.exports = ReactTransitionEvents;
+	module.exports = TransitionEvents;
 
 /***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
+/* 27 */
+/***/ function(module, exports) {
 
 	'use strict';
 	
@@ -2521,72 +2552,6 @@
 	    elem.className = className.trim();
 	  }
 	};
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-		"name": "rc-dialog",
-		"version": "4.3.0",
-		"description": "dialog ui component for react",
-		"keywords": [
-			"react",
-			"react-component",
-			"react-dialog",
-			"dialog",
-			"ui"
-		],
-		"homepage": "http://github.com/react-component/dialog",
-		"maitainers": [
-			"yiminghe@gmail.com",
-			"dxq613@gmail.com"
-		],
-		"repository": {
-			"type": "git",
-			"url": "git@github.com:react-component/dialog.git"
-		},
-		"bugs": {
-			"url": "http://github.com/react-component/dialog/issues"
-		},
-		"licenses": "MIT",
-		"main": "./lib/index",
-		"config": {
-			"port": 8000
-		},
-		"scripts": {
-			"build": "rc-tools run build",
-			"precommit": "rc-tools run precommit",
-			"less": "rc-tools run less",
-			"gh-pages": "rc-tools run gh-pages",
-			"history": "rc-tools run history",
-			"start": "node --harmony node_modules/.bin/rc-server",
-			"publish": "rc-tools run tag",
-			"lint": "rc-tools run lint",
-			"saucelabs": "node --harmony node_modules/.bin/rc-tools run saucelabs",
-			"browser-test": "node --harmony node_modules/.bin/rc-tools run browser-test",
-			"browser-test-cover": "node --harmony node_modules/.bin/rc-tools run browser-test-cover"
-		},
-		"devDependencies": {
-			"async": "^0.9.0",
-			"bootstrap": "^3.3.2",
-			"expect.js": "~0.3.1",
-			"jquery": "^1.11.2",
-			"precommit-hook": "^1.0.7",
-			"rc-server": "3.x",
-			"rc-tools": "3.x",
-			"react": "~0.13.0"
-		},
-		"precommit": [
-			"precommit"
-		],
-		"dependencies": {
-			"css-animation": "~1.0.1",
-			"dom-align": "~1.0.3",
-			"object-assign": "~2.0.0",
-			"rc-util": "~2.0.2"
-		}
-	}
 
 /***/ }
 /******/ ]);
