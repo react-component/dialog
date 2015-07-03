@@ -3,6 +3,7 @@
 var React = require('react');
 var domAlign = require('dom-align');
 var RcUtil = require('rc-util');
+var KeyCode = RcUtil.KeyCode;
 var Dom = RcUtil.Dom;
 var assign = require('object-assign');
 var anim = require('css-animation');
@@ -95,6 +96,12 @@ var Dialog = React.createClass({
     this.unMonitorWindowResize();
   },
 
+  handleKeyDown(e) {
+    if (e.keyCode === KeyCode.ESC) {
+      this.props.onRequestClose();
+    }
+  },
+
   render() {
     var props = this.props;
     var visible = props.visible;
@@ -141,7 +148,13 @@ var Dialog = React.createClass({
     }
     return (<div className={className.join(' ')}>
     {props.mask !== false ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
-      <div className={[prefixClsFn(prefixCls, ''), props.className].join(' ')} tabIndex="0" role="dialog" ref='dialog' style={style}>
+      <div 
+        className={[prefixClsFn(prefixCls, ''), props.className].join(' ')} 
+        tabIndex="0" 
+        role="dialog" 
+        ref='dialog' 
+        onKeyDown={this.handleKeyDown}
+        style={style}>
         <div className={prefixClsFn(prefixCls, 'content')}>
           {header}
           <div className={prefixClsFn(prefixCls, 'body')}>{props.children}</div>
