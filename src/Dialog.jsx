@@ -125,15 +125,23 @@ var Dialog = React.createClass({
     var style = assign({}, props.style, dest);
 
     var maskProps = {};
+    var dialogProps = {
+      className :[prefixClsFn(prefixCls, ''), props.className].join(' '),
+      tabIndex: '0',
+      role: 'dialog',
+      ref: 'dialog',
+      style: style
+    };
     if (closable) {
       maskProps.onClick = this.props.onRequestClose;
+      dialogProps.onKeyDown = this.handleKeyDown;
     }
     if (style.zIndex) {
       maskProps.style = {zIndex: style.zIndex};
     }
     var footer;
     if (props.footer) {
-      footer = <div className={prefixClsFn(prefixCls, 'footer')}>{props.footer}</div>;
+      footer = (<div className={prefixClsFn(prefixCls, 'footer')}>{props.footer}</div>);
     }
     var header;
     if (props.title || closable) {
@@ -148,13 +156,7 @@ var Dialog = React.createClass({
     }
     return (<div className={className.join(' ')}>
     {props.mask !== false ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
-      <div 
-        className={[prefixClsFn(prefixCls, ''), props.className].join(' ')} 
-        tabIndex="0" 
-        role="dialog" 
-        ref='dialog' 
-        onKeyDown={this.handleKeyDown}
-        style={style}>
+      <div {...dialogProps}>
         <div className={prefixClsFn(prefixCls, 'content')}>
           {header}
           <div className={prefixClsFn(prefixCls, 'body')}>{props.children}</div>
