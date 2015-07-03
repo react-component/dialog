@@ -1,5 +1,9 @@
 # History
 ----
+## 4.4.0 2015-07-03
+
+support esc to close
+
 ## 4.2.0 / 2015-06-09
 
 add renderToBody props

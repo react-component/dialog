@@ -8,6 +8,7 @@ var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var Simulate = TestUtils.Simulate;
 var async = require('async');
+var rcUtil = require('rc-util');
 
 describe('dialog', function () {
   var title = "第一个title";
@@ -34,7 +35,8 @@ describe('dialog', function () {
     dialog = React.render((<Dialog
       style={{width: 600}}
       title={title}
-      onClose={onClose} onShow={onShow}>
+      onClose={onClose}
+      onShow={onShow}>
       <p>第一个dialog</p>
     </Dialog>), container);
   });
@@ -87,6 +89,22 @@ describe('dialog', function () {
     }, function (done) {
       var btn = $('.rc-dialog-header a')[0];
       Simulate.click(btn);
+      setTimeout(done, 10);
+    }, function (done) {
+      expect(callback1).to.be(1);
+      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
+      done();
+    }], done)
+  });
+
+  it('esc to close', function (done) {
+    async.series([function (done) {
+      dialog.show();
+      setTimeout(done, 10);
+    }, function (done) {
+      Simulate.keyDown($('.rc-dialog')[0], {
+        keyCode: rcUtil.KeyCode.ESC
+      });
       setTimeout(done, 10);
     }, function (done) {
       expect(callback1).to.be(1);

@@ -75,7 +75,7 @@ var Dialog = React.createClass({
         this.align();
         this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
         this.anim(dialogDomNode, props.transitionName, props.animation, true, () => {
-          this.props.onShow();
+          props.onShow();
         });
         dialogDomNode.focus();
       } else if (props.align !== prevProps.align) {
@@ -85,7 +85,7 @@ var Dialog = React.createClass({
       if (prevProps.visible) {
         this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
         this.anim(dialogDomNode, props.transitionName, props.animation, false, ()=> {
-          this.props.onClose();
+          props.onClose();
         });
       }
       this.unMonitorWindowResize();
@@ -126,14 +126,14 @@ var Dialog = React.createClass({
 
     var maskProps = {};
     var dialogProps = {
-      className :[prefixClsFn(prefixCls, ''), props.className].join(' '),
+      className: [prefixCls, props.className].join(' '),
       tabIndex: '0',
       role: 'dialog',
       ref: 'dialog',
       style: style
     };
     if (closable) {
-      maskProps.onClick = this.props.onRequestClose;
+      maskProps.onClick = props.onRequestClose;
       dialogProps.onKeyDown = this.handleKeyDown;
     }
     if (style.zIndex) {
@@ -147,7 +147,7 @@ var Dialog = React.createClass({
     if (props.title || closable) {
       header = <div className={prefixClsFn(prefixCls, 'header')}>
             {closable ?
-              (<a tabIndex="0" onClick={this.props.onRequestClose} className={[prefixClsFn(prefixCls, 'close')].join('')}>
+              (<a tabIndex="0" onClick={props.onRequestClose} className={[prefixClsFn(prefixCls, 'close')].join('')}>
                 <span className={prefixClsFn(prefixCls, 'close-x')}></span>
               </a>) :
               null}
