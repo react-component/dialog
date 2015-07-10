@@ -3,6 +3,7 @@
 <html>
 <head>
   <title>rc-dialog-inline</title>
+  <meta http-equiv=Content-Type content="text/html;charset=utf-8">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
   <style>
       .hljs {
@@ -179,124 +180,136 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
 </head>
 <body>
-<h1>rc-dialog@4.3.5</h1>
+<h1>rc-dialog@4.4.1</h1>
 <div id="__react-content"></div>
 <script src="common.js?nowrap"></script>
 <script src="inline.js?nowrap"></script>
 <div class="highlight">
 <pre>
-<span class="xml">'use strict';
+<span class="hljs-string">'use strict'</span>;
 
-require('rc-dialog/assets/index.css');
-var React = require('react');
-var Dialog = require('rc-dialog');
-var container;
+require(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">'react'</span>);
+<span class="hljs-keyword">var</span> Dialog = require(<span class="hljs-string">'rc-dialog'</span>);
+<span class="hljs-keyword">var</span> container;
 
-var DialogContent = React.createClass({
+<span class="hljs-keyword">var</span> DialogContent = React.createClass({
   getInitialState() {
-    return {
-      value: ''
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-keyword">value</span>: <span class="hljs-string">''</span>
     };
   },
 
   onChange(e) {
-    this.props.onChange(e.target.value);
-    this.setState({
-      value: e.target.value
+    <span class="hljs-keyword">this</span>.props.onChange(e.target.<span class="hljs-keyword">value</span>);
+    <span class="hljs-keyword">this</span>.setState({
+      <span class="hljs-keyword">value</span>: e.target.<span class="hljs-keyword">value</span>
     });
   },
 
   render() {
-    return <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onChange}</span>
+    <span class="hljs-keyword">return</span> &lt;div&gt;
+      &lt;input onChange={<span class="hljs-keyword">this</span>.onChange}
 
-        <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.state.value}</span>/&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>第二个弹出框内容<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"modal-footer"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.props.onClose}</span> &gt;</span>Close<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.props.onDestroy}</span> &gt;</span>destroy<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.props.handleSave}</span>&gt;</span>Save changes<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;
+        <span class="hljs-keyword">value</span>={<span class="hljs-keyword">this</span>.state.<span class="hljs-keyword">value</span>}/&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;p&gt;第二个弹出框内容&lt;/p&gt;
+      &lt;div className=<span class="hljs-string">"modal-footer"</span>&gt;
+        &lt;button className=<span class="hljs-string">"btn"</span> onClick={<span class="hljs-keyword">this</span>.props.onClose} &gt;Close&lt;/button&gt;
+        &lt;button className=<span class="hljs-string">"btn"</span> onClick={<span class="hljs-keyword">this</span>.props.onDestroy} &gt;destroy&lt;/button&gt;
+        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.props.handleSave}&gt;Save changes&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;;
   }
 });
 
-var MyControl = React.createClass({
+<span class="hljs-keyword">var</span> MyControl = React.createClass({
   getInitialState() {
-    return {
-      visible: false
+    <span class="hljs-keyword">return</span> {
+      visible: <span class="hljs-keyword">false</span>,
+      closable: <span class="hljs-keyword">true</span>
     };
   },
 
   onChange(v) {
-    this.dialogContentInput = v;
+    <span class="hljs-keyword">this</span>.dialogContentInput = v;
   },
 
   handleClose() {
-    this.setState({
-      visible: false
+    <span class="hljs-keyword">this</span>.setState({
+      visible: <span class="hljs-keyword">false</span>
     });
   },
 
   handleDestroy() {
-    this.setState({
-      destroy: true
+    <span class="hljs-keyword">this</span>.setState({
+      destroy: <span class="hljs-keyword">true</span>
     });
   },
 
   handleTrigger() {
-    this.setState({
-      visible: true
+    <span class="hljs-keyword">this</span>.setState({
+      visible: <span class="hljs-keyword">true</span>
     });
 
-    // test rerender
+    <span class="hljs-comment">// test rerender</span>
     setTimeout(()=&gt; {
-      this.setState({
-        visible: true
+      <span class="hljs-keyword">this</span>.setState({
+        visible: <span class="hljs-keyword">true</span>
       });
-    }, 100);
+    }, <span class="hljs-number">100</span>);
+  },
+
+  toggleClosable() {
+    <span class="hljs-keyword">this</span>.setState({
+      closable: !<span class="hljs-keyword">this</span>.state.closable
+    })
   },
 
   render() {
-    if (this.state.destroy) {
-      return null;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.destroy) {
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
     }
-    return (
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleTrigger}</span>&gt;</span>show dialog<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleTrigger}&gt;show dialog&lt;/button&gt;
       &amp;nbsp;&amp;nbsp;&amp;nbsp;
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleDestroy}</span>&gt;</span>destroy<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span>
-          <span class="hljs-attribute">ref</span>=<span class="hljs-value">'dialog'</span>
-          <span class="hljs-attribute">title</span>= "第二个弹框"
-          <span class="hljs-attribute">animation</span>=<span class="hljs-value">"zoom"</span>
-          <span class="hljs-attribute">maskAnimation</span>=<span class="hljs-value">"fade"</span>
-          <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
-          <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.handleClose}</span>
-          <span class="hljs-attribute">style</span>=</span></span><span class="hljs-expression">{{<span class="hljs-variable">width</span>: 600}}</span><span class="xml"><span class="hljs-tag">
-        &gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">DialogContent</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onChange}</span> <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.handleClose}</span>
-            <span class="hljs-attribute">onDestroy</span>=<span class="hljs-value">{this.handleDestroy}</span>/&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        &lt;label&gt;
+          &lt;input type=<span class="hljs-string">"checkbox"</span> <span class="hljs-keyword">checked</span>={<span class="hljs-keyword">this</span>.state.closable} onChange={<span class="hljs-keyword">this</span>.toggleClosable}/&gt;
+          closable&lt;/label&gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;
+        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleDestroy}&gt;destroy&lt;/button&gt;
+        &lt;Dialog
+          <span class="hljs-keyword">ref</span>=<span class="hljs-string">'dialog'</span>
+          title= <span class="hljs-string">"第二个弹框"</span>
+          animation=<span class="hljs-string">"zoom"</span>
+          closable={<span class="hljs-keyword">this</span>.state.closable}
+          maskAnimation=<span class="hljs-string">"fade"</span>
+          visible={<span class="hljs-keyword">this</span>.state.visible}
+          onClose={<span class="hljs-keyword">this</span>.handleClose}
+          style={{width: <span class="hljs-number">600</span>}}
+        &gt;
+          &lt;DialogContent onChange={<span class="hljs-keyword">this</span>.onChange} onClose={<span class="hljs-keyword">this</span>.handleClose}
+            onDestroy={<span class="hljs-keyword">this</span>.handleDestroy}/&gt;
+        &lt;/Dialog&gt;
+      &lt;/div&gt;
     );
   }
 });
 
 React.render(
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>render dialog inside component<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">MyControl</span>/&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+  &lt;div&gt;
+    &lt;h2&gt;render dialog inside component&lt;/h2&gt;
+    &lt;MyControl/&gt;
+  &lt;/div&gt;,
+  document.getElementById(<span class="hljs-string">'__react-content'</span>)
 );
-</span>
+
 </pre>
 </div>
 </body>

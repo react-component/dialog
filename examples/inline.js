@@ -136,7 +136,8 @@ webpackJsonp([1],{
 	
 	  getInitialState: function getInitialState() {
 	    return {
-	      visible: false
+	      visible: false,
+	      closable: true
 	    };
 	  },
 	
@@ -171,6 +172,12 @@ webpackJsonp([1],{
 	    }, 100);
 	  },
 	
+	  toggleClosable: function toggleClosable() {
+	    this.setState({
+	      closable: !this.state.closable
+	    });
+	  },
+	
 	  render: function render() {
 	    if (this.state.destroy) {
 	      return null;
@@ -185,6 +192,13 @@ webpackJsonp([1],{
 	      ),
 	      '   ',
 	      React.createElement(
+	        'label',
+	        null,
+	        React.createElement('input', { type: 'checkbox', checked: this.state.closable, onChange: this.toggleClosable }),
+	        'closable'
+	      ),
+	      '   ',
+	      React.createElement(
 	        'button',
 	        { className: 'btn btn-primary', onClick: this.handleDestroy },
 	        'destroy'
@@ -195,6 +209,7 @@ webpackJsonp([1],{
 	          ref: 'dialog',
 	          title: '第二个弹框',
 	          animation: 'zoom',
+	          closable: this.state.closable,
 	          maskAnimation: 'fade',
 	          visible: this.state.visible,
 	          onClose: this.handleClose,

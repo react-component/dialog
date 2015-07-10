@@ -490,7 +490,7 @@
 	    key: 'getDialogElement',
 	    value: function getDialogElement(extra) {
 	      var props = this.props;
-	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
+	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'mask', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
 	
 	      assign(dialogProps, {
 	        onClose: this.handleClose,
@@ -554,6 +554,7 @@
 	    offset: [0, 100]
 	  },
 	  renderToBody: true,
+	  mask: true,
 	  closable: true,
 	  prefixCls: 'rc-dialog',
 	  visible: false,
@@ -582,6 +583,7 @@
 	var React = __webpack_require__(6);
 	var domAlign = __webpack_require__(10);
 	var RcUtil = __webpack_require__(12);
+	var KeyCode = RcUtil.KeyCode;
 	var Dom = RcUtil.Dom;
 	var assign = __webpack_require__(24);
 	var _anim = __webpack_require__(25);
@@ -657,8 +659,9 @@
 	        this.align();
 	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
 	        this.anim(dialogDomNode, props.transitionName, props.animation, true, function () {
-	          _this.props.onShow();
+	          props.onShow();
 	        });
+	        this.lastOutSideFocusNode = document.activeElement;
 	        dialogDomNode.focus();
 	      } else if (props.align !== prevProps.align) {
 	        this.align();
@@ -667,7 +670,13 @@
 	      if (prevProps.visible) {
 	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
 	        this.anim(dialogDomNode, props.transitionName, props.animation, false, function () {
-	          _this.props.onClose();
+	          props.onClose();
+	          if (props.mask && _this.lastOutSideFocusNode) {
+	            try {
+	              _this.lastOutSideFocusNode.focus();
+	            } catch (e) {}
+	            _this.lastOutSideFocusNode = null;
+	          }
 	        });
 	      }
 	      this.unMonitorWindowResize();
@@ -676,6 +685,37 @@
 	
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.unMonitorWindowResize();
+	  },
+	
+	  handleKeyDown: function handleKeyDown(e) {
+	    var props = this.props;
+	    if (props.closable) {
+	      if (e.keyCode === KeyCode.ESC) {
+	        this.props.onRequestClose();
+	      }
+	    }
+	    // keep focus inside dialog
+	    if (props.visible) {
+	      if (e.keyCode === KeyCode.TAB) {
+	        var activeElement = document.activeElement;
+	        var dialogRoot = React.findDOMNode(this.refs.dialog);
+	        var sentinel = React.findDOMNode(this.refs.sentinel);
+	        if (e.shiftKey) {
+	          if (activeElement === dialogRoot) {
+	            sentinel.focus();
+	          }
+	        } else if (activeElement === React.findDOMNode(this.refs.sentinel)) {
+	          dialogRoot.focus();
+	        }
+	      }
+	    }
+	  },
+	
+	  handleMaskClick: function handleMaskClick() {
+	    if (this.props.closable) {
+	      this.props.onRequestClose();
+	    }
+	    React.findDOMNode(this.refs.dialog).focus();
 	  },
 	
 	  render: function render() {
@@ -700,10 +740,18 @@
 	
 	    var style = assign({}, props.style, dest);
 	
-	    var maskProps = {};
-	    if (closable) {
-	      maskProps.onClick = this.props.onRequestClose;
-	    }
+	    var maskProps = {
+	      onClick: this.handleMaskClick
+	    };
+	    var dialogProps = {
+	      className: [prefixCls, props.className].join(' '),
+	      tabIndex: '0',
+	      role: 'dialog',
+	      ref: 'dialog',
+	      style: style,
+	      onKeyDown: this.handleKeyDown
+	    };
+	
 	    if (style.zIndex) {
 	      maskProps.style = { zIndex: style.zIndex };
 	    }
@@ -713,13 +761,15 @@
 	    }
 	    var header;
 	    if (props.title || closable) {
-	      header = React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: this.props.onRequestClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') })) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title));
+	      header = React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: props.onRequestClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') })) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title));
 	    }
-	    return React.createElement('div', { className: className.join(' ') }, props.mask !== false ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', { className: [prefixClsFn(prefixCls, ''), props.className].join(' '), tabIndex: '0', role: 'dialog', ref: 'dialog', style: style }, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, header, React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer)));
+	    return React.createElement('div', { className: className.join(' ') }, props.mask ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', dialogProps, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, header, React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer), React.createElement('div', { tabIndex: '0', ref: 'sentinel', style: { width: 0, height: 0, overflow: 'hidden' } }, 'sentinel')));
 	  }
 	});
 	
 	module.exports = Dialog;
+	
+	// empty
 
 /***/ },
 /* 10 */
@@ -2394,7 +2444,7 @@
 	var Event = __webpack_require__(26);
 	var Css = __webpack_require__(27);
 	
-	module.exports = function (node, transitionName, callback) {
+	var cssAnimation = function cssAnimation(node, transitionName, callback) {
 	  var className = transitionName;
 	  var activeClassName = className + '-active';
 	
@@ -2434,6 +2484,55 @@
 	    node.rcAnimTimeout = null;
 	  }, 0);
 	};
+	
+	cssAnimation.style = function (node, style, callback) {
+	  if (node.rcEndListener) {
+	    node.rcEndListener();
+	  }
+	
+	  node.rcEndListener = function (e) {
+	    if (e && e.target !== node) {
+	      return;
+	    }
+	
+	    if (node.rcAnimTimeout) {
+	      clearTimeout(node.rcAnimTimeout);
+	      node.rcAnimTimeout = null;
+	    }
+	
+	    Event.removeEndEventListener(node, node.rcEndListener);
+	    node.rcEndListener = null;
+	
+	    // Usually this optional callback is used for informing an owner of
+	    // a leave animation and telling it to remove the child.
+	    if (callback) {
+	      callback();
+	    }
+	  };
+	
+	  Event.addEndEventListener(node, node.rcEndListener);
+	
+	  node.rcAnimTimeout = setTimeout(function () {
+	    for (var s in style) {
+	      node.style[s] = style[s];
+	    }
+	    node.rcAnimTimeout = null;
+	  }, 0);
+	};
+	
+	cssAnimation.setTransition = function (node, property, v) {
+	  property = property || '';
+	  ['Webkit', 'Moz', 'O',
+	  // ms is special .... !
+	  'ms'].forEach(function (prefix) {
+	    node.style[prefix + 'Transition' + property] = v;
+	  });
+	};
+	
+	cssAnimation.addClass = Css.addClass;
+	cssAnimation.removeClass = Css.removeClass;
+	
+	module.exports = cssAnimation;
 
 /***/ },
 /* 26 */
