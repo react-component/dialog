@@ -77,6 +77,7 @@ var Dialog = React.createClass({
         this.anim(dialogDomNode, props.transitionName, props.animation, true, () => {
           props.onShow();
         });
+        this.lastOutSideFocusNode = document.activeElement;
         dialogDomNode.focus();
       } else if (props.align !== prevProps.align) {
         this.align();
@@ -86,6 +87,14 @@ var Dialog = React.createClass({
         this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
         this.anim(dialogDomNode, props.transitionName, props.animation, false, ()=> {
           props.onClose();
+          if (props.mask && this.lastOutSideFocusNode) {
+            try {
+              this.lastOutSideFocusNode.focus();
+            } catch (e) {
+              // empty
+            }
+            this.lastOutSideFocusNode = null;
+          }
         });
       }
       this.unMonitorWindowResize();
@@ -97,9 +106,34 @@ var Dialog = React.createClass({
   },
 
   handleKeyDown(e) {
-    if (e.keyCode === KeyCode.ESC) {
+    var props = this.props;
+    if (props.closable) {
+      if (e.keyCode === KeyCode.ESC) {
+        this.props.onRequestClose();
+      }
+    }
+    // keep focus inside dialog
+    if (props.visible) {
+      if (e.keyCode === KeyCode.TAB) {
+        var activeElement = document.activeElement;
+        var dialogRoot = React.findDOMNode(this.refs.dialog);
+        var sentinel = React.findDOMNode(this.refs.sentinel);
+        if (e.shiftKey) {
+          if (activeElement === dialogRoot) {
+            sentinel.focus();
+          }
+        } else if (activeElement === React.findDOMNode(this.refs.sentinel)) {
+          dialogRoot.focus();
+        }
+      }
+    }
+  },
+
+  handleMaskClick() {
+    if (this.props.closable) {
       this.props.onRequestClose();
     }
+    React.findDOMNode(this.refs.dialog).focus();
   },
 
   render() {
@@ -124,18 +158,18 @@ var Dialog = React.createClass({
 
     var style = assign({}, props.style, dest);
 
-    var maskProps = {};
+    var maskProps = {
+      onClick: this.handleMaskClick
+    };
     var dialogProps = {
       className: [prefixCls, props.className].join(' '),
       tabIndex: '0',
       role: 'dialog',
       ref: 'dialog',
-      style: style
+      style: style,
+      onKeyDown: this.handleKeyDown
     };
-    if (closable) {
-      maskProps.onClick = props.onRequestClose;
-      dialogProps.onKeyDown = this.handleKeyDown;
-    }
+
     if (style.zIndex) {
       maskProps.style = {zIndex: style.zIndex};
     }
@@ -155,14 +189,16 @@ var Dialog = React.createClass({
       </div>;
     }
     return (<div className={className.join(' ')}>
-    {props.mask !== false ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
+    {props.mask ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
       <div {...dialogProps}>
         <div className={prefixClsFn(prefixCls, 'content')}>
           {header}
           <div className={prefixClsFn(prefixCls, 'body')}>{props.children}</div>
           {footer}
         </div>
+        <div tabIndex="0" ref='sentinel' style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
       </div>
+
     </div>);
   }
 });

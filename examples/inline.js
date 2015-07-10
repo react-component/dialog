@@ -43,7 +43,8 @@ var DialogContent = React.createClass({
 var MyControl = React.createClass({
   getInitialState() {
     return {
-      visible: false
+      visible: false,
+      closable: true
     };
   },
 
@@ -76,6 +77,12 @@ var MyControl = React.createClass({
     }, 100);
   },
 
+  toggleClosable() {
+    this.setState({
+      closable: !this.state.closable
+    })
+  },
+
   render() {
     if (this.state.destroy) {
       return null;
@@ -84,11 +91,16 @@ var MyControl = React.createClass({
       <div>
         <button className="btn btn-primary" onClick={this.handleTrigger}>show dialog</button>
       &nbsp;&nbsp;&nbsp;
+        <label>
+          <input type="checkbox" checked={this.state.closable} onChange={this.toggleClosable}/>
+          closable</label>
+      &nbsp;&nbsp;&nbsp;
         <button className="btn btn-primary" onClick={this.handleDestroy}>destroy</button>
         <Dialog
           ref='dialog'
           title= "第二个弹框"
           animation="zoom"
+          closable={this.state.closable}
           maskAnimation="fade"
           visible={this.state.visible}
           onClose={this.handleClose}

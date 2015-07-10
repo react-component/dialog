@@ -103,7 +103,7 @@ class DialogWrap extends React.Component {
     var props = this.props;
     var dialogProps = copy(props, [
       'className', 'closable', 'align',
-      'title', 'footer',
+      'title', 'footer', 'mask',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName',
       'prefixCls', 'style', 'width',
@@ -166,6 +166,7 @@ DialogWrap.defaultProps = {
     offset: [0, 100]
   },
   renderToBody: true,
+  mask: true,
   closable: true,
   prefixCls: 'rc-dialog',
   visible: false,
