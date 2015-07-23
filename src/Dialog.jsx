@@ -2,21 +2,11 @@
 
 var React = require('react');
 var domAlign = require('dom-align');
-var RcUtil = require('rc-util');
-var KeyCode = RcUtil.KeyCode;
-var Dom = RcUtil.Dom;
+var rcUtil = require('rc-util');
+var KeyCode = rcUtil.KeyCode;
+var Dom = rcUtil.Dom;
 var assign = require('object-assign');
-var anim = require('css-animation');
-
-function prefixClsFn(prefixCls) {
-  var args = Array.prototype.slice.call(arguments, 1);
-  return args.map(function (s) {
-    if (!s) {
-      return prefixCls;
-    }
-    return prefixCls + '-' + s;
-  }).join(' ');
-}
+var Animate = require('rc-animate');
 
 function buffer(fn, ms) {
   var timer;
@@ -40,23 +30,104 @@ var Dialog = React.createClass({
     }
   },
 
-  anim(el, transitionName, animation, enter, fn) {
-    var props = this.props;
-    if (!transitionName && animation) {
-      transitionName = `${props.prefixCls}-${animation}`;
-    }
-    if (transitionName) {
-      anim(el, transitionName + (enter ? '-enter' : '-leave'), fn);
-    } else if (fn) {
-      fn();
-    }
-  },
-
   unMonitorWindowResize() {
     if (this.resizeHandler) {
       this.resizeHandler.remove();
       this.resizeHandler = null;
     }
+  },
+
+  getDialogElement() {
+    var props = this.props;
+    var closable = props.closable;
+    var prefixCls = props.prefixCls;
+    var dest = {};
+    if (props.width !== undefined) {
+      dest.width = props.width;
+    }
+    if (props.height !== undefined) {
+      dest.height = props.height;
+    }
+    if (props.zIndex !== undefined) {
+      dest.zIndex = props.zIndex;
+    }
+
+    var footer;
+    if (props.footer) {
+      footer = (<div className={`${prefixCls}-footer`}>{props.footer}</div>);
+    }
+
+    var header;
+    if (props.title || props.closable) {
+      header = <div className={`${prefixCls}-header`}>
+        {closable ?
+          (<a tabIndex="0" onClick={props.onRequestClose} className={`${prefixCls}-close`}>
+            <span className={`${prefixCls}-close-x`}></span>
+          </a>) :
+          null}
+        <div className={`${prefixCls}-title`}>{props.title}</div>
+      </div>;
+    }
+
+    var style = assign({}, props.style, dest);
+    var dialogProps = {
+      className: [props.prefixCls, props.className].join(' '),
+      tabIndex: '0',
+      role: 'dialog',
+      ref: 'dialog',
+      'data-visible': props.visible,
+      style: style,
+      onKeyDown: this.handleKeyDown
+    };
+    var transitionName = this.getTransitionName();
+    var dialogElement = <div {...dialogProps} key="dialog">
+      <div className={`${prefixCls}-content`}>
+        {header}
+        <div className={`${prefixCls}-body`}>{props.children}</div>
+        {footer}
+      </div>
+      <div tabIndex="0" ref='sentinel' style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
+    </div>;
+
+    if (transitionName) {
+      dialogElement = <Animate key="dialog" showProp="data-visible"
+                               onEnd={this.handleAnimateEnd}
+                               transitionName={transitionName} component=""
+                               animateMount={true}>{dialogElement}</Animate>;
+    }
+    return dialogElement;
+  },
+
+  getMaskElement() {
+    var props = this.props;
+    var maskProps = {
+      onClick: this.handleMaskClick,
+      'data-visible': props.visible
+    };
+
+    if (props.zIndex) {
+      maskProps.style = {zIndex: props.zIndex};
+    }
+    var maskElement;
+    if (props.mask) {
+      var maskTransition = this.getMaskTransitionName();
+      maskElement = <div {...maskProps} key='mask' className={`${props.prefixCls}-mask`}/>;
+      if (maskTransition) {
+        maskElement = <Animate key="mask" showProp="data-visible" animateMount={true} component=""
+                               transitionName={maskTransition}>{maskElement}</Animate>;
+      }
+    }
+    return maskElement;
+  },
+
+  getMaskTransitionName() {
+    var props = this.props;
+    var transitionName = props.maskTransitionName;
+    var animation = props.maskAnimation;
+    if (!transitionName && animation) {
+      transitionName = `${props.prefixCls}-${animation}`;
+    }
+    return transitionName;
   },
 
   componentDidMount() {
@@ -66,39 +137,25 @@ var Dialog = React.createClass({
   componentDidUpdate(prevProps) {
     var props = this.props;
     var dialogDomNode = React.findDOMNode(this.refs.dialog);
-    var maskNode = React.findDOMNode(this.refs.mask);
     prevProps = prevProps || {};
     if (props.visible) {
       this.monitorWindowResize();
       // first show
       if (!prevProps.visible) {
+        if (!this.getTransitionName()) {
+          this.handleShow();
+        }
         this.align();
-        this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
-        this.anim(dialogDomNode, props.transitionName, props.animation, true, () => {
-          props.onShow();
-        });
         this.lastOutSideFocusNode = document.activeElement;
         dialogDomNode.focus();
       } else if (props.align !== prevProps.align) {
         this.align();
       }
-    } else {
-      if (prevProps.visible) {
-        this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
-        this.anim(dialogDomNode, props.transitionName, props.animation, false, ()=> {
-          props.onClose();
-          if (props.mask && this.lastOutSideFocusNode) {
-            try {
-              this.lastOutSideFocusNode.focus();
-            } catch (e) {
-              // empty
-            }
-            this.lastOutSideFocusNode = null;
-          }
-        });
-      }
-      this.unMonitorWindowResize();
+    } else if (prevProps.visible && !this.getTransitionName()) {
+      this.handleClose();
     }
+
+    this.unMonitorWindowResize();
   },
 
   componentWillUnmount() {
@@ -129,6 +186,41 @@ var Dialog = React.createClass({
     }
   },
 
+  getTransitionName() {
+    var props = this.props;
+    var transitionName = props.transitionName;
+    var animation = props.animation;
+    if (!transitionName && animation) {
+      transitionName = `${props.prefixCls}-${animation}`;
+    }
+    return transitionName;
+  },
+
+  handleShow() {
+    this.props.onShow();
+  },
+
+  handleClose() {
+    var props = this.props;
+    props.onClose();
+    if (props.mask && this.lastOutSideFocusNode) {
+      try {
+        this.lastOutSideFocusNode.focus();
+      } catch (e) {
+        // empty
+      }
+      this.lastOutSideFocusNode = null;
+    }
+  },
+
+  handleAnimateEnd(key, visible) {
+    if (visible) {
+      this.handleShow();
+    } else {
+      this.handleClose();
+    }
+  },
+
   handleMaskClick() {
     if (this.props.closable) {
       this.props.onRequestClose();
@@ -138,67 +230,14 @@ var Dialog = React.createClass({
 
   render() {
     var props = this.props;
-    var visible = props.visible;
     var prefixCls = props.prefixCls;
-    var className = [prefixClsFn(prefixCls, 'wrap')];
-    var closable = props.closable;
-    if (!visible) {
-      className.push(prefixClsFn(prefixCls, 'wrap-hidden'));
-    }
-    var dest = {};
-    if (props.width !== undefined) {
-      dest.width = props.width;
-    }
-    if (props.height !== undefined) {
-      dest.height = props.height;
-    }
-    if (props.zIndex !== undefined) {
-      dest.zIndex = props.zIndex;
-    }
-
-    var style = assign({}, props.style, dest);
-
-    var maskProps = {
-      onClick: this.handleMaskClick
-    };
-    var dialogProps = {
-      className: [prefixCls, props.className].join(' '),
-      tabIndex: '0',
-      role: 'dialog',
-      ref: 'dialog',
-      style: style,
-      onKeyDown: this.handleKeyDown
+    var className = {
+      [`${prefixCls}-wrap`]: 1,
+      [`${prefixCls}-wrap-hidden`]: !props.visible
     };
 
-    if (style.zIndex) {
-      maskProps.style = {zIndex: style.zIndex};
-    }
-    var footer;
-    if (props.footer) {
-      footer = (<div className={prefixClsFn(prefixCls, 'footer')}>{props.footer}</div>);
-    }
-    var header;
-    if (props.title || closable) {
-      header = <div className={prefixClsFn(prefixCls, 'header')}>
-            {closable ?
-              (<a tabIndex="0" onClick={props.onRequestClose} className={[prefixClsFn(prefixCls, 'close')].join('')}>
-                <span className={prefixClsFn(prefixCls, 'close-x')}></span>
-              </a>) :
-              null}
-        <div className={prefixClsFn(prefixCls, 'title')}>{props.title}</div>
-      </div>;
-    }
-    return (<div className={className.join(' ')}>
-    {props.mask ? <div {...maskProps} className={prefixClsFn(prefixCls, 'mask')} ref="mask"/> : null}
-      <div {...dialogProps}>
-        <div className={prefixClsFn(prefixCls, 'content')}>
-          {header}
-          <div className={prefixClsFn(prefixCls, 'body')}>{props.children}</div>
-          {footer}
-        </div>
-        <div tabIndex="0" ref='sentinel' style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
-      </div>
-
+    return (<div className={rcUtil.classSet(className)}>
+      {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
   }
 });

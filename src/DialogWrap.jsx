@@ -117,8 +117,8 @@ class DialogWrap extends React.Component {
       onRequestClose: this.requestClose
     }, extra);
 
-    return <Dialog {...dialogProps}>
-    {props.children}
+    return <Dialog {...dialogProps} key="dialog">
+      {props.children}
     </Dialog>;
   }
 
