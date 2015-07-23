@@ -332,6 +332,16 @@
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }return target;
+	};
+	
 	var _createClass = (function () {
 	  function defineProperties(target, props) {
 	    for (var i = 0; i < props.length; i++) {
@@ -499,7 +509,7 @@
 	        onRequestClose: this.requestClose
 	      }, extra);
 	
-	      return React.createElement(Dialog, dialogProps, props.children);
+	      return React.createElement(Dialog, _extends({}, dialogProps, { key: 'dialog' }), props.children);
 	    }
 	  }, {
 	    key: 'render',
@@ -580,23 +590,21 @@
 	  }return target;
 	};
 	
+	function _defineProperty(obj, key, value) {
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+	  } else {
+	    obj[key] = value;
+	  }return obj;
+	}
+	
 	var React = __webpack_require__(6);
 	var domAlign = __webpack_require__(10);
-	var RcUtil = __webpack_require__(12);
-	var KeyCode = RcUtil.KeyCode;
-	var Dom = RcUtil.Dom;
+	var rcUtil = __webpack_require__(12);
+	var KeyCode = rcUtil.KeyCode;
+	var Dom = rcUtil.Dom;
 	var assign = __webpack_require__(24);
-	var _anim = __webpack_require__(25);
-	
-	function prefixClsFn(prefixCls) {
-	  var args = Array.prototype.slice.call(arguments, 1);
-	  return args.map(function (s) {
-	    if (!s) {
-	      return prefixCls;
-	    }
-	    return prefixCls + '-' + s;
-	  }).join(' ');
-	}
+	var Animate = __webpack_require__(25);
 	
 	function buffer(fn, ms) {
 	  var timer;
@@ -622,18 +630,6 @@
 	    }
 	  },
 	
-	  anim: function anim(el, transitionName, animation, enter, fn) {
-	    var props = this.props;
-	    if (!transitionName && animation) {
-	      transitionName = props.prefixCls + '-' + animation;
-	    }
-	    if (transitionName) {
-	      _anim(el, transitionName + (enter ? '-enter' : '-leave'), fn);
-	    } else if (fn) {
-	      fn();
-	    }
-	  },
-	
 	  unMonitorWindowResize: function unMonitorWindowResize() {
 	    if (this.resizeHandler) {
 	      this.resizeHandler.remove();
@@ -641,46 +637,111 @@
 	    }
 	  },
 	
+	  getDialogElement: function getDialogElement() {
+	    var props = this.props;
+	    var closable = props.closable;
+	    var prefixCls = props.prefixCls;
+	    var dest = {};
+	    if (props.width !== undefined) {
+	      dest.width = props.width;
+	    }
+	    if (props.height !== undefined) {
+	      dest.height = props.height;
+	    }
+	    if (props.zIndex !== undefined) {
+	      dest.zIndex = props.zIndex;
+	    }
+	
+	    var footer;
+	    if (props.footer) {
+	      footer = React.createElement('div', { className: prefixCls + '-footer' }, props.footer);
+	    }
+	
+	    var header;
+	    if (props.title || props.closable) {
+	      header = React.createElement('div', { className: prefixCls + '-header' }, closable ? React.createElement('a', { tabIndex: '0', onClick: props.onRequestClose, className: prefixCls + '-close' }, React.createElement('span', { className: prefixCls + '-close-x' })) : null, React.createElement('div', { className: prefixCls + '-title' }, props.title));
+	    }
+	
+	    var style = assign({}, props.style, dest);
+	    var dialogProps = {
+	      className: [props.prefixCls, props.className].join(' '),
+	      tabIndex: '0',
+	      role: 'dialog',
+	      ref: 'dialog',
+	      'data-visible': props.visible,
+	      style: style,
+	      onKeyDown: this.handleKeyDown
+	    };
+	    var transitionName = this.getTransitionName();
+	    var dialogElement = React.createElement('div', _extends({}, dialogProps, { key: 'dialog' }), React.createElement('div', { className: prefixCls + '-content' }, header, React.createElement('div', { className: prefixCls + '-body' }, props.children), footer), React.createElement('div', { tabIndex: '0', ref: 'sentinel', style: { width: 0, height: 0, overflow: 'hidden' } }, 'sentinel'));
+	
+	    if (transitionName) {
+	      dialogElement = React.createElement(Animate, { key: 'dialog', showProp: 'data-visible',
+	        onEnd: this.handleAnimateEnd,
+	        transitionName: transitionName, component: '',
+	        animateMount: true }, dialogElement);
+	    }
+	    return dialogElement;
+	  },
+	
+	  getMaskElement: function getMaskElement() {
+	    var props = this.props;
+	    var maskProps = {
+	      onClick: this.handleMaskClick,
+	      'data-visible': props.visible
+	    };
+	
+	    if (props.zIndex) {
+	      maskProps.style = { zIndex: props.zIndex };
+	    }
+	    var maskElement;
+	    if (props.mask) {
+	      var maskTransition = this.getMaskTransitionName();
+	      maskElement = React.createElement('div', _extends({}, maskProps, { key: 'mask', className: props.prefixCls + '-mask' }));
+	      if (maskTransition) {
+	        maskElement = React.createElement(Animate, { key: 'mask', showProp: 'data-visible', animateMount: true, component: '',
+	          transitionName: maskTransition }, maskElement);
+	      }
+	    }
+	    return maskElement;
+	  },
+	
+	  getMaskTransitionName: function getMaskTransitionName() {
+	    var props = this.props;
+	    var transitionName = props.maskTransitionName;
+	    var animation = props.maskAnimation;
+	    if (!transitionName && animation) {
+	      transitionName = props.prefixCls + '-' + animation;
+	    }
+	    return transitionName;
+	  },
+	
 	  componentDidMount: function componentDidMount() {
 	    this.componentDidUpdate();
 	  },
 	
 	  componentDidUpdate: function componentDidUpdate(prevProps) {
-	    var _this = this;
-	
 	    var props = this.props;
 	    var dialogDomNode = React.findDOMNode(this.refs.dialog);
-	    var maskNode = React.findDOMNode(this.refs.mask);
 	    prevProps = prevProps || {};
 	    if (props.visible) {
 	      this.monitorWindowResize();
 	      // first show
 	      if (!prevProps.visible) {
+	        if (!this.getTransitionName()) {
+	          this.handleShow();
+	        }
 	        this.align();
-	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation, true);
-	        this.anim(dialogDomNode, props.transitionName, props.animation, true, function () {
-	          props.onShow();
-	        });
 	        this.lastOutSideFocusNode = document.activeElement;
 	        dialogDomNode.focus();
 	      } else if (props.align !== prevProps.align) {
 	        this.align();
 	      }
-	    } else {
-	      if (prevProps.visible) {
-	        this.anim(maskNode, props.maskTransitionName, props.maskAnimation);
-	        this.anim(dialogDomNode, props.transitionName, props.animation, false, function () {
-	          props.onClose();
-	          if (props.mask && _this.lastOutSideFocusNode) {
-	            try {
-	              _this.lastOutSideFocusNode.focus();
-	            } catch (e) {}
-	            _this.lastOutSideFocusNode = null;
-	          }
-	        });
-	      }
-	      this.unMonitorWindowResize();
+	    } else if (prevProps.visible && !this.getTransitionName()) {
+	      this.handleClose();
 	    }
+	
+	    this.unMonitorWindowResize();
 	  },
 	
 	  componentWillUnmount: function componentWillUnmount() {
@@ -711,6 +772,39 @@
 	    }
 	  },
 	
+	  getTransitionName: function getTransitionName() {
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    var animation = props.animation;
+	    if (!transitionName && animation) {
+	      transitionName = props.prefixCls + '-' + animation;
+	    }
+	    return transitionName;
+	  },
+	
+	  handleShow: function handleShow() {
+	    this.props.onShow();
+	  },
+	
+	  handleClose: function handleClose() {
+	    var props = this.props;
+	    props.onClose();
+	    if (props.mask && this.lastOutSideFocusNode) {
+	      try {
+	        this.lastOutSideFocusNode.focus();
+	      } catch (e) {}
+	      this.lastOutSideFocusNode = null;
+	    }
+	  },
+	
+	  handleAnimateEnd: function handleAnimateEnd(key, visible) {
+	    if (visible) {
+	      this.handleShow();
+	    } else {
+	      this.handleClose();
+	    }
+	  },
+	
 	  handleMaskClick: function handleMaskClick() {
 	    if (this.props.closable) {
 	      this.props.onRequestClose();
@@ -719,51 +813,13 @@
 	  },
 	
 	  render: function render() {
+	    var _className;
+	
 	    var props = this.props;
-	    var visible = props.visible;
 	    var prefixCls = props.prefixCls;
-	    var className = [prefixClsFn(prefixCls, 'wrap')];
-	    var closable = props.closable;
-	    if (!visible) {
-	      className.push(prefixClsFn(prefixCls, 'wrap-hidden'));
-	    }
-	    var dest = {};
-	    if (props.width !== undefined) {
-	      dest.width = props.width;
-	    }
-	    if (props.height !== undefined) {
-	      dest.height = props.height;
-	    }
-	    if (props.zIndex !== undefined) {
-	      dest.zIndex = props.zIndex;
-	    }
+	    var className = (_className = {}, _defineProperty(_className, prefixCls + '-wrap', 1), _defineProperty(_className, prefixCls + '-wrap-hidden', !props.visible), _className);
 	
-	    var style = assign({}, props.style, dest);
-	
-	    var maskProps = {
-	      onClick: this.handleMaskClick
-	    };
-	    var dialogProps = {
-	      className: [prefixCls, props.className].join(' '),
-	      tabIndex: '0',
-	      role: 'dialog',
-	      ref: 'dialog',
-	      style: style,
-	      onKeyDown: this.handleKeyDown
-	    };
-	
-	    if (style.zIndex) {
-	      maskProps.style = { zIndex: style.zIndex };
-	    }
-	    var footer;
-	    if (props.footer) {
-	      footer = React.createElement('div', { className: prefixClsFn(prefixCls, 'footer') }, props.footer);
-	    }
-	    var header;
-	    if (props.title || closable) {
-	      header = React.createElement('div', { className: prefixClsFn(prefixCls, 'header') }, closable ? React.createElement('a', { tabIndex: '0', onClick: props.onRequestClose, className: [prefixClsFn(prefixCls, 'close')].join('') }, React.createElement('span', { className: prefixClsFn(prefixCls, 'close-x') })) : null, React.createElement('div', { className: prefixClsFn(prefixCls, 'title') }, props.title));
-	    }
-	    return React.createElement('div', { className: className.join(' ') }, props.mask ? React.createElement('div', _extends({}, maskProps, { className: prefixClsFn(prefixCls, 'mask'), ref: 'mask' })) : null, React.createElement('div', dialogProps, React.createElement('div', { className: prefixClsFn(prefixCls, 'content') }, header, React.createElement('div', { className: prefixClsFn(prefixCls, 'body') }, props.children), footer), React.createElement('div', { tabIndex: '0', ref: 'sentinel', style: { width: 0, height: 0, overflow: 'hidden' } }, 'sentinel')));
+	    return React.createElement('div', { className: rcUtil.classSet(className) }, [this.getMaskElement(), this.getDialogElement()]);
 	  }
 	});
 	
@@ -2439,10 +2495,447 @@
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// export this package's api
 	'use strict';
 	
-	var Event = __webpack_require__(26);
-	var Css = __webpack_require__(27);
+	module.exports = __webpack_require__(26);
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ChildrenUtils = __webpack_require__(27);
+	
+	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
+	
+	var _AnimateChild = __webpack_require__(28);
+	
+	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
+	
+	var Animate = _react2['default'].createClass({
+	  displayName: 'Animate',
+	
+	  protoTypes: {
+	    component: _react2['default'].PropTypes.any,
+	    animation: _react2['default'].PropTypes.object,
+	    transitionName: _react2['default'].PropTypes.string,
+	    transitionEnter: _react2['default'].PropTypes.bool,
+	    transitionLeave: _react2['default'].PropTypes.bool,
+	    onEnd: _react2['default'].PropTypes.func,
+	    showProp: _react2['default'].PropTypes.bool,
+	    animateMount: _react2['default'].PropTypes.bool
+	  },
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      animation: {},
+	      component: 'span',
+	      transitionEnter: true,
+	      transitionLeave: true,
+	      enter: true,
+	      animateMount: false,
+	      onEnd: function onEnd() {}
+	    };
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    this.currentlyAnimatingKeys = {};
+	    this.keysToEnter = [];
+	    this.keysToLeave = [];
+	    return {
+	      children: (0, _ChildrenUtils.toArrayChildren)(this.props.children)
+	    };
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var _this = this;
+	
+	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(nextProps.children);
+	    var props = this.props;
+	    var showProp = props.showProp;
+	    var exclusive = props.exclusive;
+	    // last props children if exclusive
+	    // exclusive needs immediate response
+	    var currentChildren = exclusive ? (0, _ChildrenUtils.toArrayChildren)(props.children) : this.state.children;
+	    var newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	
+	    if (showProp) {
+	      newChildren = newChildren.map(function (c) {
+	        if (!c.props[showProp] && (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp)) {
+	          c = _react2['default'].cloneElement(c, _defineProperty({}, showProp, true));
+	        }
+	        return c;
+	      });
+	    }
+	
+	    // exclusive needs immediate response
+	    if (exclusive) {
+	      // make middle state children invalid
+	      // restore to last props children
+	      newChildren.forEach(function (c) {
+	        _this.stop(c.key);
+	      });
+	    }
+	
+	    this.setState({
+	      children: newChildren
+	    });
+	
+	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+	
+	    nextChildren.forEach(function (c) {
+	      var key = c.key;
+	      if (currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasPrev = (0, _ChildrenUtils.inChildren)(currentChildren, c);
+	      if (showProp) {
+	        if (hasPrev) {
+	          var showInNow = (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp);
+	          var showInNext = c.props[showProp];
+	          if (!showInNow && showInNext) {
+	            _this.keysToEnter.push(key);
+	          }
+	        }
+	      } else if (!hasPrev) {
+	        _this.keysToEnter.push(key);
+	      }
+	    });
+	
+	    currentChildren.forEach(function (c) {
+	      var key = c.key;
+	      if (currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasNext = (0, _ChildrenUtils.inChildren)(nextChildren, c);
+	      if (showProp) {
+	        if (hasNext) {
+	          var showInNext = (0, _ChildrenUtils.isShownInChildren)(nextChildren, c, showProp);
+	          var showInNow = c.props[showProp];
+	          if (!showInNext && showInNow) {
+	            _this.keysToLeave.push(key);
+	          }
+	        }
+	      } else if (!hasNext) {
+	        _this.keysToLeave.push(key);
+	      }
+	    });
+	  },
+	
+	  performEnter: function performEnter(key) {
+	    this.currentlyAnimatingKeys[key] = true;
+	    this.refs[key].componentWillEnter(this._handleDoneEntering.bind(this, key));
+	  },
+	
+	  _handleDoneEntering: function _handleDoneEntering(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(this.props.children);
+	    if (!this.isValidChildByKey(currentChildren, key)) {
+	      // exclusive will not need this
+	      this.performLeave(key);
+	    } else {
+	      this.props.onEnd(key, true);
+	      if (this.isMounted()) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
+	    }
+	  },
+	
+	  performLeave: function performLeave(key) {
+	    this.currentlyAnimatingKeys[key] = true;
+	    this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
+	  },
+	
+	  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
+	    var showProp = this.props.showProp;
+	    if (showProp) {
+	      return (0, _ChildrenUtils.isShownInChildrenByKey)(currentChildren, key, showProp);
+	    } else {
+	      return (0, _ChildrenUtils.inChildrenByKey)(currentChildren, key);
+	    }
+	  },
+	
+	  _handleDoneLeaving: function _handleDoneLeaving(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(this.props.children);
+	    // in case state change is too fast
+	    if (this.isValidChildByKey(currentChildren, key)) {
+	      this.performEnter(key);
+	    } else {
+	      this.props.onEnd(key, false);
+	      if (this.isMounted()) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
+	    }
+	  },
+	
+	  stop: function stop(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var component = this.refs[key];
+	    if (component) {
+	      component.stop();
+	    }
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.animateMount) {
+	      this.state.children.map(function (c) {
+	        return c.key;
+	      }).forEach(this.performEnter);
+	    }
+	  },
+	
+	  componentDidUpdate: function componentDidUpdate() {
+	    var keysToEnter = this.keysToEnter;
+	    this.keysToEnter = [];
+	    keysToEnter.forEach(this.performEnter);
+	    var keysToLeave = this.keysToLeave;
+	    this.keysToLeave = [];
+	    keysToLeave.forEach(this.performLeave);
+	  },
+	
+	  render: function render() {
+	    var props = this.props;
+	    var children = this.state.children.map(function (child) {
+	      return _react2['default'].createElement(
+	        _AnimateChild2['default'],
+	        {
+	          key: child.key,
+	          ref: child.key,
+	          animation: props.animation,
+	          transitionName: props.transitionName,
+	          transitionEnter: props.transitionEnter,
+	          transitionLeave: props.transitionLeave },
+	        child
+	      );
+	    });
+	    var Component = props.component;
+	    if (Component) {
+	      return _react2['default'].createElement(
+	        Component,
+	        this.props,
+	        children
+	      );
+	    } else {
+	      return children[0] || null;
+	    }
+	  }
+	});
+	
+	exports['default'] = Animate;
+	module.exports = exports['default'];
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function inChildren(children, child) {
+	  var found = 0;
+	  children.forEach(function (c) {
+	    if (found) {
+	      return;
+	    }
+	    found = c.key === child.key;
+	  });
+	  return found;
+	}
+	
+	exports['default'] = {
+	  inChildren: inChildren,
+	
+	  toArrayChildren: function toArrayChildren(children) {
+	    var ret = [];
+	    _react2['default'].Children.forEach(children, function (c) {
+	      ret.push(c);
+	    });
+	    return ret;
+	  },
+	
+	  isShownInChildren: function isShownInChildren(children, child, showProp) {
+	    var found = 0;
+	    children.forEach(function (c) {
+	      if (found) {
+	        return;
+	      }
+	      found = c.key === child.key && c.props[showProp];
+	    });
+	    return found;
+	  },
+	
+	  inChildrenByKey: function inChildrenByKey(children, key) {
+	    var found = 0;
+	    if (children) {
+	      children.forEach(function (c) {
+	        if (found) {
+	          return;
+	        }
+	        found = c.key === key;
+	      });
+	    }
+	    return found;
+	  },
+	
+	  isShownInChildrenByKey: function isShownInChildrenByKey(children, key, showProp) {
+	    var found = 0;
+	    if (children) {
+	      children.forEach(function (c) {
+	        if (found) {
+	          return;
+	        }
+	        found = c.key === key && c.props[showProp];
+	      });
+	    }
+	    return found;
+	  },
+	
+	  mergeChildren: function mergeChildren(prev, next) {
+	    var ret = [];
+	
+	    // For each key of `next`, the list of keys to insert before that key in
+	    // the combined list
+	    var nextChildrenPending = {};
+	    var pendingChildren = [];
+	    prev.forEach(function (c) {
+	      if (inChildren(next, c)) {
+	        if (pendingChildren.length) {
+	          nextChildrenPending[c.key] = pendingChildren;
+	          pendingChildren = [];
+	        }
+	      } else {
+	        pendingChildren.push(c);
+	      }
+	    });
+	
+	    next.forEach(function (c) {
+	      if (nextChildrenPending.hasOwnProperty(c.key)) {
+	        ret = ret.concat(nextChildrenPending[c.key]);
+	      }
+	      ret.push(c);
+	    });
+	
+	    ret = ret.concat(pendingChildren);
+	
+	    return ret;
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _cssAnimation = __webpack_require__(29);
+	
+	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
+	
+	var AnimateChild = _react2['default'].createClass({
+	  displayName: 'AnimateChild',
+	
+	  transition: function transition(animationType, finishCallback) {
+	    var _this = this;
+	
+	    var node = _react2['default'].findDOMNode(this);
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    this.stop();
+	    var end = function end() {
+	      _this.stopper = null;
+	      finishCallback();
+	    };
+	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props.transitionEnter) {
+	      this.stopper = (0, _cssAnimation2['default'])(node, transitionName + '-' + animationType, end);
+	    } else {
+	      this.stopper = props.animation[animationType](node, end);
+	    }
+	  },
+	
+	  stop: function stop() {
+	    if (this.stopper) {
+	      this.stopper.stop();
+	      this.stopper = null;
+	    }
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.stop();
+	  },
+	
+	  componentWillEnter: function componentWillEnter(done) {
+	    var props = this.props;
+	    if (props.transitionEnter && props.transitionName || props.animation.enter) {
+	      this.transition('enter', done);
+	    } else {
+	      done();
+	    }
+	  },
+	
+	  componentWillLeave: function componentWillLeave(done) {
+	    var props = this.props;
+	    if (props.transitionLeave && props.transitionName || props.animation.leave) {
+	      this.transition('leave', done);
+	    } else {
+	      done();
+	    }
+	  },
+	
+	  render: function render() {
+	    return this.props.children;
+	  }
+	});
+	
+	exports['default'] = AnimateChild;
+	module.exports = exports['default'];
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Event = __webpack_require__(30);
+	var Css = __webpack_require__(31);
 	
 	var cssAnimation = function cssAnimation(node, transitionName, callback) {
 	  var className = transitionName;
@@ -2535,7 +3028,7 @@
 	module.exports = cssAnimation;
 
 /***/ },
-/* 26 */
+/* 30 */
 /***/ function(module, exports) {
 
 	
@@ -2622,7 +3115,7 @@
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 27 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
