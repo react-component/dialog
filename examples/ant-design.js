@@ -39,7 +39,7 @@ var DialogContent = React.createClass({
 var MyControl = React.createClass({
   handleTrigger: function () {
     this.d = showDialog(<DialogContent />, {
-      title: "第二个弹框",
+      title: <p> 第二个弹框 <input /></p>,
       animation: 'zoom',
       maskAnimation: 'fade',
       onBeforeClose: this.beforeClose,

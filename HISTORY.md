@@ -3,7 +3,7 @@
 
 ## 4.5.0 2015-07-23
 
-use rc-animate
+use rc-animate & rc-align
 
 ## 4.4.0 2015-07-03
 

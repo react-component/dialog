@@ -1,42 +1,13 @@
 'use strict';
 
 var React = require('react');
-var domAlign = require('dom-align');
+var Align = require('rc-align');
 var rcUtil = require('rc-util');
 var KeyCode = rcUtil.KeyCode;
-var Dom = rcUtil.Dom;
 var assign = require('object-assign');
 var Animate = require('rc-animate');
 
-function buffer(fn, ms) {
-  var timer;
-  return function () {
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(fn, ms);
-  };
-}
-
 var Dialog = React.createClass({
-  align() {
-    var align = this.props.align;
-    domAlign(React.findDOMNode(this.refs.dialog), align.node || window, align);
-  },
-
-  monitorWindowResize() {
-    if (!this.resizeHandler) {
-      this.resizeHandler = Dom.addEventListener(window, 'resize', buffer(this.align, 80));
-    }
-  },
-
-  unMonitorWindowResize() {
-    if (this.resizeHandler) {
-      this.resizeHandler.remove();
-      this.resizeHandler = null;
-    }
-  },
-
   getDialogElement() {
     var props = this.props;
     var closable = props.closable;
@@ -75,12 +46,11 @@ var Dialog = React.createClass({
       tabIndex: '0',
       role: 'dialog',
       ref: 'dialog',
-      'data-visible': props.visible,
       style: style,
       onKeyDown: this.handleKeyDown
     };
     var transitionName = this.getTransitionName();
-    var dialogElement = <div {...dialogProps} key="dialog">
+    var dialogElement = <div {...dialogProps} >
       <div className={`${prefixCls}-content`}>
         {header}
         <div className={`${prefixCls}-body`}>{props.children}</div>
@@ -88,14 +58,16 @@ var Dialog = React.createClass({
       </div>
       <div tabIndex="0" ref='sentinel' style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
     </div>;
-
-    if (transitionName) {
-      dialogElement = <Animate key="dialog" showProp="data-visible"
-                               onEnd={this.handleAnimateEnd}
-                               transitionName={transitionName} component=""
-                               animateMount={true}>{dialogElement}</Animate>;
-    }
-    return dialogElement;
+    return <Animate key="dialog"
+                    showProp="dialogVisible"
+                    onEnd={this.handleAnimateEnd}
+                    transitionName={transitionName}
+                    component=""
+                    animateMount={true}><Align align={props.align}
+                                               dialogVisible={props.visible}
+                                               monitorBufferTime={80}
+                                               monitorWindowResize={true}
+                                               disabled={!props.visible}>{dialogElement}</Align></Animate>;
   },
 
   getMaskElement() {
@@ -111,7 +83,7 @@ var Dialog = React.createClass({
     var maskElement;
     if (props.mask) {
       var maskTransition = this.getMaskTransitionName();
-      maskElement = <div {...maskProps} key='mask' className={`${props.prefixCls}-mask`}/>;
+      maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`}/>;
       if (maskTransition) {
         maskElement = <Animate key="mask" showProp="data-visible" animateMount={true} component=""
                                transitionName={maskTransition}>{maskElement}</Animate>;
@@ -131,35 +103,27 @@ var Dialog = React.createClass({
   },
 
   componentDidMount() {
-    this.componentDidUpdate();
+    this.componentDidUpdate({});
   },
 
   componentDidUpdate(prevProps) {
     var props = this.props;
-    var dialogDomNode = React.findDOMNode(this.refs.dialog);
-    prevProps = prevProps || {};
     if (props.visible) {
-      this.monitorWindowResize();
       // first show
       if (!prevProps.visible) {
-        if (!this.getTransitionName()) {
-          this.handleShow();
-        }
-        this.align();
         this.lastOutSideFocusNode = document.activeElement;
-        dialogDomNode.focus();
-      } else if (props.align !== prevProps.align) {
-        this.align();
+        React.findDOMNode(this.refs.dialog).focus();
       }
-    } else if (prevProps.visible && !this.getTransitionName()) {
-      this.handleClose();
+    } else if (prevProps.visible) {
+      if (props.mask && this.lastOutSideFocusNode) {
+        try {
+          this.lastOutSideFocusNode.focus();
+        } catch (e) {
+          // empty
+        }
+        this.lastOutSideFocusNode = null;
+      }
     }
-
-    this.unMonitorWindowResize();
-  },
-
-  componentWillUnmount() {
-    this.unMonitorWindowResize();
   },
 
   handleKeyDown(e) {
@@ -201,16 +165,7 @@ var Dialog = React.createClass({
   },
 
   handleClose() {
-    var props = this.props;
-    props.onClose();
-    if (props.mask && this.lastOutSideFocusNode) {
-      try {
-        this.lastOutSideFocusNode.focus();
-      } catch (e) {
-        // empty
-      }
-      this.lastOutSideFocusNode = null;
-    }
+    this.props.onClose();
   },
 
   handleAnimateEnd(key, visible) {
