@@ -3,7 +3,7 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(32);
+	module.exports = __webpack_require__(35);
 
 
 /***/ },
@@ -40,7 +40,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 32:
+/***/ 35:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -110,20 +110,20 @@ webpackJsonp([1],{
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'modal-footer' },
+	        { className: "modal-footer" },
 	        React.createElement(
 	          'button',
-	          { className: 'btn', onClick: this.props.onClose },
+	          { className: "btn", onClick: this.props.onClose },
 	          'Close'
 	        ),
 	        React.createElement(
 	          'button',
-	          { className: 'btn', onClick: this.props.onDestroy },
+	          { className: "btn", onClick: this.props.onDestroy },
 	          'destroy'
 	        ),
 	        React.createElement(
 	          'button',
-	          { className: 'btn btn-primary', onClick: this.props.handleSave },
+	          { className: "btn btn-primary", onClick: this.props.handleSave },
 	          'Save changes'
 	        )
 	      )
@@ -187,30 +187,30 @@ webpackJsonp([1],{
 	      null,
 	      React.createElement(
 	        'button',
-	        { className: 'btn btn-primary', onClick: this.handleTrigger },
+	        { className: "btn btn-primary", onClick: this.handleTrigger },
 	        'show dialog'
 	      ),
 	      '   ',
 	      React.createElement(
 	        'label',
 	        null,
-	        React.createElement('input', { type: 'checkbox', checked: this.state.closable, onChange: this.toggleClosable }),
+	        React.createElement('input', { type: "checkbox", checked: this.state.closable, onChange: this.toggleClosable }),
 	        'closable'
 	      ),
 	      '   ',
 	      React.createElement(
 	        'button',
-	        { className: 'btn btn-primary', onClick: this.handleDestroy },
+	        { className: "btn btn-primary", onClick: this.handleDestroy },
 	        'destroy'
 	      ),
 	      React.createElement(
 	        Dialog,
 	        {
 	          ref: 'dialog',
-	          title: '第二个弹框',
-	          animation: 'zoom',
+	          title: "第二个弹框",
+	          animation: "zoom",
 	          closable: this.state.closable,
-	          maskAnimation: 'fade',
+	          maskAnimation: "fade",
 	          visible: this.state.visible,
 	          onClose: this.handleClose,
 	          style: { width: 600 }

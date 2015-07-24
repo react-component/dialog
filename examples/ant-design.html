@@ -227,7 +227,7 @@ require(<span class="hljs-string">'rc-dialog/assets/index.css'</span>);
 <span class="hljs-keyword">var</span> MyControl = React.createClass({
   handleTrigger: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.d = showDialog(&lt;DialogContent /&gt;, {
-      title: <span class="hljs-string">"第二个弹框"</span>,
+      title: &lt;p&gt; 第二个弹框 &lt;input /&gt;&lt;/p&gt;,
       animation: <span class="hljs-string">'zoom'</span>,
       maskAnimation: <span class="hljs-string">'fade'</span>,
       onBeforeClose: <span class="hljs-keyword">this</span>.beforeClose,

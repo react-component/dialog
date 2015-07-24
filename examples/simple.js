@@ -3,17 +3,17 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(33);
+	module.exports = __webpack_require__(36);
 
 
 /***/ },
 
-/***/ 33:
+/***/ 36:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	__webpack_require__(34);
+	__webpack_require__(37);
 	var React = __webpack_require__(6);
 	var Dialog = __webpack_require__(7);
 	
@@ -36,8 +36,8 @@ webpackJsonp([2],{
 	  React.createElement(
 	    Dialog,
 	    {
-	      title: '第一个弹框',
-	      width: '500',
+	      title: "第一个弹框",
+	      width: "500",
 	      zIndex: 100,
 	      visible: true,
 	      onClose: close,
@@ -53,13 +53,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 34:
+/***/ 37:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(35);
+	var content = __webpack_require__(38);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(5)(content, {});
@@ -77,7 +77,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 35:
+/***/ 38:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();

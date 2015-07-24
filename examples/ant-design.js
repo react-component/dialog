@@ -66,7 +66,12 @@ webpackJsonp([0],[
 	
 	  handleTrigger: function handleTrigger() {
 	    this.d = showDialog(React.createElement(DialogContent, null), {
-	      title: '第二个弹框',
+	      title: React.createElement(
+	        'p',
+	        null,
+	        ' 第二个弹框 ',
+	        React.createElement('input', null)
+	      ),
 	      animation: 'zoom',
 	      maskAnimation: 'fade',
 	      onBeforeClose: this.beforeClose,
@@ -80,7 +85,7 @@ webpackJsonp([0],[
 	      null,
 	      React.createElement(
 	        'button',
-	        { className: 'btn btn-primary', onClick: this.handleTrigger },
+	        { className: "btn btn-primary", onClick: this.handleTrigger },
 	        'show dialog'
 	      )
 	    );
