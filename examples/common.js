@@ -340,19 +340,33 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var React = __webpack_require__(6);
-	var Dialog = __webpack_require__(10);
-	var assign = __webpack_require__(27);
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Dialog = __webpack_require__(10);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
+	var _objectAssign = __webpack_require__(27);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
 	function noop() {}
 	
@@ -468,15 +482,15 @@
 	      var props = this.props;
 	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'mask', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
 	
-	      assign(dialogProps, {
+	      (0, _objectAssign2['default'])(dialogProps, {
 	        onClose: this.handleClose,
 	        onShow: this.handleShow,
 	        visible: this.state.visible,
 	        onRequestClose: this.requestClose
 	      }, extra);
 	
-	      return React.createElement(
-	        Dialog,
+	      return _react2['default'].createElement(
+	        _Dialog2['default'],
 	        _extends({}, dialogProps, { key: "dialog" }),
 	        props.children
 	      );
@@ -498,13 +512,13 @@
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
 	      if (this.props.renderToBody && this.dialogRendered) {
-	        React.render(this.getDialogElement(), this.getDialogContainer());
+	        _react2['default'].render(this.getDialogElement(), this.getDialogContainer());
 	      }
 	    }
 	  }, {
 	    key: 'cleanDialogContainer',
 	    value: function cleanDialogContainer() {
-	      React.unmountComponentAtNode(this.getDialogContainer());
+	      _react2['default'].unmountComponentAtNode(this.getDialogContainer());
 	      document.body.removeChild(this.dialogContainer);
 	      this.dialogContainer = null;
 	    }
@@ -513,7 +527,7 @@
 	    value: function componentWillUnmount() {
 	      if (this.dialogContainer) {
 	        if (this.state.visible) {
-	          React.render(this.getDialogElement({
+	          _react2['default'].render(this.getDialogElement({
 	            onClose: this.cleanDialogContainer,
 	            visible: false
 	          }), this.dialogContainer);
@@ -525,7 +539,7 @@
 	  }]);
 	
 	  return DialogWrap;
-	})(React.Component);
+	})(_react2['default'].Component);
 	
 	DialogWrap.defaultProps = {
 	  className: '',
@@ -542,7 +556,23 @@
 	  onClose: noop
 	};
 	
-	module.exports = DialogWrap;
+	DialogWrap.PropTypes = {
+	  className: _react2['default'].PropTypes.string,
+	  align: _react2['default'].PropTypes.shape({
+	    align: _react2['default'].PropTypes.array,
+	    offset: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number)
+	  }),
+	  renderToBody: _react2['default'].PropTypes.bool,
+	  mask: _react2['default'].PropTypes.bool,
+	  closable: _react2['default'].PropTypes.bool,
+	  prefixCls: _react2['default'].PropTypes.string,
+	  visible: _react2['default'].PropTypes.bool,
+	  onShow: _react2['default'].PropTypes.func,
+	  onClose: _react2['default'].PropTypes.func
+	};
+	
+	exports['default'] = DialogWrap;
+	module.exports = exports['default'];
 
 /***/ },
 /* 10 */
@@ -550,18 +580,35 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var React = __webpack_require__(6);
-	var Align = __webpack_require__(11);
-	var rcUtil = __webpack_require__(15);
-	var KeyCode = rcUtil.KeyCode;
-	var assign = __webpack_require__(27);
-	var Animate = __webpack_require__(28);
+	var _react = __webpack_require__(6);
 	
-	var Dialog = React.createClass({
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _rcAlign = __webpack_require__(11);
+	
+	var _rcAlign2 = _interopRequireDefault(_rcAlign);
+	
+	var _rcUtil = __webpack_require__(15);
+	
+	var _objectAssign = __webpack_require__(27);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
+	var _rcAnimate = __webpack_require__(28);
+	
+	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var Dialog = _react2['default'].createClass({
 	  displayName: 'Dialog',
 	
 	  getDialogElement: function getDialogElement() {
@@ -581,7 +628,7 @@
 	
 	    var footer;
 	    if (props.footer) {
-	      footer = React.createElement(
+	      footer = _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-footer' },
 	        props.footer
@@ -590,15 +637,15 @@
 	
 	    var header;
 	    if (props.title || props.closable) {
-	      header = React.createElement(
+	      header = _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-header' },
-	        closable ? React.createElement(
+	        closable ? _react2['default'].createElement(
 	          'a',
 	          { tabIndex: "0", onClick: props.onRequestClose, className: prefixCls + '-close' },
-	          React.createElement('span', { className: prefixCls + '-close-x' })
+	          _react2['default'].createElement('span', { className: prefixCls + '-close-x' })
 	        ) : null,
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'div',
 	          { className: prefixCls + '-title' },
 	          props.title
@@ -606,7 +653,7 @@
 	      );
 	    }
 	
-	    var style = assign({}, props.style, dest);
+	    var style = (0, _objectAssign2['default'])({}, props.style, dest);
 	    var dialogProps = {
 	      className: [props.prefixCls, props.className].join(' '),
 	      tabIndex: '0',
@@ -616,37 +663,39 @@
 	      onKeyDown: this.handleKeyDown
 	    };
 	    var transitionName = this.getTransitionName();
-	    var dialogElement = React.createElement(
+	    var dialogElement = _react2['default'].createElement(
 	      'div',
 	      dialogProps,
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
 	        header,
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'div',
 	          { className: prefixCls + '-body' },
 	          props.children
 	        ),
 	        footer
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'div',
 	        { tabIndex: "0", ref: 'sentinel', style: { width: 0, height: 0, overflow: 'hidden' } },
 	        'sentinel'
 	      )
 	    );
-	    return React.createElement(
-	      Animate,
+	    // add key for align to keep animate children stable
+	    return _react2['default'].createElement(
+	      _rcAnimate2['default'],
 	      { key: "dialog",
 	        showProp: "dialogVisible",
 	        onEnd: this.handleAnimateEnd,
 	        transitionName: transitionName,
 	        component: "",
 	        animateMount: true },
-	      React.createElement(
-	        Align,
+	      _react2['default'].createElement(
+	        _rcAlign2['default'],
 	        { align: props.align,
+	          key: "dialog",
 	          dialogVisible: props.visible,
 	          monitorBufferTime: 80,
 	          monitorWindowResize: true,
@@ -669,10 +718,10 @@
 	    var maskElement;
 	    if (props.mask) {
 	      var maskTransition = this.getMaskTransitionName();
-	      maskElement = React.createElement('div', _extends({}, maskProps, { className: props.prefixCls + '-mask' }));
+	      maskElement = _react2['default'].createElement('div', _extends({}, maskProps, { className: props.prefixCls + '-mask', key: "mask" }));
 	      if (maskTransition) {
-	        maskElement = React.createElement(
-	          Animate,
+	        maskElement = _react2['default'].createElement(
+	          _rcAnimate2['default'],
 	          { key: "mask", showProp: "data-visible", animateMount: true, component: "",
 	            transitionName: maskTransition },
 	          maskElement
@@ -702,7 +751,7 @@
 	      // first show
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
-	        React.findDOMNode(this.refs.dialog).focus();
+	        _react2['default'].findDOMNode(this.refs.dialog).focus();
 	      }
 	    } else if (prevProps.visible) {
 	      if (props.mask && this.lastOutSideFocusNode) {
@@ -719,21 +768,21 @@
 	  handleKeyDown: function handleKeyDown(e) {
 	    var props = this.props;
 	    if (props.closable) {
-	      if (e.keyCode === KeyCode.ESC) {
+	      if (e.keyCode === _rcUtil.KeyCode.ESC) {
 	        this.props.onRequestClose();
 	      }
 	    }
 	    // keep focus inside dialog
 	    if (props.visible) {
-	      if (e.keyCode === KeyCode.TAB) {
+	      if (e.keyCode === _rcUtil.KeyCode.TAB) {
 	        var activeElement = document.activeElement;
-	        var dialogRoot = React.findDOMNode(this.refs.dialog);
-	        var sentinel = React.findDOMNode(this.refs.sentinel);
+	        var dialogRoot = _react2['default'].findDOMNode(this.refs.dialog);
+	        var sentinel = _react2['default'].findDOMNode(this.refs.sentinel);
 	        if (e.shiftKey) {
 	          if (activeElement === dialogRoot) {
 	            sentinel.focus();
 	          }
-	        } else if (activeElement === React.findDOMNode(this.refs.sentinel)) {
+	        } else if (activeElement === _react2['default'].findDOMNode(this.refs.sentinel)) {
 	          dialogRoot.focus();
 	        }
 	      }
@@ -770,7 +819,7 @@
 	    if (this.props.closable) {
 	      this.props.onRequestClose();
 	    }
-	    React.findDOMNode(this.refs.dialog).focus();
+	    _react2['default'].findDOMNode(this.refs.dialog).focus();
 	  },
 	
 	  render: function render() {
@@ -780,15 +829,16 @@
 	    var prefixCls = props.prefixCls;
 	    var className = (_className = {}, _defineProperty(_className, prefixCls + '-wrap', 1), _defineProperty(_className, prefixCls + '-wrap-hidden', !props.visible), _className);
 	
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
-	      { className: rcUtil.classSet(className) },
+	      { className: (0, _rcUtil.classSet)(className) },
 	      [this.getMaskElement(), this.getDialogElement()]
 	    );
 	  }
 	});
 	
-	module.exports = Dialog;
+	exports['default'] = Dialog;
+	module.exports = exports['default'];
 
 /***/ },
 /* 11 */
@@ -848,6 +898,16 @@
 	  /*eslint-enable eqeqeq */
 	}
 	
+	function buffer(fn, ms) {
+	  var timer;
+	  return function () {
+	    if (timer) {
+	      clearTimeout(timer);
+	    }
+	    timer = setTimeout(fn, ms);
+	  };
+	}
+	
 	var Align = (function (_React$Component) {
 	  _inherits(Align, _React$Component);
 	
@@ -865,19 +925,25 @@
 	
 	      var props = this.props;
 	      // parent ref not attached ....
-	      setTimeout(function () {
-	        (0, _domAlign2['default'])(_react2['default'].findDOMNode(_this), props.target(), props.align);
-	      }, 0);
-	
-	      if (props.monitorWindowResize) {
-	        this.startMonitorWindowResize();
+	      if (!props.disabled) {
+	        this.hackRefTimer = setTimeout(function () {
+	          (0, _domAlign2['default'])(_react2['default'].findDOMNode(_this), props.target(), props.align);
+	        }, 0);
+	        if (props.monitorWindowResize) {
+	          this.startMonitorWindowResize();
+	        }
 	      }
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps() {
+	      this.clearHackRefTimer();
 	    }
 	  }, {
 	    key: 'startMonitorWindowResize',
 	    value: function startMonitorWindowResize() {
 	      if (!this.resizeHandler) {
-	        this.resizeHandler = _rcUtil2['default'].Dom.addEventListener(window, 'resize', this.handleWindowResize);
+	        this.resizeHandler = _rcUtil2['default'].Dom.addEventListener(window, 'resize', buffer(this.handleWindowResize, this.props.monitorBufferTime));
 	      }
 	    }
 	  }, {
@@ -889,41 +955,58 @@
 	      }
 	    }
 	  }, {
+	    key: 'clearHackRefTimer',
+	    value: function clearHackRefTimer() {
+	      if (this.hackRefTimer) {
+	        clearTimeout(this.hackRefTimer);
+	        this.hackRefTimer = null;
+	      }
+	    }
+	  }, {
 	    key: 'handleWindowResize',
 	    value: function handleWindowResize() {
 	      var props = this.props;
-	      (0, _domAlign2['default'])(_react2['default'].findDOMNode(this), props.target(), props.align);
+	      if (!props.disabled) {
+	        (0, _domAlign2['default'])(_react2['default'].findDOMNode(this), props.target(), props.align);
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.stopMonitorWindowResize();
+	      this.clearHackRefTimer();
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps) {
+	      var _this2 = this;
+	
 	      var reAlign = false;
 	      var props = this.props;
 	      var currentTarget;
 	
-	      if (prevProps.align !== props.align) {
-	        reAlign = true;
-	        currentTarget = props.target();
-	      } else {
-	        var lastTarget = prevProps.target();
-	        currentTarget = props.target();
-	        if (isWindow(lastTarget) && isWindow(currentTarget)) {
-	          reAlign = false;
-	        } else if (lastTarget !== currentTarget) {
-	          reAlign = true;
+	      this.hackRefTimer = setTimeout(function () {
+	        if (!props.disabled) {
+	          if (prevProps.disabled || prevProps.align !== props.align) {
+	            reAlign = true;
+	            currentTarget = props.target();
+	          } else {
+	            var lastTarget = prevProps.target();
+	            currentTarget = props.target();
+	            if (isWindow(lastTarget) && isWindow(currentTarget)) {
+	              reAlign = false;
+	            } else if (lastTarget !== currentTarget) {
+	              reAlign = true;
+	            }
+	          }
 	        }
-	      }
 	
-	      if (reAlign) {
-	        (0, _domAlign2['default'])(_react2['default'].findDOMNode(this), currentTarget, props.align);
-	      }
+	        if (reAlign) {
+	          (0, _domAlign2['default'])(_react2['default'].findDOMNode(_this2), currentTarget, props.align);
+	        }
+	      }, 0);
 	
-	      if (props.monitorWindowResize) {
+	      if (props.monitorWindowResize && !props.disabled) {
 	        this.startMonitorWindowResize();
 	      } else {
 	        this.stopMonitorWindowResize();
@@ -942,12 +1025,18 @@
 	Align.defaultProps = {
 	  target: function target() {
 	    return window;
-	  }
+	  },
+	  monitorBufferTime: 50,
+	  monitorWindowResize: false,
+	  disabled: false
 	};
 	
 	Align.PropTypes = {
 	  align: _react2['default'].PropTypes.object.isRequired,
-	  target: _react2['default'].PropTypes.func
+	  target: _react2['default'].PropTypes.func,
+	  monitorBufferTime: _react2['default'].PropTypes.number,
+	  monitorWindowResize: _react2['default'].PropTypes.bool,
+	  disabled: _react2['default'].PropTypes.bool
 	};
 	
 	exports['default'] = Align;
@@ -2793,7 +2882,7 @@
 	      this.performLeave(key);
 	    } else {
 	      this.props.onEnd(key, true);
-	      if (this.isMounted()) {
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
 	        this.setState({
 	          children: currentChildren
 	        });
@@ -2823,7 +2912,7 @@
 	      this.performEnter(key);
 	    } else {
 	      this.props.onEnd(key, false);
-	      if (this.isMounted()) {
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
 	        this.setState({
 	          children: currentChildren
 	        });
@@ -2963,6 +3052,18 @@
 	      });
 	    }
 	    return found;
+	  },
+	
+	  isSameChildren: function isSameChildren(c1, c2) {
+	    var same = c1.length === c2.length;
+	    if (same) {
+	      c1.forEach(function (c, i) {
+	        if (c !== c2[i]) {
+	          same = false;
+	        }
+	      });
+	    }
+	    return same;
 	  },
 	
 	  mergeChildren: function mergeChildren(prev, next) {

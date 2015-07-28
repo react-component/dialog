@@ -13,9 +13,17 @@ webpackJsonp([2],{
 
 	'use strict';
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
 	__webpack_require__(37);
-	var React = __webpack_require__(6);
-	var Dialog = __webpack_require__(7);
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _rcDialog = __webpack_require__(7);
+	
+	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
 	function close() {
 	  console.log('close');
@@ -25,16 +33,16 @@ webpackJsonp([2],{
 	  console.log('show');
 	}
 	
-	React.render(React.createElement(
+	_react2['default'].render(_react2['default'].createElement(
 	  'div',
 	  null,
-	  React.createElement(
+	  _react2['default'].createElement(
 	    'p',
 	    null,
 	    'does not support render visible on server!'
 	  ),
-	  React.createElement(
-	    Dialog,
+	  _react2['default'].createElement(
+	    _rcDialog2['default'],
 	    {
 	      title: "第一个弹框",
 	      width: "500",
@@ -43,9 +51,9 @@ webpackJsonp([2],{
 	      onClose: close,
 	      onShow: show
 	    },
-	    React.createElement(
+	    _react2['default'].createElement(
 	      'p',
-	      null,
+	      { key: "1" },
 	      '第一个dialog'
 	    )
 	  )

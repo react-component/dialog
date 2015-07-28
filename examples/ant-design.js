@@ -13,9 +13,18 @@ webpackJsonp([0],[
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
 	__webpack_require__(2);
-	var React = __webpack_require__(6);
-	var Dialog = __webpack_require__(7);
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _rcDialog = __webpack_require__(7);
+	
+	var _rcDialog2 = _interopRequireDefault(_rcDialog);
+	
 	var container;
 	
 	function showDialog(content, props) {
@@ -28,10 +37,10 @@ webpackJsonp([0],[
 	    if (close) {
 	      close();
 	    }
-	    React.unmountComponentAtNode(container);
+	    _react2['default'].unmountComponentAtNode(container);
 	  };
-	  var dialog = React.render(React.createElement(
-	    Dialog,
+	  var dialog = _react2['default'].render(_react2['default'].createElement(
+	    _rcDialog2['default'],
 	    _extends({}, props, { renderToBody: false }),
 	    content
 	  ), container);
@@ -39,7 +48,7 @@ webpackJsonp([0],[
 	  return dialog;
 	}
 	
-	var DialogContent = React.createClass({
+	var DialogContent = _react2['default'].createClass({
 	  displayName: 'DialogContent',
 	
 	  getInitialState: function getInitialState() {
@@ -49,10 +58,10 @@ webpackJsonp([0],[
 	  },
 	
 	  render: function render() {
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        'basic modal'
@@ -61,16 +70,16 @@ webpackJsonp([0],[
 	  }
 	});
 	
-	var MyControl = React.createClass({
+	var MyControl = _react2['default'].createClass({
 	  displayName: 'MyControl',
 	
 	  handleTrigger: function handleTrigger() {
-	    this.d = showDialog(React.createElement(DialogContent, null), {
-	      title: React.createElement(
+	    this.d = showDialog(_react2['default'].createElement(DialogContent, null), {
+	      title: _react2['default'].createElement(
 	        'p',
 	        null,
 	        ' 第二个弹框 ',
-	        React.createElement('input', null)
+	        _react2['default'].createElement('input', null)
 	      ),
 	      animation: 'zoom',
 	      maskAnimation: 'fade',
@@ -80,10 +89,10 @@ webpackJsonp([0],[
 	  },
 	
 	  render: function render() {
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'button',
 	        { className: "btn btn-primary", onClick: this.handleTrigger },
 	        'show dialog'
@@ -92,15 +101,15 @@ webpackJsonp([0],[
 	  }
 	});
 	
-	React.render(React.createElement(
+	_react2['default'].render(_react2['default'].createElement(
 	  'div',
 	  null,
-	  React.createElement(
+	  _react2['default'].createElement(
 	    'h2',
 	    null,
 	    'render dialog standalone'
 	  ),
-	  React.createElement(MyControl, null)
+	  _react2['default'].createElement(MyControl, null)
 	), document.getElementById('__react-content'));
 
 /***/ },

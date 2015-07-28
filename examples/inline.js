@@ -45,12 +45,21 @@ webpackJsonp([1],{
 
 	'use strict';
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
 	__webpack_require__(2);
-	var React = __webpack_require__(6);
-	var Dialog = __webpack_require__(7);
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _rcDialog = __webpack_require__(7);
+	
+	var _rcDialog2 = _interopRequireDefault(_rcDialog);
+	
 	var container;
 	
-	var DialogContent = React.createClass({
+	var DialogContent = _react2['default'].createClass({
 	  displayName: 'DialogContent',
 	
 	  getInitialState: function getInitialState() {
@@ -67,61 +76,61 @@ webpackJsonp([1],{
 	  },
 	
 	  render: function render() {
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      React.createElement('input', { onChange: this.onChange,
+	      _react2['default'].createElement('input', { onChange: this.onChange,
 	
 	        value: this.state.value }),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'div',
 	        { className: "modal-footer" },
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'button',
 	          { className: "btn", onClick: this.props.onClose },
 	          'Close'
 	        ),
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'button',
 	          { className: "btn", onClick: this.props.onDestroy },
 	          'destroy'
 	        ),
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'button',
 	          { className: "btn btn-primary", onClick: this.props.handleSave },
 	          'Save changes'
@@ -131,7 +140,7 @@ webpackJsonp([1],{
 	  }
 	});
 	
-	var MyControl = React.createClass({
+	var MyControl = _react2['default'].createClass({
 	  displayName: 'MyControl',
 	
 	  getInitialState: function getInitialState() {
@@ -182,29 +191,29 @@ webpackJsonp([1],{
 	    if (this.state.destroy) {
 	      return null;
 	    }
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'button',
 	        { className: "btn btn-primary", onClick: this.handleTrigger },
 	        'show dialog'
 	      ),
 	      '   ',
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'label',
 	        null,
-	        React.createElement('input', { type: "checkbox", checked: this.state.closable, onChange: this.toggleClosable }),
+	        _react2['default'].createElement('input', { type: "checkbox", checked: this.state.closable, onChange: this.toggleClosable }),
 	        'closable'
 	      ),
 	      '   ',
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'button',
 	        { className: "btn btn-primary", onClick: this.handleDestroy },
 	        'destroy'
 	      ),
-	      React.createElement(
-	        Dialog,
+	      _react2['default'].createElement(
+	        _rcDialog2['default'],
 	        {
 	          ref: 'dialog',
 	          title: "第二个弹框",
@@ -215,22 +224,22 @@ webpackJsonp([1],{
 	          onClose: this.handleClose,
 	          style: { width: 600 }
 	        },
-	        React.createElement(DialogContent, { onChange: this.onChange, onClose: this.handleClose,
+	        _react2['default'].createElement(DialogContent, { onChange: this.onChange, onClose: this.handleClose,
 	          onDestroy: this.handleDestroy })
 	      )
 	    );
 	  }
 	});
 	
-	React.render(React.createElement(
+	_react2['default'].render(_react2['default'].createElement(
 	  'div',
 	  null,
-	  React.createElement(
+	  _react2['default'].createElement(
 	    'h2',
 	    null,
 	    'render dialog inside component'
 	  ),
-	  React.createElement(MyControl, null)
+	  _react2['default'].createElement(MyControl, null)
 	), document.getElementById('__react-content'));
 
 /***/ }

@@ -79,20 +79,33 @@ webpackJsonp([3],[
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
 	__webpack_require__(40);
+	
 	__webpack_require__(37);
-	var React = __webpack_require__(6);
-	var Dialog = __webpack_require__(7);
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _rcDialog = __webpack_require__(7);
+	
+	var _rcDialog2 = _interopRequireDefault(_rcDialog);
+	
+	var _bluebird = __webpack_require__(47);
+	
+	var _bluebird2 = _interopRequireDefault(_bluebird);
+	
 	var container;
-	var Promise = __webpack_require__(47);
 	
 	function showDialog(content, props) {
 	  if (!container) {
 	    container = document.createElement('div');
 	    document.body.appendChild(container);
 	  }
-	  var dialog = React.render(React.createElement(
-	    Dialog,
+	  var dialog = _react2['default'].render(_react2['default'].createElement(
+	    _rcDialog2['default'],
 	    _extends({}, props, { renderToBody: false }),
 	    content
 	  ), container);
@@ -100,7 +113,7 @@ webpackJsonp([3],[
 	  return dialog;
 	}
 	
-	var DialogContent = React.createClass({
+	var DialogContent = _react2['default'].createClass({
 	  displayName: 'DialogContent',
 	
 	  getInitialState: function getInitialState() {
@@ -117,54 +130,54 @@ webpackJsonp([3],[
 	  },
 	
 	  render: function render() {
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      React.createElement('input', { onChange: this.onChange, value: this.state.value }),
-	      React.createElement(
+	      _react2['default'].createElement('input', { onChange: this.onChange, value: this.state.value }),
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'p',
 	        null,
 	        '第二个弹出框内容'
 	      ),
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'div',
 	        { className: "modal-footer" },
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'button',
 	          { className: "btn", onClick: this.props.handleClose },
 	          'Close'
 	        ),
-	        React.createElement(
+	        _react2['default'].createElement(
 	          'button',
 	          { className: "btn btn-primary", onClick: this.props.handleSave },
 	          'Save changes'
@@ -174,7 +187,7 @@ webpackJsonp([3],[
 	  }
 	});
 	
-	var MyControl = React.createClass({
+	var MyControl = _react2['default'].createClass({
 	  displayName: 'MyControl',
 	
 	  onChange: function onChange(v) {
@@ -184,7 +197,7 @@ webpackJsonp([3],[
 	  beforeClose: function beforeClose() {
 	    var _this = this;
 	
-	    return new Promise(function (resolve) {
+	    return new _bluebird2['default'](function (resolve) {
 	      setTimeout(function () {
 	        if (!_this.dialogContentInput) {
 	          if (confirm('input is empty, decide to close?')) {
@@ -200,7 +213,7 @@ webpackJsonp([3],[
 	  },
 	
 	  handleTrigger: function handleTrigger() {
-	    this.d = showDialog(React.createElement(DialogContent, { onChange: this.onChange, handleClose: this.requestClose, handleSave: this.requestClose }), {
+	    this.d = showDialog(_react2['default'].createElement(DialogContent, { onChange: this.onChange, handleClose: this.requestClose, handleSave: this.requestClose }), {
 	      title: "第二个弹框",
 	      onBeforeClose: this.beforeClose,
 	      style: { width: 600 }
@@ -208,10 +221,10 @@ webpackJsonp([3],[
 	  },
 	
 	  render: function render() {
-	    return React.createElement(
+	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      React.createElement(
+	      _react2['default'].createElement(
 	        'button',
 	        { className: "btn btn-primary", onClick: this.handleTrigger },
 	        'show dialog'
@@ -220,15 +233,15 @@ webpackJsonp([3],[
 	  }
 	});
 	
-	React.render(React.createElement(
+	_react2['default'].render(_react2['default'].createElement(
 	  'div',
 	  null,
-	  React.createElement(
+	  _react2['default'].createElement(
 	    'h1',
 	    null,
 	    'render dialog standalone'
 	  ),
-	  React.createElement(MyControl, null)
+	  _react2['default'].createElement(MyControl, null)
 	), document.getElementById('__react-content'));
 
 /***/ },
