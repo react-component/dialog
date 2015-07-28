@@ -1,8 +1,8 @@
 'use strict';
 
-require('rc-dialog/assets/bootstrap.css');
-var React = require('react');
-var Dialog = require('rc-dialog');
+import 'rc-dialog/assets/bootstrap.css';
+import React from 'react';
+import Dialog from 'rc-dialog';
 
 function close() {
   console.log('close');
@@ -22,7 +22,7 @@ React.render(<div>
     onClose={close}
     onShow={show}
   >
-    <p>第一个dialog</p>
+    <p key="1">第一个dialog</p>
   </Dialog>
 
 </div>,document.getElementById('__react-content'));

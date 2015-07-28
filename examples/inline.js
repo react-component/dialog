@@ -1,8 +1,8 @@
 'use strict';
 
-require('rc-dialog/assets/index.css');
-var React = require('react');
-var Dialog = require('rc-dialog');
+import 'rc-dialog/assets/index.css';
+import React from 'react';
+import Dialog from 'rc-dialog';
 var container;
 
 var DialogContent = React.createClass({

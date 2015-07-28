@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react');
-var Dialog = require('./Dialog');
-var assign = require('object-assign');
+import React from 'react';
+import Dialog from './Dialog';
+import assign from 'object-assign';
 
 function noop() {
 }
@@ -174,4 +174,19 @@ DialogWrap.defaultProps = {
   onClose: noop
 };
 
-module.exports = DialogWrap;
+DialogWrap.PropTypes = {
+  className: React.PropTypes.string,
+  align: React.PropTypes.shape({
+    align: React.PropTypes.array,
+    offset: React.PropTypes.arrayOf(React.PropTypes.number)
+  }),
+  renderToBody: React.PropTypes.bool,
+  mask: React.PropTypes.bool,
+  closable: React.PropTypes.bool,
+  prefixCls: React.PropTypes.string,
+  visible: React.PropTypes.bool,
+  onShow: React.PropTypes.func,
+  onClose: React.PropTypes.func
+};
+
+export default DialogWrap;

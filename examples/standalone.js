@@ -1,11 +1,11 @@
 'use strict';
 
-require('bootstrap/dist/css/bootstrap.css');
-require('rc-dialog/assets/bootstrap.css');
-var React = require('react');
-var Dialog = require('rc-dialog');
+import 'bootstrap/dist/css/bootstrap.css';
+import 'rc-dialog/assets/bootstrap.css';
+import React from 'react';
+import Dialog from 'rc-dialog';
+import Promise from 'bluebird';
 var container;
-var Promise = require('bluebird');
 
 function showDialog(content, props) {
   if (!container) {

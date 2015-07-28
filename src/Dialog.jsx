@@ -1,11 +1,10 @@
 'use strict';
 
-var React = require('react');
-var Align = require('rc-align');
-var rcUtil = require('rc-util');
-var KeyCode = rcUtil.KeyCode;
-var assign = require('object-assign');
-var Animate = require('rc-animate');
+import React from 'react';
+import Align from 'rc-align';
+import {KeyCode, classSet} from 'rc-util';
+import assign from 'object-assign';
+import Animate from 'rc-animate';
 
 var Dialog = React.createClass({
   getDialogElement() {
@@ -58,16 +57,22 @@ var Dialog = React.createClass({
       </div>
       <div tabIndex="0" ref='sentinel' style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
     </div>;
-    return <Animate key="dialog"
-                    showProp="dialogVisible"
-                    onEnd={this.handleAnimateEnd}
-                    transitionName={transitionName}
-                    component=""
-                    animateMount={true}><Align align={props.align}
-                                               dialogVisible={props.visible}
-                                               monitorBufferTime={80}
-                                               monitorWindowResize={true}
-                                               disabled={!props.visible}>{dialogElement}</Align></Animate>;
+    // add key for align to keep animate children stable
+    return (<Animate key="dialog"
+                     showProp="dialogVisible"
+                     onEnd={this.handleAnimateEnd}
+                     transitionName={transitionName}
+                     component=""
+                     animateMount={true}>
+      <Align align={props.align}
+             key="dialog"
+             dialogVisible={props.visible}
+             monitorBufferTime={80}
+             monitorWindowResize={true}
+             disabled={!props.visible}>
+        {dialogElement}
+      </Align>
+    </Animate>);
   },
 
   getMaskElement() {
@@ -83,7 +88,7 @@ var Dialog = React.createClass({
     var maskElement;
     if (props.mask) {
       var maskTransition = this.getMaskTransitionName();
-      maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`}/>;
+      maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
       if (maskTransition) {
         maskElement = <Animate key="mask" showProp="data-visible" animateMount={true} component=""
                                transitionName={maskTransition}>{maskElement}</Animate>;
@@ -191,10 +196,10 @@ var Dialog = React.createClass({
       [`${prefixCls}-wrap-hidden`]: !props.visible
     };
 
-    return (<div className={rcUtil.classSet(className)}>
+    return (<div className={classSet(className)}>
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
   }
 });
 
-module.exports = Dialog;
+export default Dialog;

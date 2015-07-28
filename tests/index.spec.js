@@ -48,6 +48,7 @@ describe('dialog', function () {
   it('show', function (done) {
     dialog.show();
     setTimeout(function () {
+      expect(callback2).to.be(1);
       expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
       done();
     }, 10);
@@ -71,15 +72,6 @@ describe('dialog', function () {
     dialog.show();
     expect($('.rc-dialog-mask').length).to.be(1);
 
-  });
-
-  it('show', function (done) {
-    dialog.show();
-    setTimeout(function () {
-      expect(callback2).to.be(1);
-      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
-      done();
-    }, 10);
   });
 
   it('click close', function (done) {

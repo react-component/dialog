@@ -54,9 +54,9 @@
     "precommit"
   ],
   "dependencies": {
-    "object-assign": "~2.0.0",
-    "rc-align": "~1.0.0",
-    "rc-animate": "~1.0.0",
-    "rc-util": "~2.0.2"
+    "object-assign": "2.x",
+    "rc-align": "1.x",
+    "rc-animate": "1.x",
+    "rc-util": "2.x"
   }
 }
