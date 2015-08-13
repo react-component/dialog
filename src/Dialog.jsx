@@ -1,6 +1,6 @@
 'use strict';
 
-import React , {findDOMNode} from 'react';
+import React, {findDOMNode} from 'react';
 import Align from 'rc-align';
 import {KeyCode, classSet} from 'rc-util';
 import assign from 'object-assign';
@@ -190,7 +190,7 @@ var Dialog = React.createClass({
     findDOMNode(this.refs.dialog).focus();
   },
 
-  setDialogOrigin(){
+  setDialogOrigin() {
     var dom = findDOMNode(this.refs.dialog);
     var t = this.props.mousePosition;
     if (t && typeof t === 'object') {
