@@ -105,7 +105,7 @@ class DialogWrap extends React.Component {
       'className', 'closable', 'align',
       'title', 'footer', 'mask',
       'animation', 'transitionName',
-      'maskAnimation', 'maskTransitionName',
+      'maskAnimation', 'maskTransitionName', 'mousePosition',
       'prefixCls', 'style', 'width',
       'height', 'zIndex'
     ]);
@@ -116,7 +116,6 @@ class DialogWrap extends React.Component {
       visible: this.state.visible,
       onRequestClose: this.requestClose
     }, extra);
-
     return <Dialog {...dialogProps} key="dialog">
       {props.children}
     </Dialog>;

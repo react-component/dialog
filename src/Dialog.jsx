@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React , {findDOMNode} from 'react';
 import Align from 'rc-align';
 import {KeyCode, classSet} from 'rc-util';
 import assign from 'object-assign';
@@ -31,7 +31,7 @@ var Dialog = React.createClass({
     if (props.title || props.closable) {
       header = <div className={`${prefixCls}-header`}>
         {closable ?
-          (<a tabIndex="0" onClick={props.onRequestClose} className={`${prefixCls}-close`}>
+          (<a tabIndex="0" onClick={this.originClose} className={`${prefixCls}-close`}>
             <span className={`${prefixCls}-close-x`}></span>
           </a>) :
           null}
@@ -49,8 +49,8 @@ var Dialog = React.createClass({
       onKeyDown: this.handleKeyDown
     };
     var transitionName = this.getTransitionName();
-    var dialogElement = <div {...dialogProps} >
-      <div className={`${prefixCls}-content`}>
+    var dialogElement = <div {...dialogProps}>
+      <div className={`${prefixCls}-content`} >
         {header}
         <div className={`${prefixCls}-body`}>{props.children}</div>
         {footer}
@@ -59,17 +59,17 @@ var Dialog = React.createClass({
     </div>;
     // add key for align to keep animate children stable
     return (<Animate key="dialog"
-                     showProp="dialogVisible"
-                     onEnd={this.handleAnimateEnd}
-                     transitionName={transitionName}
-                     component=""
-                     animateMount={true}>
+      showProp="dialogVisible"
+      onEnd={this.handleAnimateEnd}
+      transitionName={transitionName}
+      component=""
+      animateMount={true}>
       <Align align={props.align}
-             key="dialog"
-             dialogVisible={props.visible}
-             monitorBufferTime={80}
-             monitorWindowResize={true}
-             disabled={!props.visible}>
+        key="dialog"
+        dialogVisible={props.visible}
+        monitorBufferTime={80}
+        monitorWindowResize={true}
+        disabled={!props.visible}>
         {dialogElement}
       </Align>
     </Animate>);
@@ -91,7 +91,7 @@ var Dialog = React.createClass({
       maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
       if (maskTransition) {
         maskElement = <Animate key="mask" showProp="data-visible" animateMount={true} component=""
-                               transitionName={maskTransition}>{maskElement}</Animate>;
+          transitionName={maskTransition}>{maskElement}</Animate>;
       }
     }
     return maskElement;
@@ -117,8 +117,10 @@ var Dialog = React.createClass({
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
-        React.findDOMNode(this.refs.dialog).focus();
+        findDOMNode(this.refs.dialog).focus();
       }
+      //更新时的配置中心点
+      this.setDialogOrigin();
     } else if (prevProps.visible) {
       if (props.mask && this.lastOutSideFocusNode) {
         try {
@@ -135,20 +137,20 @@ var Dialog = React.createClass({
     var props = this.props;
     if (props.closable) {
       if (e.keyCode === KeyCode.ESC) {
-        this.props.onRequestClose();
+        this.originClose();
       }
     }
     // keep focus inside dialog
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
         var activeElement = document.activeElement;
-        var dialogRoot = React.findDOMNode(this.refs.dialog);
-        var sentinel = React.findDOMNode(this.refs.sentinel);
+        var dialogRoot = findDOMNode(this.refs.dialog);
+        var sentinel = findDOMNode(this.refs.sentinel);
         if (e.shiftKey) {
           if (activeElement === dialogRoot) {
             sentinel.focus();
           }
-        } else if (activeElement === React.findDOMNode(this.refs.sentinel)) {
+        } else if (activeElement === findDOMNode(this.refs.sentinel)) {
           dialogRoot.focus();
         }
       }
@@ -183,9 +185,25 @@ var Dialog = React.createClass({
 
   handleMaskClick() {
     if (this.props.closable) {
-      this.props.onRequestClose();
+      this.originClose();
     }
-    React.findDOMNode(this.refs.dialog).focus();
+    findDOMNode(this.refs.dialog).focus();
+  },
+
+  setDialogOrigin(){
+    var dom = findDOMNode(this.refs.dialog);
+    var t = this.props.mousePosition;
+    if (t && typeof t === 'object') {
+      dom.style.transformOrigin =
+        (t.x - dom.offsetLeft) + 'px ' +
+        (t.y - dom.offsetTop) + 'px';
+    }
+  },
+
+  originClose() {
+    //关闭时重置中心点，避免窗口变化。
+    this.setDialogOrigin();
+    this.props.onRequestClose();
   },
 
   render() {
