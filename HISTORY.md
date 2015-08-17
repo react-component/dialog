@@ -1,6 +1,10 @@
 # History
 ----
 
+## 5.0.0 2015-08-17
+
+- refactor to clean api. remove onShow onBeforeClose
+
 ## 4.5.0 2015-07-23
 
 use rc-animate & rc-align

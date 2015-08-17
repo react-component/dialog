@@ -74,13 +74,7 @@ var Dialog = require('rc-dialog');
           <td>visible</td>
           <td>Boolean</td>
           <th>false</th>
-          <td></td>
-      </tr>
-      <tr>
-          <td>renderToBody</td>
-          <td>Boolean</td>
-          <th>true</th>
-          <td>whether render dialog to body</td>
+          <td>current dialog's visible status</td>
       </tr>
       <tr>
           <td>animation</td>
@@ -113,10 +107,16 @@ var Dialog = require('rc-dialog');
           <td>whether show close button and click mask to close</td>
       </tr>
       <tr>
-          <td>onBeforeClose</td>
-          <td>function(close)</td>
+          <td>mousePosition</td>
+          <td>{x:number,y:number}</td>
           <th></th>
-          <td>when click close button or mask. argument is a close function</td>
+          <td>set pageX and pageY of current mouse(it will cause transform origin to be set).</td>
+      </tr>
+      <tr>
+          <td>onClose</td>
+          <td>function()</td>
+          <th></th>
+          <td>called when click close button or mask</td>
       </tr>
     </tbody>
 </table>

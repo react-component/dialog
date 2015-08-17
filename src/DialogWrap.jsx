@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import Dialog from './Dialog';
 import assign from 'object-assign';
@@ -8,7 +6,7 @@ function noop() {
 }
 
 function copy(obj, fields) {
-  var ret = {};
+  const ret = {};
   fields.forEach((f)=> {
     if (obj[f] !== undefined) {
       ret[f] = obj[f];
@@ -21,65 +19,51 @@ class DialogWrap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: this.props.visible
+      visible: props.visible,
     };
-    ['cleanDialogContainer', 'requestClose', 'close', 'handleClose', 'handleShow'].forEach((m) => {
+    ['onClose', 'cleanDialogContainer'].forEach((m) => {
       this[m] = this[m].bind(this);
     });
   }
 
+  componentDidMount() {
+    this.componentDidUpdate();
+  }
+
   componentWillReceiveProps(props) {
-    if (this.state.visible !== props.visible) {
-      if (props.visible) {
-        this.show();
-      } else {
-        this.close();
-      }
+    if ('visible' in props) {
+      this.setState({
+        visible: props.visible,
+      });
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (!this.state.visible && !nextState.visible) {
-      return false;
-    }
-    return true;
+    return this.state.visible || nextState.visible;
   }
 
-  show() {
-    if (!this.state.visible) {
-      this.setState({
-        visible: true
-      });
+  componentDidUpdate() {
+    if (this.dialogRendered) {
+      React.render(this.getDialogElement(), this.getDialogContainer());
     }
   }
 
-  close() {
-    if (this.state.visible) {
-      this.setState({
-        visible: false
-      });
-    }
-  }
-
-  requestClose() {
-    var onBeforeClose = this.props.onBeforeClose;
-    var close = this.close;
-    if (onBeforeClose) {
-      var ret;
-      if (onBeforeClose.length) {
-        ret = onBeforeClose(close);
+  componentWillUnmount() {
+    if (this.dialogContainer) {
+      if (this.state.visible) {
+        React.render(this.getDialogElement({
+          onAfterClose: this.cleanDialogContainer,
+          onClose: noop,
+          visible: false,
+        }), this.dialogContainer);
       } else {
-        ret = onBeforeClose();
-        if (!ret) {
-          close();
-        }
+        this.cleanDialogContainer();
       }
-      if (ret && ret.then) {
-        ret.then(close);
-      }
-    } else {
-      close();
     }
+  }
+
+  onClose() {
+    this.props.onClose();
   }
 
   getDialogContainer() {
@@ -91,51 +75,29 @@ class DialogWrap extends React.Component {
     return this.dialogContainer;
   }
 
-  handleClose() {
-    this.props.onClose();
-  }
-
-  handleShow() {
-    this.props.onShow();
-  }
-
   getDialogElement(extra) {
-    var props = this.props;
-    var dialogProps = copy(props, [
+    const props = this.props;
+    const dialogProps = copy(props, [
       'className', 'closable', 'align',
       'title', 'footer', 'mask',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName', 'mousePosition',
       'prefixCls', 'style', 'width',
-      'height', 'zIndex'
+      'height', 'zIndex',
     ]);
 
     assign(dialogProps, {
-      onClose: this.handleClose,
-      onShow: this.handleShow,
+      onClose: this.onClose,
       visible: this.state.visible,
-      onRequestClose: this.requestClose
     }, extra);
-    return <Dialog {...dialogProps} key="dialog">
+    return (<Dialog {...dialogProps} key="dialog">
       {props.children}
-    </Dialog>;
+    </Dialog>);
   }
 
   render() {
-    if (this.state.visible) {
-      this.dialogRendered = true;
-    }
-    return this.props.renderToBody ? null : (this.dialogRendered ? this.getDialogElement() : null);
-  }
-
-  componentDidMount() {
-    this.componentDidUpdate();
-  }
-
-  componentDidUpdate() {
-    if (this.props.renderToBody && this.dialogRendered) {
-      React.render(this.getDialogElement(), this.getDialogContainer());
-    }
+    this.dialogRendered = this.dialogRendered || this.state.visible;
+    return null;
   }
 
   cleanDialogContainer() {
@@ -143,49 +105,31 @@ class DialogWrap extends React.Component {
     document.body.removeChild(this.dialogContainer);
     this.dialogContainer = null;
   }
-
-  componentWillUnmount() {
-    if (this.dialogContainer) {
-      if (this.state.visible) {
-        React.render(this.getDialogElement({
-          onClose: this.cleanDialogContainer,
-          visible: false
-        }), this.dialogContainer);
-      } else {
-        this.cleanDialogContainer();
-      }
-    }
-  }
 }
 
 DialogWrap.defaultProps = {
   className: '',
   align: {
     points: ['tc', 'tc'],
-    offset: [0, 100]
+    offset: [0, 100],
   },
-  renderToBody: true,
   mask: true,
   closable: true,
   prefixCls: 'rc-dialog',
-  visible: false,
-  onShow: noop,
-  onClose: noop
+  onClose: noop,
 };
 
-DialogWrap.PropTypes = {
+DialogWrap.propTypes = {
   className: React.PropTypes.string,
   align: React.PropTypes.shape({
     align: React.PropTypes.array,
-    offset: React.PropTypes.arrayOf(React.PropTypes.number)
+    offset: React.PropTypes.arrayOf(React.PropTypes.number),
   }),
-  renderToBody: React.PropTypes.bool,
   mask: React.PropTypes.bool,
   closable: React.PropTypes.bool,
   prefixCls: React.PropTypes.string,
   visible: React.PropTypes.bool,
-  onShow: React.PropTypes.func,
-  onClose: React.PropTypes.func
+  onClose: React.PropTypes.func,
 };
 
 export default DialogWrap;

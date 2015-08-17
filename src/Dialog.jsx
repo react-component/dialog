@@ -1,110 +1,60 @@
-'use strict';
-
 import React, {findDOMNode} from 'react';
 import Align from 'rc-align';
 import {KeyCode, classSet} from 'rc-util';
 import assign from 'object-assign';
 import Animate from 'rc-animate';
 
-var Dialog = React.createClass({
-  getDialogElement() {
-    var props = this.props;
-    var closable = props.closable;
-    var prefixCls = props.prefixCls;
-    var dest = {};
-    if (props.width !== undefined) {
-      dest.width = props.width;
-    }
-    if (props.height !== undefined) {
-      dest.height = props.height;
-    }
-    if (props.zIndex !== undefined) {
-      dest.zIndex = props.zIndex;
-    }
+function noop() {
+}
 
-    var footer;
-    if (props.footer) {
-      footer = (<div className={`${prefixCls}-footer`}>{props.footer}</div>);
+function getScroll(w, top) {
+  let ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
+  const method = 'scroll' + (top ? 'Top' : 'Left');
+  if (typeof ret !== 'number') {
+    const d = w.document;
+    ret = d.documentElement[method];
+    if (typeof ret !== 'number') {
+      ret = d.body[method];
     }
+  }
+  return ret;
+}
 
-    var header;
-    if (props.title || props.closable) {
-      header = <div className={`${prefixCls}-header`}>
-        {closable ?
-          (<a tabIndex="0" onClick={this.originClose} className={`${prefixCls}-close`}>
-            <span className={`${prefixCls}-close-x`}></span>
-          </a>) :
-          null}
-        <div className={`${prefixCls}-title`}>{props.title}</div>
-      </div>;
-    }
+function setTransformOrigin(node, value) {
+  const style = node.style;
+  ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix)=> {
+    style[`${prefix}TransformOrigin`] = value;
+  });
+  style[`transformOrigin`] = value;
+}
 
-    var style = assign({}, props.style, dest);
-    var dialogProps = {
-      className: [props.prefixCls, props.className].join(' '),
-      tabIndex: '0',
-      role: 'dialog',
-      ref: 'dialog',
-      style: style,
-      onKeyDown: this.handleKeyDown
-    };
-    var transitionName = this.getTransitionName();
-    var dialogElement = <div {...dialogProps}>
-      <div className={`${prefixCls}-content`} >
-        {header}
-        <div className={`${prefixCls}-body`}>{props.children}</div>
-        {footer}
-      </div>
-      <div tabIndex="0" ref='sentinel' style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
-    </div>;
-    // add key for align to keep animate children stable
-    return (<Animate key="dialog"
-      showProp="dialogVisible"
-      onEnd={this.handleAnimateEnd}
-      transitionName={transitionName}
-      component=""
-      animateMount={true}>
-      <Align align={props.align}
-        key="dialog"
-        dialogVisible={props.visible}
-        monitorBufferTime={80}
-        monitorWindowResize={true}
-        disabled={!props.visible}>
-        {dialogElement}
-      </Align>
-    </Animate>);
+function offset(el) {
+  const rect = el.getBoundingClientRect();
+  const pos = {
+    left: rect.left,
+    top: rect.top,
+  };
+  const doc = el.ownerDocument;
+  const w = doc.defaultView || doc.parentWindow;
+  pos.left += getScroll(w);
+  pos.top += getScroll(w, 1);
+  return pos;
+}
+
+const Dialog = React.createClass({
+  propTypes: {
+    onAfterClose: React.PropTypes.func,
+    onClose: React.PropTypes.func,
+    closable: React.PropTypes.bool,
+    visible: React.PropTypes.bool,
+    mousePosition: React.PropTypes.object,
   },
 
-  getMaskElement() {
-    var props = this.props;
-    var maskProps = {
-      onClick: this.handleMaskClick,
-      'data-visible': props.visible
+  getDefaultProps() {
+    return {
+      onAfterClose: noop,
+      onClose: noop,
     };
-
-    if (props.zIndex) {
-      maskProps.style = {zIndex: props.zIndex};
-    }
-    var maskElement;
-    if (props.mask) {
-      var maskTransition = this.getMaskTransitionName();
-      maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
-      if (maskTransition) {
-        maskElement = <Animate key="mask" showProp="data-visible" animateMount={true} component=""
-          transitionName={maskTransition}>{maskElement}</Animate>;
-      }
-    }
-    return maskElement;
-  },
-
-  getMaskTransitionName() {
-    var props = this.props;
-    var transitionName = props.maskTransitionName;
-    var animation = props.maskAnimation;
-    if (!transitionName && animation) {
-      transitionName = `${props.prefixCls}-${animation}`;
-    }
-    return transitionName;
   },
 
   componentDidMount() {
@@ -112,40 +62,51 @@ var Dialog = React.createClass({
   },
 
   componentDidUpdate(prevProps) {
-    var props = this.props;
+    const props = this.props;
     if (props.visible) {
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
         findDOMNode(this.refs.dialog).focus();
       }
-      //更新时的配置中心点
-      this.setDialogOrigin();
     } else if (prevProps.visible) {
       if (props.mask && this.lastOutSideFocusNode) {
         try {
           this.lastOutSideFocusNode.focus();
         } catch (e) {
-          // empty
+          this.lastOutSideFocusNode = null;
         }
         this.lastOutSideFocusNode = null;
       }
     }
   },
 
-  handleKeyDown(e) {
-    var props = this.props;
+  onAnimateEnd(key, visible) {
+    if (!visible) {
+      this.props.onAfterClose();
+    }
+  },
+
+  onMaskClick() {
+    if (this.props.closable) {
+      this.close();
+    }
+    findDOMNode(this.refs.dialog).focus();
+  },
+
+  onKeyDown(e) {
+    const props = this.props;
     if (props.closable) {
       if (e.keyCode === KeyCode.ESC) {
-        this.originClose();
+        this.close();
       }
     }
     // keep focus inside dialog
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
-        var activeElement = document.activeElement;
-        var dialogRoot = findDOMNode(this.refs.dialog);
-        var sentinel = findDOMNode(this.refs.sentinel);
+        const activeElement = document.activeElement;
+        const dialogRoot = findDOMNode(this.refs.dialog);
+        const sentinel = findDOMNode(this.refs.sentinel);
         if (e.shiftKey) {
           if (activeElement === dialogRoot) {
             sentinel.focus();
@@ -157,67 +118,145 @@ var Dialog = React.createClass({
     }
   },
 
-  getTransitionName() {
-    var props = this.props;
-    var transitionName = props.transitionName;
-    var animation = props.animation;
+  onAlign(dialogNode) {
+    const mousePosition = this.props.mousePosition;
+    if (this.props.visible) {
+      if (mousePosition) {
+        const elOffset = offset(dialogNode);
+        setTransformOrigin(dialogNode, `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`);
+      } else {
+        setTransformOrigin(dialogNode, '');
+      }
+    }
+  },
+
+  getDialogElement() {
+    const props = this.props;
+    const closable = props.closable;
+    const prefixCls = props.prefixCls;
+    const dest = {};
+    if (props.width !== undefined) {
+      dest.width = props.width;
+    }
+    if (props.height !== undefined) {
+      dest.height = props.height;
+    }
+    if (props.zIndex !== undefined) {
+      dest.zIndex = props.zIndex;
+    }
+
+    let footer;
+    if (props.footer) {
+      footer = (<div className={`${prefixCls}-footer`}>{props.footer}</div>);
+    }
+
+    let header;
+    if (props.title || props.closable) {
+      header = (<div className={`${prefixCls}-header`}>
+        {closable ?
+          (<a tabIndex="0" onClick={this.close} className={`${prefixCls}-close`}>
+            <span className={`${prefixCls}-close-x`}></span>
+          </a>) :
+          null}
+        <div className={`${prefixCls}-title`}>{props.title}</div>
+      </div>);
+    }
+
+    const style = assign({}, props.style, dest);
+    const dialogProps = {
+      className: [props.prefixCls, props.className].join(' '),
+      tabIndex: '0',
+      role: 'dialog',
+      ref: 'dialog',
+      style: style,
+      onKeyDown: this.onKeyDown,
+    };
+    const transitionName = this.getTransitionName();
+    const dialogElement = (<div {...dialogProps}>
+      <div className={`${prefixCls}-content`}>
+        {header}
+        <div className={`${prefixCls}-body`}>{props.children}</div>
+        {footer}
+      </div>
+      <div tabIndex="0" ref="sentinel" style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
+    </div>);
+    // add key for align to keep animate children stable
+    return (<Animate key="dialog"
+                     showProp="dialogVisible"
+                     onEnd={this.onAnimateEnd}
+                     transitionName={transitionName}
+                     component=""
+                     animateMount={true}>
+      <Align align={props.align}
+             key="dialog"
+             onAlign={this.onAlign}
+             dialogVisible={props.visible}
+             monitorBufferTime={80}
+             monitorWindowResize={true}
+             disabled={!props.visible}>
+        {dialogElement}
+      </Align>
+    </Animate>);
+  },
+
+  getMaskElement() {
+    const props = this.props;
+    const maskProps = {
+      onClick: this.onMaskClick,
+      'data-visible': props.visible,
+    };
+
+    if (props.zIndex) {
+      maskProps.style = {zIndex: props.zIndex};
+    }
+    let maskElement;
+    if (props.mask) {
+      const maskTransition = this.getMaskTransitionName();
+      maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
+      if (maskTransition) {
+        maskElement = (<Animate key="mask" showProp="data-visible" animateMount={true} component=""
+                               transitionName={maskTransition}>{maskElement}</Animate>);
+      }
+    }
+    return maskElement;
+  },
+
+  getMaskTransitionName() {
+    const props = this.props;
+    let transitionName = props.maskTransitionName;
+    const animation = props.maskAnimation;
     if (!transitionName && animation) {
       transitionName = `${props.prefixCls}-${animation}`;
     }
     return transitionName;
   },
 
-  handleShow() {
-    this.props.onShow();
-  },
-
-  handleClose() {
-    this.props.onClose();
-  },
-
-  handleAnimateEnd(key, visible) {
-    if (visible) {
-      this.handleShow();
-    } else {
-      this.handleClose();
+  getTransitionName() {
+    const props = this.props;
+    let transitionName = props.transitionName;
+    const animation = props.animation;
+    if (!transitionName && animation) {
+      transitionName = `${props.prefixCls}-${animation}`;
     }
-  },
-
-  handleMaskClick() {
-    if (this.props.closable) {
-      this.originClose();
-    }
-    findDOMNode(this.refs.dialog).focus();
-  },
-
-  setDialogOrigin() {
-    var dom = findDOMNode(this.refs.dialog);
-    var t = this.props.mousePosition;
-    if (t && typeof t === 'object') {
-      dom.style.transformOrigin =
-        (t.x - dom.offsetLeft) + 'px ' +
-        (t.y - dom.offsetTop) + 'px';
-    }
-  },
-
-  originClose() {
-    //关闭时重置中心点，避免窗口变化。
-    this.setDialogOrigin();
-    this.props.onRequestClose();
+    return transitionName;
   },
 
   render() {
-    var props = this.props;
-    var prefixCls = props.prefixCls;
-    var className = {
+    const props = this.props;
+    const prefixCls = props.prefixCls;
+    const className = {
       [`${prefixCls}-wrap`]: 1,
-      [`${prefixCls}-wrap-hidden`]: !props.visible
+      [`${prefixCls}-wrap-hidden`]: !props.visible,
     };
 
     return (<div className={classSet(className)}>
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
-  }
+  },
+
+  close() {
+    this.props.onClose();
+  },
 });
 
 export default Dialog;

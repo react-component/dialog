@@ -3,59 +3,58 @@
 import 'rc-dialog/assets/index.css';
 import React from 'react';
 import Dialog from 'rc-dialog';
-var container;
 
-function showDialog(content, props) {
-  if (!container) {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  }
-  var close = props.onClose;
-  props.onClose = function () {
-    if (close) {
-      close();
-    }
-    React.unmountComponentAtNode(container);
-  };
-  var dialog = React.render(<Dialog {...props} renderToBody={false}>{content}</Dialog>, container);
-  dialog.show();
-  return dialog;
-}
-
-var DialogContent = React.createClass({
-  getInitialState: function () {
+var MyControl = React.createClass({
+  getInitialState(){
     return {
-      value: ''
+      visible:false,
+      destroyOnClose:false,
     };
   },
 
-  render: function () {
-    return <div>
-      <p>basic modal</p>
-    </div>;
-  }
-});
-
-var MyControl = React.createClass({
-  handleTrigger: function (e) {
-    this.d = showDialog(<DialogContent />, {
-      title: <p> 第二个弹框 <input /></p>,
-      animation: 'zoom',
-      maskAnimation: 'fade',
-      onBeforeClose: this.beforeClose,
+  onClick: function (e) {
+    this.setState({
       mousePosition: {
         x:e.pageX,
         y:e.pageY
       },
-      style: {width: 600}
+      visible:true
     });
   },
 
+  onClose(){
+    this.setState({
+      visible:false
+    });
+  },
+
+  onDestroyOnCloseChange(e){
+    this.setState({
+      destroyOnClose:e.target.checked
+    });
+  },
 
   render: function () {
+    var dialog;
+    if(this.state.visible || !this.state.destroyOnClose){
+      dialog= <Dialog visible={this.state.visible}
+              animation="zoom"
+              maskAnimation="fade"
+              onClose={this.onClose}
+              style={{width:600}}
+              mousePosition={this.state.mousePosition} title={<div> 第二个弹框</div>}>
+        <input />
+        <p>basic modal</p>
+      </Dialog>;
+   }
     return (
       <div>
-        <button className="btn btn-primary" onClick={this.handleTrigger}>show dialog</button>
+        <p>
+        <button className="btn btn-primary" onClick={this.onClick}>show dialog</button>
+          &nbsp;
+          <label>destroy on close: <input type="checkbox" checked={this.state.destroyOnClose} onChange={this.onDestroyOnCloseChange}/></label>
+          </p>
+        {dialog}
       </div>
     );
   }
@@ -63,7 +62,7 @@ var MyControl = React.createClass({
 
 React.render(
   <div>
-    <h2>render dialog standalone</h2>
+    <h2>ant-design dialog</h2>
     <MyControl/>
   </div>,
   document.getElementById('__react-content')
