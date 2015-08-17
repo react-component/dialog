@@ -229,84 +229,88 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
 <![endif]-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+  
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-dialog@4.5.0</h1>
+            <h1>rc-dialog@5.0.1</h1>
             <p>dialog ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
         <script src="common.js?nowrap"></script>
         <script src="ant-design.js?nowrap"></script>
-        <div class="highlight"><pre><code><span class="hljs-string">'use strict'</span>;
+        <div class="highlight"><pre><code><span class="hljs-pi">'use strict'</span>;
 
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> 'rc-dialog/assets/index.css';</span>
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> React from 'react';</span>
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> Dialog from 'rc-dialog';</span>
-<span class="hljs-keyword">var</span> container;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-dialog/assets/index.css'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> Dialog <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-dialog'</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showDialog</span><span class="hljs-params">(content, props)</span> </span>{
-  <span class="hljs-keyword">if</span> (!container) {
-    container = document.createElement(<span class="hljs-string">'div'</span>);
-    document.body.appendChild(container);
-  }
-  <span class="hljs-keyword">var</span> close = props.onClose;
-  props.onClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">if</span> (close) {
-      close();
-    }
-    React.unmountComponentAtNode(container);
-  };
-  <span class="hljs-keyword">var</span> dialog = React.render(&lt;Dialog {...props} renderToBody={<span class="hljs-literal">false</span>}&gt;{content}&lt;/Dialog&gt;, container);
-  dialog.show();
-  <span class="hljs-keyword">return</span> dialog;
-}
-
-<span class="hljs-keyword">var</span> DialogContent = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+<span class="hljs-keyword">var</span> MyControl = React.createClass({
+  getInitialState(){
     <span class="hljs-keyword">return</span> {
-      value: <span class="hljs-string">''</span>
+      visible:<span class="hljs-literal">false</span>,
+      destroyOnClose:<span class="hljs-literal">false</span>,
     };
   },
 
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;
-      &lt;p&gt;basic modal&lt;/p&gt;
-    &lt;/div&gt;;
-  }
-});
-
-<span class="hljs-keyword">var</span> MyControl = React.createClass({
-  handleTrigger: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">this</span>.d = showDialog(&lt;DialogContent /&gt;, {
-      title: &lt;p&gt; 第二个弹框 &lt;input /&gt;&lt;/p&gt;,
-      animation: <span class="hljs-string">'zoom'</span>,
-      maskAnimation: <span class="hljs-string">'fade'</span>,
-      onBeforeClose: <span class="hljs-keyword">this</span>.beforeClose,
-      style: {width: <span class="hljs-number">600</span>}
+  onClick: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-keyword">this</span>.setState({
+      mousePosition: {
+        x:e.pageX,
+        y:e.pageY
+      },
+      visible:<span class="hljs-literal">true</span>
     });
   },
 
+  onClose(){
+    <span class="hljs-keyword">this</span>.setState({
+      visible:<span class="hljs-literal">false</span>
+    });
+  },
 
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  onDestroyOnCloseChange(e){
+    <span class="hljs-keyword">this</span>.setState({
+      destroyOnClose:e.target.checked
+    });
+  },
+
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> dialog;
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.visible || !<span class="hljs-keyword">this</span>.state.destroyOnClose){
+      dialog= <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span> <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
+              <span class="hljs-attribute">animation</span>=<span class="hljs-value">"zoom"</span>
+              <span class="hljs-attribute">maskAnimation</span>=<span class="hljs-value">"fade"</span>
+              <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.onClose}</span>
+              <span class="hljs-attribute">style</span>=<span class="hljs-value">{{width:600}}</span>
+              <span class="hljs-attribute">mousePosition</span>=<span class="hljs-value">{this.state.mousePosition}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{&lt;div</span>&gt;</span> 第二个弹框<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-title">input</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>;</span>
+   }
     <span class="hljs-keyword">return</span> (
-      &lt;div&gt;
-        &lt;button className=<span class="hljs-string">"btn btn-primary"</span> onClick={<span class="hljs-keyword">this</span>.handleTrigger}&gt;show dialog&lt;/button&gt;
-      &lt;/div&gt;
-    );
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClick}</span>&gt;</span>show dialog<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+          &amp;nbsp;
+          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>destroy on close: <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.destroyOnClose}</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onDestroyOnCloseChange}</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+        {dialog}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>;
   }
 });
 
 React.render(
-  &lt;div&gt;
-    &lt;h2&gt;render dialog standalone&lt;/h2&gt;
-    &lt;MyControl/&gt;
-  &lt;/div&gt;,
-  document.getElementById(<span class="hljs-string">'__react-content'</span>)
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>ant-design dialog<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">MyControl</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
+  document.getElementById('__react-content')
 );
-</code></pre></div>
+</span></code></pre></div>
     </div>
     <a href="http://github.com/react-component/dialog"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body>
