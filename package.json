@@ -28,7 +28,7 @@
   ],
   "main": "./lib/index",
   "config": {
-    "port": 8000
+    "port": 8007
   },
   "scripts": {
     "build": "rc-tools run build",

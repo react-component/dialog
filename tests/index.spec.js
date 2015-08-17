@@ -2,7 +2,7 @@
 
 var expect = require('expect.js');
 var Dialog = require('../index');
-require('../assets/bootstrap.css');
+require('../assets/bootstrap.less');
 var $ = require('jquery');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;

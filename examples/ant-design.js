@@ -1,6 +1,6 @@
 'use strict';
 
-import 'rc-dialog/assets/index.css';
+import 'rc-dialog/assets/index.less';
 import React from 'react';
 import Dialog from 'rc-dialog';
 

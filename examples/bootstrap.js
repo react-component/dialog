@@ -1,6 +1,6 @@
 'use strict';
 
-import 'rc-dialog/assets/bootstrap.css';
+import 'rc-dialog/assets/bootstrap.less';
 import React from 'react';
 import Dialog from 'rc-dialog';
 
