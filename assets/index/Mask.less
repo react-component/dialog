@@ -18,6 +18,7 @@
   }
 
   &-wrap-hidden > &-mask&-fade-enter,
+  &-wrap-hidden > &-mask&-fade-appear,
   &-wrap-hidden > &-mask&-fade-leave {
     display: block;
   }
@@ -28,7 +29,7 @@
     animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   }
 
-  &-fade-enter {
+  &-fade-enter,&-fade-appear {
     opacity: 0;
     .fade-effect();
     animation-play-state: paused;
@@ -39,7 +40,7 @@
     animation-play-state: paused;
   }
 
-  &-fade-enter&-fade-enter-active {
+  &-fade-enter&-fade-enter-active,&-fade-appear&-fade-appear-active  {
     animation-name: rcDialogFadeIn;
     animation-play-state: running;
   }

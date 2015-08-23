@@ -80,11 +80,12 @@
   }
 
   &-wrap-hidden > &&-zoom-enter,
+  &-wrap-hidden > &&-zoom-appear,
   &-wrap-hidden > &&-zoom-leave {
     display: block;
   }
 
-  &-zoom-enter {
+  &-zoom-enter, &-zoom-appear {
     opacity: 0;
     .effect();
     animation-timing-function: cubic-bezier(0.08,0.82,0.17,1);
@@ -97,7 +98,7 @@
     animation-play-state: paused;
   }
 
-  &-zoom-enter&-zoom-enter-active {
+  &-zoom-enter&-zoom-enter-active, &-zoom-appear&-zoom-appear-active {
     animation-name: rcDialogZoomIn;
     animation-play-state: running;
   }

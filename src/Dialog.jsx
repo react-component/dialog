@@ -186,7 +186,7 @@ const Dialog = React.createClass({
                      onEnd={this.onAnimateEnd}
                      transitionName={transitionName}
                      component=""
-                     animateMount={true}>
+                     transitionAppear={true}>
       <Align align={props.align}
              key="dialog"
              onAlign={this.onAlign}
@@ -214,7 +214,7 @@ const Dialog = React.createClass({
       const maskTransition = this.getMaskTransitionName();
       maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
       if (maskTransition) {
-        maskElement = (<Animate key="mask" showProp="data-visible" animateMount={true} component=""
+        maskElement = (<Animate key="mask" showProp="data-visible" transitionAppear={true} component=""
                                transitionName={maskTransition}>{maskElement}</Animate>);
       }
     }
