@@ -39,7 +39,7 @@ class DialogWrap extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.state.visible || nextState.visible;
+    return !!(this.state.visible || nextState.visible);
   }
 
   componentDidUpdate() {
