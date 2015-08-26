@@ -81,10 +81,8 @@ const Dialog = React.createClass({
     }
   },
 
-  onAnimateEnd(key, visible) {
-    if (!visible) {
-      this.props.onAfterClose();
-    }
+  onAnimateLeave() {
+    this.props.onAfterClose();
   },
 
   onMaskClick() {
@@ -183,7 +181,7 @@ const Dialog = React.createClass({
     // add key for align to keep animate children stable
     return (<Animate key="dialog"
                      showProp="dialogVisible"
-                     onEnd={this.onAnimateEnd}
+                     onLeave={this.onAnimateLeave}
                      transitionName={transitionName}
                      component=""
                      transitionAppear={true}>
@@ -215,7 +213,7 @@ const Dialog = React.createClass({
       maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
       if (maskTransition) {
         maskElement = (<Animate key="mask" showProp="data-visible" transitionAppear={true} component=""
-                               transitionName={maskTransition}>{maskElement}</Animate>);
+                                transitionName={maskTransition}>{maskElement}</Animate>);
       }
     }
     return maskElement;
