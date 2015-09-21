@@ -71,6 +71,12 @@ var Dialog = require('rc-dialog');
           <td>The dialog dom node's prefixCls</td>
       </tr>
       <tr>
+          <td>style</td>
+          <td>Object</td>
+          <th>{}</th>
+          <td>Root style for dialog element.Such as width, height, zIndex</td>
+      </tr>      
+      <tr>
           <td>visible</td>
           <td>Boolean</td>
           <th>false</th>
