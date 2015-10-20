@@ -1,4 +1,4 @@
-import React, {findDOMNode} from 'react';
+import React, {PropTypes} from 'react';
 import Align from 'rc-align';
 import {KeyCode, classSet} from 'rc-util';
 import assign from 'object-assign';
@@ -43,11 +43,11 @@ function offset(el) {
 
 const Dialog = React.createClass({
   propTypes: {
-    onAfterClose: React.PropTypes.func,
-    onClose: React.PropTypes.func,
-    closable: React.PropTypes.bool,
-    visible: React.PropTypes.bool,
-    mousePosition: React.PropTypes.object,
+    onAfterClose: PropTypes.func,
+    onClose: PropTypes.func,
+    closable: PropTypes.bool,
+    visible: PropTypes.bool,
+    mousePosition: PropTypes.object,
   },
 
   getDefaultProps() {
@@ -67,7 +67,7 @@ const Dialog = React.createClass({
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
-        findDOMNode(this.refs.dialog).focus();
+        this.refs.dialog.focus();
       }
     } else if (prevProps.visible) {
       if (props.mask && this.lastOutSideFocusNode) {
@@ -89,7 +89,7 @@ const Dialog = React.createClass({
     if (this.props.closable) {
       this.close();
     }
-    findDOMNode(this.refs.dialog).focus();
+    this.refs.dialog.focus();
   },
 
   onKeyDown(e) {
@@ -103,13 +103,13 @@ const Dialog = React.createClass({
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
         const activeElement = document.activeElement;
-        const dialogRoot = findDOMNode(this.refs.dialog);
-        const sentinel = findDOMNode(this.refs.sentinel);
+        const dialogRoot = this.refs.dialog;
+        const sentinel = this.refs.sentinel;
         if (e.shiftKey) {
           if (activeElement === dialogRoot) {
             sentinel.focus();
           }
-        } else if (activeElement === findDOMNode(this.refs.sentinel)) {
+        } else if (activeElement === this.refs.sentinel) {
           dialogRoot.focus();
         }
       }

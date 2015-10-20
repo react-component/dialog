@@ -1,15 +1,19 @@
 # History
 ----
 
-## 5.0.0 2015-08-17
+## 5.1.0 / 2015-10-20
+
+- only support react 0.14
+
+## 5.0.0 / 2015-08-17
 
 - refactor to clean api. remove onShow onBeforeClose
 
-## 4.5.0 2015-07-23
+## 4.5.0 / 2015-07-23
 
 use rc-animate & rc-align
 
-## 4.4.0 2015-07-03
+## 4.4.0 / 2015-07-03
 
 support esc to close
 

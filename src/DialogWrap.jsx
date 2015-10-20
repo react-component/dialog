@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 import assign from 'object-assign';
 
@@ -44,14 +45,14 @@ class DialogWrap extends React.Component {
 
   componentDidUpdate() {
     if (this.dialogRendered) {
-      React.render(this.getDialogElement(), this.getDialogContainer());
+      ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
     }
   }
 
   componentWillUnmount() {
     if (this.dialogContainer) {
       if (this.state.visible) {
-        React.render(this.getDialogElement({
+        ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement({
           onAfterClose: this.cleanDialogContainer,
           onClose: noop,
           visible: false,
@@ -101,7 +102,7 @@ class DialogWrap extends React.Component {
   }
 
   cleanDialogContainer() {
-    React.unmountComponentAtNode(this.getDialogContainer());
+    ReactDOM.unmountComponentAtNode(this.getDialogContainer());
     document.body.removeChild(this.dialogContainer);
     this.dialogContainer = null;
   }

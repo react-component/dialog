@@ -2,6 +2,7 @@
 
 import 'rc-dialog/assets/bootstrap.less';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Dialog from 'rc-dialog';
 
 var MyControl = React.createClass({
@@ -60,7 +61,7 @@ var MyControl = React.createClass({
   }
 });
 
-React.render(
+ReactDOM.render(
   <div>
     <h2>ant-design dialog</h2>
     <MyControl/>
