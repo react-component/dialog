@@ -2,317 +2,346 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet" />
-    <style>
-      .highlight pre {
-        padding: .8em 1em;
-        font: 14px/20px Consolas,Monaco,'Andale Mono',monospace;
-        border: 1px solid #e5e8ec;
-        border-radius: 3px;
-        background-color: #21221d;
-        background-image: -webkit-linear-gradient(#21221d 50%,#272822 50%);
-        background-image: -moz-linear-gradient(#21221d 50%,#272822 50%);
-        background-image: -ms-linear-gradient(#21221d 50%,#272822 50%);
-        background-image: -o-linear-gradient(#21221d 50%,#272822 50%);
-        background-image: linear-gradient(#21221d 50%,#272822 50%);
-        background-size: 40px 40px;
-        background-origin: content-box;
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .highlight pre>code {
-        font-family: inherit;
-        direction: ltr;
-        text-align: left;
-        white-space: pre;
-        word-spacing: normal;
-        vertical-align: 2px;
-        display: block;
-        -moz-tab-size: 2;
-        -o-tab-size: 2;
-        tab-size: 2;
-        -webkit-hyphens: none;
-        -moz-hyphens: none;
-        -ms-hyphens: none;
-        hyphens: none;
-        color: #E5E5C2;
-      }
-          /*
-      Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
-      */
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <style>
+    .highlight pre {
+      padding: .8em 1em;
+      font: 14px/20px Consolas, Monaco, 'Andale Mono', monospace;
+      border: 1px solid #e5e8ec;
+      border-radius: 3px;
+      background-color: #21221d;
+      background-image: -webkit-linear-gradient(#21221d 50%, #272822 50%);
+      background-image: -moz-linear-gradient(#21221d 50%, #272822 50%);
+      background-image: -ms-linear-gradient(#21221d 50%, #272822 50%);
+      background-image: -o-linear-gradient(#21221d 50%, #272822 50%);
+      background-image: linear-gradient(#21221d 50%, #272822 50%);
+      background-size: 40px 40px;
+      background-origin: content-box;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
 
-      .hljs {
-        display: block;
-        overflow-x: auto;
-        padding: 0.5em;
-        background: #23241f;
-        -webkit-text-size-adjust: none;
-      }
+    .highlight pre > code {
+      font-family: inherit;
+      direction: ltr;
+      text-align: left;
+      white-space: pre;
+      word-spacing: normal;
+      vertical-align: 2px;
+      display: block;
+      -moz-tab-size: 2;
+      -o-tab-size: 2;
+      tab-size: 2;
+      -webkit-hyphens: none;
+      -moz-hyphens: none;
+      -ms-hyphens: none;
+      hyphens: none;
+      color: #E5E5C2;
+    }
 
-      .hljs,
-      .hljs-tag,
-      .css .hljs-rules,
-      .css .hljs-value,
-      .css .hljs-function
-      .hljs-preprocessor,
-      .hljs-pragma {
-        color: #f8f8f2;
-      }
+    /*
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+*/
 
-      .hljs-strongemphasis,
-      .hljs-strong,
-      .hljs-emphasis {
-        color: #a8a8a2;
-      }
+    .hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 0.5em;
+      background: #23241f;
+      -webkit-text-size-adjust: none;
+    }
 
-      .hljs-bullet,
-      .hljs-blockquote,
-      .hljs-horizontal_rule,
-      .hljs-number,
-      .hljs-regexp,
-      .alias .hljs-keyword,
-      .hljs-literal,
-      .hljs-hexcolor {
-        color: #ae81ff;
-      }
+    .hljs,
+    .hljs-tag,
+    .css .hljs-rules,
+    .css .hljs-value,
+    .css .hljs-function
+    .hljs-preprocessor,
+    .hljs-pragma {
+      color: #f8f8f2;
+    }
 
-      .hljs-tag .hljs-value,
-      .hljs-code,
-      .hljs-title,
-      .css .hljs-class,
-      .hljs-class .hljs-title:last-child {
-        color: #a6e22e;
-      }
+    .hljs-strongemphasis,
+    .hljs-strong,
+    .hljs-emphasis {
+      color: #a8a8a2;
+    }
 
-      .hljs-link_url {
-        font-size: 80%;
-      }
+    .hljs-bullet,
+    .hljs-blockquote,
+    .hljs-horizontal_rule,
+    .hljs-number,
+    .hljs-regexp,
+    .alias .hljs-keyword,
+    .hljs-literal,
+    .hljs-hexcolor {
+      color: #ae81ff;
+    }
 
-      .hljs-strong,
-      .hljs-strongemphasis {
-        font-weight: bold;
-      }
+    .hljs-tag .hljs-value,
+    .hljs-code,
+    .hljs-title,
+    .css .hljs-class,
+    .hljs-class .hljs-title:last-child {
+      color: #a6e22e;
+    }
 
-      .hljs-emphasis,
-      .hljs-strongemphasis,
-      .hljs-class .hljs-title:last-child {
-        font-style: italic;
-      }
+    .hljs-link_url {
+      font-size: 80%;
+    }
 
-      .hljs-keyword,
-      .hljs-function,
-      .hljs-change,
-      .hljs-winutils,
-      .hljs-flow,
-      .nginx .hljs-title,
-      .tex .hljs-special,
-      .hljs-header,
-      .hljs-attribute,
-      .hljs-symbol,
-      .hljs-symbol .hljs-string,
-      .hljs-tag .hljs-title,
-      .hljs-value,
-      .alias .hljs-keyword:first-child,
-      .css .hljs-tag,
-      .css .unit,
-      .css .hljs-important {
-        color: #f92672;
-      }
+    .hljs-strong,
+    .hljs-strongemphasis {
+      font-weight: bold;
+    }
 
-      .hljs-function .hljs-keyword,
-      .hljs-class .hljs-keyword:first-child,
-      .hljs-constant,
-      .css .hljs-attribute {
-        color: #66d9ef;
-      }
+    .hljs-emphasis,
+    .hljs-strongemphasis,
+    .hljs-class .hljs-title:last-child {
+      font-style: italic;
+    }
 
-      .hljs-variable,
-      .hljs-params,
-      .hljs-class .hljs-title {
-        color: #f8f8f2;
-      }
+    .hljs-keyword,
+    .hljs-function,
+    .hljs-change,
+    .hljs-winutils,
+    .hljs-flow,
+    .nginx .hljs-title,
+    .tex .hljs-special,
+    .hljs-header,
+    .hljs-attribute,
+    .hljs-symbol,
+    .hljs-symbol .hljs-string,
+    .hljs-tag .hljs-title,
+    .hljs-value,
+    .alias .hljs-keyword:first-child,
+    .css .hljs-tag,
+    .css .unit,
+    .css .hljs-important {
+      color: #f92672;
+    }
 
-      .hljs-string,
-      .css .hljs-id,
-      .hljs-subst,
-      .hljs-type,
-      .ruby .hljs-class .hljs-parent,
-      .hljs-built_in,
-      .django .hljs-template_tag,
-      .django .hljs-variable,
-      .smalltalk .hljs-class,
-      .django .hljs-filter .hljs-argument,
-      .smalltalk .hljs-localvars,
-      .smalltalk .hljs-array,
-      .hljs-attr_selector,
-      .hljs-pseudo,
-      .hljs-addition,
-      .hljs-stream,
-      .hljs-envvar,
-      .apache .hljs-tag,
-      .apache .hljs-cbracket,
-      .tex .hljs-command,
-      .hljs-prompt,
-      .hljs-link_label,
-      .hljs-link_url {
-        color: #e6db74;
-      }
+    .hljs-function .hljs-keyword,
+    .hljs-class .hljs-keyword:first-child,
+    .hljs-constant,
+    .css .hljs-attribute {
+      color: #66d9ef;
+    }
 
-      .hljs-comment,
-      .hljs-javadoc,
-      .hljs-annotation,
-      .hljs-decorator,
-      .hljs-template_comment,
-      .hljs-pi,
-      .hljs-doctype,
-      .hljs-deletion,
-      .hljs-shebang,
-      .apache .hljs-sqbracket,
-      .tex .hljs-formula {
-        color: #75715e;
-      }
+    .hljs-variable,
+    .hljs-params,
+    .hljs-class .hljs-title {
+      color: #f8f8f2;
+    }
 
-      .coffeescript .javascript,
-      .javascript .xml,
-      .tex .hljs-formula,
-      .xml .javascript,
-      .xml .vbscript,
-      .xml .css,
-      .xml .hljs-cdata,
-      .xml .php,
-      .php .xml {
-        opacity: 0.5;
-      }
-    </style>
-    <style>
-      .container {
-          width: 86%;
-          max-width: 1000px;
-          margin-left: auto;
-          margin-right: auto;
-      }
-      .header p {
-        color: #666;
-      }
-      .example {
-          padding: 20px 0;
-      }
-    </style>
-    <!--[if lt IE 9]>
-<script>
-// Console-polyfill. MIT license.
-// https://github.com/paulmillr/console-polyfill
-// Make it safe to do console.log() always.
-(function(global) {
-  'use strict';
-  global.console = global.console || {};
-  var con = global.console;
-  var prop, method;
-  var empty = {};
-  var dummy = function() {};
-  var properties = 'memory'.split(',');
-  var methods = ('assert,clear,count,debug,dir,dirxml,error,exception,group,' +
-     'groupCollapsed,groupEnd,info,log,markTimeline,profile,profiles,profileEnd,' +
-     'show,table,time,timeEnd,timeline,timelineEnd,timeStamp,trace,warn').split(',');
-  while (prop = properties.pop()) con[prop] = con[prop] || empty;
-  while (method = methods.pop()) con[method] = con[method] || dummy;
-})(typeof window === 'undefined' ? this : window);
-// Using `this` for web workers while maintaining compatibility with browser
-// targeted script loaders such as Browserify or Webpack where the only way to
-// get to the global object is via `window`.
-</script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
-<![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
-  
+    .hljs-string,
+    .css .hljs-id,
+    .hljs-subst,
+    .hljs-type,
+    .ruby .hljs-class .hljs-parent,
+    .hljs-built_in,
+    .django .hljs-template_tag,
+    .django .hljs-variable,
+    .smalltalk .hljs-class,
+    .django .hljs-filter .hljs-argument,
+    .smalltalk .hljs-localvars,
+    .smalltalk .hljs-array,
+    .hljs-attr_selector,
+    .hljs-pseudo,
+    .hljs-addition,
+    .hljs-stream,
+    .hljs-envvar,
+    .apache .hljs-tag,
+    .apache .hljs-cbracket,
+    .tex .hljs-command,
+    .hljs-prompt,
+    .hljs-link_label,
+    .hljs-link_url {
+      color: #e6db74;
+    }
+
+    .hljs-comment,
+    .hljs-javadoc,
+    .hljs-annotation,
+    .hljs-decorator,
+    .hljs-template_comment,
+    .hljs-pi,
+    .hljs-doctype,
+    .hljs-deletion,
+    .hljs-shebang,
+    .apache .hljs-sqbracket,
+    .tex .hljs-formula {
+      color: #75715e;
+    }
+
+    .coffeescript .javascript,
+    .javascript .xml,
+    .tex .hljs-formula,
+    .xml .javascript,
+    .xml .vbscript,
+    .xml .css,
+    .xml .hljs-cdata,
+    .xml .php,
+    .php .xml {
+      opacity: 0.5;
+    }
+  </style>
+  <style>
+    .container {
+      width: 86%;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .header p {
+      color: #666;
+    }
+
+    .example {
+      padding: 20px 0;
+    }
+  </style>
+
+  <script>
+    // Console-polyfill. MIT license.
+    // https://github.com/paulmillr/console-polyfill
+    // Make it safe to do console.log() always.
+    (function (global) {
+      'use strict';
+      global.console = global.console || {};
+      var con = global.console;
+      var prop, method;
+      var empty = {};
+      var dummy = function () {
+      };
+      var properties = 'memory'.split(',');
+      var methods = ('assert,clear,count,debug,dir,dirxml,error,exception,group,' +
+      'groupCollapsed,groupEnd,info,log,markTimeline,profile,profiles,profileEnd,' +
+      'show,table,time,timeEnd,timeline,timelineEnd,timeStamp,trace,warn').split(',');
+      while (prop = properties.pop()) con[prop] = con[prop] || empty;
+      while (method = methods.pop()) con[method] = con[method] || dummy;
+    })(typeof window === 'undefined' ? this : window);
+    // Using `this` for web workers while maintaining compatibility with browser
+    // targeted script loaders such as Browserify or Webpack where the only way to
+    // get to the global object is via `window`.
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="ant-design.css" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>rc-dialog@5.0.1</h1>
-            <p>dialog ui component for react</p>
-        </div>
-        <div class="example" id="__react-content"></div>
-        <script src="common.js?nowrap"></script>
-        <script src="ant-design.js?nowrap"></script>
-        <div class="highlight"><pre><code><span class="hljs-pi">'use strict'</span>;
+<div class="container">
+  <div class="header">
+    <h1>rc-dialog@5.1.0</h1>
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-dialog/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> Dialog <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-dialog'</span>;
+    <p>dialog ui component for react</p>
+  </div>
+  <div class="example" id="__react-content"></div>
+  <script src="common.js?nowrap"></script>
+  <script src="ant-design.js?nowrap"></script>
+  <div class="highlight">
+    <pre><code>'use strict';
 
-<span class="hljs-keyword">var</span> MyControl = React.createClass({
+import 'rc-dialog/assets/index.css';
+import React <span class="hljs-keyword">from</span> 'react';
+import ReactDOM <span class="hljs-keyword">from</span> 'react-dom';
+import Dialog <span class="hljs-keyword">from</span> 'rc-dialog';
+import assign <span class="hljs-keyword">from</span> 'object-assign';
+
+var MyControl = React.createClass({
   getInitialState(){
-    <span class="hljs-keyword">return</span> {
-      visible:<span class="hljs-literal">false</span>,
-      destroyOnClose:<span class="hljs-literal">false</span>,
+    return {
+      visible: false,
+      width: <span class="hljs-number">600</span>,
+      align: {
+        points: ['tc', 'tc'],
+        offset: [<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]
+      },
+      destroyOnClose: false,
     };
   },
 
-  onClick: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
-    <span class="hljs-keyword">this</span>.setState({
+  <span class="hljs-keyword">on</span>Click: function (e) {
+    this.<span class="hljs-built_in">set</span>State({
       mousePosition: {
-        x:e.pageX,
-        y:e.pageY
+        x: e.pageX,
+        y: e.pageY
       },
-      visible:<span class="hljs-literal">true</span>
+      visible: true
     });
   },
 
-  onClose(){
-    <span class="hljs-keyword">this</span>.setState({
-      visible:<span class="hljs-literal">false</span>
+  <span class="hljs-keyword">on</span>Close(){
+    this.<span class="hljs-built_in">set</span>State({
+      visible: false
     });
   },
 
-  onDestroyOnCloseChange(e){
-    <span class="hljs-keyword">this</span>.setState({
-      destroyOnClose:e.target.checked
+  <span class="hljs-keyword">on</span>DestroyOnCloseChange(e){
+    this.<span class="hljs-built_in">set</span>State({
+      destroyOnClose: e.target.checked
     });
   },
 
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> dialog;
-    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.visible || !<span class="hljs-keyword">this</span>.state.destroyOnClose){
-      dialog= <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span> <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
-              <span class="hljs-attribute">animation</span>=<span class="hljs-value">"zoom"</span>
-              <span class="hljs-attribute">maskAnimation</span>=<span class="hljs-value">"fade"</span>
-              <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.onClose}</span>
-              <span class="hljs-attribute">style</span>=<span class="hljs-value">{{width:600}}</span>
-              <span class="hljs-attribute">mousePosition</span>=<span class="hljs-value">{this.state.mousePosition}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{&lt;div</span>&gt;</span> 第二个弹框<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>}&gt;
-        <span class="hljs-tag">&lt;<span class="hljs-title">input</span> /&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>;</span>
-   }
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClick}</span>&gt;</span>show dialog<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  changeWidth() {
+    this.<span class="hljs-built_in">set</span>State({
+      width: this.<span class="hljs-keyword">state</span>.width === <span class="hljs-number">600</span> ? <span class="hljs-number">800</span> : <span class="hljs-number">600</span>,
+      align: assign({}, this.<span class="hljs-keyword">state</span>.align),
+    });
+  },
+
+  render: function () {
+    var dialog;
+    if (this.<span class="hljs-keyword">state</span>.visible || !this.<span class="hljs-keyword">state</span>.destroyOnClose) {
+      dialog = <span class="hljs-variable">&lt;Dialog visible={this.state.visible}
+                       align={this.state.align}
+                       animation="zoom"
+                       maskAnimation="fade"
+                       onClose={this.onClose}
+                       style={{width:this.state.width}}
+                       mousePosition={this.state.mousePosition} title={&lt;div&gt;</span> 第二个弹框<span class="hljs-variable">&lt;/div&gt;</span>}&gt;
+        <span class="hljs-variable">&lt;input /&gt;</span>
+
+        <span class="hljs-variable">&lt;p&gt;</span><span class="hljs-keyword">basic</span> modal<span class="hljs-variable">&lt;/p&gt;</span>
+        <span class="hljs-variable">&lt;button onClick={this.changeWidth}&gt;</span>change width<span class="hljs-variable">&lt;/button&gt;</span>
+        <span class="hljs-variable">&lt;div style={{height:200}}&gt;</span><span class="hljs-variable">&lt;/div&gt;</span>
+      <span class="hljs-variable">&lt;/Dialog&gt;</span>;
+    }
+    return (
+      <span class="hljs-variable">&lt;div&gt;</span>
+        <span class="hljs-variable">&lt;p&gt;</span>
+          <span class="hljs-variable">&lt;button className="btn btn-primary" onClick={this.onClick}&gt;</span>show dialog<span class="hljs-variable">&lt;/button&gt;</span>
           &amp;nbsp;
-          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>destroy on close: <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.destroyOnClose}</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onDestroyOnCloseChange}</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-          <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+          <span class="hljs-variable">&lt;label&gt;</span>destroy <span class="hljs-keyword">on</span> close: <span class="hljs-variable">&lt;input type="checkbox" checked={this.state.destroyOnClose}
+                                          onChange={this.onDestroyOnCloseChange}/&gt;</span><span class="hljs-variable">&lt;/label&gt;</span>
+        <span class="hljs-variable">&lt;/p&gt;</span>
         {dialog}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>;
+      <span class="hljs-variable">&lt;/div&gt;</span>
+    );
   }
 });
 
-React.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>ant-design dialog<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">MyControl</span>/&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
+ReactDOM.render(
+  <span class="hljs-variable">&lt;div&gt;</span>
+    <span class="hljs-variable">&lt;h2&gt;</span>ant-design dialog<span class="hljs-variable">&lt;/h2&gt;</span>
+    <span class="hljs-variable">&lt;MyControl/&gt;</span>
+  <span class="hljs-variable">&lt;/div&gt;</span>,
   document.getElementById('__react-content')
 );
-</span></code></pre></div>
-    </div>
-    <a href="http://github.com/react-component/dialog"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+</code></pre>
+  </div>
+</div>
+<a href="http://github.com/react-component/dialog"><img style="position: absolute; top: 0; right: 0; border: 0;"
+                            src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+                            alt="Fork me on GitHub"
+                            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body>
 
 </html>
