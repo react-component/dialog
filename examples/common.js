@@ -19671,7 +19671,7 @@
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -19691,7 +19691,7 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _objectAssign = __webpack_require__(180);
+	var _objectAssign = __webpack_require__(187);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -19797,17 +19797,17 @@
 	      );
 	    }
 	  }, {
-	    key: 'render',
-	    value: function render() {
-	      this.dialogRendered = this.dialogRendered || this.state.visible;
-	      return null;
-	    }
-	  }, {
 	    key: 'cleanDialogContainer',
 	    value: function cleanDialogContainer() {
 	      _reactDom2['default'].unmountComponentAtNode(this.getDialogContainer());
 	      document.body.removeChild(this.dialogContainer);
 	      this.dialogContainer = null;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      this.dialogRendered = this.dialogRendered || this.state.visible;
+	      return null;
 	    }
 	  }]);
 	
@@ -19866,13 +19866,13 @@
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcUtil = __webpack_require__(168);
+	var _rcUtil = __webpack_require__(174);
 	
-	var _objectAssign = __webpack_require__(180);
+	var _objectAssign = __webpack_require__(187);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _rcAnimate = __webpack_require__(181);
+	var _rcAnimate = __webpack_require__(188);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -20113,7 +20113,8 @@
 	      if (maskTransition) {
 	        maskElement = _react2['default'].createElement(
 	          _rcAnimate2['default'],
-	          { key: 'mask', showProp: 'data-visible', transitionAppear: true, component: '',
+	          { key: 'mask', showProp: 'data-visible',
+	            transitionAppear: true, component: '',
 	            transitionName: maskTransition },
 	          maskElement
 	        );
@@ -20142,6 +20143,10 @@
 	    return transitionName;
 	  },
 	
+	  close: function close() {
+	    this.props.onClose();
+	  },
+	
 	  render: function render() {
 	    var _className;
 	
@@ -20154,10 +20159,6 @@
 	      { className: (0, _rcUtil.classSet)(className) },
 	      [this.getMaskElement(), this.getDialogElement()]
 	    );
-	  },
-	
-	  close: function close() {
-	    this.props.onClose();
 	  }
 	});
 	
@@ -20168,9 +20169,9 @@
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// export this package's api
 	'use strict';
 	
-	// export this package's api
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
@@ -20194,37 +20195,29 @@
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
 	var _domAlign = __webpack_require__(166);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _rcUtil = __webpack_require__(168);
+	var _rcUtil = __webpack_require__(174);
 	
-	var _rcUtil2 = _interopRequireDefault(_rcUtil);
+	var _isWindow = __webpack_require__(186);
 	
-	function isWindow(obj) {
-	  /*eslint-disable eqeqeq */
-	  return obj != null && obj == obj.window;
-	  /*eslint-enable eqeqeq */
-	}
+	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
 	function buffer(fn, ms) {
-	  var timer;
-	  return function () {
+	  var timer = undefined;
+	  return function bufferFn() {
 	    if (timer) {
 	      clearTimeout(timer);
 	    }
@@ -20232,119 +20225,104 @@
 	  };
 	}
 	
-	var Align = (function (_React$Component) {
-	  _inherits(Align, _React$Component);
+	var Align = _react2['default'].createClass({
+	  displayName: 'Align',
 	
-	  function Align(props) {
-	    _classCallCheck(this, Align);
+	  propTypes: {
+	    align: _react.PropTypes.object.isRequired,
+	    target: _react.PropTypes.func,
+	    onAlign: _react.PropTypes.func,
+	    monitorBufferTime: _react.PropTypes.number,
+	    monitorWindowResize: _react.PropTypes.bool,
+	    disabled: _react.PropTypes.bool,
+	    children: _react.PropTypes.any
+	  },
 	
-	    _get(Object.getPrototypeOf(Align.prototype), 'constructor', this).apply(this, arguments);
-	    this.handleWindowResize = this.handleWindowResize.bind(this);
-	  }
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      target: function target() {
+	        return window;
+	      },
+	      onAlign: function onAlign() {},
+	      monitorBufferTime: 50,
+	      monitorWindowResize: false,
+	      disabled: false
+	    };
+	  },
 	
-	  _createClass(Align, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var props = this.props;
-	      // if parent ref not attached .... use document.getElementById
-	      if (!props.disabled) {
-	        var source = _react2['default'].findDOMNode(this);
-	        props.onAlign(source, (0, _domAlign2['default'])(source, props.target(), props.align));
-	        if (props.monitorWindowResize) {
-	          this.startMonitorWindowResize();
+	  componentDidMount: function componentDidMount() {
+	    var props = this.props;
+	    // if parent ref not attached .... use document.getElementById
+	    if (!props.disabled) {
+	      var source = _reactDom2['default'].findDOMNode(this);
+	      props.onAlign(source, (0, _domAlign2['default'])(source, props.target(), props.align));
+	      if (props.monitorWindowResize) {
+	        this.startMonitorWindowResize();
+	      }
+	    }
+	  },
+	
+	  componentDidUpdate: function componentDidUpdate(prevProps) {
+	    var reAlign = false;
+	    var props = this.props;
+	    var currentTarget = undefined;
+	
+	    if (!props.disabled) {
+	      if (prevProps.disabled || prevProps.align !== props.align) {
+	        reAlign = true;
+	        currentTarget = props.target();
+	      } else {
+	        var lastTarget = prevProps.target();
+	        currentTarget = props.target();
+	        if ((0, _isWindow2['default'])(lastTarget) && (0, _isWindow2['default'])(currentTarget)) {
+	          reAlign = false;
+	        } else if (lastTarget !== currentTarget) {
+	          reAlign = true;
 	        }
 	      }
 	    }
-	  }, {
-	    key: 'startMonitorWindowResize',
-	    value: function startMonitorWindowResize() {
-	      if (!this.resizeHandler) {
-	        this.resizeHandler = _rcUtil2['default'].Dom.addEventListener(window, 'resize', buffer(this.handleWindowResize, this.props.monitorBufferTime));
-	      }
+	
+	    if (reAlign) {
+	      var source = _reactDom2['default'].findDOMNode(this);
+	      props.onAlign(source, (0, _domAlign2['default'])(source, currentTarget, props.align));
 	    }
-	  }, {
-	    key: 'stopMonitorWindowResize',
-	    value: function stopMonitorWindowResize() {
-	      if (this.resizeHandler) {
-	        this.resizeHandler.remove();
-	        this.resizeHandler = null;
-	      }
-	    }
-	  }, {
-	    key: 'handleWindowResize',
-	    value: function handleWindowResize() {
-	      var props = this.props;
-	      if (!props.disabled) {
-	        var source = _react2['default'].findDOMNode(this);
-	        props.onAlign(source, (0, _domAlign2['default'])(source, props.target(), props.align));
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
+	
+	    if (props.monitorWindowResize && !props.disabled) {
+	      this.startMonitorWindowResize();
+	    } else {
 	      this.stopMonitorWindowResize();
 	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(prevProps) {
-	      var reAlign = false;
-	      var props = this.props;
-	      var currentTarget;
-	
-	      if (!props.disabled) {
-	        if (prevProps.disabled || prevProps.align !== props.align) {
-	          reAlign = true;
-	          currentTarget = props.target();
-	        } else {
-	          var lastTarget = prevProps.target();
-	          currentTarget = props.target();
-	          if (isWindow(lastTarget) && isWindow(currentTarget)) {
-	            reAlign = false;
-	          } else if (lastTarget !== currentTarget) {
-	            reAlign = true;
-	          }
-	        }
-	      }
-	
-	      if (reAlign) {
-	        var source = _react2['default'].findDOMNode(this);
-	        props.onAlign(source, (0, _domAlign2['default'])(source, currentTarget, props.align));
-	      }
-	
-	      if (props.monitorWindowResize && !props.disabled) {
-	        this.startMonitorWindowResize();
-	      } else {
-	        this.stopMonitorWindowResize();
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2['default'].Children.only(this.props.children);
-	    }
-	  }]);
-	
-	  return Align;
-	})(_react2['default'].Component);
-	
-	Align.defaultProps = {
-	  target: function target() {
-	    return window;
 	  },
-	  onAlign: function onAlign() {},
-	  monitorBufferTime: 50,
-	  monitorWindowResize: false,
-	  disabled: false
-	};
 	
-	Align.PropTypes = {
-	  align: _react2['default'].PropTypes.object.isRequired,
-	  target: _react2['default'].PropTypes.func,
-	  onAlign: _react2['default'].PropTypes.func,
-	  monitorBufferTime: _react2['default'].PropTypes.number,
-	  monitorWindowResize: _react2['default'].PropTypes.bool,
-	  disabled: _react2['default'].PropTypes.bool
-	};
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.stopMonitorWindowResize();
+	  },
+	
+	  onWindowResize: function onWindowResize() {
+	    var props = this.props;
+	    if (!props.disabled) {
+	      var source = _reactDom2['default'].findDOMNode(this);
+	      props.onAlign(source, (0, _domAlign2['default'])(source, props.target(), props.align));
+	    }
+	  },
+	
+	  startMonitorWindowResize: function startMonitorWindowResize() {
+	    if (!this.resizeHandler) {
+	      this.resizeHandler = _rcUtil.Dom.addEventListener(window, 'resize', buffer(this.onWindowResize, this.props.monitorBufferTime));
+	    }
+	  },
+	
+	  stopMonitorWindowResize: function stopMonitorWindowResize() {
+	    if (this.resizeHandler) {
+	      this.resizeHandler.remove();
+	      this.resizeHandler = null;
+	    }
+	  },
+	
+	  render: function render() {
+	    return _react2['default'].Children.only(this.props.children);
+	  }
+	});
 	
 	exports['default'] = Align;
 	module.exports = exports['default'];
@@ -20360,155 +20338,37 @@
 	
 	'use strict';
 	
-	var utils = __webpack_require__(167);
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(167);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	var _getOffsetParent = __webpack_require__(168);
+	
+	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
+	
+	var _getVisibleRectForElement = __webpack_require__(169);
+	
+	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
+	
+	var _adjustForViewport = __webpack_require__(170);
+	
+	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
+	
+	var _getRegion = __webpack_require__(171);
+	
+	var _getRegion2 = _interopRequireDefault(_getRegion);
+	
+	var _getElFuturePos = __webpack_require__(172);
+	
+	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
 	// http://yiminghe.iteye.com/blog/1124720
-	
-	/**
-	 * 获取 node 上的 align 对齐点 相对于页面的坐标
-	 */
-	
-	function getAlignOffset(region, align) {
-	  var V = align.charAt(0),
-	      H = align.charAt(1),
-	      w = region.width,
-	      h = region.height,
-	      x,
-	      y;
-	
-	  x = region.left;
-	  y = region.top;
-	
-	  if (V === 'c') {
-	    y += h / 2;
-	  } else if (V === 'b') {
-	    y += h;
-	  }
-	
-	  if (H === 'c') {
-	    x += w / 2;
-	  } else if (H === 'r') {
-	    x += w;
-	  }
-	
-	  return {
-	    left: x,
-	    top: y
-	  };
-	}
-	
-	/**
-	 * 得到会导致元素显示不全的祖先元素
-	 */
-	
-	function getOffsetParent(element) {
-	  // ie 这个也不是完全可行
-	  /*
-	   <div style="width: 50px;height: 100px;overflow: hidden">
-	   <div style="width: 50px;height: 100px;position: relative;" id="d6">
-	   元素 6 高 100px 宽 50px<br/>
-	   </div>
-	   </div>
-	   */
-	  // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
-	  //  In other browsers it only includes elements with position absolute, relative or
-	  // fixed, not elements with overflow set to auto or scroll.
-	  //        if (UA.ie && ieMode < 8) {
-	  //            return element.offsetParent;
-	  //        }
-	  // 统一的 offsetParent 方法
-	  var doc = element.ownerDocument,
-	      body = doc.body,
-	      parent,
-	      positionStyle = utils.css(element, 'position'),
-	      skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
-	
-	  if (!skipStatic) {
-	    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
-	  }
-	
-	  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
-	    positionStyle = utils.css(parent, 'position');
-	    if (positionStyle !== 'static') {
-	      return parent;
-	    }
-	  }
-	  return null;
-	}
-	
-	/**
-	 * 获得元素的显示部分的区域
-	 */
-	
-	function getVisibleRectForElement(element) {
-	  var visibleRect = {
-	    left: 0,
-	    right: Infinity,
-	    top: 0,
-	    bottom: Infinity
-	  },
-	      el = element,
-	      scrollX,
-	      scrollY,
-	      winSize,
-	      doc = element.ownerDocument,
-	      win = doc.defaultView || doc.parentWindow,
-	      body = doc.body,
-	      documentElement = doc.documentElement;
-	
-	  // Determine the size of the visible rect by climbing the dom accounting for
-	  // all scrollable containers.
-	  while (el) {
-	    // clientWidth is zero for inline block elements in ie.
-	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) && (el !== body && el !== documentElement && utils.css(el, 'overflow') !== 'visible')) {
-	      var pos = utils.offset(el);
-	      // add border
-	      pos.left += el.clientLeft;
-	      pos.top += el.clientTop;
-	      visibleRect.top = Math.max(visibleRect.top, pos.top);
-	      visibleRect.right = Math.min(visibleRect.right,
-	      // consider area without scrollBar
-	      pos.left + el.clientWidth);
-	      visibleRect.bottom = Math.min(visibleRect.bottom, pos.top + el.clientHeight);
-	      visibleRect.left = Math.max(visibleRect.left, pos.left);
-	    } else if (el === body || el === documentElement) {
-	      break;
-	    }
-	    el = getOffsetParent(el);
-	  }
-	
-	  // Clip by window's viewport.
-	  scrollX = utils.getWindowScrollLeft(win);
-	  scrollY = utils.getWindowScrollTop(win);
-	  visibleRect.left = Math.max(visibleRect.left, scrollX);
-	  visibleRect.top = Math.max(visibleRect.top, scrollY);
-	  winSize = {
-	    width: utils.viewportWidth(win),
-	    height: utils.viewportHeight(win)
-	  };
-	  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
-	  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
-	  return visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left ? visibleRect : null;
-	}
-	
-	function getElFuturePos(elRegion, refNodeRegion, points, offset) {
-	  var xy, diff, p1, p2;
-	
-	  xy = {
-	    left: elRegion.left,
-	    top: elRegion.top
-	  };
-	
-	  p1 = getAlignOffset(refNodeRegion, points[1]);
-	  p2 = getAlignOffset(elRegion, points[0]);
-	
-	  diff = [p2.left - p1.left, p2.top - p1.top];
-	
-	  return {
-	    left: xy.left - diff[0] + +offset[0],
-	    top: xy.top - diff[1] + +offset[1]
-	  };
-	}
 	
 	function isFailX(elFuturePos, elRegion, visibleRect) {
 	  return elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right;
@@ -20518,50 +20378,9 @@
 	  return elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom;
 	}
 	
-	function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
-	  var pos = utils.clone(elFuturePos),
-	      size = {
-	    width: elRegion.width,
-	    height: elRegion.height
-	  };
-	
-	  if (overflow.adjustX && pos.left < visibleRect.left) {
-	    pos.left = visibleRect.left;
-	  }
-	
-	  // Left edge inside and right edge outside viewport, try to resize it.
-	  if (overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
-	    size.width -= pos.left + size.width - visibleRect.right;
-	  }
-	
-	  // Right edge outside viewport, try to move it.
-	  if (overflow.adjustX && pos.left + size.width > visibleRect.right) {
-	    // 保证左边界和可视区域左边界对齐
-	    pos.left = Math.max(visibleRect.right - size.width, visibleRect.left);
-	  }
-	
-	  // Top edge outside viewport, try to move it.
-	  if (overflow.adjustY && pos.top < visibleRect.top) {
-	    pos.top = visibleRect.top;
-	  }
-	
-	  // Top edge inside and bottom edge outside viewport, try to resize it.
-	  if (overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
-	    size.height -= pos.top + size.height - visibleRect.bottom;
-	  }
-	
-	  // Bottom edge outside viewport, try to move it.
-	  if (overflow.adjustY && pos.top + size.height > visibleRect.bottom) {
-	    // 保证上边界和可视区域上边界对齐
-	    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
-	  }
-	
-	  return utils.mix(pos, size);
-	}
-	
 	function flip(points, reg, map) {
 	  var ret = [];
-	  utils.each(points, function (p) {
+	  _utils2['default'].each(points, function (p) {
 	    ret.push(p.replace(reg, function (m) {
 	      return map[m];
 	    }));
@@ -20574,24 +20393,19 @@
 	  return offset;
 	}
 	
-	function getRegion(node) {
-	  var offset, w, h;
-	  if (!utils.isWindow(node) && node.nodeType !== 9) {
-	    offset = utils.offset(node);
-	    w = utils.outerWidth(node);
-	    h = utils.outerHeight(node);
+	function convertOffset(str, offsetLen) {
+	  var n = undefined;
+	  if (/%$/.test(str)) {
+	    n = parseInt(str.substring(0, str.length - 1), 10) / 100 * offsetLen;
 	  } else {
-	    var win = utils.getWindow(node);
-	    offset = {
-	      left: utils.getWindowScrollLeft(win),
-	      top: utils.getWindowScrollTop(win)
-	    };
-	    w = utils.viewportWidth(win);
-	    h = utils.viewportHeight(win);
+	    n = parseInt(str, 10);
 	  }
-	  offset.width = w;
-	  offset.height = h;
-	  return offset;
+	  return n || 0;
+	}
+	
+	function normalizeOffset(offset, el) {
+	  offset[0] = convertOffset(offset[0], el.width);
+	  offset[1] = convertOffset(offset[1], el.height);
 	}
 	
 	/*
@@ -20608,23 +20422,28 @@
 	 */
 	function domAlign(el, refNode, align) {
 	  var points = align.points;
-	  var offset = align.offset;
+	  var offset = align.offset || [0, 0];
+	  var targetOffset = align.targetOffset || [0, 0];
 	  var overflow = align.overflow;
-	  offset = offset && [].concat(offset) || [0, 0];
+	  offset = [].concat(offset);
+	  targetOffset = [].concat(targetOffset);
 	  overflow = overflow || {};
 	  var newOverflowCfg = {};
 	
 	  var fail = 0;
 	  // 当前节点可以被放置的显示区域
-	  var visibleRect = getVisibleRectForElement(el);
+	  var visibleRect = (0, _getVisibleRectForElement2['default'])(el);
 	  // 当前节点所占的区域, left/top/width/height
-	  var elRegion = getRegion(el);
+	  var elRegion = (0, _getRegion2['default'])(el);
 	  // 参照节点所占的区域, left/top/width/height
-	  var refNodeRegion = getRegion(refNode);
+	  var refNodeRegion = (0, _getRegion2['default'])(refNode);
+	  // 将 offset 转换成数值，支持百分比
+	  normalizeOffset(offset, elRegion);
+	  normalizeOffset(targetOffset, refNodeRegion);
 	  // 当前节点将要被放置的位置
-	  var elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset);
+	  var elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
 	  // 当前节点将要所处的区域
-	  var newElRegion = utils.merge(elRegion, elFuturePos);
+	  var newElRegion = _utils2['default'].merge(elRegion, elFuturePos);
 	
 	  // 如果可视区域不能完全放置当前节点时允许调整
 	  if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
@@ -20639,6 +20458,7 @@
 	        });
 	        // 偏移量也反下
 	        offset = flipOffset(offset, 0);
+	        targetOffset = flipOffset(targetOffset, 0);
 	      }
 	    }
 	
@@ -20653,13 +20473,14 @@
 	        });
 	        // 偏移量也反下
 	        offset = flipOffset(offset, 1);
+	        targetOffset = flipOffset(targetOffset, 1);
 	      }
 	    }
 	
 	    // 如果失败，重新计算当前节点将要被放置的位置
 	    if (fail) {
-	      elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset);
-	      utils.mix(newElRegion, elFuturePos);
+	      elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
+	      _utils2['default'].mix(newElRegion, elFuturePos);
 	    }
 	
 	    // 检查反下后的位置是否可以放下了
@@ -20670,7 +20491,7 @@
 	
 	    // 确实要调整，甚至可能会调整高度宽度
 	    if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
-	      newElRegion = adjustForViewport(elFuturePos, elRegion, visibleRect, newOverflowCfg);
+	      newElRegion = (0, _adjustForViewport2['default'])(elFuturePos, elRegion, visibleRect, newOverflowCfg);
 	    }
 	  }
 	
@@ -20678,29 +20499,34 @@
 	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
 	  // 相对于屏幕位置没变，而 left/top 变了
 	  // 例如 <div 'relative'><el absolute></div>
-	  utils.offset(el, { left: newElRegion.left, top: newElRegion.top });
+	  _utils2['default'].offset(el, {
+	    left: newElRegion.left,
+	    top: newElRegion.top
+	  });
 	
 	  // need judge to in case set fixed with in css on height auto element
 	  if (newElRegion.width !== elRegion.width) {
-	    utils.css(el, 'width', el.width() + newElRegion.width - elRegion.width);
+	    _utils2['default'].css(el, 'width', el.width() + newElRegion.width - elRegion.width);
 	  }
 	
 	  if (newElRegion.height !== elRegion.height) {
-	    utils.css(el, 'height', el.height() + newElRegion.height - elRegion.height);
+	    _utils2['default'].css(el, 'height', el.height() + newElRegion.height - elRegion.height);
 	  }
 	
 	  return {
 	    points: points,
 	    offset: offset,
+	    targetOffset: targetOffset,
 	    overflow: newOverflowCfg
 	  };
 	}
 	
-	domAlign.__getOffsetParent = getOffsetParent;
+	domAlign.__getOffsetParent = _getOffsetParent2['default'];
 	
-	domAlign.__getVisibleRectForElement = getVisibleRectForElement;
+	domAlign.__getVisibleRectForElement = _getVisibleRectForElement2['default'];
 	
-	module.exports = domAlign;
+	exports['default'] = domAlign;
+	
 	/**
 	 *  2012-04-26 yiminghe@gmail.com
 	 *   - 优化智能对齐算法
@@ -20709,10 +20535,7 @@
 	 *  2011-07-13 yiminghe@gmail.com note:
 	 *   - 增加智能对齐，以及大小调整选项
 	 **/
-	
-	// body may have overflow set on it, yet we still get the entire
-	// viewport. In some browsers, el.offsetParent may be
-	// document.documentElement, so check for that too.
+	module.exports = exports['default'];
 
 /***/ },
 /* 167 */
@@ -20720,14 +20543,20 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
 	
-	var getComputedStyleX;
+	var getComputedStyleX = undefined;
 	
-	function css(el, name, value) {
+	function css(el, name, v) {
+	  var value = v;
 	  if (typeof name === 'object') {
 	    for (var i in name) {
-	      css(el, i, name[i]);
+	      if (name.hasOwnProperty(i)) {
+	        css(el, i, name[i]);
+	      }
 	    }
 	    return undefined;
 	  }
@@ -20737,13 +20566,14 @@
 	    }
 	    el.style[name] = value;
 	    return undefined;
-	  } else {
-	    return getComputedStyleX(el, name);
 	  }
+	  return getComputedStyleX(el, name);
 	}
 	
 	function getClientPosition(elem) {
-	  var box, x, y;
+	  var box = undefined;
+	  var x = undefined;
+	  var y = undefined;
 	  var doc = elem.ownerDocument;
 	  var body = doc.body;
 	  var docElem = doc && doc.documentElement;
@@ -20788,10 +20618,10 @@
 	  var method = 'scroll' + (top ? 'Top' : 'Left');
 	  if (typeof ret !== 'number') {
 	    var d = w.document;
-	    //ie6,7,8 standard mode
+	    // ie6,7,8 standard mode
 	    ret = d.documentElement[method];
 	    if (typeof ret !== 'number') {
-	      //quirks mode
+	      // quirks mode
 	      ret = d.body[method];
 	    }
 	  }
@@ -20814,7 +20644,8 @@
 	  pos.top += getScrollTop(w);
 	  return pos;
 	}
-	function _getComputedStyle(elem, name, computedStyle) {
+	function _getComputedStyle(elem, name, cs) {
+	  var computedStyle = cs;
 	  var val = '';
 	  var d = elem.ownerDocument;
 	
@@ -20827,11 +20658,11 @@
 	}
 	
 	var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
-	var RE_POS = /^(top|right|bottom|left)$/,
-	    CURRENT_STYLE = 'currentStyle',
-	    RUNTIME_STYLE = 'runtimeStyle',
-	    LEFT = 'left',
-	    PX = 'px';
+	var RE_POS = /^(top|right|bottom|left)$/;
+	var CURRENT_STYLE = 'currentStyle';
+	var RUNTIME_STYLE = 'runtimeStyle';
+	var LEFT = 'left';
+	var PX = 'px';
 	
 	function _getComputedStyleIE(elem, name) {
 	  // currentStyle maybe null
@@ -20850,9 +20681,9 @@
 	  // exclude left right for relativity
 	  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
 	    // Remember the original values
-	    var style = elem.style,
-	        left = style[LEFT],
-	        rsLeft = elem[RUNTIME_STYLE][LEFT];
+	    var style = elem.style;
+	    var left = style[LEFT];
+	    var rsLeft = elem[RUNTIME_STYLE][LEFT];
 	
 	    // prevent flashing of content
 	    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
@@ -20888,9 +20719,11 @@
 	  }
 	  var old = getOffset(elem);
 	  var ret = {};
-	  var key;
+	  var key = undefined;
 	  for (key in offset) {
-	    ret[key] = preset + offset[key] - old[key];
+	    if (offset.hasOwnProperty(key)) {
+	      ret[key] = preset + offset[key] - old[key];
+	    }
 	  }
 	  css(elem, ret);
 	}
@@ -20905,41 +20738,45 @@
 	  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
 	}
 	
-	var BOX_MODELS = ['margin', 'border', 'padding'],
-	    CONTENT_INDEX = -1,
-	    PADDING_INDEX = 2,
-	    BORDER_INDEX = 1,
-	    MARGIN_INDEX = 0;
+	var BOX_MODELS = ['margin', 'border', 'padding'];
+	var CONTENT_INDEX = -1;
+	var PADDING_INDEX = 2;
+	var BORDER_INDEX = 1;
+	var MARGIN_INDEX = 0;
 	
 	function swap(elem, options, callback) {
-	  var old = {},
-	      style = elem.style,
-	      name;
+	  var old = {};
+	  var style = elem.style;
+	  var name = undefined;
 	
 	  // Remember the old values, and insert the new ones
 	  for (name in options) {
-	    old[name] = style[name];
-	    style[name] = options[name];
+	    if (options.hasOwnProperty(name)) {
+	      old[name] = style[name];
+	      style[name] = options[name];
+	    }
 	  }
 	
 	  callback.call(elem);
 	
 	  // Revert the old values
 	  for (name in options) {
-	    style[name] = old[name];
+	    if (options.hasOwnProperty(name)) {
+	      style[name] = old[name];
+	    }
 	  }
 	}
 	
 	function getPBMWidth(elem, props, which) {
-	  var value = 0,
-	      prop,
-	      j,
-	      i;
+	  var value = 0;
+	  var prop = undefined;
+	  var j = undefined;
+	  var i = undefined;
 	  for (j = 0; j < props.length; j++) {
 	    prop = props[j];
 	    if (prop) {
 	      for (i = 0; i < which.length; i++) {
-	        var cssProp;
+	        var cssProp = undefined;
 	        if (prop === 'border') {
 	          cssProp = prop + which[i] + 'Width';
 	        } else {
@@ -20958,8 +20795,8 @@
 	 */
 	function isWindow(obj) {
 	  // must use == for ie8
-	  /*eslint eqeqeq:0*/
-	  return obj != null && obj == obj.window;
+	  /* eslint eqeqeq:0 */
+	  return obj !== null && obj !== undefined && obj == obj.window;
 	}
 	
 	var domUtils = {};
@@ -20968,20 +20805,20 @@
 	  domUtils['doc' + name] = function (refWin) {
 	    var d = refWin.document;
 	    return Math.max(
-	    //firefox chrome documentElement.scrollHeight< body.scrollHeight
-	    //ie standard mode : documentElement.scrollHeight> body.scrollHeight
+	    // firefox chrome documentElement.scrollHeight< body.scrollHeight
+	    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
 	    d.documentElement['scroll' + name],
-	    //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
+	    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
 	    d.body['scroll' + name], domUtils['viewport' + name](d));
 	  };
 	
 	  domUtils['viewport' + name] = function (win) {
 	    // pc browser includes scrollbar in window.innerWidth
-	    var prop = 'client' + name,
-	        doc = win.document,
-	        body = doc.body,
-	        documentElement = doc.documentElement,
-	        documentElementProp = documentElement[prop];
+	    var prop = 'client' + name;
+	    var doc = win.document;
+	    var body = doc.body;
+	    var documentElement = doc.documentElement;
+	    var documentElementProp = documentElement[prop];
 	    // 标准模式取 documentElement
 	    // backcompat 取 body
 	    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
@@ -20996,22 +20833,23 @@
 	 'border' : (css width) + padding + border
 	 'margin' : (css width) + padding + border + margin
 	 */
-	function getWH(elem, name, extra) {
+	function getWH(elem, name, ex) {
+	  var extra = ex;
 	  if (isWindow(elem)) {
 	    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
 	  } else if (elem.nodeType === 9) {
 	    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
 	  }
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'],
-	      borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
+	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+	  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
 	  var computedStyle = getComputedStyleX(elem);
 	  var isBorderBox = isBorderBoxFn(elem, computedStyle);
 	  var cssBoxValue = 0;
-	  if (borderBoxValue == null || borderBoxValue <= 0) {
+	  if (borderBoxValue === null || borderBoxValue === undefined || borderBoxValue <= 0) {
 	    borderBoxValue = undefined;
 	    // Fall back to computed then un computed css if necessary
 	    cssBoxValue = getComputedStyleX(elem, name);
-	    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
+	    if (cssBoxValue === null || cssBoxValue === undefined || Number(cssBoxValue) < 0) {
 	      cssBoxValue = elem.style[name] || 0;
 	    }
 	    // Normalize '', auto, and prepare for extra
@@ -21025,22 +20863,27 @@
 	  if (extra === CONTENT_INDEX) {
 	    if (borderBoxValueOrIsBorderBox) {
 	      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
-	    } else {
-	      return cssBoxValue;
 	    }
+	    return cssBoxValue;
 	  } else if (borderBoxValueOrIsBorderBox) {
-	    return val + (extra === BORDER_INDEX ? 0 : extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle));
-	  } else {
-	    return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
+	    if (extra === BORDER_INDEX) {
+	      return val;
+	    }
+	    return val + (extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle));
 	  }
+	  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
 	}
 	
 	var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
 	
 	// fix #119 : https://github.com/kissyteam/kissy/issues/119
-	function getWHIgnoreDisplay(elem) {
-	  var val,
-	      args = arguments;
+	function getWHIgnoreDisplay() {
+	  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	    args[_key] = arguments[_key];
+	  }
+	
+	  var val = undefined;
+	  var elem = args[0];
 	  // in case elem is window
 	  // elem.offsetWidth === undefined
 	  if (elem.offsetWidth !== 0) {
@@ -21060,7 +20903,8 @@
 	  };
 	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
 	
-	  domUtils[name] = function (elem, val) {
+	  domUtils[name] = function (elem, v) {
+	    var val = v;
 	    if (val !== undefined) {
 	      if (elem) {
 	        var computedStyle = getComputedStyleX(elem);
@@ -21078,12 +20922,14 @@
 	
 	function mix(to, from) {
 	  for (var i in from) {
-	    to[i] = from[i];
+	    if (from.hasOwnProperty(i)) {
+	      to[i] = from[i];
+	    }
 	  }
 	  return to;
 	}
 	
-	var utils = module.exports = {
+	var utils = {
 	  getWindow: function getWindow(node) {
 	    if (node && node.document && node.setTimeout) {
 	      return node;
@@ -21102,15 +20948,19 @@
 	  each: each,
 	  css: css,
 	  clone: function clone(obj) {
-	    var i;
+	    var i = undefined;
 	    var ret = {};
 	    for (i in obj) {
-	      ret[i] = obj[i];
+	      if (obj.hasOwnProperty(i)) {
+	        ret[i] = obj[i];
+	      }
 	    }
 	    var overflow = obj.overflow;
 	    if (overflow) {
 	      for (i in obj) {
-	        ret.overflow[i] = obj.overflow[i];
+	        if (obj.hasOwnProperty(i)) {
+	          ret.overflow[i] = obj.overflow[i];
+	        }
 	      }
 	    }
 	    return ret;
@@ -21124,8 +20974,13 @@
 	  },
 	  merge: function merge() {
 	    var ret = {};
-	    for (var i = 0; i < arguments.length; i++) {
-	      utils.mix(ret, arguments[i]);
+	
+	    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	      args[_key2] = arguments[_key2];
+	    }
+	
+	    for (var i = 0; i < args.length; i++) {
+	      utils.mix(ret, args[i]);
 	    }
 	    return ret;
 	  },
@@ -21134,32 +20989,361 @@
 	};
 	
 	mix(utils, domUtils);
+	
+	exports['default'] = utils;
+	module.exports = exports['default'];
 
 /***/ },
 /* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(167);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	/**
+	 * 得到会导致元素显示不全的祖先元素
+	 */
+	
+	function getOffsetParent(element) {
+	  // ie 这个也不是完全可行
+	  /*
+	   <div style="width: 50px;height: 100px;overflow: hidden">
+	   <div style="width: 50px;height: 100px;position: relative;" id="d6">
+	   元素 6 高 100px 宽 50px<br/>
+	   </div>
+	   </div>
+	   */
+	  // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
+	  //  In other browsers it only includes elements with position absolute, relative or
+	  // fixed, not elements with overflow set to auto or scroll.
+	  //        if (UA.ie && ieMode < 8) {
+	  //            return element.offsetParent;
+	  //        }
+	  // 统一的 offsetParent 方法
+	  var doc = element.ownerDocument;
+	  var body = doc.body;
+	  var parent = undefined;
+	  var positionStyle = _utils2['default'].css(element, 'position');
+	  var skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
+	
+	  if (!skipStatic) {
+	    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
+	  }
+	
+	  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
+	    positionStyle = _utils2['default'].css(parent, 'position');
+	    if (positionStyle !== 'static') {
+	      return parent;
+	    }
+	  }
+	  return null;
+	}
+	
+	exports['default'] = getOffsetParent;
+	module.exports = exports['default'];
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(167);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	var _getOffsetParent = __webpack_require__(168);
+	
+	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
+	
+	/**
+	 * 获得元素的显示部分的区域
+	 */
+	function getVisibleRectForElement(element) {
+	  var visibleRect = {
+	    left: 0,
+	    right: Infinity,
+	    top: 0,
+	    bottom: Infinity
+	  };
+	  var el = (0, _getOffsetParent2['default'])(element);
+	  var scrollX = undefined;
+	  var scrollY = undefined;
+	  var winSize = undefined;
+	  var doc = element.ownerDocument;
+	  var win = doc.defaultView || doc.parentWindow;
+	  var body = doc.body;
+	  var documentElement = doc.documentElement;
+	
+	  // Determine the size of the visible rect by climbing the dom accounting for
+	  // all scrollable containers.
+	  while (el) {
+	    // clientWidth is zero for inline block elements in ie.
+	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) && (
+	    // body may have overflow set on it, yet we still get the entire
+	    // viewport. In some browsers, el.offsetParent may be
+	    // document.documentElement, so check for that too.
+	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible')) {
+	      var pos = _utils2['default'].offset(el);
+	      // add border
+	      pos.left += el.clientLeft;
+	      pos.top += el.clientTop;
+	      visibleRect.top = Math.max(visibleRect.top, pos.top);
+	      visibleRect.right = Math.min(visibleRect.right,
+	      // consider area without scrollBar
+	      pos.left + el.clientWidth);
+	      visibleRect.bottom = Math.min(visibleRect.bottom, pos.top + el.clientHeight);
+	      visibleRect.left = Math.max(visibleRect.left, pos.left);
+	    } else if (el === body || el === documentElement) {
+	      break;
+	    }
+	    el = (0, _getOffsetParent2['default'])(el);
+	  }
+	
+	  // Clip by window's viewport.
+	  scrollX = _utils2['default'].getWindowScrollLeft(win);
+	  scrollY = _utils2['default'].getWindowScrollTop(win);
+	  visibleRect.left = Math.max(visibleRect.left, scrollX);
+	  visibleRect.top = Math.max(visibleRect.top, scrollY);
+	  winSize = {
+	    width: _utils2['default'].viewportWidth(win),
+	    height: _utils2['default'].viewportHeight(win)
+	  };
+	  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
+	  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
+	  return visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left ? visibleRect : null;
+	}
+	
+	exports['default'] = getVisibleRectForElement;
+	module.exports = exports['default'];
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(167);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
+	  var pos = _utils2['default'].clone(elFuturePos);
+	  var size = {
+	    width: elRegion.width,
+	    height: elRegion.height
+	  };
+	
+	  if (overflow.adjustX && pos.left < visibleRect.left) {
+	    pos.left = visibleRect.left;
+	  }
+	
+	  // Left edge inside and right edge outside viewport, try to resize it.
+	  if (overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
+	    size.width -= pos.left + size.width - visibleRect.right;
+	  }
+	
+	  // Right edge outside viewport, try to move it.
+	  if (overflow.adjustX && pos.left + size.width > visibleRect.right) {
+	    // 保证左边界和可视区域左边界对齐
+	    pos.left = Math.max(visibleRect.right - size.width, visibleRect.left);
+	  }
+	
+	  // Top edge outside viewport, try to move it.
+	  if (overflow.adjustY && pos.top < visibleRect.top) {
+	    pos.top = visibleRect.top;
+	  }
+	
+	  // Top edge inside and bottom edge outside viewport, try to resize it.
+	  if (overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
+	    size.height -= pos.top + size.height - visibleRect.bottom;
+	  }
+	
+	  // Bottom edge outside viewport, try to move it.
+	  if (overflow.adjustY && pos.top + size.height > visibleRect.bottom) {
+	    // 保证上边界和可视区域上边界对齐
+	    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
+	  }
+	
+	  return _utils2['default'].mix(pos, size);
+	}
+	
+	exports['default'] = adjustForViewport;
+	module.exports = exports['default'];
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(167);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	function getRegion(node) {
+	  var offset = undefined;
+	  var w = undefined;
+	  var h = undefined;
+	  if (!_utils2['default'].isWindow(node) && node.nodeType !== 9) {
+	    offset = _utils2['default'].offset(node);
+	    w = _utils2['default'].outerWidth(node);
+	    h = _utils2['default'].outerHeight(node);
+	  } else {
+	    var win = _utils2['default'].getWindow(node);
+	    offset = {
+	      left: _utils2['default'].getWindowScrollLeft(win),
+	      top: _utils2['default'].getWindowScrollTop(win)
+	    };
+	    w = _utils2['default'].viewportWidth(win);
+	    h = _utils2['default'].viewportHeight(win);
+	  }
+	  offset.width = w;
+	  offset.height = h;
+	  return offset;
+	}
+	
+	exports['default'] = getRegion;
+	module.exports = exports['default'];
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _getAlignOffset = __webpack_require__(173);
+	
+	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
+	
+	function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
+	  var xy = undefined;
+	  var diff = undefined;
+	  var p1 = undefined;
+	  var p2 = undefined;
+	
+	  xy = {
+	    left: elRegion.left,
+	    top: elRegion.top
+	  };
+	
+	  p1 = (0, _getAlignOffset2['default'])(refNodeRegion, points[1]);
+	  p2 = (0, _getAlignOffset2['default'])(elRegion, points[0]);
+	
+	  diff = [p2.left - p1.left, p2.top - p1.top];
+	
+	  return {
+	    left: xy.left - diff[0] + offset[0] - targetOffset[0],
+	    top: xy.top - diff[1] + offset[1] - targetOffset[1]
+	  };
+	}
+	
+	exports['default'] = getElFuturePos;
+	module.exports = exports['default'];
+
+/***/ },
+/* 173 */
+/***/ function(module, exports) {
+
+	/**
+	 * 获取 node 上的 align 对齐点 相对于页面的坐标
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	function getAlignOffset(region, align) {
+	  var V = align.charAt(0);
+	  var H = align.charAt(1);
+	  var w = region.width;
+	  var h = region.height;
+	  var x = undefined;
+	  var y = undefined;
+	
+	  x = region.left;
+	  y = region.top;
+	
+	  if (V === 'c') {
+	    y += h / 2;
+	  } else if (V === 'b') {
+	    y += h;
+	  }
+	
+	  if (H === 'c') {
+	    x += w / 2;
+	  } else if (H === 'r') {
+	    x += w;
+	  }
+	
+	  return {
+	    left: x,
+	    top: y
+	  };
+	}
+	
+	exports['default'] = getAlignOffset;
+	module.exports = exports['default'];
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
 	module.exports = {
-	  guid: __webpack_require__(169),
-	  classSet: __webpack_require__(170),
-	  joinClasses: __webpack_require__(171),
-	  KeyCode: __webpack_require__(172),
-	  PureRenderMixin: __webpack_require__(173),
-	  shallowEqual: __webpack_require__(174),
-	  createChainedFunction: __webpack_require__(175),
+	  guid: __webpack_require__(175),
+	  classSet: __webpack_require__(176),
+	  joinClasses: __webpack_require__(177),
+	  KeyCode: __webpack_require__(178),
+	  PureRenderMixin: __webpack_require__(179),
+	  shallowEqual: __webpack_require__(180),
+	  createChainedFunction: __webpack_require__(181),
 	  Dom: {
-	    addEventListener: __webpack_require__(176),
-	    contains: __webpack_require__(177)
+	    addEventListener: __webpack_require__(182),
+	    contains: __webpack_require__(183)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(178),
-	    mapSelf: __webpack_require__(179)
+	    toArray: __webpack_require__(184),
+	    mapSelf: __webpack_require__(185)
 	  }
 	};
 
 
 /***/ },
-/* 169 */
+/* 175 */
 /***/ function(module, exports) {
 
 	var seed = 0;
@@ -21169,7 +21353,7 @@
 
 
 /***/ },
-/* 170 */
+/* 176 */
 /***/ function(module, exports) {
 
 	/**
@@ -21214,7 +21398,7 @@
 
 
 /***/ },
-/* 171 */
+/* 177 */
 /***/ function(module, exports) {
 
 	/**
@@ -21261,7 +21445,7 @@
 
 
 /***/ },
-/* 172 */
+/* 178 */
 /***/ function(module, exports) {
 
 	/**
@@ -21788,7 +21972,7 @@
 
 
 /***/ },
-/* 173 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21804,7 +21988,7 @@
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(174);
+	var shallowEqual = __webpack_require__(180);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -21841,7 +22025,7 @@
 
 
 /***/ },
-/* 174 */
+/* 180 */
 /***/ function(module, exports) {
 
 	/**
@@ -21889,7 +22073,7 @@
 
 
 /***/ },
-/* 175 */
+/* 181 */
 /***/ function(module, exports) {
 
 	/**
@@ -21916,7 +22100,7 @@
 
 
 /***/ },
-/* 176 */
+/* 182 */
 /***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
@@ -21939,7 +22123,7 @@
 
 
 /***/ },
-/* 177 */
+/* 183 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -21955,7 +22139,7 @@
 
 
 /***/ },
-/* 178 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(3);
@@ -21970,7 +22154,7 @@
 
 
 /***/ },
-/* 179 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(3);
@@ -21986,7 +22170,26 @@
 
 
 /***/ },
-/* 180 */
+/* 186 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = isWindow;
+	
+	function isWindow(obj) {
+	  /* eslint no-eq-null: 0 */
+	  /* eslint eqeqeq: 0 */
+	  return obj != null && obj == obj.window;
+	}
+	
+	module.exports = exports["default"];
+
+/***/ },
+/* 187 */
 /***/ function(module, exports) {
 
 	/* eslint-disable no-unused-vars */
@@ -22031,16 +22234,16 @@
 
 
 /***/ },
-/* 181 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
 	'use strict';
 	
-	module.exports = __webpack_require__(182);
+	module.exports = __webpack_require__(189);
 
 /***/ },
-/* 182 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22057,15 +22260,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(183);
+	var _ChildrenUtils = __webpack_require__(190);
 	
 	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
 	
-	var _AnimateChild = __webpack_require__(184);
+	var _AnimateChild = __webpack_require__(191);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(188);
+	var _util = __webpack_require__(195);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -22131,12 +22334,12 @@
 	    var showProp = this.props.showProp;
 	    var children = this.state.children;
 	    if (showProp) {
-	      children = children.filter(function (c) {
-	        return !!c.props[showProp];
+	      children = children.filter(function (child) {
+	        return !!child.props[showProp];
 	      });
 	    }
-	    children.forEach(function (c) {
-	      _this.performAppear(c.key);
+	    children.forEach(function (child) {
+	      _this.performAppear(child.key);
 	    });
 	  },
 	
@@ -22166,6 +22369,11 @@
 	          newChildren.push(newChild);
 	        }
 	      });
+	      nextChildren.forEach(function (nextChild) {
+	        if (!(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+	          newChildren.push(nextChild);
+	        }
+	      });
 	    } else {
 	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
 	    }
@@ -22183,14 +22391,14 @@
 	      children: newChildren
 	    });
 	
-	    nextChildren.forEach(function (c) {
-	      var key = c.key;
+	    nextChildren.forEach(function (child) {
+	      var key = child.key;
 	      if (currentlyAnimatingKeys[key]) {
 	        return;
 	      }
 	      var hasPrev = (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
 	      if (showProp) {
-	        var showInNext = c.props[showProp];
+	        var showInNext = child.props[showProp];
 	        if (hasPrev) {
 	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
 	          if (!showInNow && showInNext) {
@@ -22204,14 +22412,14 @@
 	      }
 	    });
 	
-	    currentChildren.forEach(function (c) {
-	      var key = c.key;
+	    currentChildren.forEach(function (child) {
+	      var key = child.key;
 	      if (currentlyAnimatingKeys[key]) {
 	        return;
 	      }
 	      var hasNext = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
 	      if (showProp) {
-	        var showInNow = c.props[showProp];
+	        var showInNow = child.props[showProp];
 	        if (hasNext) {
 	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
 	          if (!showInNext && showInNow) {
@@ -22233,37 +22441,6 @@
 	    var keysToLeave = this.keysToLeave;
 	    this.keysToLeave = [];
 	    keysToLeave.forEach(this.performLeave);
-	  },
-	
-	  render: function render() {
-	    var props = this.props;
-	    var stateChildren = this.state.children;
-	    var children = stateChildren && stateChildren.map(function (child) {
-	      if (!child.key) {
-	        throw new Error('must set key for <rc-animate> children');
-	      }
-	      return _react2['default'].createElement(
-	        _AnimateChild2['default'],
-	        {
-	          key: child.key,
-	          ref: child.key,
-	          animation: props.animation,
-	          transitionName: props.transitionName,
-	          transitionEnter: props.transitionEnter,
-	          transitionAppear: props.transitionAppear,
-	          transitionLeave: props.transitionLeave },
-	        child
-	      );
-	    });
-	    var Component = props.component;
-	    if (Component) {
-	      return _react2['default'].createElement(
-	        Component,
-	        this.props,
-	        children
-	      );
-	    }
-	    return children[0] || null;
 	  },
 	
 	  performEnter: function performEnter(key) {
@@ -22345,6 +22522,40 @@
 	    if (component) {
 	      component.stop();
 	    }
+	  },
+	
+	  render: function render() {
+	    var props = this.props;
+	    var stateChildren = this.state.children;
+	    var children = null;
+	    if (stateChildren) {
+	      children = stateChildren.map(function (child) {
+	        if (!child.key) {
+	          throw new Error('must set key for <rc-animate> children');
+	        }
+	        return _react2['default'].createElement(
+	          _AnimateChild2['default'],
+	          {
+	            key: child.key,
+	            ref: child.key,
+	            animation: props.animation,
+	            transitionName: props.transitionName,
+	            transitionEnter: props.transitionEnter,
+	            transitionAppear: props.transitionAppear,
+	            transitionLeave: props.transitionLeave },
+	          child
+	        );
+	      });
+	    }
+	    var Component = props.component;
+	    if (Component) {
+	      return _react2['default'].createElement(
+	        Component,
+	        this.props,
+	        children
+	      );
+	    }
+	    return children[0] || null;
 	  }
 	});
 	
@@ -22352,7 +22563,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 183 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22370,8 +22581,8 @@
 	var utils = {
 	  toArrayChildren: function toArrayChildren(children) {
 	    var ret = [];
-	    _react2['default'].Children.forEach(children, function (c) {
-	      ret.push(c);
+	    _react2['default'].Children.forEach(children, function (child) {
+	      ret.push(child);
 	    });
 	    return ret;
 	  },
@@ -22379,12 +22590,12 @@
 	  findChildInChildrenByKey: function findChildInChildrenByKey(children, key) {
 	    var ret = null;
 	    if (children) {
-	      children.forEach(function (c) {
+	      children.forEach(function (child) {
 	        if (ret) {
 	          return;
 	        }
-	        if (c.key === key) {
-	          ret = c;
+	        if (child.key === key) {
+	          ret = child;
 	        }
 	      });
 	    }
@@ -22394,12 +22605,12 @@
 	  findShownChildInChildrenByKey: function findShownChildInChildrenByKey(children, key, showProp) {
 	    var ret = null;
 	    if (children) {
-	      children.forEach(function (c) {
-	        if (c.key === key && c.props[showProp]) {
+	      children.forEach(function (child) {
+	        if (child.key === key && child.props[showProp]) {
 	          if (ret) {
 	            throw new Error('two child with same key for <rc-animate> children');
 	          }
-	          ret = c;
+	          ret = child;
 	        }
 	      });
 	    }
@@ -22409,11 +22620,11 @@
 	  findHiddenChildInChildrenByKey: function findHiddenChildInChildrenByKey(children, key, showProp) {
 	    var found = 0;
 	    if (children) {
-	      children.forEach(function (c) {
+	      children.forEach(function (child) {
 	        if (found) {
 	          return;
 	        }
-	        found = c.key === key && !c.props[showProp];
+	        found = child.key === key && !child.props[showProp];
 	      });
 	    }
 	    return found;
@@ -22422,8 +22633,8 @@
 	  isSameChildren: function isSameChildren(c1, c2, showProp) {
 	    var same = c1.length === c2.length;
 	    if (same) {
-	      c1.forEach(function (child, i) {
-	        var child2 = c2[i];
+	      c1.forEach(function (child, index) {
+	        var child2 = c2[index];
 	        if (child.key !== child2.key) {
 	          same = false;
 	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
@@ -22441,22 +22652,22 @@
 	    // the combined list
 	    var nextChildrenPending = {};
 	    var pendingChildren = [];
-	    prev.forEach(function (c) {
-	      if (utils.findChildInChildrenByKey(next, c.key)) {
+	    prev.forEach(function (child) {
+	      if (utils.findChildInChildrenByKey(next, child.key)) {
 	        if (pendingChildren.length) {
-	          nextChildrenPending[c.key] = pendingChildren;
+	          nextChildrenPending[child.key] = pendingChildren;
 	          pendingChildren = [];
 	        }
 	      } else {
-	        pendingChildren.push(c);
+	        pendingChildren.push(child);
 	      }
 	    });
 	
-	    next.forEach(function (c) {
-	      if (nextChildrenPending.hasOwnProperty(c.key)) {
-	        ret = ret.concat(nextChildrenPending[c.key]);
+	    next.forEach(function (child) {
+	      if (nextChildrenPending.hasOwnProperty(child.key)) {
+	        ret = ret.concat(nextChildrenPending[child.key]);
 	      }
-	      ret.push(c);
+	      ret.push(child);
 	    });
 	
 	    ret = ret.concat(pendingChildren);
@@ -22469,7 +22680,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 184 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22484,11 +22695,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cssAnimation = __webpack_require__(185);
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _cssAnimation = __webpack_require__(192);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(188);
+	var _util = __webpack_require__(195);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -22503,31 +22718,6 @@
 	
 	  propTypes: {
 	    children: _react2['default'].PropTypes.any
-	  },
-	
-	  transition: function transition(animationType, finishCallback) {
-	    var _this = this;
-	
-	    var node = _react2['default'].findDOMNode(this);
-	    var props = this.props;
-	    var transitionName = props.transitionName;
-	    this.stop();
-	    var end = function end() {
-	      _this.stopper = null;
-	      finishCallback();
-	    };
-	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-	      this.stopper = (0, _cssAnimation2['default'])(node, transitionName + '-' + animationType, end);
-	    } else {
-	      this.stopper = props.animation[animationType](node, end);
-	    }
-	  },
-	
-	  stop: function stop() {
-	    if (this.stopper) {
-	      this.stopper.stop();
-	      this.stopper = null;
-	    }
 	  },
 	
 	  componentWillUnmount: function componentWillUnmount() {
@@ -22558,6 +22748,31 @@
 	    }
 	  },
 	
+	  transition: function transition(animationType, finishCallback) {
+	    var _this = this;
+	
+	    var node = _reactDom2['default'].findDOMNode(this);
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    this.stop();
+	    var end = function end() {
+	      _this.stopper = null;
+	      finishCallback();
+	    };
+	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+	      this.stopper = (0, _cssAnimation2['default'])(node, transitionName + '-' + animationType, end);
+	    } else {
+	      this.stopper = props.animation[animationType](node, end);
+	    }
+	  },
+	
+	  stop: function stop() {
+	    if (this.stopper) {
+	      this.stopper.stop();
+	      this.stopper = null;
+	    }
+	  },
+	
 	  render: function render() {
 	    return this.props.children;
 	  }
@@ -22567,13 +22782,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 185 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(186);
-	var Css = __webpack_require__(187);
+	var Event = __webpack_require__(193);
+	var Css = __webpack_require__(194);
 	var isCssAnimationSupported = Event.endEvents.length !== 0;
 	
 	function getDuration(node, name) {
@@ -22725,7 +22940,7 @@
 	module.exports = cssAnimation;
 
 /***/ },
-/* 186 */
+/* 193 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22813,7 +23028,7 @@
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 187 */
+/* 194 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22844,7 +23059,7 @@
 	};
 
 /***/ },
-/* 188 */
+/* 195 */
 /***/ function(module, exports) {
 
 	"use strict";

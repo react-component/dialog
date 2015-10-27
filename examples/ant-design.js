@@ -27,7 +27,7 @@ webpackJsonp([0],[
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
-	var _objectAssign = __webpack_require__(180);
+	var _objectAssign = __webpack_require__(187);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
