@@ -184,13 +184,13 @@ const Dialog = React.createClass({
                      onLeave={this.onAnimateLeave}
                      transitionName={transitionName}
                      component=""
-                     transitionAppear={true}>
+                     transitionAppear>
       <Align align={props.align}
              key="dialog"
              onAlign={this.onAlign}
              dialogVisible={props.visible}
              monitorBufferTime={80}
-             monitorWindowResize={true}
+             monitorWindowResize
              disabled={!props.visible}>
         {dialogElement}
       </Align>
@@ -212,7 +212,8 @@ const Dialog = React.createClass({
       const maskTransition = this.getMaskTransitionName();
       maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
       if (maskTransition) {
-        maskElement = (<Animate key="mask" showProp="data-visible" transitionAppear={true} component=""
+        maskElement = (<Animate key="mask" showProp="data-visible"
+                                transitionAppear component=""
                                 transitionName={maskTransition}>{maskElement}</Animate>);
       }
     }
@@ -239,6 +240,10 @@ const Dialog = React.createClass({
     return transitionName;
   },
 
+  close() {
+    this.props.onClose();
+  },
+
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
@@ -250,10 +255,6 @@ const Dialog = React.createClass({
     return (<div className={classSet(className)}>
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
-  },
-
-  close() {
-    this.props.onClose();
   },
 });
 
