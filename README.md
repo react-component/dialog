@@ -39,13 +39,12 @@ react dialog component
 ```js
 var Dialog = require('rc-dialog');
 
-  React.renderComponent(
-      (<Dialog title={title} onClose={callback1} onShow={callback2}>
-        <p>first dialog</p>
-      </Dialog>),
-      document.getElementById('t1')
-  );
-  
+ReactDOM.render(
+  <Dialog title={title} onClose={callback1} onShow={callback2}>
+      <p>first dialog</p>
+  </Dialog>
+), document.getElementById('t1'));
+
 // use dialog
 ```
 

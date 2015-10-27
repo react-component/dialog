@@ -5,6 +5,7 @@ var Dialog = require('../index');
 require('../assets/bootstrap.less');
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var Simulate = TestUtils.Simulate;
 var async = require('async');
@@ -29,7 +30,7 @@ describe('dialog', function () {
     }
 
     callback1 = 0;
-    dialog = React.render((<Dialog
+    dialog = ReactDOM.render((<Dialog
       style={{width: 600}}
       title={title}
       onClose={onClose}>
@@ -38,7 +39,7 @@ describe('dialog', function () {
   });
 
   afterEach(function () {
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
   });
 
   it('show', function (done) {
@@ -113,7 +114,7 @@ describe('dialog', function () {
   });
 
   it('renderToBody', function () {
-    var d = React.render(<Dialog>
+    var d = ReactDOM.render(<Dialog>
       <p className="renderToBody">1</p>
     </Dialog>, container);
     expect($('.renderToBody').length).to.be(0);
@@ -125,7 +126,7 @@ describe('dialog', function () {
     expect($('.renderToBody').length).to.be(1);
     expect($('.rc-dialog-wrap')[0].parentNode).not.to.be(container);
     expect($('.rc-dialog-wrap')[0].parentNode.className).to.be('rc-dialog-container');
-    React.unmountComponentAtNode(container);
+    ReactDOM.unmountComponentAtNode(container);
     expect($('.renderToBody').length).to.be(0);
     expect($('.rc-dialog-container').length).to.be(0);
   });
