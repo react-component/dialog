@@ -5,11 +5,7 @@
   top: -9999px;
   z-index: 1000;
 }
-.rc-dialog-wrap * {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-.rc-dialog-wrap-hidden > .rc-dialog {
+.rc-dialog-hidden {
   display: none;
 }
 .rc-dialog-title {
@@ -63,11 +59,6 @@
   padding: 10px 20px 10px 10px;
   text-align: right;
   border-radius: 0 0 5px 5px;
-}
-.rc-dialog-wrap-hidden > .rc-dialog.rc-dialog-zoom-enter,
-.rc-dialog-wrap-hidden > .rc-dialog.rc-dialog-zoom-appear,
-.rc-dialog-wrap-hidden > .rc-dialog.rc-dialog-zoom-leave {
-  display: block;
 }
 .rc-dialog-zoom-enter,
 .rc-dialog-zoom-appear {
@@ -150,9 +141,6 @@
             transform: scale(0, 0);
   }
 }
-.rc-dialog-wrap-hidden > .rc-dialog-mask {
-  display: none;
-}
 .rc-dialog-mask {
   position: fixed;
   top: 0;
@@ -165,10 +153,8 @@
   z-index: 1000;
   filter: alpha(opacity=50);
 }
-.rc-dialog-wrap-hidden > .rc-dialog-mask.rc-dialog-fade-enter,
-.rc-dialog-wrap-hidden > .rc-dialog-mask.rc-dialog-fade-appear,
-.rc-dialog-wrap-hidden > .rc-dialog-mask.rc-dialog-fade-leave {
-  display: block;
+.rc-dialog-mask-hidden {
+  display: none;
 }
 .rc-dialog-fade-enter,
 .rc-dialog-fade-appear {

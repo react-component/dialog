@@ -19862,6 +19862,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _react3 = _interopRequireDefault(_react);
+	
 	var _rcAlign = __webpack_require__(164);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
@@ -19875,6 +19877,10 @@
 	var _rcAnimate = __webpack_require__(188);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var _DOMWrap = __webpack_require__(196);
+	
+	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
 	
 	function noop() {}
 	
@@ -19940,7 +19946,7 @@
 	      // first show
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
-	        this.refs.dialog.focus();
+	        _react3['default'].findDOMNode(this.refs.dialog).focus();
 	      }
 	    } else if (prevProps.visible) {
 	      if (props.mask && this.lastOutSideFocusNode) {
@@ -19962,7 +19968,7 @@
 	    if (this.props.closable) {
 	      this.close();
 	    }
-	    this.refs.dialog.focus();
+	    _react3['default'].findDOMNode(this.refs.dialog).focus();
 	  },
 	
 	  onKeyDown: function onKeyDown(e) {
@@ -19976,7 +19982,7 @@
 	    if (props.visible) {
 	      if (e.keyCode === _rcUtil.KeyCode.TAB) {
 	        var activeElement = document.activeElement;
-	        var dialogRoot = this.refs.dialog;
+	        var dialogRoot = _react3['default'].findDOMNode(this.refs.dialog);
 	        var sentinel = this.refs.sentinel;
 	        if (e.shiftKey) {
 	          if (activeElement === dialogRoot) {
@@ -20054,8 +20060,9 @@
 	    };
 	    var transitionName = this.getTransitionName();
 	    var dialogElement = _react2['default'].createElement(
-	      'div',
-	      dialogProps,
+	      _DOMWrap2['default'],
+	      _extends({}, dialogProps, {
+	        hiddenClassName: prefixCls + '-hidden' }),
 	      _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
@@ -20088,6 +20095,9 @@
 	          key: 'dialog',
 	          onAlign: this.onAlign,
 	          dialogVisible: props.visible,
+	          childrenProps: {
+	            visible: 'dialogVisible'
+	          },
 	          monitorBufferTime: 80,
 	          monitorWindowResize: true,
 	          disabled: !props.visible },
@@ -20099,8 +20109,7 @@
 	  getMaskElement: function getMaskElement() {
 	    var props = this.props;
 	    var maskProps = {
-	      onClick: this.onMaskClick,
-	      'data-visible': props.visible
+	      onClick: this.onMaskClick
 	    };
 	
 	    if (props.zIndex) {
@@ -20109,11 +20118,13 @@
 	    var maskElement = undefined;
 	    if (props.mask) {
 	      var maskTransition = this.getMaskTransitionName();
-	      maskElement = _react2['default'].createElement('div', _extends({}, maskProps, { className: props.prefixCls + '-mask', key: 'mask' }));
+	      maskElement = _react2['default'].createElement(_DOMWrap2['default'], _extends({}, maskProps, { className: props.prefixCls + '-mask',
+	        visible: props.visible,
+	        hiddenClassName: props.prefixCls + '-mask-hidden' }));
 	      if (maskTransition) {
 	        maskElement = _react2['default'].createElement(
 	          _rcAnimate2['default'],
-	          { key: 'mask', showProp: 'data-visible',
+	          { key: 'mask', showProp: 'visible',
 	            transitionAppear: true, component: '',
 	            transitionName: maskTransition },
 	          maskElement
@@ -20148,11 +20159,9 @@
 	  },
 	
 	  render: function render() {
-	    var _className;
-	
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
-	    var className = (_className = {}, _defineProperty(_className, prefixCls + '-wrap', 1), _defineProperty(_className, prefixCls + '-wrap-hidden', !props.visible), _className);
+	    var className = _defineProperty({}, prefixCls + '-wrap', 1);
 	
 	    return _react2['default'].createElement(
 	      'div',
@@ -20229,6 +20238,7 @@
 	  displayName: 'Align',
 	
 	  propTypes: {
+	    childrenProps: _react.PropTypes.object,
 	    align: _react.PropTypes.object.isRequired,
 	    target: _react.PropTypes.func,
 	    onAlign: _react.PropTypes.func,
@@ -20320,7 +20330,21 @@
 	  },
 	
 	  render: function render() {
-	    return _react2['default'].Children.only(this.props.children);
+	    var _props = this.props;
+	    var childrenProps = _props.childrenProps;
+	    var children = _props.children;
+	
+	    var child = _react2['default'].Children.only(children);
+	    if (childrenProps) {
+	      var newProps = {};
+	      for (var prop in childrenProps) {
+	        if (childrenProps.hasOwnProperty(prop)) {
+	          newProps[prop] = this.props[childrenProps[prop]];
+	        }
+	      }
+	      return _react2['default'].cloneElement(child, newProps);
+	    }
+	    return child;
 	  }
 	});
 	
@@ -20495,15 +20519,6 @@
 	    }
 	  }
 	
-	  // https://github.com/kissyteam/kissy/issues/190
-	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
-	  // 相对于屏幕位置没变，而 left/top 变了
-	  // 例如 <div 'relative'><el absolute></div>
-	  _utils2['default'].offset(el, {
-	    left: newElRegion.left,
-	    top: newElRegion.top
-	  });
-	
 	  // need judge to in case set fixed with in css on height auto element
 	  if (newElRegion.width !== elRegion.width) {
 	    _utils2['default'].css(el, 'width', el.width() + newElRegion.width - elRegion.width);
@@ -20512,6 +20527,18 @@
 	  if (newElRegion.height !== elRegion.height) {
 	    _utils2['default'].css(el, 'height', el.height() + newElRegion.height - elRegion.height);
 	  }
+	
+	  // https://github.com/kissyteam/kissy/issues/190
+	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
+	  // 相对于屏幕位置没变，而 left/top 变了
+	  // 例如 <div 'relative'><el absolute></div>
+	  _utils2['default'].offset(el, {
+	    left: newElRegion.left,
+	    top: newElRegion.top
+	  }, {
+	    useCssRight: align.useCssRight,
+	    useCssBottom: align.useCssBottom
+	  });
 	
 	  return {
 	    points: points,
@@ -20648,9 +20675,10 @@
 	  var computedStyle = cs;
 	  var val = '';
 	  var d = elem.ownerDocument;
+	  computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null);
 	
 	  // https://github.com/kissyteam/kissy/issues/61
-	  if (computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null)) {
+	  if (computedStyle) {
 	    val = computedStyle.getPropertyValue(name) || computedStyle[name];
 	  }
 	
@@ -20704,25 +20732,66 @@
 	  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
 	}
 	
+	function getOffsetDirection(dir, option) {
+	  if (dir === 'left') {
+	    return option.useCssRight ? 'right' : dir;
+	  }
+	  return option.useCssBottom ? 'bottom' : dir;
+	}
+	
+	function oppositeOffsetDirection(dir) {
+	  if (dir === 'left') {
+	    return 'right';
+	  } else if (dir === 'right') {
+	    return 'left';
+	  } else if (dir === 'top') {
+	    return 'bottom';
+	  } else if (dir === 'bottom') {
+	    return 'top';
+	  }
+	}
+	
 	// 设置 elem 相对 elem.ownerDocument 的坐标
-	function setOffset(elem, offset) {
+	function setOffset(elem, offset, option) {
 	  // set position first, in-case top/left are set even on static elem
 	  if (css(elem, 'position') === 'static') {
 	    elem.style.position = 'relative';
 	  }
-	  var preset = -9999;
+	  var presetH = -999;
+	  var presetV = -999;
+	  var horizontalProperty = getOffsetDirection('left', option);
+	  var verticalProperty = getOffsetDirection('top', option);
+	  var oppositeHorizontalProperty = oppositeOffsetDirection(horizontalProperty);
+	  var oppositeVerticalProperty = oppositeOffsetDirection(verticalProperty);
+	
+	  if (horizontalProperty !== 'left') {
+	    presetH = 999;
+	  }
+	
+	  if (verticalProperty !== 'top') {
+	    presetV = 999;
+	  }
+	
 	  if ('left' in offset) {
-	    elem.style.left = preset + 'px';
+	    elem.style[oppositeHorizontalProperty] = '';
+	    elem.style[horizontalProperty] = presetH + 'px';
 	  }
 	  if ('top' in offset) {
-	    elem.style.top = preset + 'px';
+	    elem.style[oppositeVerticalProperty] = '';
+	    elem.style[verticalProperty] = presetV + 'px';
 	  }
 	  var old = getOffset(elem);
 	  var ret = {};
 	  var key = undefined;
 	  for (key in offset) {
 	    if (offset.hasOwnProperty(key)) {
-	      ret[key] = preset + offset[key] - old[key];
+	      var dir = getOffsetDirection(key, option);
+	      var preset = key === 'left' ? presetH : presetV;
+	      if (dir === key) {
+	        ret[dir] = preset + offset[key] - old[key];
+	      } else {
+	        ret[dir] = preset + old[key] - offset[key];
+	      }
 	    }
 	  }
 	  css(elem, ret);
@@ -20937,9 +21006,9 @@
 	    var doc = node.ownerDocument || node;
 	    return doc.defaultView || doc.parentWindow;
 	  },
-	  offset: function offset(el, value) {
+	  offset: function offset(el, value, option) {
 	    if (typeof value !== 'undefined') {
-	      setOffset(el, value);
+	      setOffset(el, value, option || {});
 	    } else {
 	      return getOffset(el);
 	    }
@@ -21094,11 +21163,11 @@
 	  // all scrollable containers.
 	  while (el) {
 	    // clientWidth is zero for inline block elements in ie.
-	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) && (
+	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) &&
 	    // body may have overflow set on it, yet we still get the entire
 	    // viewport. In some browsers, el.offsetParent may be
 	    // document.documentElement, so check for that too.
-	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible')) {
+	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible') {
 	      var pos = _utils2['default'].offset(el);
 	      // add border
 	      pos.left += el.clientLeft;
@@ -23090,6 +23159,53 @@
 	};
 	exports["default"] = util;
 	module.exports = exports["default"];
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(3);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _objectAssign = __webpack_require__(187);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
+	var DOMWrap = _react2['default'].createClass({
+	  displayName: 'DOMWrap',
+	
+	  propTypes: {
+	    tag: _react2['default'].PropTypes.string
+	  },
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      tag: 'div'
+	    };
+	  },
+	
+	  render: function render() {
+	    var props = (0, _objectAssign2['default'])({}, this.props);
+	    if (!props.visible) {
+	      props.className = props.className || '';
+	      props.className += ' ' + props.hiddenClassName;
+	    }
+	    var Tag = props.tag;
+	    return _react2['default'].createElement(Tag, props);
+	  }
+	});
+	
+	exports['default'] = DOMWrap;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
