@@ -47,7 +47,7 @@ describe('dialog', function () {
       visible: true
     });
     setTimeout(function () {
-      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).not.to.be.ok();
+      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
       done();
     }, 10);
 
@@ -61,7 +61,7 @@ describe('dialog', function () {
       visible: false
     });
     setTimeout(function () {
-      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
+      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
     }, 10);
   });
@@ -90,7 +90,7 @@ describe('dialog', function () {
       setTimeout(done, 10);
     }, function (done) {
       expect(callback1).to.be(1);
-      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
+      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
     }], done)
   });
@@ -108,7 +108,7 @@ describe('dialog', function () {
       setTimeout(done, 10);
     }, function (done) {
       expect(callback1).to.be(1);
-      expect($('.rc-dialog-wrap').hasClass('rc-dialog-wrap-hidden')).to.be.ok();
+      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
     }], done)
   });

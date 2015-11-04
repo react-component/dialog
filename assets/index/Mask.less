@@ -1,9 +1,4 @@
 .@{prefixCls} {
-
-  &-wrap-hidden > &-mask {
-    display: none;
-  }
-
   &-mask {
     position: fixed;
     top: 0;
@@ -15,12 +10,10 @@
     height: 100%;
     z-index: 1000;
     filter: alpha(opacity=50);
-  }
 
-  &-wrap-hidden > &-mask&-fade-enter,
-  &-wrap-hidden > &-mask&-fade-appear,
-  &-wrap-hidden > &-mask&-fade-leave {
-    display: block;
+    &-hidden {
+      display: none;
+    }
   }
 
   .fade-effect() {

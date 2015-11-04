@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react';
 import Align from 'rc-align';
 import {KeyCode, classSet} from 'rc-util';
 import assign from 'object-assign';
 import Animate from 'rc-animate';
+import DOMWrap from './DOMWrap';
 
 function noop() {
 }
@@ -67,7 +69,7 @@ const Dialog = React.createClass({
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
-        this.refs.dialog.focus();
+        ReactDOM.findDOMNode(this.refs.dialog).focus();
       }
     } else if (prevProps.visible) {
       if (props.mask && this.lastOutSideFocusNode) {
@@ -89,7 +91,7 @@ const Dialog = React.createClass({
     if (this.props.closable) {
       this.close();
     }
-    this.refs.dialog.focus();
+    ReactDOM.findDOMNode(this.refs.dialog).focus();
   },
 
   onKeyDown(e) {
@@ -103,7 +105,7 @@ const Dialog = React.createClass({
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
         const activeElement = document.activeElement;
-        const dialogRoot = this.refs.dialog;
+        const dialogRoot = ReactDOM.findDOMNode(this.refs.dialog);
         const sentinel = this.refs.sentinel;
         if (e.shiftKey) {
           if (activeElement === dialogRoot) {
@@ -170,14 +172,15 @@ const Dialog = React.createClass({
       onKeyDown: this.onKeyDown,
     };
     const transitionName = this.getTransitionName();
-    const dialogElement = (<div {...dialogProps}>
+    const dialogElement = (<DOMWrap {...dialogProps}
+      hiddenClassName={`${prefixCls}-hidden`}>
       <div className={`${prefixCls}-content`}>
         {header}
         <div className={`${prefixCls}-body`}>{props.children}</div>
         {footer}
       </div>
       <div tabIndex="0" ref="sentinel" style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
-    </div>);
+    </DOMWrap>);
     // add key for align to keep animate children stable
     return (<Animate key="dialog"
                      showProp="dialogVisible"
@@ -189,6 +192,9 @@ const Dialog = React.createClass({
              key="dialog"
              onAlign={this.onAlign}
              dialogVisible={props.visible}
+             childrenProps={{
+               visible: 'dialogVisible',
+             }}
              monitorBufferTime={80}
              monitorWindowResize
              disabled={!props.visible}>
@@ -201,7 +207,6 @@ const Dialog = React.createClass({
     const props = this.props;
     const maskProps = {
       onClick: this.onMaskClick,
-      'data-visible': props.visible,
     };
 
     if (props.zIndex) {
@@ -210,9 +215,11 @@ const Dialog = React.createClass({
     let maskElement;
     if (props.mask) {
       const maskTransition = this.getMaskTransitionName();
-      maskElement = <div {...maskProps} className={`${props.prefixCls}-mask`} key="mask"/>;
+      maskElement = (<DOMWrap {...maskProps} className={`${props.prefixCls}-mask`}
+                                            visible={props.visible}
+                                            hiddenClassName={`${props.prefixCls}-mask-hidden`} />);
       if (maskTransition) {
-        maskElement = (<Animate key="mask" showProp="data-visible"
+        maskElement = (<Animate key="mask" showProp="visible"
                                 transitionAppear component=""
                                 transitionName={maskTransition}>{maskElement}</Animate>);
       }
@@ -249,7 +256,6 @@ const Dialog = React.createClass({
     const prefixCls = props.prefixCls;
     const className = {
       [`${prefixCls}-wrap`]: 1,
-      [`${prefixCls}-wrap-hidden`]: !props.visible,
     };
 
     return (<div className={classSet(className)}>

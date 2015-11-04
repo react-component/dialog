@@ -5,12 +5,7 @@
   top: -9999px;
   z-index: 1000;
 
-  &-wrap * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  &-wrap-hidden > & {
+  &-hidden {
     display: none;
   }
 
@@ -77,12 +72,6 @@
   .effect() {
     animation-duration: 0.3s;
     animation-fill-mode: both;
-  }
-
-  &-wrap-hidden > &&-zoom-enter,
-  &-wrap-hidden > &&-zoom-appear,
-  &-wrap-hidden > &&-zoom-leave {
-    display: block;
   }
 
   &-zoom-enter, &-zoom-appear {
