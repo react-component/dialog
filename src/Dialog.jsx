@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import ReactDOM from 'react';
+import ReactDOM from 'react-dom';
 import Align from 'rc-align';
 import {KeyCode, classSet} from 'rc-util';
 import assign from 'object-assign';
