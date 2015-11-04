@@ -19862,7 +19862,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _react3 = _interopRequireDefault(_react);
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	var _rcAlign = __webpack_require__(164);
 	
@@ -19946,7 +19948,7 @@
 	      // first show
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
-	        _react3['default'].findDOMNode(this.refs.dialog).focus();
+	        _reactDom2['default'].findDOMNode(this.refs.dialog).focus();
 	      }
 	    } else if (prevProps.visible) {
 	      if (props.mask && this.lastOutSideFocusNode) {
@@ -19968,7 +19970,7 @@
 	    if (this.props.closable) {
 	      this.close();
 	    }
-	    _react3['default'].findDOMNode(this.refs.dialog).focus();
+	    _reactDom2['default'].findDOMNode(this.refs.dialog).focus();
 	  },
 	
 	  onKeyDown: function onKeyDown(e) {
@@ -19982,7 +19984,7 @@
 	    if (props.visible) {
 	      if (e.keyCode === _rcUtil.KeyCode.TAB) {
 	        var activeElement = document.activeElement;
-	        var dialogRoot = _react3['default'].findDOMNode(this.refs.dialog);
+	        var dialogRoot = _reactDom2['default'].findDOMNode(this.refs.dialog);
 	        var sentinel = this.refs.sentinel;
 	        if (e.shiftKey) {
 	          if (activeElement === dialogRoot) {
