@@ -151,15 +151,17 @@ const Dialog = React.createClass({
     }
 
     let header;
-    if (props.title || props.closable) {
+    if (props.title) {
       header = (<div className={`${prefixCls}-header`}>
-        {closable ?
-          (<a tabIndex="0" onClick={this.close} className={`${prefixCls}-close`}>
-            <span className={`${prefixCls}-close-x`}></span>
-          </a>) :
-          null}
         <div className={`${prefixCls}-title`}>{props.title}</div>
       </div>);
+    }
+
+    let closer;
+    if (closable) {
+      closer = (<a tabIndex="0" onClick={this.close} className={`${prefixCls}-close`}>
+        <span className={`${prefixCls}-close-x`}></span>
+      </a>);
     }
 
     const style = assign({}, props.style, dest);
@@ -175,6 +177,7 @@ const Dialog = React.createClass({
     const dialogElement = (<DOMWrap {...dialogProps}
       hiddenClassName={`${prefixCls}-hidden`}>
       <div className={`${prefixCls}-content`}>
+        {closer}
         {header}
         <div className={`${prefixCls}-body`}>{props.children}</div>
         {footer}
