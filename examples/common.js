@@ -20034,20 +20034,24 @@
 	    }
 	
 	    var header = undefined;
-	    if (props.title || props.closable) {
+	    if (props.title) {
 	      header = _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-header' },
-	        closable ? _react2['default'].createElement(
-	          'a',
-	          { tabIndex: '0', onClick: this.close, className: prefixCls + '-close' },
-	          _react2['default'].createElement('span', { className: prefixCls + '-close-x' })
-	        ) : null,
 	        _react2['default'].createElement(
 	          'div',
 	          { className: prefixCls + '-title' },
 	          props.title
 	        )
+	      );
+	    }
+	
+	    var closer = undefined;
+	    if (closable) {
+	      closer = _react2['default'].createElement(
+	        'a',
+	        { tabIndex: '0', onClick: this.close, className: prefixCls + '-close' },
+	        _react2['default'].createElement('span', { className: prefixCls + '-close-x' })
 	      );
 	    }
 	
@@ -20068,6 +20072,7 @@
 	      _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
+	        closer,
 	        header,
 	        _react2['default'].createElement(
 	          'div',

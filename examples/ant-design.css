@@ -25,9 +25,10 @@
 .rc-dialog-close {
   cursor: pointer;
   outline: none;
-  margin-top: -2px;
-  float: right;
   font-size: 21px;
+  position: absolute;
+  right: 20px;
+  top: 12px;
   font-weight: 700;
   line-height: 1;
   color: #000;
