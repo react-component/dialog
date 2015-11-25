@@ -20125,7 +20125,8 @@
 	    var maskElement = undefined;
 	    if (props.mask) {
 	      var maskTransition = this.getMaskTransitionName();
-	      maskElement = _react2['default'].createElement(_DOMWrap2['default'], _extends({}, maskProps, { className: props.prefixCls + '-mask',
+	      maskElement = _react2['default'].createElement(_DOMWrap2['default'], _extends({}, maskProps, { key: 'mask',
+	        className: props.prefixCls + '-mask',
 	        visible: props.visible,
 	        hiddenClassName: props.prefixCls + '-mask-hidden' }));
 	      if (maskTransition) {
