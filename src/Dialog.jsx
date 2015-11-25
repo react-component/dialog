@@ -160,7 +160,7 @@ const Dialog = React.createClass({
     let closer;
     if (closable) {
       closer = (<a tabIndex="0" onClick={this.close} className={`${prefixCls}-close`}>
-        <span className={`${prefixCls}-close-x`}></span>
+        <span className={`${prefixCls}-close-x`} />
       </a>);
     }
 
@@ -218,7 +218,8 @@ const Dialog = React.createClass({
     let maskElement;
     if (props.mask) {
       const maskTransition = this.getMaskTransitionName();
-      maskElement = (<DOMWrap {...maskProps} className={`${props.prefixCls}-mask`}
+      maskElement = (<DOMWrap {...maskProps} key="mask"
+                                             className={`${props.prefixCls}-mask`}
                                             visible={props.visible}
                                             hiddenClassName={`${props.prefixCls}-mask-hidden`} />);
       if (maskTransition) {
