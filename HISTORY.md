@@ -1,6 +1,10 @@
 # History
 ----
 
+## 5.3.0 / 2015-11-23
+
+- separate close and header
+
 ## 5.1.0 / 2015-10-20
 
 - only support react 0.14

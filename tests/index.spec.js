@@ -85,7 +85,7 @@ describe('dialog', function () {
       });
       setTimeout(done, 10);
     }, function (done) {
-      var btn = $('.rc-dialog-header a')[0];
+      var btn = $('.rc-dialog-close')[0];
       Simulate.click(btn);
       setTimeout(done, 10);
     }, function (done) {
