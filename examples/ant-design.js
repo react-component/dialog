@@ -29,7 +29,8 @@ var MyControl = React.createClass({
     });
   },
 
-  onClose(){
+  onClose(e) {
+    console.log(e);
     this.setState({
       visible: false
     });

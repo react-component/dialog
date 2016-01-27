@@ -63,8 +63,8 @@ class DialogWrap extends React.Component {
     }
   }
 
-  onClose() {
-    this.props.onClose();
+  onClose(e) {
+    this.props.onClose(e);
   }
 
   getDialogContainer() {

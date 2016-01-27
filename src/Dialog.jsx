@@ -87,9 +87,9 @@ const Dialog = React.createClass({
     this.props.onAfterClose();
   },
 
-  onMaskClick() {
+  onMaskClick(e) {
     if (this.props.closable) {
-      this.close();
+      this.close(e);
     }
     ReactDOM.findDOMNode(this.refs.dialog).focus();
   },
@@ -98,7 +98,7 @@ const Dialog = React.createClass({
     const props = this.props;
     if (props.closable) {
       if (e.keyCode === KeyCode.ESC) {
-        this.close();
+        this.close(e);
       }
     }
     // keep focus inside dialog
@@ -251,8 +251,8 @@ const Dialog = React.createClass({
     return transitionName;
   },
 
-  close() {
-    this.props.onClose();
+  close(e) {
+    this.props.onClose(e);
   },
 
   render() {
