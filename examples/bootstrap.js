@@ -1,64 +1,64 @@
-'use strict';
-
 import 'rc-dialog/assets/bootstrap.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from 'rc-dialog';
 
-var MyControl = React.createClass({
-  getInitialState(){
+const MyControl = React.createClass({
+  getInitialState() {
     return {
-      visible:false,
-      destroyOnClose:false,
+      visible: false,
+      destroyOnClose: false,
     };
   },
 
-  onClick: function (e) {
+  onClick(e) {
     this.setState({
       mousePosition: {
-        x:e.pageX,
-        y:e.pageY
+        x: e.pageX,
+        y: e.pageY,
       },
-      visible:true
+      visible: true,
     });
   },
 
-  onClose(){
+  onClose() {
     this.setState({
-      visible:false
+      visible: false,
     });
   },
 
-  onDestroyOnCloseChange(e){
+  onDestroyOnCloseChange(e) {
     this.setState({
-      destroyOnClose:e.target.checked
+      destroyOnClose: e.target.checked,
     });
   },
 
-  render: function () {
-    var dialog;
-    if(this.state.visible || !this.state.destroyOnClose){
-      dialog= <Dialog visible={this.state.visible}
-              animation="zoom"
-              maskAnimation="fade"
-              onClose={this.onClose}
-              style={{width:600}}
-              mousePosition={this.state.mousePosition} title={<div> 第二个弹框</div>}>
-        <input />
-        <p>basic modal</p>
-      </Dialog>;
-   }
+  render() {
+    let dialog;
+    if (this.state.visible || !this.state.destroyOnClose) {
+      dialog = (
+        <Dialog visible={this.state.visible}
+                animation="zoom"
+                maskAnimation="fade"
+                onClose={this.onClose}
+                style={{width: 600}}
+                mousePosition={this.state.mousePosition} title={<div>第二个弹框</div>}>
+          <input />
+          <p>basic modal</p>
+        </Dialog>
+      );
+    }
     return (
       <div>
         <p>
-        <button className="btn btn-primary" onClick={this.onClick}>show dialog</button>
+          <button className="btn btn-primary" onClick={this.onClick}>show dialog</button>
           &nbsp;
           <label>destroy on close: <input type="checkbox" checked={this.state.destroyOnClose} onChange={this.onDestroyOnCloseChange}/></label>
-          </p>
+        </p>
         {dialog}
       </div>
     );
-  }
+  },
 });
 
 ReactDOM.render(

@@ -1,44 +1,42 @@
-'use strict';
-
 import 'rc-dialog/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from 'rc-dialog';
 import assign from 'object-assign';
 
-var MyControl = React.createClass({
-  getInitialState(){
+const MyControl = React.createClass({
+  getInitialState() {
     return {
       visible: false,
       width: 600,
       align: {
         points: ['tc', 'tc'],
-        offset: [0, 100]
+        offset: [0, 100],
       },
       destroyOnClose: false,
     };
   },
 
-  onClick: function (e) {
+  onClick(e) {
     this.setState({
       mousePosition: {
         x: e.pageX,
-        y: e.pageY
+        y: e.pageY,
       },
-      visible: true
+      visible: true,
     });
   },
 
   onClose(e) {
     console.log(e);
     this.setState({
-      visible: false
+      visible: false,
     });
   },
 
-  onDestroyOnCloseChange(e){
+  onDestroyOnCloseChange(e) {
     this.setState({
-      destroyOnClose: e.target.checked
+      destroyOnClose: e.target.checked,
     });
   },
 
@@ -49,22 +47,23 @@ var MyControl = React.createClass({
     });
   },
 
-  render: function () {
-    var dialog;
+  render() {
+    let dialog;
     if (this.state.visible || !this.state.destroyOnClose) {
-      dialog = <Dialog visible={this.state.visible}
-                       align={this.state.align}
-                       animation="zoom"
-                       maskAnimation="fade"
-                       onClose={this.onClose}
-                       style={{width:this.state.width}}
-                       mousePosition={this.state.mousePosition} title={<div> 第二个弹框</div>}>
-        <input />
-
-        <p>basic modal</p>
-        <button onClick={this.changeWidth}>change width</button>
-        <div style={{height:200}}></div>
-      </Dialog>;
+      dialog = (
+        <Dialog visible={this.state.visible}
+                align={this.state.align}
+                animation="zoom"
+                maskAnimation="fade"
+                onClose={this.onClose}
+                style={{width: this.state.width}}
+                mousePosition={this.state.mousePosition} title={<div>第二个弹框</div>}>
+          <input />
+          <p>basic modal</p>
+          <button onClick={this.changeWidth}>change width</button>
+          <div style={{height: 200}}></div>
+        </Dialog>
+      );
     }
     return (
       <div>
@@ -77,13 +76,13 @@ var MyControl = React.createClass({
         {dialog}
       </div>
     );
-  }
+  },
 });
 
 ReactDOM.render(
   <div>
     <h2>ant-design dialog</h2>
-    <MyControl/>
+    <MyControl />
   </div>,
   document.getElementById('__react-content')
 );
