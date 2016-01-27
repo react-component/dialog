@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Align from 'rc-align';
-import {KeyCode, classSet} from 'rc-util';
+import { KeyCode } from 'rc-util';
 import assign from 'object-assign';
 import Animate from 'rc-animate';
 import DOMWrap from './DOMWrap';
+import classNames from 'classnames';
 
 function noop() {
 }
@@ -262,7 +263,7 @@ const Dialog = React.createClass({
       [`${prefixCls}-wrap`]: 1,
     };
 
-    return (<div className={classSet(className)}>
+    return (<div className={classNames(className)}>
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
   },
