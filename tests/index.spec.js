@@ -1,31 +1,30 @@
-'use strict';
-
-var expect = require('expect.js');
-var Dialog = require('../index');
+/* eslint-disable func-names */
+const expect = require('expect.js');
+const Dialog = require('../index');
 require('../assets/bootstrap.less');
-var $ = require('jquery');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Simulate = TestUtils.Simulate;
-var async = require('async');
-var rcUtil = require('rc-util');
+const $ = require('jquery');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const TestUtils = require('react-addons-test-utils');
+const Simulate = TestUtils.Simulate;
+const async = require('async');
+const rcUtil = require('rc-util');
 
-describe('dialog', function () {
-  var title = "第一个title";
-  var dialog;
+describe('dialog', function() {
+  const title = '第一个title';
+  let dialog;
 
-  var container = document.createElement('div');
+  const container = document.createElement('div');
   container.id = 't1';
   document.body.appendChild(container);
 
-  var callback1;
+  let callback1;
 
-  beforeEach(function () {
+  beforeEach(function() {
     function onClose() {
       callback1 = 1;
       dialog.setState({
-        visible: false
+        visible: false,
       });
     }
 
@@ -38,89 +37,87 @@ describe('dialog', function () {
     </Dialog>), container);
   });
 
-  afterEach(function () {
+  afterEach(function() {
     ReactDOM.unmountComponentAtNode(container);
   });
 
-  it('show', function (done) {
+  it('show', function(done) {
     dialog.setState({
-      visible: true
+      visible: true,
     });
-    setTimeout(function () {
+    setTimeout(function() {
       expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
       done();
     }, 10);
-
   });
 
-  it('close', function (done) {
+  it('close', function(done) {
     dialog.setState({
-      visible: true
+      visible: true,
     });
     dialog.setState({
-      visible: false
+      visible: false,
     });
-    setTimeout(function () {
+    setTimeout(function() {
       expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
     }, 10);
   });
 
-  it('create', function () {
+  it('create', function() {
     expect($('.rc-dialog').length).to.be(0);
   });
 
-  it('mask', function () {
+  it('mask', function() {
     dialog.setState({
-      visible: true
+      visible: true,
     });
     expect($('.rc-dialog-mask').length).to.be(1);
-
   });
 
-  it('click close', function (done) {
-    async.series([function (done) {
+  it('click close', function(finish) {
+    async.series([function(done) {
       dialog.setState({
-        visible: true
+        visible: true,
       });
       setTimeout(done, 10);
-    }, function (done) {
-      var btn = $('.rc-dialog-close')[0];
+    }, function(done) {
+      const btn = $('.rc-dialog-close')[0];
       Simulate.click(btn);
       setTimeout(done, 10);
-    }, function (done) {
+    }, function(done) {
       expect(callback1).to.be(1);
       expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
-    }], done)
+    }], finish);
   });
 
-  it('esc to close', function (done) {
-    async.series([function (done) {
+  it('esc to close', function(finish) {
+    async.series([function(done) {
       dialog.setState({
-        visible: true
+        visible: true,
       });
       setTimeout(done, 10);
-    }, function (done) {
+    }, function(done) {
       Simulate.keyDown($('.rc-dialog')[0], {
-        keyCode: rcUtil.KeyCode.ESC
+        keyCode: rcUtil.KeyCode.ESC,
       });
       setTimeout(done, 10);
-    }, function (done) {
+    }, function(done) {
       expect(callback1).to.be(1);
       expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
-    }], done)
+    }], finish);
   });
 
-  it('renderToBody', function () {
-    var d = ReactDOM.render(<Dialog>
+  it('renderToBody', function() {
+    const d = ReactDOM.render(<Dialog>
       <p className="renderToBody">1</p>
     </Dialog>, container);
     expect($('.renderToBody').length).to.be(0);
     expect($('.rc-dialog-container').length).to.be(0);
     d.setState({
-      visible: true
+      visible: true,
     });
     expect($('.rc-dialog-container').length).to.be(1);
     expect($('.renderToBody').length).to.be(1);

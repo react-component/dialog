@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Align from 'rc-align';
-import {KeyCode, classSet} from 'rc-util';
+import { KeyCode } from 'rc-util';
 import assign from 'object-assign';
 import Animate from 'rc-animate';
 import DOMWrap from './DOMWrap';
+import classNames from 'classnames';
 
 function noop() {
 }
@@ -87,9 +88,9 @@ const Dialog = React.createClass({
     this.props.onAfterClose();
   },
 
-  onMaskClick() {
+  onMaskClick(e) {
     if (this.props.closable) {
-      this.close();
+      this.close(e);
     }
     ReactDOM.findDOMNode(this.refs.dialog).focus();
   },
@@ -98,7 +99,7 @@ const Dialog = React.createClass({
     const props = this.props;
     if (props.closable) {
       if (e.keyCode === KeyCode.ESC) {
-        this.close();
+        this.close(e);
       }
     }
     // keep focus inside dialog
@@ -251,8 +252,8 @@ const Dialog = React.createClass({
     return transitionName;
   },
 
-  close() {
-    this.props.onClose();
+  close(e) {
+    this.props.onClose(e);
   },
 
   render() {
@@ -262,7 +263,7 @@ const Dialog = React.createClass({
       [`${prefixCls}-wrap`]: 1,
     };
 
-    return (<div className={classSet(className)}>
+    return (<div className={classNames(className)}>
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
   },
