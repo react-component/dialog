@@ -3,29 +3,29 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(197);
+	module.exports = __webpack_require__(208);
 
 
 /***/ },
 
-/***/ 197:
+/***/ 208:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	__webpack_require__(198);
+	__webpack_require__(209);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(159);
+	var _reactDom = __webpack_require__(160);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcDialog = __webpack_require__(160);
+	var _rcDialog = __webpack_require__(161);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
@@ -62,7 +62,7 @@ webpackJsonp([1],{
 	  },
 	
 	  render: function render() {
-	    var dialog;
+	    var dialog = undefined;
 	    if (this.state.visible || !this.state.destroyOnClose) {
 	      dialog = _react2['default'].createElement(
 	        _rcDialog2['default'],
@@ -74,7 +74,7 @@ webpackJsonp([1],{
 	          mousePosition: this.state.mousePosition, title: _react2['default'].createElement(
 	            'div',
 	            null,
-	            ' 第二个弹框'
+	            '第二个弹框'
 	          ) },
 	        _react2['default'].createElement('input', null),
 	        _react2['default'].createElement(
@@ -121,7 +121,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 198:
+/***/ 209:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

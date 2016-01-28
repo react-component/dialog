@@ -9,6 +9,8 @@ webpackJsonp([0],[
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint no-console:0 */
+	
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -19,15 +21,15 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(159);
+	var _reactDom = __webpack_require__(160);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcDialog = __webpack_require__(160);
+	var _rcDialog = __webpack_require__(161);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
-	var _objectAssign = __webpack_require__(187);
+	var _objectAssign = __webpack_require__(194);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -56,7 +58,8 @@ webpackJsonp([0],[
 	    });
 	  },
 	
-	  onClose: function onClose() {
+	  onClose: function onClose(e) {
+	    console.log(e);
 	    this.setState({
 	      visible: false
 	    });
@@ -76,7 +79,7 @@ webpackJsonp([0],[
 	  },
 	
 	  render: function render() {
-	    var dialog;
+	    var dialog = undefined;
 	    if (this.state.visible || !this.state.destroyOnClose) {
 	      dialog = _react2['default'].createElement(
 	        _rcDialog2['default'],
@@ -89,7 +92,7 @@ webpackJsonp([0],[
 	          mousePosition: this.state.mousePosition, title: _react2['default'].createElement(
 	            'div',
 	            null,
-	            ' 第二个弹框'
+	            '第二个弹框'
 	          ) },
 	        _react2['default'].createElement('input', null),
 	        _react2['default'].createElement(
