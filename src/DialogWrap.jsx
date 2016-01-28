@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
-import assign from 'object-assign';
 
 function noop() {
 }
@@ -78,7 +77,7 @@ class DialogWrap extends React.Component {
 
   getDialogElement(extra) {
     const props = this.props;
-    const dialogProps = copy(props, [
+    let dialogProps = copy(props, [
       'className', 'closable', 'align',
       'title', 'footer', 'mask',
       'animation', 'transitionName',
@@ -86,11 +85,12 @@ class DialogWrap extends React.Component {
       'prefixCls', 'style', 'width',
       'height', 'zIndex',
     ]);
-
-    assign(dialogProps, {
+    dialogProps = {
+      ...dialogProps,
       onClose: this.onClose,
       visible: this.state.visible,
-    }, extra);
+      ...extra,
+    };
     return (<Dialog {...dialogProps} key="dialog">
       {props.children}
     </Dialog>);

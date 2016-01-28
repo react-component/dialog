@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Align from 'rc-align';
-import { KeyCode } from 'rc-util';
-import assign from 'object-assign';
+import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import DOMWrap from './DOMWrap';
 import classNames from 'classnames';
@@ -165,7 +164,7 @@ const Dialog = React.createClass({
       </a>);
     }
 
-    const style = assign({}, props.style, dest);
+    const style = {...props.style, ...dest};
     const dialogProps = {
       className: [props.prefixCls, props.className].join(' '),
       tabIndex: '0',
