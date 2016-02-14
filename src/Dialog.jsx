@@ -179,7 +179,7 @@ const Dialog = React.createClass({
       <div className={`${prefixCls}-content`}>
         {closer}
         {header}
-        <div className={`${prefixCls}-body`}>{props.children}</div>
+        <div className={`${prefixCls}-body`} style={props.bodyStyle}>{props.children}</div>
         {footer}
       </div>
       <div tabIndex="0" ref="sentinel" style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>

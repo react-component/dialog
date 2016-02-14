@@ -59,7 +59,8 @@ const MyControl = React.createClass({
                 maskAnimation="fade"
                 onClose={this.onClose}
                 style={{width: this.state.width}}
-                mousePosition={this.state.mousePosition} title={<div>第二个弹框</div>}>
+                mousePosition={this.state.mousePosition}
+                title={<div>第二个弹框</div>}>
           <input />
           <p>basic modal</p>
           <button onClick={this.changeWidth}>change width</button>

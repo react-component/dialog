@@ -83,7 +83,7 @@ class DialogWrap extends React.Component {
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName', 'mousePosition',
       'prefixCls', 'style', 'width',
-      'height', 'zIndex',
+      'height', 'zIndex', 'bodyStyle',
     ]);
     dialogProps = {
       ...dialogProps,
