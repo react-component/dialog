@@ -19828,7 +19828,7 @@
 	    key: 'getDialogElement',
 	    value: function getDialogElement(extra) {
 	      var props = this.props;
-	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'mask', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'height', 'zIndex']);
+	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'mask', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'height', 'zIndex', 'bodyStyle']);
 	      dialogProps = _extends({}, dialogProps, {
 	        onClose: this.onClose,
 	        visible: this.state.visible
@@ -20121,7 +20121,7 @@
 	        header,
 	        _react2['default'].createElement(
 	          'div',
-	          { className: prefixCls + '-body' },
+	          { className: prefixCls + '-body', style: props.bodyStyle },
 	          props.children
 	        ),
 	        footer

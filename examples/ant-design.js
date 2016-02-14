@@ -89,7 +89,8 @@ webpackJsonp([0],[
 	          maskAnimation: 'fade',
 	          onClose: this.onClose,
 	          style: { width: this.state.width },
-	          mousePosition: this.state.mousePosition, title: _react2['default'].createElement(
+	          mousePosition: this.state.mousePosition,
+	          title: _react2['default'].createElement(
 	            'div',
 	            null,
 	            '第二个弹框'
