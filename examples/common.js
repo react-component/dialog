@@ -19791,7 +19791,7 @@
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
 	      if (this.dialogRendered) {
-	        _reactDom2['default'].unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
+	        this.dialogInstance = _reactDom2['default'].unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
 	      }
 	    }
 	  }, {
@@ -19838,6 +19838,11 @@
 	        _extends({}, dialogProps, { key: 'dialog' }),
 	        props.children
 	      );
+	    }
+	  }, {
+	    key: 'getElement',
+	    value: function getElement(part) {
+	      return this.dialogInstance.getElement(part);
 	    }
 	  }, {
 	    key: 'cleanDialogContainer',
@@ -20073,7 +20078,7 @@
 	    if (props.footer) {
 	      footer = _react2['default'].createElement(
 	        'div',
-	        { className: prefixCls + '-footer' },
+	        { className: prefixCls + '-footer', ref: 'footer' },
 	        props.footer
 	      );
 	    }
@@ -20082,7 +20087,7 @@
 	    if (props.title) {
 	      header = _react2['default'].createElement(
 	        'div',
-	        { className: prefixCls + '-header' },
+	        { className: prefixCls + '-header', ref: 'header' },
 	        _react2['default'].createElement(
 	          'div',
 	          { className: prefixCls + '-title' },
@@ -20121,7 +20126,7 @@
 	        header,
 	        _react2['default'].createElement(
 	          'div',
-	          { className: prefixCls + '-body', style: props.bodyStyle },
+	          { className: prefixCls + '-body', style: props.bodyStyle, ref: 'body' },
 	          props.children
 	        ),
 	        footer
@@ -20207,6 +20212,10 @@
 	    return transitionName;
 	  },
 	
+	  getElement: function getElement(part) {
+	    return this.refs[part];
+	  },
+	
 	  close: function close(e) {
 	    this.props.onClose(e);
 	  },
@@ -20218,7 +20227,7 @@
 	
 	    return _react2['default'].createElement(
 	      'div',
-	      { className: (0, _classnames2['default'])(className) },
+	      { className: (0, _classnames2['default'])(className), ref: 'root' },
 	      [this.getMaskElement(), this.getDialogElement()]
 	    );
 	  }
