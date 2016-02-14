@@ -147,12 +147,12 @@ const Dialog = React.createClass({
 
     let footer;
     if (props.footer) {
-      footer = (<div className={`${prefixCls}-footer`}>{props.footer}</div>);
+      footer = (<div className={`${prefixCls}-footer`} ref="footer">{props.footer}</div>);
     }
 
     let header;
     if (props.title) {
-      header = (<div className={`${prefixCls}-header`}>
+      header = (<div className={`${prefixCls}-header`} ref="header">
         <div className={`${prefixCls}-title`}>{props.title}</div>
       </div>);
     }
@@ -179,7 +179,7 @@ const Dialog = React.createClass({
       <div className={`${prefixCls}-content`}>
         {closer}
         {header}
-        <div className={`${prefixCls}-body`} style={props.bodyStyle}>{props.children}</div>
+        <div className={`${prefixCls}-body`} style={props.bodyStyle} ref="body">{props.children}</div>
         {footer}
       </div>
       <div tabIndex="0" ref="sentinel" style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
@@ -251,6 +251,10 @@ const Dialog = React.createClass({
     return transitionName;
   },
 
+  getElement(part) {
+    return this.refs[part];
+  },
+
   close(e) {
     this.props.onClose(e);
   },
@@ -262,7 +266,7 @@ const Dialog = React.createClass({
       [`${prefixCls}-wrap`]: 1,
     };
 
-    return (<div className={classNames(className)}>
+    return (<div className={classNames(className)} ref="root">
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
   },

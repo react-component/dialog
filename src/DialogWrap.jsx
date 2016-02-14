@@ -44,7 +44,7 @@ class DialogWrap extends React.Component {
 
   componentDidUpdate() {
     if (this.dialogRendered) {
-      ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
+      this.dialogInstance = ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
     }
   }
 
@@ -94,6 +94,10 @@ class DialogWrap extends React.Component {
     return (<Dialog {...dialogProps} key="dialog">
       {props.children}
     </Dialog>);
+  }
+
+  getElement(part) {
+    return this.dialogInstance.getElement(part);
   }
 
   cleanDialogContainer() {
