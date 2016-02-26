@@ -48,6 +48,7 @@ const Dialog = React.createClass({
     onAfterClose: PropTypes.func,
     onClose: PropTypes.func,
     closable: PropTypes.bool,
+    maskClosable: PropTypes.bool,
     visible: PropTypes.bool,
     mousePosition: PropTypes.object,
   },

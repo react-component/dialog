@@ -110,10 +110,10 @@ describe('dialog', function() {
     }], finish);
   });
 
-  it('mask to close', function (finish) {
-    async.series([function (done) {
+  it('mask to close', function(finish) {
+    async.series([function(done) {
       dialog.setState({
-        visible: true
+        visible: true,
       });
       setTimeout(done, 10);
     }, function(done) {
@@ -121,23 +121,23 @@ describe('dialog', function() {
       Simulate.click(mask);
       setTimeout(done, 10);
     }, function(done) {
-      //dialog should closed after mask click
+      // dialog should closed after mask click
       expect(callback1).to.be(1);
       expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
       done();
     }, function(done) {
       dialog.setState({
         visible: true,
-        maskClosable: false
+        maskClosable: false,
       });
 
       setTimeout(done, 10);
     }, function(done) {
-      //dialog should stay on visible after mask click if set maskClosable to false
-      //expect(callback1).to.be(0);
+      // dialog should stay on visible after mask click if set maskClosable to false
+      // expect(callback1).to.be(0);
       expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
       done();
-    }], finish)
+    }], finish);
   });
 
   it('renderToBody', function() {

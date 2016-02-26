@@ -112,6 +112,12 @@ ReactDOM.render(
           <td>whether show close button and click mask to close</td>
       </tr>
       <tr>
+          <td>maskClosable</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether click mask to close, this props will ignored if set closable prop to false</td>
+      </tr>
+      <tr>
           <td>mousePosition</td>
           <td>{x:number,y:number}</td>
           <th></th>
