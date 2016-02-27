@@ -19828,7 +19828,7 @@
 	    key: 'getDialogElement',
 	    value: function getDialogElement(extra) {
 	      var props = this.props;
-	      var dialogProps = copy(props, ['className', 'closable', 'align', 'title', 'footer', 'mask', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'height', 'zIndex', 'bodyStyle']);
+	      var dialogProps = copy(props, ['className', 'closable', 'maskClosable', 'align', 'title', 'footer', 'mask', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'height', 'zIndex', 'bodyStyle']);
 	      dialogProps = _extends({}, dialogProps, {
 	        onClose: this.onClose,
 	        visible: this.state.visible
@@ -19870,6 +19870,7 @@
 	  },
 	  mask: true,
 	  closable: true,
+	  maskClosable: true,
 	  prefixCls: 'rc-dialog',
 	  onClose: noop
 	};
@@ -19882,6 +19883,7 @@
 	  }),
 	  mask: _react2['default'].PropTypes.bool,
 	  closable: _react2['default'].PropTypes.bool,
+	  maskClosable: _react2['default'].PropTypes.bool,
 	  prefixCls: _react2['default'].PropTypes.string,
 	  visible: _react2['default'].PropTypes.bool,
 	  onClose: _react2['default'].PropTypes.func
@@ -19977,6 +19979,7 @@
 	    onAfterClose: _react.PropTypes.func,
 	    onClose: _react.PropTypes.func,
 	    closable: _react.PropTypes.bool,
+	    maskClosable: _react.PropTypes.bool,
 	    visible: _react.PropTypes.bool,
 	    mousePosition: _react.PropTypes.object
 	  },
@@ -20017,7 +20020,7 @@
 	  },
 	
 	  onMaskClick: function onMaskClick(e) {
-	    if (this.props.closable) {
+	    if (this.props.closable && this.props.maskClosable) {
 	      this.close(e);
 	    }
 	    _reactDom2['default'].findDOMNode(this.refs.dialog).focus();

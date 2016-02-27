@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-dialog@5.3.4 - dialog ui component for react</title>
+  <title>rc-dialog@5.4.0 - dialog ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-dialog@5.3.4</h1>
+  <h1>rc-dialog@5.4.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -830,6 +830,12 @@ ReactDOM.render(
           <td>Boolean</td>
           <th>true</th>
           <td>whether show close button and click mask to close</td>
+      </tr>
+      <tr>
+          <td>maskClosable</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether click mask to close, this prop will be ignored if set closable prop to false</td>
       </tr>
       <tr>
           <td>mousePosition</td>
