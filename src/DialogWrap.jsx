@@ -78,7 +78,7 @@ class DialogWrap extends React.Component {
   getDialogElement(extra) {
     const props = this.props;
     let dialogProps = copy(props, [
-      'className', 'closable', 'align',
+      'className', 'closable', 'maskClosable', 'align',
       'title', 'footer', 'mask',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName', 'mousePosition',
@@ -120,6 +120,7 @@ DialogWrap.defaultProps = {
   },
   mask: true,
   closable: true,
+  maskClosable: true,
   prefixCls: 'rc-dialog',
   onClose: noop,
 };
@@ -132,6 +133,7 @@ DialogWrap.propTypes = {
   }),
   mask: React.PropTypes.bool,
   closable: React.PropTypes.bool,
+  maskClosable: React.PropTypes.bool,
   prefixCls: React.PropTypes.string,
   visible: React.PropTypes.bool,
   onClose: React.PropTypes.func,

@@ -48,6 +48,7 @@ const Dialog = React.createClass({
     onAfterClose: PropTypes.func,
     onClose: PropTypes.func,
     closable: PropTypes.bool,
+    maskClosable: PropTypes.bool,
     visible: PropTypes.bool,
     mousePosition: PropTypes.object,
   },
@@ -88,7 +89,7 @@ const Dialog = React.createClass({
   },
 
   onMaskClick(e) {
-    if (this.props.closable) {
+    if (this.props.closable && this.props.maskClosable) {
       this.close(e);
     }
     ReactDOM.findDOMNode(this.refs.dialog).focus();
