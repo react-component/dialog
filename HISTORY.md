@@ -1,6 +1,10 @@
 # History
 ----
 
+## 5.4.0 / 2016-02-27
+
+- add maskClosable
+
 ## 5.3.0 / 2015-11-23
 
 - separate close and header
