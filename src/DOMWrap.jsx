@@ -1,5 +1,4 @@
 import React from 'react';
-import assign from 'object-assign';
 
 const DOMWrap = React.createClass({
   propTypes: {
@@ -13,7 +12,7 @@ const DOMWrap = React.createClass({
   },
 
   render() {
-    const props = assign({}, this.props);
+    const props = {...this.props};
     if (!props.visible) {
       props.className = props.className || '';
       props.className += ' ' + props.hiddenClassName;

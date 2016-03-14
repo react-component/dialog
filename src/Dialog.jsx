@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Align from 'rc-align';
-import {KeyCode, classSet} from 'rc-util';
-import assign from 'object-assign';
+import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import DOMWrap from './DOMWrap';
+import classNames from 'classnames';
 
 function noop() {
 }
@@ -48,6 +48,7 @@ const Dialog = React.createClass({
     onAfterClose: PropTypes.func,
     onClose: PropTypes.func,
     closable: PropTypes.bool,
+    maskClosable: PropTypes.bool,
     visible: PropTypes.bool,
     mousePosition: PropTypes.object,
   },
@@ -88,7 +89,7 @@ const Dialog = React.createClass({
   },
 
   onMaskClick(e) {
-    if (this.props.closable) {
+    if (this.props.closable && this.props.maskClosable) {
       this.close(e);
     }
     ReactDOM.findDOMNode(this.refs.dialog).focus();
@@ -147,12 +148,12 @@ const Dialog = React.createClass({
 
     let footer;
     if (props.footer) {
-      footer = (<div className={`${prefixCls}-footer`}>{props.footer}</div>);
+      footer = (<div className={`${prefixCls}-footer`} ref="footer">{props.footer}</div>);
     }
 
     let header;
     if (props.title) {
-      header = (<div className={`${prefixCls}-header`}>
+      header = (<div className={`${prefixCls}-header`} ref="header">
         <div className={`${prefixCls}-title`}>{props.title}</div>
       </div>);
     }
@@ -164,7 +165,7 @@ const Dialog = React.createClass({
       </a>);
     }
 
-    const style = assign({}, props.style, dest);
+    const style = {...props.style, ...dest};
     const dialogProps = {
       className: [props.prefixCls, props.className].join(' '),
       tabIndex: '0',
@@ -179,7 +180,7 @@ const Dialog = React.createClass({
       <div className={`${prefixCls}-content`}>
         {closer}
         {header}
-        <div className={`${prefixCls}-body`}>{props.children}</div>
+        <div className={`${prefixCls}-body`} style={props.bodyStyle} ref="body">{props.children}</div>
         {footer}
       </div>
       <div tabIndex="0" ref="sentinel" style={{width: 0, height: 0, overflow: 'hidden'}}>sentinel</div>
@@ -251,6 +252,10 @@ const Dialog = React.createClass({
     return transitionName;
   },
 
+  getElement(part) {
+    return this.refs[part];
+  },
+
   close(e) {
     this.props.onClose(e);
   },
@@ -262,7 +267,7 @@ const Dialog = React.createClass({
       [`${prefixCls}-wrap`]: 1,
     };
 
-    return (<div className={classSet(className)}>
+    return (<div className={classNames(className)} ref="root">
       {[this.getMaskElement(), this.getDialogElement()]}
     </div>);
   },

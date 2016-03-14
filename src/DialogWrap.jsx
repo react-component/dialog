@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
-import assign from 'object-assign';
 
 function noop() {
 }
@@ -45,7 +44,7 @@ class DialogWrap extends React.Component {
 
   componentDidUpdate() {
     if (this.dialogRendered) {
-      ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
+      this.dialogInstance = ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
     }
   }
 
@@ -78,22 +77,27 @@ class DialogWrap extends React.Component {
 
   getDialogElement(extra) {
     const props = this.props;
-    const dialogProps = copy(props, [
-      'className', 'closable', 'align',
+    let dialogProps = copy(props, [
+      'className', 'closable', 'maskClosable', 'align',
       'title', 'footer', 'mask',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName', 'mousePosition',
       'prefixCls', 'style', 'width',
-      'height', 'zIndex',
+      'height', 'zIndex', 'bodyStyle',
     ]);
-
-    assign(dialogProps, {
+    dialogProps = {
+      ...dialogProps,
       onClose: this.onClose,
       visible: this.state.visible,
-    }, extra);
+      ...extra,
+    };
     return (<Dialog {...dialogProps} key="dialog">
       {props.children}
     </Dialog>);
+  }
+
+  getElement(part) {
+    return this.dialogInstance.getElement(part);
   }
 
   cleanDialogContainer() {
@@ -116,6 +120,7 @@ DialogWrap.defaultProps = {
   },
   mask: true,
   closable: true,
+  maskClosable: true,
   prefixCls: 'rc-dialog',
   onClose: noop,
 };
@@ -128,6 +133,7 @@ DialogWrap.propTypes = {
   }),
   mask: React.PropTypes.bool,
   closable: React.PropTypes.bool,
+  maskClosable: React.PropTypes.bool,
   prefixCls: React.PropTypes.string,
   visible: React.PropTypes.bool,
   onClose: React.PropTypes.func,

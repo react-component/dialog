@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "5.3.1",
+  "version": "5.4.0",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -55,7 +55,7 @@
     "lint"
   ],
   "dependencies": {
-    "object-assign": "4.x",
+    "classnames": "2.x",
     "rc-align": "2.x",
     "rc-animate": "2.x",
     "rc-util": "3.x"
