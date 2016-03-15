@@ -207,7 +207,7 @@ const Dialog = React.createClass({
     </Animate>);
   },
 
-  getMaskElement() {
+  getMaskElement(dialog) {
     const props = this.props;
     const maskProps = {
       onClick: this.onMaskClick,
@@ -221,8 +221,10 @@ const Dialog = React.createClass({
       const maskTransition = this.getMaskTransitionName();
       maskElement = (<DOMWrap {...maskProps} key="mask"
                                              className={`${props.prefixCls}-mask`}
-                                            visible={props.visible}
-                                            hiddenClassName={`${props.prefixCls}-mask-hidden`} />);
+                                             visible={props.visible}
+                                             hiddenClassName={`${props.prefixCls}-mask-hidden`}>
+        {dialog}
+      </DOMWrap>);
       if (maskTransition) {
         maskElement = (<Animate key="mask" showProp="visible"
                                 transitionAppear component=""
@@ -268,7 +270,7 @@ const Dialog = React.createClass({
     };
 
     return (<div className={classNames(className)} ref="root">
-      {[this.getMaskElement(), this.getDialogElement()]}
+      {this.getMaskElement(this.getDialogElement())}
     </div>);
   },
 });

@@ -18,7 +18,7 @@ const DOMWrap = React.createClass({
       props.className += ' ' + props.hiddenClassName;
     }
     const Tag = props.tag;
-    return <Tag {...props} />;
+    return <Tag {...props}>{props.children}</Tag>;
   },
 });
 
