@@ -70,6 +70,7 @@ const Dialog = React.createClass({
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
+        this.addScrollingClass();
         ReactDOM.findDOMNode(this.refs.dialog).focus();
       }
     } else if (prevProps.visible) {
@@ -80,6 +81,7 @@ const Dialog = React.createClass({
           this.lastOutSideFocusNode = null;
         }
         this.lastOutSideFocusNode = null;
+        this.removeScrollingClass();
       }
     }
   },
@@ -258,6 +260,19 @@ const Dialog = React.createClass({
 
   getElement(part) {
     return this.refs[part];
+  },
+
+  addScrollingClass() {
+    const props = this.props;
+    const scrollingClassName = `${props.prefixCls}-scrolling`;
+    document.body.className += ` ${scrollingClassName}`;
+  },
+
+  removeScrollingClass() {
+    const props = this.props;
+    const scrollingClassName = `${props.prefixCls}-scrolling`;
+    const body = document.body;
+    body.className = body.className.replace(scrollingClassName, '');
   },
 
   close(e) {
