@@ -89,10 +89,12 @@ const Dialog = React.createClass({
   },
 
   onMaskClick(e) {
-    if (this.props.closable && this.props.maskClosable) {
-      this.close(e);
+    if (e.target === e.currentTarget) {
+      if (this.props.closable && this.props.maskClosable) {
+        this.close(e);
+      }
+      ReactDOM.findDOMNode(this.refs.dialog).focus();
     }
-    ReactDOM.findDOMNode(this.refs.dialog).focus();
   },
 
   onKeyDown(e) {
