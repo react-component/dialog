@@ -70,6 +70,7 @@ const Dialog = React.createClass({
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
+        this.addScrollingClass();
         ReactDOM.findDOMNode(this.refs.dialog).focus();
       }
     } else if (prevProps.visible) {
@@ -80,6 +81,7 @@ const Dialog = React.createClass({
           this.lastOutSideFocusNode = null;
         }
         this.lastOutSideFocusNode = null;
+        this.removeScrollingClass();
       }
     }
   },
@@ -89,10 +91,12 @@ const Dialog = React.createClass({
   },
 
   onMaskClick(e) {
-    if (this.props.closable && this.props.maskClosable) {
-      this.close(e);
+    if (e.target === e.currentTarget) {
+      if (this.props.closable && this.props.maskClosable) {
+        this.close(e);
+      }
+      ReactDOM.findDOMNode(this.refs.dialog).focus();
     }
-    ReactDOM.findDOMNode(this.refs.dialog).focus();
   },
 
   onKeyDown(e) {
@@ -207,7 +211,7 @@ const Dialog = React.createClass({
     </Animate>);
   },
 
-  getMaskElement() {
+  getMaskElement(dialog) {
     const props = this.props;
     const maskProps = {
       onClick: this.onMaskClick,
@@ -221,8 +225,10 @@ const Dialog = React.createClass({
       const maskTransition = this.getMaskTransitionName();
       maskElement = (<DOMWrap {...maskProps} key="mask"
                                              className={`${props.prefixCls}-mask`}
-                                            visible={props.visible}
-                                            hiddenClassName={`${props.prefixCls}-mask-hidden`} />);
+                                             visible={props.visible}
+                                             hiddenClassName={`${props.prefixCls}-mask-hidden`}>
+        {dialog}
+      </DOMWrap>);
       if (maskTransition) {
         maskElement = (<Animate key="mask" showProp="visible"
                                 transitionAppear component=""
@@ -256,6 +262,19 @@ const Dialog = React.createClass({
     return this.refs[part];
   },
 
+  addScrollingClass() {
+    const props = this.props;
+    const scrollingClassName = `${props.prefixCls}-scrolling`;
+    document.body.className += ` ${scrollingClassName}`;
+  },
+
+  removeScrollingClass() {
+    const props = this.props;
+    const scrollingClassName = `${props.prefixCls}-scrolling`;
+    const body = document.body;
+    body.className = body.className.replace(scrollingClassName, '');
+  },
+
   close(e) {
     this.props.onClose(e);
   },
@@ -268,7 +287,7 @@ const Dialog = React.createClass({
     };
 
     return (<div className={classNames(className)} ref="root">
-      {[this.getMaskElement(), this.getDialogElement()]}
+      {this.getMaskElement(this.getDialogElement())}
     </div>);
   },
 });
