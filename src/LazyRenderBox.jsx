@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const LazyRenderBox = React.createClass({
+  propTypes: {
+    className: PropTypes.string,
+    visible: PropTypes.bool,
+    hiddenClassName: PropTypes.string,
+  },
   shouldComponentUpdate(nextProps) {
-    return nextProps.visible;
+    return nextProps.hiddenClassName || nextProps.visible;
   },
 
   render() {
-    return <div {...this.props} />;
+    let className = this.props.className;
+    if (this.props.hiddenClassName && !this.props.visible) {
+      className += ` ${this.props.hiddenClassName}`;
+    }
+    return <div {...this.props} className={className}/>;
   },
 });
 

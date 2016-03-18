@@ -1,8 +1,13 @@
 .@{prefixCls} {
   &-slide-fade-enter,
+  &-slide-fade-appear {
+    transform: translate(0, -25%);
+  }
+
+  &-slide-fade-enter,
   &-slide-fade-appear,
   &-slide-fade-leave {
-    animation-duration: 0.3s;
+    animation-duration: .3s;
     animation-fill-mode: both;
     animation-timing-function: ease-out;
     animation-play-state: paused;

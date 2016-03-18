@@ -76,7 +76,7 @@ const Dialog = React.createClass({
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
         this.addScrollingClass();
-        this.refs.root.style.display = 'block';
+        this.refs.container.style.display = 'block';
         this.refs.container.focus();
         const dialogNode = ReactDOM.findDOMNode(this.refs.dialog);
         if (mousePosition) {
@@ -101,7 +101,7 @@ const Dialog = React.createClass({
   },
 
   onAnimateLeave() {
-    this.refs.root.style.display = 'none';
+    this.refs.container.style.display = 'none';
     this.props.onAfterClose();
   },
 
@@ -234,6 +234,7 @@ const Dialog = React.createClass({
           style={this.getZIndexStyle()}
           key="mask"
           className={`${props.prefixCls}-mask`}
+          hiddenClassName={`${props.prefixCls}-mask-hidden`}
           visible={props.visible}
         />
       );
@@ -306,7 +307,7 @@ const Dialog = React.createClass({
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
-    return (<div className={`${prefixCls}-wrap`} ref="root">
+    return (<div>
       {this.getMaskElement()}
       <div
         tabIndex="-1"
