@@ -6,10 +6,8 @@
   width: auto;
   margin: 10px;
 }
-.rc-dialog-wrap {
-  display: none;
-}
 .rc-dialog-container {
+  display: none;
   position: fixed;
   overflow: auto;
   top: 0;
@@ -171,6 +169,9 @@
   height: 100%;
   filter: alpha(opacity=50);
   z-index: 1050;
+}
+.rc-dialog-mask-hidden {
+  display: none;
 }
 .rc-dialog-fade-enter,
 .rc-dialog-fade-appear {

@@ -6771,10 +6771,8 @@ button.close {
   width: auto;
   margin: 10px;
 }
-.rc-dialog-wrap {
-  display: none;
-}
 .rc-dialog-container {
+  display: none;
   position: fixed;
   overflow: auto;
   top: 0;
@@ -6856,10 +6854,15 @@ button.close {
   }
 }
 .rc-dialog-slide-fade-enter,
+.rc-dialog-slide-fade-appear {
+  -webkit-transform: translate(0, -25%);
+          transform: translate(0, -25%);
+}
+.rc-dialog-slide-fade-enter,
 .rc-dialog-slide-fade-appear,
 .rc-dialog-slide-fade-leave {
-  -webkit-animation-duration: 0.3s;
-          animation-duration: 0.3s;
+  -webkit-animation-duration: .3s;
+          animation-duration: .3s;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   -webkit-animation-timing-function: ease-out;
@@ -6931,6 +6934,9 @@ button.close {
   height: 100%;
   filter: alpha(opacity=50);
   z-index: 1050;
+}
+.rc-dialog-mask-hidden {
+  display: none;
 }
 .rc-dialog-fade-enter,
 .rc-dialog-fade-appear {

@@ -19996,7 +19996,7 @@
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
 	        this.addScrollingClass();
-	        this.refs.root.style.display = 'block';
+	        this.refs.container.style.display = 'block';
 	        this.refs.container.focus();
 	        var dialogNode = _reactDom2["default"].findDOMNode(this.refs.dialog);
 	        if (mousePosition) {
@@ -20019,7 +20019,7 @@
 	    }
 	  },
 	  onAnimateLeave: function onAnimateLeave() {
-	    this.refs.root.style.display = 'none';
+	    this.refs.container.style.display = 'none';
 	    this.props.onAfterClose();
 	  },
 	  onMaskClick: function onMaskClick(e) {
@@ -20156,6 +20156,7 @@
 	        style: this.getZIndexStyle(),
 	        key: 'mask',
 	        className: props.prefixCls + '-mask',
+	        hiddenClassName: props.prefixCls + '-mask-hidden',
 	        visible: props.visible
 	      });
 	      if (maskTransition) {
@@ -20222,7 +20223,7 @@
 	    var prefixCls = props.prefixCls;
 	    return _react2["default"].createElement(
 	      'div',
-	      { className: prefixCls + '-wrap', ref: 'root' },
+	      null,
 	      this.getMaskElement(),
 	      _react2["default"].createElement(
 	        'div',
@@ -21650,6 +21651,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -21658,11 +21661,21 @@
 	
 	var LazyRenderBox = _react2["default"].createClass({
 	  displayName: 'LazyRenderBox',
+	
+	  propTypes: {
+	    className: _react.PropTypes.string,
+	    visible: _react.PropTypes.bool,
+	    hiddenClassName: _react.PropTypes.string
+	  },
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	    return nextProps.visible;
+	    return nextProps.hiddenClassName || nextProps.visible;
 	  },
 	  render: function render() {
-	    return _react2["default"].createElement('div', this.props);
+	    var className = this.props.className;
+	    if (this.props.hiddenClassName && !this.props.visible) {
+	      className += ' ' + this.props.hiddenClassName;
+	    }
+	    return _react2["default"].createElement('div', _extends({}, this.props, { className: className }));
 	  }
 	});
 	
