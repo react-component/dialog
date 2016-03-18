@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-dialog@5.4.0 - dialog ui component for react</title>
+  <title>rc-dialog@6.0.0-beta.0 - dialog ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-dialog@5.4.0</h1>
+  <h1>rc-dialog@6.0.0-beta.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -760,10 +760,7 @@
 <a href="https://travis-ci.org/react-component/dialog" title="null"><img src="https://img.shields.io/travis/react-component/dialog.svg?style=flat-square" alt="build status"></a>
 <a href="https://coveralls.io/r/react-component/dialog?branch=master" title="null"><img src="https://img.shields.io/coveralls/react-component/dialog.svg?style=flat-square" alt="Test coverage"></a>
 <a href="https://gemnasium.com/react-component/dialog" title="null"><img src="http://img.shields.io/gemnasium/react-component/dialog.svg?style=flat-square" alt="gemnasium deps"></a>
-<a href="http://nodejs.org/download/" title="null"><img src="https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square" alt="node version"></a>
-<a href="https://npmjs.org/package/rc-dialog" title="null"><img src="https://img.shields.io/npm/dm/rc-dialog.svg?style=flat-square" alt="npm download"></a>
-<a href="https://saucelabs.com/u/rc-dialog" title="null"><img src="https://saucelabs.com/buildstatus/rc-dialog" alt="Sauce Test Status"></a></p>
-<p><a href="https://saucelabs.com/u/rc-dialog" title="null"><img src="https://saucelabs.com/browser-matrix/rc-dialog.svg" alt="Sauce Test Status"></a></p>
+<a href="https://npmjs.org/package/rc-dialog" title="null"><img src="https://img.shields.io/npm/dm/rc-dialog.svg?style=flat-square" alt="npm download"></a></p>
 <h2>Screenshot<a id="user-content-screenshot" name="screenshot" class="anchor" aria-hidden="true" href="#screenshot"><span class="octicon octicon-link"></span></a></h2><p><img src="http://gtms04.alicdn.com/tps/i4/TB1dp5lHXXXXXbmXpXXyVug.FXX-664-480.png" /></p>
 <h2>Install<a id="user-content-install" name="install" class="anchor" aria-hidden="true" href="#install"><span class="octicon octicon-link"></span></a></h2><p><a href="https://npmjs.org/package/rc-dialog" title="null"><img src="https://nodei.co/npm/rc-dialog.png" alt="rc-dialog"></a></p>
 <h2>Usage<a id="user-content-usage" name="usage" class="anchor" aria-hidden="true" href="#usage"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="js"><span class="hljs-keyword">var</span> Dialog = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-dialog'</span>);
@@ -772,9 +769,9 @@ ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{title}</span> <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{callback1}</span> <span class="hljs-attribute">onShow</span>=<span class="hljs-value">{callback2}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>first dialog<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
-), document.getElementById('t1'));
+)</span>, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'t1'</span>));
 
-// use dialog</span></code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>props<a id="user-content-props" name="props" class="anchor" aria-hidden="true" href="#props"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
+<span class="hljs-comment">// use dialog</span></code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>props<a id="user-content-props" name="props" class="anchor" aria-hidden="true" href="#props"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th style="width: 100px;">name</th>
@@ -787,66 +784,91 @@ ReactDOM.render(
       <tr>
           <td>prefixCls</td>
           <td>String</td>
-          <th>rc-dialog</th>
+          <td>rc-dialog</td>
           <td>The dialog dom node&#39;s prefixCls</td>
       </tr>
       <tr>
           <td>style</td>
           <td>Object</td>
-          <th>{}</th>
-          <td>Root style for dialog element.Such as width, height, zIndex</td>
-      </tr><br>      <tr>
+          <td>{}</td>
+          <td>Root style for dialog element.Such as width, height</td>
+      </tr>
+      <tr>
+          <td>zIndex</td>
+          <td>Number</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>bodyStyle</td>
+          <td>Object</td>
+          <td>{}</td>
+          <td>body style for dialog body element.Such as height</td>
+      </tr>
+      <tr>
           <td>visible</td>
           <td>Boolean</td>
-          <th>false</th>
+          <td>false</td>
           <td>current dialog&#39;s visible status</td>
       </tr>
       <tr>
           <td>animation</td>
           <td>String</td>
-          <th></th>
+          <td></td>
           <td>part of dialog animation css class name</td>
       </tr>
       <tr>
           <td>maskAnimation</td>
           <td>String</td>
-          <th></th>
+          <td></td>
           <td>part of dialog&#39;s mask animation css class name</td>
+      </tr>
+      <tr>
+          <td>transitionName</td>
+          <td>String</td>
+          <td></td>
+          <td>dialog animation css class name</td>
+      </tr>
+      <tr>
+          <td>maskTransitionName</td>
+          <td>String</td>
+          <td></td>
+          <td>mask animation css class name</td>
       </tr>
       <tr>
           <td>title</td>
           <td>String|React.Element</td>
-          <th></th>
+          <td></td>
           <td>Title of the dialog</td>
       </tr>
       <tr>
           <td>footer</td>
           <td>React.Element</td>
-          <th></th>
+          <td></td>
           <td>footer of the dialog</td>
       </tr>
       <tr>
           <td>closable</td>
           <td>Boolean</td>
-          <th>true</th>
+          <td>true</td>
           <td>whether show close button and click mask to close</td>
       </tr>
       <tr>
           <td>maskClosable</td>
           <td>Boolean</td>
-          <th>true</th>
+          <td>true</td>
           <td>whether click mask to close, this prop will be ignored if set closable prop to false</td>
       </tr>
       <tr>
           <td>mousePosition</td>
           <td>{x:number,y:number}</td>
-          <th></th>
+          <td></td>
           <td>set pageX and pageY of current mouse(it will cause transform origin to be set).</td>
       </tr>
       <tr>
           <td>onClose</td>
           <td>function()</td>
-          <th></th>
+          <td></td>
           <td>called when click close button or mask</td>
       </tr>
     </tbody>
@@ -855,9 +877,9 @@ ReactDOM.render(
 
 <h2>Development<a id="user-content-development" name="development" class="anchor" aria-hidden="true" href="#development"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm install
 npm start</code></pre></div><h2>Example<a id="user-content-example" name="example" class="anchor" aria-hidden="true" href="#example"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8007/examples/" title="null">http://localhost:8007/examples/</a></p>
-<p>online example: <a href="http://react-component.github.io/dialog/examples/" title="null">http://react-component.github.io/dialog/examples/</a></p>
-<h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8007/tests/runner.html?coverage" title="null">http://localhost:8007/tests/runner.html?coverage</a></p>
-<h2>Coverage<a id="user-content-coverage" name="coverage" class="anchor" aria-hidden="true" href="#coverage"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8007/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8007/tests/runner.html?coverage" title="null">http://localhost:8007/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8007/tests/runner.html?coverage</a></p>
+<p>online example: <a href="http://react-component.github.io/dialog/" title="null">http://react-component.github.io/dialog/</a></p>
+<h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm test
+npm run chrome-test</code></pre></div><h2>Coverage<a id="user-content-coverage" name="coverage" class="anchor" aria-hidden="true" href="#coverage"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm run coverage</code></pre></div><p>open coverage/ dir</p>
 <h2>License<a id="user-content-license" name="license" class="anchor" aria-hidden="true" href="#license"><span class="octicon octicon-link"></span></a></h2><p>rc-dialog is released under the MIT license.</p>
 
   </div>
