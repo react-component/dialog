@@ -1,6 +1,11 @@
 # History
 ----
 
+## 6.0.0 / 2016-03-18
+
+- new html structure and class
+- disable window scroll when show
+
 ## 5.4.0 / 2016-02-27
 
 - add maskClosable

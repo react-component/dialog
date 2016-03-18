@@ -12,12 +12,14 @@
 }
 
 .@{prefixCls} {
+  &-wrap {
+    display: none;
+  }
 
   // Container that the rc-dialog scrolls within
   &-container {
-    display: none;
-    overflow: hidden;
     position: fixed;
+    overflow: auto;
     top: 0;
     right: 0;
     bottom: 0;
@@ -29,6 +31,8 @@
     // https://github.com/twbs/bootstrap/pull/10951.
     outline: 0;
   }
+
+
 
   // Shell div to position the rc-dialog with bottom padding
   position: relative;

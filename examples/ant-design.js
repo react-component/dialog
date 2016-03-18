@@ -85,6 +85,7 @@ const MyControl = React.createClass({
 ReactDOM.render(
   <div>
     <h2>ant-design dialog</h2>
+    <div style={{ height: 500 }}/>
     <MyControl />
   </div>,
   document.getElementById('__react-content')

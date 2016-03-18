@@ -1,24 +1,24 @@
 .@{prefixCls} {
-  &-fade-enter,
-  &-fade-appear,
-  &-fade-leave {
+  &-slide-fade-enter,
+  &-slide-fade-appear,
+  &-slide-fade-leave {
     animation-duration: 0.3s;
     animation-fill-mode: both;
     animation-timing-function: ease-out;
     animation-play-state: paused;
   }
 
-  &-fade-enter&-fade-enter-active, &-fade-appear&-fade-appear-active {
-    animation-name: rcDialogFadeIn;
+  &-slide-fade-enter&-slide-fade-enter-active, &-slide-fade-appear&-slide-fade-appear-active {
+    animation-name: rcDialogSlideFadeIn;
     animation-play-state: running;
   }
 
-  &-fade-leave&-fade-leave-active {
-    animation-name: rcDialogFadeOut;
+  &-slide-fade-leave&-slide-fade-leave-active {
+    animation-name: rcDialogSlideFadeOut;
     animation-play-state: running;
   }
 
-  @keyframes rcDialogFadeIn {
+  @keyframes rcDialogSlideFadeIn {
     0% {
       transform: translate(0, -25%);
     }
@@ -26,7 +26,7 @@
       transform: translate(0, 0);
     }
   }
-  @keyframes rcDialogFadeOut {
+  @keyframes rcDialogSlideFadeOut {
     0% {
       transform: translate(0, 0);
     }

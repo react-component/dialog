@@ -48,7 +48,8 @@ describe('dialog', () => {
       visible: true,
     });
     setTimeout(() => {
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('block');
       done();
     }, 10);
   });
@@ -61,7 +62,8 @@ describe('dialog', () => {
       visible: false,
     });
     setTimeout(() => {
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }, 10);
   });
@@ -89,7 +91,8 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       expect(callback1).to.be(1);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }], finish);
   });
@@ -107,7 +110,8 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       expect(callback1).to.be(1);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }], finish);
   });
@@ -119,13 +123,14 @@ describe('dialog', () => {
       });
       setTimeout(done, 10);
     }, (done) => {
-      const mask = $('.rc-dialog-mask')[0];
+      const mask = $('.rc-dialog-container')[0];
       Simulate.click(mask);
       setTimeout(done, 10);
     }, (done) => {
       // dialog should closed after mask click
       expect(callback1).to.be(1);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }, (done) => {
       dialog.setState({
@@ -137,7 +142,8 @@ describe('dialog', () => {
     }, (done) => {
       // dialog should stay on visible after mask click if set maskClosable to false
       // expect(callback1).to.be(0);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('block');
       done();
     }], finish);
   });
@@ -154,7 +160,8 @@ describe('dialog', () => {
     expect($('.rc-dialog-container').length).to.be(1);
     expect($('.renderToBody').length).to.be(1);
     expect($('.rc-dialog-wrap')[0].parentNode).not.to.be(container);
-    expect($('.rc-dialog-wrap')[0].parentNode.className).to.be('rc-dialog-container');
+    expect($('.rc-dialog-container')[0].parentNode.className)
+      .to.be('rc-dialog-wrap');
     ReactDOM.unmountComponentAtNode(container);
     expect($('.renderToBody').length).to.be(0);
     expect($('.rc-dialog-container').length).to.be(0);

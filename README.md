@@ -62,67 +62,91 @@ ReactDOM.render(
       <tr>
           <td>prefixCls</td>
           <td>String</td>
-          <th>rc-dialog</th>
+          <td>rc-dialog</td>
           <td>The dialog dom node's prefixCls</td>
       </tr>
       <tr>
           <td>style</td>
           <td>Object</td>
-          <th>{}</th>
-          <td>Root style for dialog element.Such as width, height, zIndex</td>
-      </tr>      
+          <td>{}</td>
+          <td>Root style for dialog element.Such as width, height</td>
+      </tr>
+      <tr>
+          <td>zIndex</td>
+          <td>Number</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>bodyStyle</td>
+          <td>Object</td>
+          <td>{}</td>
+          <td>body style for dialog body element.Such as height</td>
+      </tr>
       <tr>
           <td>visible</td>
           <td>Boolean</td>
-          <th>false</th>
+          <td>false</td>
           <td>current dialog's visible status</td>
       </tr>
       <tr>
           <td>animation</td>
           <td>String</td>
-          <th></th>
+          <td></td>
           <td>part of dialog animation css class name</td>
       </tr>
       <tr>
           <td>maskAnimation</td>
           <td>String</td>
-          <th></th>
+          <td></td>
           <td>part of dialog's mask animation css class name</td>
+      </tr>
+      <tr>
+          <td>transitionName</td>
+          <td>String</td>
+          <td></td>
+          <td>dialog animation css class name</td>
+      </tr>
+      <tr>
+          <td>maskTransitionName</td>
+          <td>String</td>
+          <td></td>
+          <td>mask animation css class name</td>
       </tr>
       <tr>
           <td>title</td>
           <td>String|React.Element</td>
-          <th></th>
+          <td></td>
           <td>Title of the dialog</td>
       </tr>
       <tr>
           <td>footer</td>
           <td>React.Element</td>
-          <th></th>
+          <td></td>
           <td>footer of the dialog</td>
       </tr>
       <tr>
           <td>closable</td>
           <td>Boolean</td>
-          <th>true</th>
+          <td>true</td>
           <td>whether show close button and click mask to close</td>
       </tr>
       <tr>
           <td>maskClosable</td>
           <td>Boolean</td>
-          <th>true</th>
+          <td>true</td>
           <td>whether click mask to close, this prop will be ignored if set closable prop to false</td>
       </tr>
       <tr>
           <td>mousePosition</td>
           <td>{x:number,y:number}</td>
-          <th></th>
+          <td></td>
           <td>set pageX and pageY of current mouse(it will cause transform origin to be set).</td>
       </tr>
       <tr>
           <td>onClose</td>
           <td>function()</td>
-          <th></th>
+          <td></td>
           <td>called when click close button or mask</td>
       </tr>
     </tbody>

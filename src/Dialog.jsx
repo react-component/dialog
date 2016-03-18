@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
-
 let uuid = 0;
+let openCount = 0;
 
 function noop() {
 }
@@ -76,7 +76,7 @@ const Dialog = React.createClass({
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
         this.addScrollingClass();
-        this.refs.container.style.display = 'block';
+        this.refs.root.style.display = 'block';
         this.refs.container.focus();
         const dialogNode = ReactDOM.findDOMNode(this.refs.dialog);
         if (mousePosition) {
@@ -101,12 +101,12 @@ const Dialog = React.createClass({
   },
 
   onAnimateLeave() {
-    this.refs.container.style.display = 'none';
+    this.refs.root.style.display = 'none';
     this.props.onAfterClose();
   },
 
   onMaskClick(e) {
-    if (this.props.closable && this.props.maskClosable) {
+    if (e.target === e.currentTarget && this.props.closable && this.props.maskClosable) {
       this.close(e);
     }
   },
@@ -215,20 +215,27 @@ const Dialog = React.createClass({
     );
   },
 
-  getMaskElement(dialog) {
+  getZIndexStyle() {
+    const style = {};
+    const props = this.props;
+    if (props.zIndex !== undefined) {
+      style.zIndex = props.zIndex;
+    }
+    return style;
+  },
+
+  getMaskElement() {
     const props = this.props;
     let maskElement;
     if (props.mask) {
       const maskTransition = this.getMaskTransitionName();
       maskElement = (
         <LazyRenderBox
-          onClick={this.onMaskClick}
+          style={this.getZIndexStyle()}
           key="mask"
           className={`${props.prefixCls}-mask`}
           visible={props.visible}
-        >
-          {dialog}
-        </LazyRenderBox>
+        />
       );
       if (maskTransition) {
         maskElement = (
@@ -272,14 +279,22 @@ const Dialog = React.createClass({
   },
 
   addScrollingClass() {
+    openCount++;
+    if (openCount !== 1) {
+      return;
+    }
     const props = this.props;
-    const scrollingClassName = `${props.prefixCls}-scrolling`;
+    const scrollingClassName = `${props.prefixCls}-open`;
     document.body.className += ` ${scrollingClassName}`;
   },
 
   removeScrollingClass() {
+    openCount--;
+    if (openCount !== 0) {
+      return;
+    }
     const props = this.props;
-    const scrollingClassName = `${props.prefixCls}-scrolling`;
+    const scrollingClassName = `${props.prefixCls}-open`;
     const body = document.body;
     body.className = body.className.replace(scrollingClassName, '');
   },
@@ -291,21 +306,20 @@ const Dialog = React.createClass({
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
-    const style = {};
-    if (props.zIndex !== undefined) {
-      style.zIndex = props.zIndex;
-    }
-    return (<div
-      tabIndex="-1"
-      onKeyDown={this.onKeyDown}
-      className={`${prefixCls}-container`}
-      ref="container"
-      role="dialog"
-      aria-labelledby={props.title ? this.titleId : null}
-      style={style}
-    >
+    return (<div className={`${prefixCls}-wrap`} ref="root">
       {this.getMaskElement()}
-      {this.getDialogElement()}
+      <div
+        tabIndex="-1"
+        onKeyDown={this.onKeyDown}
+        className={`${prefixCls}-container`}
+        ref="container"
+        onClick={this.onMaskClick}
+        role="dialog"
+        aria-labelledby={props.title ? this.titleId : null}
+        style={this.getZIndexStyle()}
+      >
+        {this.getDialogElement()}
+      </div>
     </div>);
   },
 });
