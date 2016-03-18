@@ -131,7 +131,6 @@ webpackJsonp([0],[
 	    null,
 	    'ant-design dialog'
 	  ),
-	  _react2["default"].createElement('div', { style: { height: 500 } }),
 	  _react2["default"].createElement(MyControl, null)
 	), document.getElementById('__react-content'));
 
