@@ -1,0 +1,37 @@
+.@{prefixCls} {
+  &-fade-enter,
+  &-fade-appear,
+  &-fade-leave {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+    animation-play-state: paused;
+  }
+
+  &-fade-enter&-fade-enter-active, &-fade-appear&-fade-appear-active {
+    animation-name: rcDialogFadeIn;
+    animation-play-state: running;
+  }
+
+  &-fade-leave&-fade-leave-active {
+    animation-name: rcDialogFadeOut;
+    animation-play-state: running;
+  }
+
+  @keyframes rcDialogFadeIn {
+    0% {
+      transform: translate(0, -25%);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+  @keyframes rcDialogFadeOut {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(0, -25%);
+    }
+  }
+}

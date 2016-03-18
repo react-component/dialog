@@ -4,17 +4,12 @@ import 'rc-dialog/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from 'rc-dialog';
-import assign from 'object-assign';
 
 const MyControl = React.createClass({
   getInitialState() {
     return {
       visible: false,
       width: 600,
-      align: {
-        points: ['tc', 'tc'],
-        offset: [0, 100],
-      },
       destroyOnClose: false,
     };
   },
@@ -45,7 +40,6 @@ const MyControl = React.createClass({
   changeWidth() {
     this.setState({
       width: this.state.width === 600 ? 800 : 600,
-      align: assign({}, this.state.align),
     });
   },
 
@@ -53,18 +47,19 @@ const MyControl = React.createClass({
     let dialog;
     if (this.state.visible || !this.state.destroyOnClose) {
       dialog = (
-        <Dialog visible={this.state.visible}
-                align={this.state.align}
-                animation="zoom"
-                maskAnimation="fade"
-                onClose={this.onClose}
-                style={{width: this.state.width}}
-                mousePosition={this.state.mousePosition}
-                title={<div>第二个弹框</div>}>
+        <Dialog
+          visible={this.state.visible}
+          animation="zoom"
+          maskAnimation="fade"
+          onClose={this.onClose}
+          style={{ width: this.state.width }}
+          mousePosition={this.state.mousePosition}
+          title={<div>第二个弹框</div>}
+        >
           <input />
           <p>basic modal</p>
           <button onClick={this.changeWidth}>change width</button>
-          <div style={{height: 200}}></div>
+          <div style={{ height: 200 }}></div>
         </Dialog>
       );
     }
@@ -73,8 +68,13 @@ const MyControl = React.createClass({
         <p>
           <button className="btn btn-primary" onClick={this.onClick}>show dialog</button>
           &nbsp;
-          <label>destroy on close: <input type="checkbox" checked={this.state.destroyOnClose}
-                                          onChange={this.onDestroyOnCloseChange}/></label>
+          <label>destroy on close:
+            <input
+              type="checkbox"
+              checked={this.state.destroyOnClose}
+              onChange={this.onDestroyOnCloseChange}
+            />
+          </label>
         </p>
         {dialog}
       </div>

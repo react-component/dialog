@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 
@@ -7,7 +7,7 @@ function noop() {
 
 function copy(obj, fields) {
   const ret = {};
-  fields.forEach((f)=> {
+  fields.forEach((f) => {
     if (obj[f] !== undefined) {
       ret[f] = obj[f];
     }
@@ -44,7 +44,8 @@ class DialogWrap extends React.Component {
 
   componentDidUpdate() {
     if (this.dialogRendered) {
-      this.dialogInstance = ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
+      this.dialogInstance = ReactDOM.unstable_renderSubtreeIntoContainer(this,
+        this.getDialogElement(), this.getDialogContainer());
     }
   }
 
@@ -69,7 +70,6 @@ class DialogWrap extends React.Component {
   getDialogContainer() {
     if (!this.dialogContainer) {
       this.dialogContainer = document.createElement('div');
-      this.dialogContainer.className = `${this.props.prefixCls}-container`;
       document.body.appendChild(this.dialogContainer);
     }
     return this.dialogContainer;
@@ -78,8 +78,8 @@ class DialogWrap extends React.Component {
   getDialogElement(extra) {
     const props = this.props;
     let dialogProps = copy(props, [
-      'className', 'closable', 'maskClosable', 'align',
-      'title', 'footer', 'mask',
+      'className', 'closable', 'maskClosable',
+      'title', 'footer', 'mask', 'keyboard',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName', 'mousePosition',
       'prefixCls', 'style', 'width',
@@ -114,11 +114,8 @@ class DialogWrap extends React.Component {
 
 DialogWrap.defaultProps = {
   className: '',
-  align: {
-    points: ['tc', 'tc'],
-    offset: [0, 100],
-  },
   mask: true,
+  keyboard: true,
   closable: true,
   maskClosable: true,
   prefixCls: 'rc-dialog',
@@ -126,17 +123,14 @@ DialogWrap.defaultProps = {
 };
 
 DialogWrap.propTypes = {
-  className: React.PropTypes.string,
-  align: React.PropTypes.shape({
-    align: React.PropTypes.array,
-    offset: React.PropTypes.arrayOf(React.PropTypes.number),
-  }),
-  mask: React.PropTypes.bool,
-  closable: React.PropTypes.bool,
-  maskClosable: React.PropTypes.bool,
-  prefixCls: React.PropTypes.string,
-  visible: React.PropTypes.bool,
-  onClose: React.PropTypes.func,
+  className: PropTypes.string,
+  keyboard: PropTypes.bool,
+  mask: PropTypes.bool,
+  closable: PropTypes.bool,
+  maskClosable: PropTypes.bool,
+  prefixCls: PropTypes.string,
+  visible: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 export default DialogWrap;

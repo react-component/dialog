@@ -7,11 +7,7 @@ react dialog component
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-dialog)](https://saucelabs.com/u/rc-dialog)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-dialog.svg)](https://saucelabs.com/u/rc-dialog)
 
 [npm-image]: http://img.shields.io/npm/v/rc-dialog.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-dialog
@@ -144,15 +140,22 @@ npm start
 
 http://localhost:8007/examples/
 
-online example: http://react-component.github.io/dialog/examples/
+online example: http://react-component.github.io/dialog/
 
 ## Test Case
 
-http://localhost:8007/tests/runner.html?coverage
+```
+npm test
+npm run chrome-test
+```
 
 ## Coverage
 
-http://localhost:8007/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8007/tests/runner.html?coverage
+```
+npm run coverage
+```
+
+open coverage/ dir
 
 ## License
 
