@@ -76,7 +76,6 @@ const Dialog = React.createClass({
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
         this.addScrollingClass();
-        this.refs.wrap.style.display = 'block';
         this.refs.wrap.focus();
         const dialogNode = ReactDOM.findDOMNode(this.refs.dialog);
         if (mousePosition) {
@@ -307,6 +306,12 @@ const Dialog = React.createClass({
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
+    const style = this.getZIndexStyle();
+    // clear hide display
+    // and only set display after async anim, not here for hide
+    if (props.visible) {
+      style.display = null;
+    }
     return (<div>
       {this.getMaskElement()}
       <div
@@ -317,7 +322,7 @@ const Dialog = React.createClass({
         onClick={this.onMaskClick}
         role="dialog"
         aria-labelledby={props.title ? this.titleId : null}
-        style={this.getZIndexStyle()}
+        style={style}
       >
         {this.getDialogElement()}
       </div>
