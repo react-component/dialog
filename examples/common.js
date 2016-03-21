@@ -19996,8 +19996,8 @@
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
 	        this.addScrollingClass();
-	        this.refs.container.style.display = 'block';
-	        this.refs.container.focus();
+	        this.refs.wrap.style.display = 'block';
+	        this.refs.wrap.focus();
 	        var dialogNode = _reactDom2["default"].findDOMNode(this.refs.dialog);
 	        if (mousePosition) {
 	          var elOffset = offset(dialogNode);
@@ -20019,7 +20019,7 @@
 	    }
 	  },
 	  onAnimateLeave: function onAnimateLeave() {
-	    this.refs.container.style.display = 'none';
+	    this.refs.wrap.style.display = 'none';
 	    this.props.onAfterClose();
 	  },
 	  onMaskClick: function onMaskClick(e) {
@@ -20038,7 +20038,7 @@
 	    if (props.visible) {
 	      if (e.keyCode === _KeyCode2["default"].TAB) {
 	        var activeElement = document.activeElement;
-	        var dialogRoot = this.refs.container;
+	        var dialogRoot = this.refs.wrap;
 	        var sentinel = this.refs.sentinel;
 	        if (e.shiftKey) {
 	          if (activeElement === dialogRoot) {
@@ -20230,8 +20230,8 @@
 	        {
 	          tabIndex: '-1',
 	          onKeyDown: this.onKeyDown,
-	          className: prefixCls + '-container',
-	          ref: 'container',
+	          className: prefixCls + '-wrap',
+	          ref: 'wrap',
 	          onClick: this.onMaskClick,
 	          role: 'dialog',
 	          'aria-labelledby': props.title ? this.titleId : null,

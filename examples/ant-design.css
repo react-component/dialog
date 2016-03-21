@@ -6,7 +6,7 @@
   width: auto;
   margin: 10px;
 }
-.rc-dialog-container {
+.rc-dialog-wrap {
   display: none;
   position: fixed;
   overflow: auto;
