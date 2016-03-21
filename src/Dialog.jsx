@@ -76,8 +76,8 @@ const Dialog = React.createClass({
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
         this.addScrollingClass();
-        this.refs.container.style.display = 'block';
-        this.refs.container.focus();
+        this.refs.wrap.style.display = 'block';
+        this.refs.wrap.focus();
         const dialogNode = ReactDOM.findDOMNode(this.refs.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
@@ -101,7 +101,7 @@ const Dialog = React.createClass({
   },
 
   onAnimateLeave() {
-    this.refs.container.style.display = 'none';
+    this.refs.wrap.style.display = 'none';
     this.props.onAfterClose();
   },
 
@@ -122,7 +122,7 @@ const Dialog = React.createClass({
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
         const activeElement = document.activeElement;
-        const dialogRoot = this.refs.container;
+        const dialogRoot = this.refs.wrap;
         const sentinel = this.refs.sentinel;
         if (e.shiftKey) {
           if (activeElement === dialogRoot) {
@@ -312,8 +312,8 @@ const Dialog = React.createClass({
       <div
         tabIndex="-1"
         onKeyDown={this.onKeyDown}
-        className={`${prefixCls}-container`}
-        ref="container"
+        className={`${prefixCls}-wrap`}
+        ref="wrap"
         onClick={this.onMaskClick}
         role="dialog"
         aria-labelledby={props.title ? this.titleId : null}
