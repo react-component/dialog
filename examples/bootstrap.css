@@ -6772,7 +6772,6 @@ button.close {
   margin: 10px;
 }
 .rc-dialog-wrap {
-  display: none;
   position: fixed;
   overflow: auto;
   top: 0;

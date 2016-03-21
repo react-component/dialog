@@ -19996,7 +19996,6 @@
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
 	        this.addScrollingClass();
-	        this.refs.wrap.style.display = 'block';
 	        this.refs.wrap.focus();
 	        var dialogNode = _reactDom2["default"].findDOMNode(this.refs.dialog);
 	        if (mousePosition) {
@@ -20221,6 +20220,12 @@
 	  render: function render() {
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
+	    var style = this.getZIndexStyle();
+	    // clear hide display
+	    // and only set display after async anim, not here for hide
+	    if (props.visible) {
+	      style.display = null;
+	    }
 	    return _react2["default"].createElement(
 	      'div',
 	      null,
@@ -20235,7 +20240,7 @@
 	          onClick: this.onMaskClick,
 	          role: 'dialog',
 	          'aria-labelledby': props.title ? this.titleId : null,
-	          style: this.getZIndexStyle()
+	          style: style
 	        },
 	        this.getDialogElement()
 	      )
