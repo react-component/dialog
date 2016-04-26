@@ -82,7 +82,7 @@ const Dialog = React.createClass({
 
   componentWillUnmount() {
     window.onmousewheel = null;
-  }
+  },
 
   componentDidUpdate(prevProps) {
     const props = this.props;
