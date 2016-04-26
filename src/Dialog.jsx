@@ -51,6 +51,7 @@ const Dialog = React.createClass({
     maskClosable: PropTypes.bool,
     visible: PropTypes.bool,
     mousePosition: PropTypes.object,
+    scrollable: PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -60,12 +61,27 @@ const Dialog = React.createClass({
     };
   },
 
+  getInitialState() {
+    return {
+      top: 0,
+    };
+  }
+
   componentWillMount() {
     this.titleId = `rcDialogTitle${uuid++}`;
   },
 
   componentDidMount() {
     this.componentDidUpdate({});
+    if (this.props.scrollable) {
+      window.onmousewheel = (evt) => {
+        this.setState({top: this.state.top + evt.wheelDeltaY});
+      };
+    }
+  },
+
+  componentWillUnmount() {
+    window.onmousewheel = null;
   },
 
   componentDidUpdate(prevProps) {
@@ -177,6 +193,9 @@ const Dialog = React.createClass({
     const style = {
       ...props.style,
       ...dest,
+      {
+        marginTop: this.state.top
+      }
     };
     const transitionName = this.getTransitionName();
     const dialogElement = (
