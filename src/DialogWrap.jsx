@@ -70,6 +70,8 @@ class DialogWrap extends React.Component {
   getDialogContainer() {
     if (!this.dialogContainer) {
       this.dialogContainer = document.createElement('div');
+      const dialogProps = copy(this.props, ['prefixCls']);
+      this.dialogContainer.className = `${dialogProps.prefixCls}-container`;
       document.body.appendChild(this.dialogContainer);
     }
     return this.dialogContainer;
