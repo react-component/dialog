@@ -51,6 +51,8 @@ const Dialog = React.createClass({
     maskClosable: PropTypes.bool,
     visible: PropTypes.bool,
     mousePosition: PropTypes.object,
+    wrapStyle: PropTypes.object,
+    wrapClassName: PropTypes.string,
   },
 
   getDefaultProps() {
@@ -223,6 +225,13 @@ const Dialog = React.createClass({
     return style;
   },
 
+  getWrapStyle() {
+    return {
+      ...this.getZIndexStyle(),
+      ...this.props.wrapStyle,
+    };
+  },
+
   getMaskElement() {
     const props = this.props;
     let maskElement;
@@ -306,7 +315,7 @@ const Dialog = React.createClass({
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
-    const style = this.getZIndexStyle();
+    const style = this.getWrapStyle();
     // clear hide display
     // and only set display after async anim, not here for hide
     if (props.visible) {
@@ -317,7 +326,7 @@ const Dialog = React.createClass({
       <div
         tabIndex="-1"
         onKeyDown={this.onKeyDown}
-        className={`${prefixCls}-wrap`}
+        className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
         ref="wrap"
         onClick={this.onMaskClick}
         role="dialog"

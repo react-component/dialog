@@ -11,6 +11,7 @@ const MyControl = React.createClass({
       visible: false,
       width: 600,
       destroyOnClose: false,
+      center: false,
     };
   },
 
@@ -43,16 +44,30 @@ const MyControl = React.createClass({
     });
   },
 
+  center(e) {
+    this.setState({
+      center: e.target.checked,
+    });
+  },
+
   render() {
     let dialog;
     if (this.state.visible || !this.state.destroyOnClose) {
+      const style = {
+        width: this.state.width,
+      };
+      let wrapClassName = '';
+      if (this.state.center) {
+        wrapClassName = 'center';
+      }
       dialog = (
         <Dialog
           visible={this.state.visible}
+          wrapClassName={wrapClassName}
           animation="zoom"
           maskAnimation="fade"
           onClose={this.onClose}
-          style={{ width: this.state.width }}
+          style={style}
           mousePosition={this.state.mousePosition}
           title={<div>第二个弹框</div>}
         >
@@ -65,14 +80,40 @@ const MyControl = React.createClass({
     }
     return (
       <div>
+        <style>
+          {
+            `
+            .center {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            `
+          }
+        </style>
         <p>
-          <button className="btn btn-primary" onClick={this.onClick}>show dialog</button>
+          <button
+            className="btn btn-primary"
+            onClick={this.onClick}
+          >
+            show dialog
+          </button>
+
           &nbsp;
           <label>destroy on close:
             <input
               type="checkbox"
               checked={this.state.destroyOnClose}
               onChange={this.onDestroyOnCloseChange}
+            />
+          </label>
+
+          &nbsp;
+          <label>center
+            <input
+              type="checkbox"
+              checked={this.state.center}
+              onChange={this.center}
             />
           </label>
         </p>

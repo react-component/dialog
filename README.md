@@ -66,6 +66,18 @@ ReactDOM.render(
           <td>The dialog dom node's prefixCls</td>
       </tr>
       <tr>
+          <td>className</td>
+          <td>String</td>
+          <td></td>
+          <td>additional className for dialog</td>
+      </tr>
+      <tr>
+          <td>wrapClassName</td>
+          <td>String</td>
+          <td></td>
+          <td>additional className for dialog wrap</td>
+      </tr>
+      <tr>
           <td>style</td>
           <td>Object</td>
           <td>{}</td>

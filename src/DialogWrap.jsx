@@ -82,8 +82,8 @@ class DialogWrap extends React.Component {
       'title', 'footer', 'mask', 'keyboard',
       'animation', 'transitionName',
       'maskAnimation', 'maskTransitionName', 'mousePosition',
-      'prefixCls', 'style', 'width',
-      'height', 'zIndex', 'bodyStyle',
+      'prefixCls', 'style', 'width', 'wrapStyle',
+      'height', 'zIndex', 'bodyStyle', 'wrapClassName',
     ]);
     dialogProps = {
       ...dialogProps,
@@ -125,6 +125,8 @@ DialogWrap.defaultProps = {
 DialogWrap.propTypes = {
   className: PropTypes.string,
   keyboard: PropTypes.bool,
+  wrapStyle: PropTypes.object,
+  style: PropTypes.object,
   mask: PropTypes.bool,
   closable: PropTypes.bool,
   maskClosable: PropTypes.bool,
