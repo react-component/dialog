@@ -19833,7 +19833,7 @@
 	    key: 'getDialogElement',
 	    value: function getDialogElement(extra) {
 	      var props = this.props;
-	      var dialogProps = copy(props, ['className', 'closable', 'maskClosable', 'title', 'footer', 'mask', 'keyboard', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'height', 'zIndex', 'bodyStyle']);
+	      var dialogProps = copy(props, ['className', 'closable', 'maskClosable', 'title', 'footer', 'mask', 'keyboard', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'wrapStyle', 'height', 'zIndex', 'bodyStyle', 'wrapClassName']);
 	      dialogProps = _extends({}, dialogProps, {
 	        onClose: this.onClose,
 	        visible: this.state.visible
@@ -19880,6 +19880,8 @@
 	DialogWrap.propTypes = {
 	  className: _react.PropTypes.string,
 	  keyboard: _react.PropTypes.bool,
+	  wrapStyle: _react.PropTypes.object,
+	  style: _react.PropTypes.object,
 	  mask: _react.PropTypes.bool,
 	  closable: _react.PropTypes.bool,
 	  maskClosable: _react.PropTypes.bool,
@@ -19973,7 +19975,9 @@
 	    closable: _react.PropTypes.bool,
 	    maskClosable: _react.PropTypes.bool,
 	    visible: _react.PropTypes.bool,
-	    mousePosition: _react.PropTypes.object
+	    mousePosition: _react.PropTypes.object,
+	    wrapStyle: _react.PropTypes.object,
+	    wrapClassName: _react.PropTypes.string
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -20146,6 +20150,9 @@
 	    }
 	    return style;
 	  },
+	  getWrapStyle: function getWrapStyle() {
+	    return _extends({}, this.getZIndexStyle(), this.props.wrapStyle);
+	  },
 	  getMaskElement: function getMaskElement() {
 	    var props = this.props;
 	    var maskElement = void 0;
@@ -20220,7 +20227,7 @@
 	  render: function render() {
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
-	    var style = this.getZIndexStyle();
+	    var style = this.getWrapStyle();
 	    // clear hide display
 	    // and only set display after async anim, not here for hide
 	    if (props.visible) {
@@ -20235,7 +20242,7 @@
 	        {
 	          tabIndex: '-1',
 	          onKeyDown: this.onKeyDown,
-	          className: prefixCls + '-wrap',
+	          className: prefixCls + '-wrap ' + (props.wrapClassName || ''),
 	          ref: 'wrap',
 	          onClick: this.onMaskClick,
 	          role: 'dialog',

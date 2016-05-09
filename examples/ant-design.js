@@ -35,7 +35,8 @@ webpackJsonp([0],[
 	    return {
 	      visible: false,
 	      width: 600,
-	      destroyOnClose: false
+	      destroyOnClose: false,
+	      center: false
 	    };
 	  },
 	  onClick: function onClick(e) {
@@ -63,17 +64,30 @@ webpackJsonp([0],[
 	      width: this.state.width === 600 ? 800 : 600
 	    });
 	  },
+	  center: function center(e) {
+	    this.setState({
+	      center: e.target.checked
+	    });
+	  },
 	  render: function render() {
 	    var dialog = void 0;
 	    if (this.state.visible || !this.state.destroyOnClose) {
+	      var style = {
+	        width: this.state.width
+	      };
+	      var wrapClassName = '';
+	      if (this.state.center) {
+	        wrapClassName = 'center';
+	      }
 	      dialog = _react2["default"].createElement(
 	        _rcDialog2["default"],
 	        {
 	          visible: this.state.visible,
+	          wrapClassName: wrapClassName,
 	          animation: 'zoom',
 	          maskAnimation: 'fade',
 	          onClose: this.onClose,
-	          style: { width: this.state.width },
+	          style: style,
 	          mousePosition: this.state.mousePosition,
 	          title: _react2["default"].createElement(
 	            'div',
@@ -99,11 +113,19 @@ webpackJsonp([0],[
 	      'div',
 	      null,
 	      _react2["default"].createElement(
+	        'style',
+	        null,
+	        '\n            .center {\n              display: flex;\n              align-items: center;\n              justify-content: center;\n            }\n            '
+	      ),
+	      _react2["default"].createElement(
 	        'p',
 	        null,
 	        _react2["default"].createElement(
 	          'button',
-	          { className: 'btn btn-primary', onClick: this.onClick },
+	          {
+	            className: 'btn btn-primary',
+	            onClick: this.onClick
+	          },
 	          'show dialog'
 	        ),
 	        ' ',
@@ -115,6 +137,17 @@ webpackJsonp([0],[
 	            type: 'checkbox',
 	            checked: this.state.destroyOnClose,
 	            onChange: this.onDestroyOnCloseChange
+	          })
+	        ),
+	        ' ',
+	        _react2["default"].createElement(
+	          'label',
+	          null,
+	          'center',
+	          _react2["default"].createElement('input', {
+	            type: 'checkbox',
+	            checked: this.state.center,
+	            onChange: this.center
 	          })
 	        )
 	      ),

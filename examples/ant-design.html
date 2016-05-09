@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ant-design.js - example - rc-dialog@6.0.1</title>
+  <title>ant-design.js - example - rc-dialog@6.0.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-dialog@6.0.1</h1>
+    <h1>rc-dialog@6.0.2</h1>
 
     <p>dialog ui component for react</p>
   </div>
@@ -277,6 +277,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       visible: <span class="hljs-literal">false</span>,
       width: <span class="hljs-number">600</span>,
       destroyOnClose: <span class="hljs-literal">false</span>,
+      center: <span class="hljs-literal">false</span>,
     };
   },
 
@@ -309,16 +310,30 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   },
 
+  center(e) {
+    <span class="hljs-keyword">this</span>.setState({
+      center: e.target.checked,
+    });
+  },
+
   render() {
     <span class="hljs-keyword">let</span> dialog;
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.visible || !<span class="hljs-keyword">this</span>.state.destroyOnClose) {
+      <span class="hljs-keyword">const</span> style = {
+        width: <span class="hljs-keyword">this</span>.state.width,
+      };
+      <span class="hljs-keyword">let</span> wrapClassName = <span class="hljs-string">''</span>;
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.center) {
+        wrapClassName = <span class="hljs-string">'center'</span>;
+      }
       dialog = (
         <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span>
           <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
+          <span class="hljs-attribute">wrapClassName</span>=<span class="hljs-value">{wrapClassName}</span>
           <span class="hljs-attribute">animation</span>=<span class="hljs-value">"zoom"</span>
           <span class="hljs-attribute">maskAnimation</span>=<span class="hljs-value">"fade"</span>
           <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.onClose}</span>
-          <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">width:</span> <span class="hljs-attribute">this.state.width</span> }}
+          <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>
           <span class="hljs-attribute">mousePosition</span>=<span class="hljs-value">{this.state.mousePosition}</span>
           <span class="hljs-attribute">title</span>=<span class="hljs-value">{&lt;div</span>&gt;</span>第二个弹框<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>}
         &gt;
@@ -331,14 +346,40 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     }
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+          <span class="hljs-rules">{
+            `
+            .center {
+              <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
+              <span class="hljs-rule"><span class="hljs-attribute">align-items</span>:<span class="hljs-value"> center</span></span>;
+              <span class="hljs-rule"><span class="hljs-attribute">justify-content</span>:<span class="hljs-value"> center</span></span>;
+            }</span>
+            `
+          }
+        </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClick}</span>&gt;</span>show dialog<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">button</span>
+            <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span>
+            <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClick}</span>
+          &gt;</span>
+            show dialog
+          <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+
           &amp;nbsp;
           <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>destroy on close:
             <span class="hljs-tag">&lt;<span class="hljs-title">input</span>
               <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
               <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.destroyOnClose}</span>
               <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onDestroyOnCloseChange}</span>
+            /&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+
+          &amp;nbsp;
+          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>center
+            <span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+              <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
+              <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.center}</span>
+              <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.center}</span>
             /&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
