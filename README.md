@@ -144,6 +144,12 @@ ReactDOM.render(
           <td>whether show close button and click mask to close</td>
       </tr>
       <tr>
+          <td>mask</td>
+          <td>Boolean</td>
+          <td>true</td>
+          <td>whether show mask</td>
+      </tr>
+      <tr>
           <td>maskClosable</td>
           <td>Boolean</td>
           <td>true</td>
