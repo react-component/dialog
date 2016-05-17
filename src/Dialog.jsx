@@ -102,7 +102,9 @@ const Dialog = React.createClass({
   },
 
   onAnimateLeave() {
-    this.refs.wrap.style.display = 'none';
+    if (this.refs.wrap) {
+      this.refs.wrap.style.display = 'none';
+    }
     this.props.onAfterClose();
   },
 
