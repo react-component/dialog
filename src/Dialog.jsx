@@ -102,7 +102,7 @@ const Dialog = React.createClass({
   },
 
   onAnimateLeave() {
-    if (this.refs.wrap) {
+    if (ReactDOM.findDOMNode(this.refs.wrap)) {
       this.refs.wrap.style.display = 'none';
     }
     this.props.onAfterClose();
