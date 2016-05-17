@@ -6,6 +6,8 @@ import LazyRenderBox from './LazyRenderBox';
 let uuid = 0;
 let openCount = 0;
 
+/* eslint react/no-is-mounted:0 */
+
 function noop() {
 }
 
@@ -102,7 +104,11 @@ const Dialog = React.createClass({
   },
 
   onAnimateLeave() {
-    this.refs.wrap.style.display = 'none';
+    // need demo?
+    // https://github.com/react-component/dialog/pull/28
+    if (this.isMounted()) {
+      this.refs.wrap.style.display = 'none';
+    }
     this.props.onAfterClose();
   },
 

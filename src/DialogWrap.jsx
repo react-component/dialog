@@ -101,9 +101,11 @@ class DialogWrap extends React.Component {
   }
 
   cleanDialogContainer() {
-    ReactDOM.unmountComponentAtNode(this.getDialogContainer());
-    document.body.removeChild(this.dialogContainer);
-    this.dialogContainer = null;
+    if (this.dialogContainer) {
+      ReactDOM.unmountComponentAtNode(this.dialogContainer);
+      document.body.removeChild(this.dialogContainer);
+      this.dialogContainer = null;
+    }
   }
 
   render() {
