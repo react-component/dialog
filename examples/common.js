@@ -19852,9 +19852,11 @@
 	  }, {
 	    key: 'cleanDialogContainer',
 	    value: function cleanDialogContainer() {
-	      _reactDom2["default"].unmountComponentAtNode(this.getDialogContainer());
-	      document.body.removeChild(this.dialogContainer);
-	      this.dialogContainer = null;
+	      if (this.dialogContainer) {
+	        _reactDom2["default"].unmountComponentAtNode(this.dialogContainer);
+	        document.body.removeChild(this.dialogContainer);
+	        this.dialogContainer = null;
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -19929,6 +19931,8 @@
 	
 	var uuid = 0;
 	var openCount = 0;
+	
+	/* eslint react/no-is-mounted:0 */
 	
 	function noop() {}
 	
@@ -20022,7 +20026,11 @@
 	    }
 	  },
 	  onAnimateLeave: function onAnimateLeave() {
-	    this.refs.wrap.style.display = 'none';
+	    // need demo?
+	    // https://github.com/react-component/dialog/pull/28
+	    if (this.isMounted()) {
+	      this.refs.wrap.style.display = 'none';
+	    }
 	    this.props.onAfterClose();
 	  },
 	  onMaskClick: function onMaskClick(e) {
