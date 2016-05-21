@@ -10,7 +10,7 @@ const Simulate = TestUtils.Simulate;
 const async = require('async');
 const rcUtil = require('rc-util');
 
-describe('dialog', function() {
+describe('dialog', () => {
   const title = '第一个title';
   let dialog;
 
@@ -20,7 +20,7 @@ describe('dialog', function() {
 
   let callback1;
 
-  beforeEach(function() {
+  beforeEach(() => {
     function onClose() {
       callback1 = 1;
       dialog.setState({
@@ -29,132 +29,139 @@ describe('dialog', function() {
     }
 
     callback1 = 0;
-    dialog = ReactDOM.render((<Dialog
-      style={{width: 600}}
-      title={title}
-      onClose={onClose}>
-      <p>第一个dialog</p>
-    </Dialog>), container);
+    dialog = ReactDOM.render((
+      <Dialog
+        style={{ width: 600 }}
+        title={title}
+        onClose={onClose}
+      >
+        <p>第一个dialog</p>
+      </Dialog>), container);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ReactDOM.unmountComponentAtNode(container);
   });
 
-  it('show', function(done) {
+  it('show', (done) => {
     dialog.setState({
       visible: true,
     });
-    setTimeout(function() {
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
+    setTimeout(() => {
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('block');
       done();
     }, 10);
   });
 
-  it('close', function(done) {
+  it('close', (done) => {
     dialog.setState({
       visible: true,
     });
     dialog.setState({
       visible: false,
     });
-    setTimeout(function() {
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+    setTimeout(() => {
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }, 10);
   });
 
-  it('create', function() {
+  it('create', () => {
     expect($('.rc-dialog').length).to.be(0);
   });
 
-  it('mask', function() {
+  it('mask', () => {
     dialog.setState({
       visible: true,
     });
     expect($('.rc-dialog-mask').length).to.be(1);
   });
 
-  it('click close', function(finish) {
-    async.series([function(done) {
+  it('click close', (finish) => {
+    async.series([(done) => {
       dialog.setState({
         visible: true,
       });
       setTimeout(done, 10);
-    }, function(done) {
+    }, (done) => {
       const btn = $('.rc-dialog-close')[0];
       Simulate.click(btn);
       setTimeout(done, 10);
-    }, function(done) {
+    }, (done) => {
       expect(callback1).to.be(1);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }], finish);
   });
 
-  it('esc to close', function(finish) {
-    async.series([function(done) {
+  it('esc to close', (finish) => {
+    async.series([(done) => {
       dialog.setState({
         visible: true,
       });
       setTimeout(done, 10);
-    }, function(done) {
+    }, (done) => {
       Simulate.keyDown($('.rc-dialog')[0], {
         keyCode: rcUtil.KeyCode.ESC,
       });
       setTimeout(done, 10);
-    }, function(done) {
+    }, (done) => {
       expect(callback1).to.be(1);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
     }], finish);
   });
 
-  it('mask to close', function(finish) {
-    async.series([function(done) {
+  it('mask to close', (finish) => {
+    async.series([(done) => {
       dialog.setState({
         visible: true,
       });
       setTimeout(done, 10);
-    }, function(done) {
-      const mask = $('.rc-dialog-mask')[0];
+    }, (done) => {
+      const mask = $('.rc-dialog-wrap')[0];
       Simulate.click(mask);
       setTimeout(done, 10);
-    }, function(done) {
+    }, (done) => {
       // dialog should closed after mask click
       expect(callback1).to.be(1);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
       done();
-    }, function(done) {
+    }, (done) => {
       dialog.setState({
         visible: true,
         maskClosable: false,
       });
 
       setTimeout(done, 10);
-    }, function(done) {
+    }, (done) => {
       // dialog should stay on visible after mask click if set maskClosable to false
       // expect(callback1).to.be(0);
-      expect($('.rc-dialog').hasClass('rc-dialog-hidden')).not.to.be.ok();
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('block');
       done();
     }], finish);
   });
 
-  it('renderToBody', function() {
+  it('renderToBody', () => {
     const d = ReactDOM.render(<Dialog>
       <p className="renderToBody">1</p>
     </Dialog>, container);
     expect($('.renderToBody').length).to.be(0);
-    expect($('.rc-dialog-container').length).to.be(0);
+    expect($('.rc-dialog-wrap').length).to.be(0);
     d.setState({
       visible: true,
     });
-    expect($('.rc-dialog-container').length).to.be(1);
+    expect($('.rc-dialog-wrap').length).to.be(1);
     expect($('.renderToBody').length).to.be(1);
-    expect($('.rc-dialog-wrap')[0].parentNode).not.to.be(container);
-    expect($('.rc-dialog-wrap')[0].parentNode.className).to.be('rc-dialog-container');
+    expect($('.rc-dialog-wrap')[0].parentNode.parentNode).not.to.be(container);
     ReactDOM.unmountComponentAtNode(container);
     expect($('.renderToBody').length).to.be(0);
-    expect($('.rc-dialog-container').length).to.be(0);
+    expect($('.rc-dialog-wrap').length).to.be(0);
   });
 });

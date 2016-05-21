@@ -1,12 +1,18 @@
 .@{prefixCls} {
-  outline: none;
-  position: absolute;
-  left: -9999px;
-  top: -9999px;
-  z-index: 1000;
+  position: relative;
+  width: auto;
+  margin: 10px;
 
-  &-hidden {
-    display: none;
+  &-wrap {
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
   }
 
   &-title {
@@ -22,12 +28,12 @@
     border: none;
     border-radius: 6px 6px;
     background-clip: padding-box;
-    outline: 0;
   }
 
   &-close {
     cursor: pointer;
-    outline: none;
+    border: 0;
+    background: transparent;
     font-size: 21px;
     position: absolute;
     right: 20px;
@@ -41,7 +47,7 @@
     text-decoration: none;
 
     &-x:after {
-      content:'×'
+      content: '×'
     }
 
     &:hover {
@@ -78,13 +84,13 @@
   &-zoom-enter, &-zoom-appear {
     opacity: 0;
     .effect();
-    animation-timing-function: cubic-bezier(0.08,0.82,0.17,1);
+    animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
     animation-play-state: paused;
   }
 
   &-zoom-leave {
     .effect();
-    animation-timing-function: cubic-bezier(0.6,0.04,0.98,0.34);
+    animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
     animation-play-state: paused;
   }
 
@@ -117,5 +123,12 @@
       opacity: 0;
       transform: scale(0, 0);
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .@{prefixCls} {
+    width: 600px;
+    margin: 30px auto;
   }
 }

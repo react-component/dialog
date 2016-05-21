@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "5.4.0",
+  "version": "6.0.3",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -30,23 +30,23 @@
   "scripts": {
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
-    "start": "rc-server",
+    "start": "rc-tools run server",
     "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
     "karma": "rc-tools run karma",
     "saucelabs": "rc-tools run saucelabs",
-    "browser-test": "rc-tools run browser-test",
-    "browser-test-cover": "rc-tools run browser-test-cover"
+    "test": "rc-tools run test",
+    "chrome-test": "rc-tools run chrome-test",
+    "coverage": "rc-tools run coverage"
   },
   "devDependencies": {
     "async": "^0.9.0",
     "bluebird": "~2.9.30",
-    "bootstrap": "^3.3.2",
+    "bootstrap": "^3.3.6",
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
     "pre-commit": "1.x",
-    "rc-server": "3.x",
-    "rc-tools": "4.x",
+    "rc-tools": "5.x",
     "react": "~0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0"
@@ -55,8 +55,6 @@
     "lint"
   ],
   "dependencies": {
-    "classnames": "2.x",
-    "rc-align": "2.x",
     "rc-animate": "2.x",
     "rc-util": "3.x"
   }
