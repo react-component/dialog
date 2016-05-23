@@ -19932,6 +19932,15 @@
 	var uuid = 0;
 	var openCount = 0;
 	
+	// Measure scrollbar width for padding body during modal show/hide
+	var scrollbarMeasure = {
+	  position: 'absolute',
+	  top: '-9999px',
+	  width: '50px',
+	  height: '50px',
+	  overflow: 'scroll'
+	};
+	
 	/* eslint react/no-is-mounted:0 */
 	
 	function noop() {}
@@ -20003,7 +20012,7 @@
 	      // first show
 	      if (!prevProps.visible) {
 	        this.lastOutSideFocusNode = document.activeElement;
-	        this.addScrollingClass();
+	        this.addScrollingEffect();
 	        this.refs.wrap.focus();
 	        var dialogNode = _reactDom2["default"].findDOMNode(this.refs.dialog);
 	        if (mousePosition) {
@@ -20021,7 +20030,7 @@
 	          this.lastOutSideFocusNode = null;
 	        }
 	        this.lastOutSideFocusNode = null;
-	        this.removeScrollingClass();
+	        this.removeScrollingEffect();
 	      }
 	    }
 	  },
@@ -20210,16 +20219,23 @@
 	  getElement: function getElement(part) {
 	    return this.refs[part];
 	  },
-	  addScrollingClass: function addScrollingClass() {
+	  setScrollbar: function setScrollbar() {
+	    if (this.bodyIsOverflowing) {
+	      document.body.style.paddingRight = this.scrollbarWidth + 'px';
+	    }
+	  },
+	  addScrollingEffect: function addScrollingEffect() {
 	    openCount++;
 	    if (openCount !== 1) {
 	      return;
 	    }
 	    var props = this.props;
+	    this.checkScrollbar();
+	    this.setScrollbar();
 	    var scrollingClassName = props.prefixCls + '-open';
 	    document.body.className += ' ' + scrollingClassName;
 	  },
-	  removeScrollingClass: function removeScrollingClass() {
+	  removeScrollingEffect: function removeScrollingEffect() {
 	    openCount--;
 	    if (openCount !== 0) {
 	      return;
@@ -20228,9 +20244,37 @@
 	    var scrollingClassName = props.prefixCls + '-open';
 	    var body = document.body;
 	    body.className = body.className.replace(scrollingClassName, '');
+	    this.resetScrollbar();
 	  },
 	  close: function close(e) {
 	    this.props.onClose(e);
+	  },
+	  checkScrollbar: function checkScrollbar() {
+	    var fullWindowWidth = window.innerWidth;
+	    if (!fullWindowWidth) {
+	      // workaround for missing window.innerWidth in IE8
+	      var documentElementRect = document.documentElement.getBoundingClientRect();
+	      fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
+	    }
+	    this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
+	    if (this.bodyIsOverflowing) {
+	      this.scrollbarWidth = this.measureScrollbar();
+	    }
+	  },
+	  resetScrollbar: function resetScrollbar() {
+	    document.body.style.paddingRight = '';
+	  },
+	  measureScrollbar: function measureScrollbar() {
+	    var scrollDiv = document.createElement('div');
+	    for (var scrollProp in scrollbarMeasure) {
+	      if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
+	        scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
+	      }
+	    }
+	    document.body.appendChild(scrollDiv);
+	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+	    document.body.removeChild(scrollDiv);
+	    return scrollbarWidth;
 	  },
 	  render: function render() {
 	    var props = this.props;
