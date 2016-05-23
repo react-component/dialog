@@ -3,8 +3,18 @@ import ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
+
 let uuid = 0;
 let openCount = 0;
+
+// Measure scrollbar width for padding body during modal show/hide
+const scrollbarMeasure = {
+  position: 'absolute',
+  top: '-9999px',
+  width: '50px',
+  height: '50px',
+  overflow: 'scroll',
+};
 
 /* eslint react/no-is-mounted:0 */
 
@@ -22,28 +32,6 @@ function getScroll(w, top) {
     }
   }
   return ret;
-}
-
-// http://www.alexandre-gomes.com/?p=115
-function getScrollBarWidth() {
-  const inner = document.createElement('p');
-  inner.style.width = '100%';
-  inner.style.height = '200px';
-  const outer = document.createElement('div');
-  outer.style.position = 'absolute';
-  outer.style.top = '0px';
-  outer.style.left = '0px';
-  outer.style.visibility = 'hidden';
-  outer.style.width = '200px';
-  outer.style.height = '150px';
-  outer.style.overflow = 'hidden';
-  outer.appendChild(inner);
-  document.body.appendChild(outer);
-  const w1 = inner.offsetWidth;
-  outer.style.overflow = 'scroll';
-  const w2 = (w1 === w2) ? outer.clientWidth : inner.offsetWidth;
-  document.body.removeChild(outer);
-  return w1 - w2;
 }
 
 function setTransformOrigin(node, value) {
@@ -101,7 +89,7 @@ const Dialog = React.createClass({
       // first show
       if (!prevProps.visible) {
         this.lastOutSideFocusNode = document.activeElement;
-        this.addScrollingClass();
+        this.addScrollingEffect();
         this.refs.wrap.focus();
         const dialogNode = ReactDOM.findDOMNode(this.refs.dialog);
         if (mousePosition) {
@@ -120,7 +108,7 @@ const Dialog = React.createClass({
           this.lastOutSideFocusNode = null;
         }
         this.lastOutSideFocusNode = null;
-        this.removeScrollingClass();
+        this.removeScrollingEffect();
       }
     }
   },
@@ -315,23 +303,25 @@ const Dialog = React.createClass({
     return this.refs[part];
   },
 
-  addScrollingClass() {
+  setScrollbar() {
+    if (this.bodyIsOverflowing) {
+      document.body.style.paddingRight = `${this.scrollbarWidth}px`;
+    }
+  },
+
+  addScrollingEffect() {
     openCount++;
     if (openCount !== 1) {
       return;
     }
     const props = this.props;
+    this.checkScrollbar();
+    this.setScrollbar();
     const scrollingClassName = `${props.prefixCls}-open`;
     document.body.className += ` ${scrollingClassName}`;
-    // inspired by bootstrap modal
-    // https://github.com/twbs/bootstrap/blob/795d2208b882e194e6059a1639e056e020d64072/js/modal.js#L259-L267
-    const scrollBarWidth = getScrollBarWidth();
-    if (scrollBarWidth) {
-      document.body.style.paddingRight = `${scrollBarWidth}px`;
-    }
   },
 
-  removeScrollingClass() {
+  removeScrollingEffect() {
     openCount--;
     if (openCount !== 0) {
       return;
@@ -340,11 +330,39 @@ const Dialog = React.createClass({
     const scrollingClassName = `${props.prefixCls}-open`;
     const body = document.body;
     body.className = body.className.replace(scrollingClassName, '');
-    document.body.style.paddingRight = '';
+    this.resetScrollbar();
   },
 
   close(e) {
     this.props.onClose(e);
+  },
+
+  checkScrollbar() {
+    let fullWindowWidth = window.innerWidth;
+    if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
+      const documentElementRect = document.documentElement.getBoundingClientRect();
+      fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
+    }
+    this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
+    if (this.bodyIsOverflowing) {
+      this.scrollbarWidth = this.measureScrollbar();
+    }
+  },
+  resetScrollbar() {
+    document.body.style.paddingRight = '';
+  },
+
+  measureScrollbar() {
+    const scrollDiv = document.createElement('div');
+    for (const scrollProp in scrollbarMeasure) {
+      if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
+        scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
+      }
+    }
+    document.body.appendChild(scrollDiv);
+    const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    document.body.removeChild(scrollDiv);
+    return scrollbarWidth;
   },
 
   render() {
