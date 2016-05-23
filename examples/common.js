@@ -20230,8 +20230,8 @@
 	    if (openCount !== 1) {
 	      return;
 	    }
-	    // this.checkScrollbar();
-	    // this.setScrollbar();
+	    this.checkScrollbar();
+	    this.setScrollbar();
 	    var scrollingClassName = this.props.prefixCls + '-open';
 	    document.body.className += ' ' + scrollingClassName;
 	    // this.adjustDialog();
@@ -20244,7 +20244,7 @@
 	    var scrollingClassName = this.props.prefixCls + '-open';
 	    var body = document.body;
 	    body.className = body.className.replace(scrollingClassName, '');
-	    // this.resetScrollbar();
+	    this.resetScrollbar();
 	    // this.resetAdjustments();
 	  },
 	  close: function close(e) {

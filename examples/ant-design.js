@@ -111,7 +111,7 @@ webpackJsonp([0],[
 	    }
 	    return _react2["default"].createElement(
 	      'div',
-	      null,
+	      { style: { width: '90%', margin: '0 auto' } },
 	      _react2["default"].createElement(
 	        'style',
 	        null,
