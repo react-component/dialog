@@ -24,6 +24,28 @@ function getScroll(w, top) {
   return ret;
 }
 
+// http://www.alexandre-gomes.com/?p=115
+function getScrollBarWidth() {
+  const inner = document.createElement('p');
+  inner.style.width = '100%';
+  inner.style.height = '200px';
+  const outer = document.createElement('div');
+  outer.style.position = 'absolute';
+  outer.style.top = '0px';
+  outer.style.left = '0px';
+  outer.style.visibility = 'hidden';
+  outer.style.width = '200px';
+  outer.style.height = '150px';
+  outer.style.overflow = 'hidden';
+  outer.appendChild(inner);
+  document.body.appendChild(outer);
+  const w1 = inner.offsetWidth;
+  outer.style.overflow = 'scroll';
+  const w2 = (w1 === w2) ? outer.clientWidth : inner.offsetWidth;
+  document.body.removeChild(outer);
+  return w1 - w2;
+}
+
 function setTransformOrigin(node, value) {
   const style = node.style;
   ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix) => {
@@ -301,6 +323,12 @@ const Dialog = React.createClass({
     const props = this.props;
     const scrollingClassName = `${props.prefixCls}-open`;
     document.body.className += ` ${scrollingClassName}`;
+    // inspired by bootstrap modal
+    // https://github.com/twbs/bootstrap/blob/795d2208b882e194e6059a1639e056e020d64072/js/modal.js#L259-L267
+    const scrollBarWidth = getScrollBarWidth();
+    if (scrollBarWidth) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    }
   },
 
   removeScrollingClass() {
@@ -312,6 +340,7 @@ const Dialog = React.createClass({
     const scrollingClassName = `${props.prefixCls}-open`;
     const body = document.body;
     body.className = body.className.replace(scrollingClassName, '');
+    document.body.style.paddingRight = '';
   },
 
   close(e) {
