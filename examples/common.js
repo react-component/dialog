@@ -19990,6 +19990,7 @@
 	    visible: _react.PropTypes.bool,
 	    mousePosition: _react.PropTypes.object,
 	    wrapStyle: _react.PropTypes.object,
+	    prefixCls: _react.PropTypes.string,
 	    wrapClassName: _react.PropTypes.string
 	  },
 	
@@ -20030,15 +20031,15 @@
 	          this.lastOutSideFocusNode = null;
 	        }
 	        this.lastOutSideFocusNode = null;
-	        this.removeScrollingEffect();
 	      }
 	    }
 	  },
 	  onAnimateLeave: function onAnimateLeave() {
 	    // need demo?
 	    // https://github.com/react-component/dialog/pull/28
-	    if (this.isMounted()) {
+	    if (this.refs.wrap) {
 	      this.refs.wrap.style.display = 'none';
+	      this.removeScrollingEffect();
 	    }
 	    this.props.onAfterClose();
 	  },
@@ -20229,22 +20230,22 @@
 	    if (openCount !== 1) {
 	      return;
 	    }
-	    var props = this.props;
-	    this.checkScrollbar();
-	    this.setScrollbar();
-	    var scrollingClassName = props.prefixCls + '-open';
+	    // this.checkScrollbar();
+	    // this.setScrollbar();
+	    var scrollingClassName = this.props.prefixCls + '-open';
 	    document.body.className += ' ' + scrollingClassName;
+	    // this.adjustDialog();
 	  },
 	  removeScrollingEffect: function removeScrollingEffect() {
 	    openCount--;
 	    if (openCount !== 0) {
 	      return;
 	    }
-	    var props = this.props;
-	    var scrollingClassName = props.prefixCls + '-open';
+	    var scrollingClassName = this.props.prefixCls + '-open';
 	    var body = document.body;
 	    body.className = body.className.replace(scrollingClassName, '');
-	    this.resetScrollbar();
+	    // this.resetScrollbar();
+	    // this.resetAdjustments();
 	  },
 	  close: function close(e) {
 	    this.props.onClose(e);
@@ -20275,6 +20276,16 @@
 	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
 	    document.body.removeChild(scrollDiv);
 	    return scrollbarWidth;
+	  },
+	  adjustDialog: function adjustDialog() {
+	    var modalIsOverflowing = this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
+	    this.refs.wrap.style.paddingLeft = (!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	    this.refs.wrap.style.paddingRight = (this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	  },
+	  resetAdjustments: function resetAdjustments() {
+	    if (this.refs.wrap) {
+	      this.refs.wrap.style.paddingLeft = this.refs.wrap.style.paddingLeft = '';
+	    }
 	  },
 	  render: function render() {
 	    var props = this.props;
