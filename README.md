@@ -36,7 +36,7 @@ react dialog component
 var Dialog = require('rc-dialog');
 
 ReactDOM.render(
-  <Dialog title={title} onClose={callback1} onShow={callback2}>
+  <Dialog title={title} onClose={callback1} visible>
       <p>first dialog</p>
   </Dialog>
 ), document.getElementById('t1'));
