@@ -354,6 +354,9 @@ const Dialog = React.createClass({
   },
 
   measureScrollbar() {
+    if (this.scrollbarWidth !== undefined) {
+      return this.scrollbarWidth;
+    }
     const scrollDiv = document.createElement('div');
     for (const scrollProp in scrollbarMeasure) {
       if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
@@ -363,6 +366,7 @@ const Dialog = React.createClass({
     document.body.appendChild(scrollDiv);
     const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
     document.body.removeChild(scrollDiv);
+    this.scrollbarWidth = scrollbarWidth;
     return scrollbarWidth;
   },
 
