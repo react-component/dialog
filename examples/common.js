@@ -20266,6 +20266,9 @@
 	    document.body.style.paddingRight = '';
 	  },
 	  measureScrollbar: function measureScrollbar() {
+	    if (this.scrollbarWidth !== undefined) {
+	      return this.scrollbarWidth;
+	    }
 	    var scrollDiv = document.createElement('div');
 	    for (var scrollProp in scrollbarMeasure) {
 	      if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
@@ -20275,6 +20278,7 @@
 	    document.body.appendChild(scrollDiv);
 	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
 	    document.body.removeChild(scrollDiv);
+	    this.scrollbarWidth = scrollbarWidth;
 	    return scrollbarWidth;
 	  },
 	  adjustDialog: function adjustDialog() {
