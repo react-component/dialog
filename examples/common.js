@@ -20039,8 +20039,8 @@
 	    // https://github.com/react-component/dialog/pull/28
 	    if (this.refs.wrap) {
 	      this.refs.wrap.style.display = 'none';
-	      this.removeScrollingEffect();
 	    }
+	    this.removeScrollingEffect();
 	    this.props.onAfterClose();
 	  },
 	  onMaskClick: function onMaskClick(e) {
@@ -20221,7 +20221,7 @@
 	    return this.refs[part];
 	  },
 	  setScrollbar: function setScrollbar() {
-	    if (this.bodyIsOverflowing) {
+	    if (this.bodyIsOverflowing && this.scrollbarWidth) {
 	      document.body.style.paddingRight = this.scrollbarWidth + 'px';
 	    }
 	  },
@@ -20282,9 +20282,11 @@
 	    return scrollbarWidth;
 	  },
 	  adjustDialog: function adjustDialog() {
-	    var modalIsOverflowing = this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
-	    this.refs.wrap.style.paddingLeft = (!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
-	    this.refs.wrap.style.paddingRight = (this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	    if (this.refs.wrap && this.scrollbarWidth) {
+	      var modalIsOverflowing = this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
+	      this.refs.wrap.style.paddingLeft = (!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	      this.refs.wrap.style.paddingRight = (this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	    }
 	  },
 	  resetAdjustments: function resetAdjustments() {
 	    if (this.refs.wrap) {
