@@ -305,7 +305,7 @@ const Dialog = React.createClass({
   },
 
   setScrollbar() {
-    if (this.bodyIsOverflowing) {
+    if (this.bodyIsOverflowing && this.scrollbarWidth) {
       document.body.style.paddingRight = `${this.scrollbarWidth}px`;
     }
   },
@@ -371,11 +371,14 @@ const Dialog = React.createClass({
   },
 
   adjustDialog() {
-    const modalIsOverflowing = this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
-    this.refs.wrap.style.paddingLeft =
-      `${!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : ''}px`;
-    this.refs.wrap.style.paddingRight =
-      `${this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''}px`;
+    if (this.refs.wrap && this.scrollbarWidth) {
+      const modalIsOverflowing =
+        this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
+      this.refs.wrap.style.paddingLeft =
+        `${!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : ''}px`;
+      this.refs.wrap.style.paddingRight =
+        `${this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''}px`;
+    }
   },
 
   resetAdjustments() {
