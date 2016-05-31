@@ -118,8 +118,8 @@ const Dialog = React.createClass({
     // https://github.com/react-component/dialog/pull/28
     if (this.refs.wrap) {
       this.refs.wrap.style.display = 'none';
-      this.removeScrollingEffect();
     }
+    this.removeScrollingEffect();
     this.props.onAfterClose();
   },
 
