@@ -317,8 +317,7 @@ const Dialog = React.createClass({
     }
     this.checkScrollbar();
     this.setScrollbar();
-    const scrollingClassName = `${this.props.prefixCls}-open`;
-    document.body.className += ` ${scrollingClassName}`;
+    document.body.style.overflow = 'hidden';
     // this.adjustDialog();
   },
 
@@ -327,9 +326,7 @@ const Dialog = React.createClass({
     if (openCount !== 0) {
       return;
     }
-    const scrollingClassName = `${this.props.prefixCls}-open`;
-    const body = document.body;
-    body.className = body.className.replace(scrollingClassName, '');
+    document.body.style.overflow = '';
     this.resetScrollbar();
     // this.resetAdjustments();
   },
