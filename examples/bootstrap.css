@@ -6763,9 +6763,6 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
-.rc-dialog-open {
-  overflow: hidden;
-}
 .rc-dialog {
   position: relative;
   width: auto;

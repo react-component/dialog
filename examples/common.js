@@ -20232,8 +20232,7 @@
 	    }
 	    this.checkScrollbar();
 	    this.setScrollbar();
-	    var scrollingClassName = this.props.prefixCls + '-open';
-	    document.body.className += ' ' + scrollingClassName;
+	    document.body.style.overflow = 'hidden';
 	    // this.adjustDialog();
 	  },
 	  removeScrollingEffect: function removeScrollingEffect() {
@@ -20241,9 +20240,7 @@
 	    if (openCount !== 0) {
 	      return;
 	    }
-	    var scrollingClassName = this.props.prefixCls + '-open';
-	    var body = document.body;
-	    body.className = body.className.replace(scrollingClassName, '');
+	    document.body.style.overflow = '';
 	    this.resetScrollbar();
 	    // this.resetAdjustments();
 	  },
