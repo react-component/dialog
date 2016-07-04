@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -47,9 +47,9 @@
     "jquery": "^1.11.2",
     "pre-commit": "1.x",
     "rc-tools": "5.x",
-    "react": "~0.14.0",
-    "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react": "15.x",
+    "react-addons-test-utils": "15.x",
+    "react-dom": "15.x"
   },
   "pre-commit": [
     "lint"
