@@ -17,11 +17,11 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(35);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcDialog = __webpack_require__(161);
+	var _rcDialog = __webpack_require__(172);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
