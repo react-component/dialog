@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.2.0 / 2016-07-18
+
+- use getContainerRenderMixin from 'rc-util'
+
 ## 6.0.0 / 2016-03-18
 
 - new html structure and class

@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
+import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
 
 function noop() {
 }
 
-function copy(obj, fields) {
+function pick(obj, fields) {
   const ret = {};
   fields.forEach((f) => {
     if (obj[f] !== undefined) {
@@ -15,126 +15,104 @@ function copy(obj, fields) {
   return ret;
 }
 
-class DialogWrap extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: props.visible,
+const DialogWrap = React.createClass({
+  propTypes: {
+    className: PropTypes.string,
+    keyboard: PropTypes.bool,
+    wrapStyle: PropTypes.object,
+    style: PropTypes.object,
+    mask: PropTypes.bool,
+    children: PropTypes.any,
+    closable: PropTypes.bool,
+    maskClosable: PropTypes.bool,
+    prefixCls: PropTypes.string,
+    visible: PropTypes.bool,
+    onClose: PropTypes.func,
+  },
+  mixins: [
+    getContainerRenderMixin({
+      isVisible(instance) {
+        return instance.state.visible;
+      },
+      autoDestroy: false,
+      getComponent(instance, extra) {
+        const props = instance.props;
+        const dialogProps = pick(props, [
+          'className', 'closable', 'maskClosable',
+          'title', 'footer', 'mask', 'keyboard',
+          'animation', 'transitionName',
+          'maskAnimation', 'maskTransitionName', 'mousePosition',
+          'prefixCls', 'style', 'width', 'wrapStyle',
+          'height', 'zIndex', 'bodyStyle', 'wrapClassName',
+        ]);
+        return (
+          <Dialog
+            {...dialogProps}
+            onClose={instance.onClose}
+            visible={instance.state.visible}
+            {...extra}
+            key="dialog"
+          >
+            {props.children}
+          </Dialog>
+        );
+      },
+    }),
+  ],
+
+  getDefaultProps() {
+    return {
+      className: '',
+      mask: true,
+      keyboard: true,
+      closable: true,
+      maskClosable: true,
+      prefixCls: 'rc-dialog',
+      onClose: noop,
     };
-    ['onClose', 'cleanDialogContainer'].forEach((m) => {
-      this[m] = this[m].bind(this);
-    });
-  }
+  },
 
-  componentDidMount() {
-    this.componentDidUpdate();
-  }
+  getInitialState() {
+    return {
+      visible: this.props.visible,
+    };
+  },
 
-  componentWillReceiveProps(props) {
-    if ('visible' in props) {
+  componentWillReceiveProps({ visible }) {
+    if (visible !== undefined) {
       this.setState({
-        visible: props.visible,
+        visible,
       });
     }
-  }
+  },
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(_, nextState) {
     return !!(this.state.visible || nextState.visible);
-  }
-
-  componentDidUpdate() {
-    if (this.dialogRendered) {
-      this.dialogInstance = ReactDOM.unstable_renderSubtreeIntoContainer(this,
-        this.getDialogElement(), this.getDialogContainer());
-    }
-  }
+  },
 
   componentWillUnmount() {
-    if (this.dialogContainer) {
-      if (this.state.visible) {
-        ReactDOM.unstable_renderSubtreeIntoContainer(this, this.getDialogElement({
-          onAfterClose: this.cleanDialogContainer,
-          onClose: noop,
-          visible: false,
-        }), this.dialogContainer);
-      } else {
-        this.cleanDialogContainer();
-      }
+    if (this.state.visible) {
+      this.renderComponent({
+        onAfterClose: this.removeContainer,
+        onClose: noop,
+        visible: false,
+      });
+    } else {
+      this.removeContainer();
     }
-  }
+  },
 
   onClose(e) {
     this.props.onClose(e);
-  }
-
-  getDialogContainer() {
-    if (!this.dialogContainer) {
-      this.dialogContainer = document.createElement('div');
-      document.body.appendChild(this.dialogContainer);
-    }
-    return this.dialogContainer;
-  }
-
-  getDialogElement(extra) {
-    const props = this.props;
-    let dialogProps = copy(props, [
-      'className', 'closable', 'maskClosable',
-      'title', 'footer', 'mask', 'keyboard',
-      'animation', 'transitionName',
-      'maskAnimation', 'maskTransitionName', 'mousePosition',
-      'prefixCls', 'style', 'width', 'wrapStyle',
-      'height', 'zIndex', 'bodyStyle', 'wrapClassName',
-    ]);
-    dialogProps = {
-      ...dialogProps,
-      onClose: this.onClose,
-      visible: this.state.visible,
-      ...extra,
-    };
-    return (<Dialog {...dialogProps} key="dialog">
-      {props.children}
-    </Dialog>);
-  }
+  },
 
   getElement(part) {
-    return this.dialogInstance.getElement(part);
-  }
-
-  cleanDialogContainer() {
-    if (this.dialogContainer) {
-      ReactDOM.unmountComponentAtNode(this.dialogContainer);
-      document.body.removeChild(this.dialogContainer);
-      this.dialogContainer = null;
-    }
-  }
+    return this._component.getElement(part);
+  },
 
   render() {
-    this.dialogRendered = this.dialogRendered || this.state.visible;
     return null;
-  }
-}
-
-DialogWrap.defaultProps = {
-  className: '',
-  mask: true,
-  keyboard: true,
-  closable: true,
-  maskClosable: true,
-  prefixCls: 'rc-dialog',
-  onClose: noop,
-};
-
-DialogWrap.propTypes = {
-  className: PropTypes.string,
-  keyboard: PropTypes.bool,
-  wrapStyle: PropTypes.object,
-  style: PropTypes.object,
-  mask: PropTypes.bool,
-  closable: PropTypes.bool,
-  maskClosable: PropTypes.bool,
-  prefixCls: PropTypes.string,
-  visible: PropTypes.bool,
-  onClose: PropTypes.func,
-};
+  },
+});
 
 export default DialogWrap;
