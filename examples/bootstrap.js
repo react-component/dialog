@@ -3,19 +3,19 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(186);
+	module.exports = __webpack_require__(187);
 
 
 /***/ },
 
-/***/ 186:
+/***/ 187:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	__webpack_require__(187);
-	
 	__webpack_require__(188);
+	
+	__webpack_require__(189);
 	
 	var _react = __webpack_require__(3);
 	
@@ -29,9 +29,9 @@ webpackJsonp([1],{
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var MyControl = _react2["default"].createClass({
+	var MyControl = _react2.default.createClass({
 	  displayName: 'MyControl',
 	  getInitialState: function getInitialState() {
 	    return {
@@ -57,20 +57,20 @@ webpackJsonp([1],{
 	  render: function render() {
 	    var dialog = void 0;
 	    if (this.state.visible || !this.state.destroyOnClose) {
-	      dialog = _react2["default"].createElement(
-	        _rcDialog2["default"],
+	      dialog = _react2.default.createElement(
+	        _rcDialog2.default,
 	        {
 	          visible: this.state.visible,
 	          animation: 'slide-fade',
 	          maskAnimation: 'fade',
 	          onClose: this.onClose,
 	          style: { width: 600 },
-	          title: _react2["default"].createElement(
+	          title: _react2.default.createElement(
 	            'div',
 	            null,
 	            '第二个弹框'
 	          ),
-	          footer: [_react2["default"].createElement(
+	          footer: [_react2.default.createElement(
 	            'button',
 	            {
 	              type: 'button',
@@ -79,7 +79,7 @@ webpackJsonp([1],{
 	              onClick: this.onClose
 	            },
 	            'Close'
-	          ), _react2["default"].createElement(
+	          ), _react2.default.createElement(
 	            'button',
 	            {
 	              type: 'button',
@@ -90,66 +90,66 @@ webpackJsonp([1],{
 	            'Save changes'
 	          )]
 	        },
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'h4',
 	          null,
 	          'Text in a modal'
 	        ),
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'p',
 	          null,
 	          'Duis mollis, est non commodo luctus, nisi erat porttitor ligula.'
 	        ),
-	        _react2["default"].createElement('hr', null),
-	        _react2["default"].createElement(
+	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement(
 	          'h4',
 	          null,
 	          'Overflowing text to show scroll behavior'
 	        ),
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'p',
 	          null,
 	          'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'
 	        ),
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'p',
 	          null,
 	          'Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'
 	        ),
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'div',
 	          { style: { display: '' } },
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.'
 	          ),
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'
 	          ),
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'
 	          ),
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.'
 	          ),
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'
 	          ),
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'
 	          ),
-	          _react2["default"].createElement(
+	          _react2.default.createElement(
 	            'p',
 	            null,
 	            'Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.'
@@ -157,23 +157,23 @@ webpackJsonp([1],{
 	        )
 	      );
 	    }
-	    return _react2["default"].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: { margin: 20 } },
-	      _react2["default"].createElement(
+	      _react2.default.createElement(
 	        'p',
 	        null,
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'button',
 	          { className: 'btn btn-primary', onClick: this.onClick },
 	          'show dialog'
 	        ),
 	        ' ',
-	        _react2["default"].createElement(
+	        _react2.default.createElement(
 	          'label',
 	          null,
 	          'destroy on close:',
-	          _react2["default"].createElement('input', {
+	          _react2.default.createElement('input', {
 	            type: 'checkbox',
 	            checked: this.state.destroyOnClose,
 	            onChange: this.onDestroyOnCloseChange
@@ -185,23 +185,16 @@ webpackJsonp([1],{
 	  }
 	});
 	
-	_reactDom2["default"].render(_react2["default"].createElement(
+	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
 	  null,
-	  _react2["default"].createElement(
+	  _react2.default.createElement(
 	    'h2',
 	    null,
 	    'ant-design dialog'
 	  ),
-	  _react2["default"].createElement(MyControl, null)
+	  _react2.default.createElement(MyControl, null)
 	), document.getElementById('__react-content'));
-
-/***/ },
-
-/***/ 187:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ },
 
@@ -210,7 +203,10 @@ webpackJsonp([1],{
 
 	// removed by extract-text-webpack-plugin
 
-/***/ }
+/***/ },
+
+/***/ 189:
+188
 
 });
 //# sourceMappingURL=bootstrap.js.map
