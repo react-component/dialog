@@ -21067,97 +21067,46 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function noop() {}
-	
-	function pick(obj, fields) {
-	  var ret = {};
-	  fields.forEach(function (f) {
-	    if (obj[f] !== undefined) {
-	      ret[f] = obj[f];
-	    }
-	  });
-	  return ret;
-	}
-	
 	var DialogWrap = _react2.default.createClass({
 	  displayName: 'DialogWrap',
 	
 	  propTypes: {
-	    className: _react.PropTypes.string,
-	    keyboard: _react.PropTypes.bool,
-	    wrapStyle: _react.PropTypes.object,
-	    style: _react.PropTypes.object,
-	    mask: _react.PropTypes.bool,
-	    children: _react.PropTypes.any,
-	    closable: _react.PropTypes.bool,
-	    maskClosable: _react.PropTypes.bool,
-	    prefixCls: _react.PropTypes.string,
-	    visible: _react.PropTypes.bool,
-	    onClose: _react.PropTypes.func
+	    visible: _react.PropTypes.bool
 	  },
 	  mixins: [(0, _getContainerRenderMixin2.default)({
 	    isVisible: function isVisible(instance) {
-	      return instance.state.visible;
+	      return instance.props.visible;
 	    },
 	
 	    autoDestroy: false,
 	    getComponent: function getComponent(instance, extra) {
-	      var props = instance.props;
-	      var dialogProps = pick(props, ['className', 'closable', 'maskClosable', 'title', 'footer', 'mask', 'keyboard', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'wrapStyle', 'height', 'zIndex', 'bodyStyle', 'wrapClassName']);
-	      return _react2.default.createElement(
-	        _Dialog2.default,
-	        _extends({}, dialogProps, {
-	          onClose: instance.onClose,
-	          visible: instance.state.visible
-	        }, extra, {
-	          key: 'dialog'
-	        }),
-	        props.children
-	      );
+	      return _react2.default.createElement(_Dialog2.default, _extends({}, instance.props, extra, {
+	        key: 'dialog'
+	      }));
 	    }
 	  })],
 	
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      className: '',
-	      mask: true,
-	      keyboard: true,
-	      closable: true,
-	      maskClosable: true,
-	      prefixCls: 'rc-dialog',
-	      onClose: noop
+	      visible: false
 	    };
 	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      visible: this.props.visible
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(_ref) {
+	  shouldComponentUpdate: function shouldComponentUpdate(_ref) {
 	    var visible = _ref.visible;
 	
-	    if (visible !== undefined) {
-	      this.setState({
-	        visible: visible
-	      });
-	    }
-	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(_, nextState) {
-	    return !!(this.state.visible || nextState.visible);
+	    return !!(this.props.visible || visible);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    if (this.state.visible) {
+	    if (this.props.visible) {
 	      this.renderComponent({
 	        onAfterClose: this.removeContainer,
-	        onClose: noop,
+	        onClose: function onClose() {},
+	
 	        visible: false
 	      });
 	    } else {
 	      this.removeContainer();
 	    }
-	  },
-	  onClose: function onClose(e) {
-	    this.props.onClose(e);
 	  },
 	  getElement: function getElement(part) {
 	    return this._component.getElement(part);
@@ -21258,6 +21207,11 @@
 	  displayName: 'Dialog',
 	
 	  propTypes: {
+	    className: _react.PropTypes.string,
+	    keyboard: _react.PropTypes.bool,
+	    style: _react.PropTypes.object,
+	    mask: _react.PropTypes.bool,
+	    children: _react.PropTypes.any,
 	    onAfterClose: _react.PropTypes.func,
 	    onClose: _react.PropTypes.func,
 	    closable: _react.PropTypes.bool,
@@ -21272,6 +21226,13 @@
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      onAfterClose: noop,
+	      className: '',
+	      mask: true,
+	      visible: false,
+	      keyboard: true,
+	      closable: true,
+	      maskClosable: true,
+	      prefixCls: 'rc-dialog',
 	      onClose: noop
 	    };
 	  },
