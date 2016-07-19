@@ -20,6 +20,24 @@ describe('dialog', () => {
 
   let callback1;
 
+  const DialogWrap = React.createClass({
+    getInitialState() {
+      return {
+        visible: false,
+        maskClosable: true,
+      };
+    },
+    render() {
+      return (
+        <Dialog
+          {...this.props}
+          visible={this.state.visible}
+          maskClosable={this.state.maskClosable}
+        />
+      );
+    },
+  });
+
   beforeEach(() => {
     function onClose() {
       callback1 = 1;
@@ -30,13 +48,13 @@ describe('dialog', () => {
 
     callback1 = 0;
     dialog = ReactDOM.render((
-      <Dialog
+      <DialogWrap
         style={{ width: 600 }}
         title={title}
         onClose={onClose}
       >
         <p>第一个dialog</p>
-      </Dialog>), container);
+      </DialogWrap>), container);
   });
 
   afterEach(() => {
@@ -149,9 +167,9 @@ describe('dialog', () => {
   });
 
   it('renderToBody', () => {
-    const d = ReactDOM.render(<Dialog>
+    const d = ReactDOM.render(<DialogWrap>
       <p className="renderToBody">1</p>
-    </Dialog>, container);
+    </DialogWrap>, container);
     expect($('.renderToBody').length).to.be(0);
     expect($('.rc-dialog-wrap').length).to.be(0);
     d.setState({

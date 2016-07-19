@@ -57,6 +57,11 @@ function offset(el) {
 
 const Dialog = React.createClass({
   propTypes: {
+    className: PropTypes.string,
+    keyboard: PropTypes.bool,
+    style: PropTypes.object,
+    mask: PropTypes.bool,
+    children: PropTypes.any,
     onAfterClose: PropTypes.func,
     onClose: PropTypes.func,
     closable: PropTypes.bool,
@@ -71,6 +76,13 @@ const Dialog = React.createClass({
   getDefaultProps() {
     return {
       onAfterClose: noop,
+      className: '',
+      mask: true,
+      visible: false,
+      keyboard: true,
+      closable: true,
+      maskClosable: true,
+      prefixCls: 'rc-dialog',
       onClose: noop,
     };
   },
