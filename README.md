@@ -96,6 +96,12 @@ ReactDOM.render(
           <td>body style for dialog body element.Such as height</td>
       </tr>
       <tr>
+          <td>maskStyle</td>
+          <td>Object</td>
+          <td>{}</td>
+          <td>style for mask element.</td>
+      </tr>
+      <tr>
           <td>visible</td>
           <td>Boolean</td>
           <td>false</td>

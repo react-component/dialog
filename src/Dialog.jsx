@@ -69,6 +69,7 @@ const Dialog = React.createClass({
     visible: PropTypes.bool,
     mousePosition: PropTypes.object,
     wrapStyle: PropTypes.object,
+    maskStyle: PropTypes.object,
     prefixCls: PropTypes.string,
     wrapClassName: PropTypes.string,
   },
@@ -261,6 +262,13 @@ const Dialog = React.createClass({
     };
   },
 
+  getMaskStyle() {
+    return {
+      ...this.getZIndexStyle(),
+      ...this.props.maskStyle,
+    };
+  },
+
   getMaskElement() {
     const props = this.props;
     let maskElement;
@@ -268,7 +276,7 @@ const Dialog = React.createClass({
       const maskTransition = this.getMaskTransitionName();
       maskElement = (
         <LazyRenderBox
-          style={this.getZIndexStyle()}
+          style={this.getMaskStyle()}
           key="mask"
           className={`${props.prefixCls}-mask`}
           hiddenClassName={`${props.prefixCls}-mask-hidden`}
