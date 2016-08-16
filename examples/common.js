@@ -21063,7 +21063,7 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _getContainerRenderMixin = __webpack_require__(224);
+	var _getContainerRenderMixin = __webpack_require__(225);
 	
 	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
@@ -21688,19 +21688,14 @@
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
+	var _getScrollBarSize = __webpack_require__(224);
+	
+	var _getScrollBarSize2 = _interopRequireDefault(_getScrollBarSize);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var uuid = 0;
 	var openCount = 0;
-	
-	// Measure scrollbar width for padding body during modal show/hide
-	var scrollbarMeasure = {
-	  position: 'absolute',
-	  top: '-9999px',
-	  width: '50px',
-	  height: '50px',
-	  overflow: 'scroll'
-	};
 	
 	/* eslint react/no-is-mounted:0 */
 	
@@ -21756,6 +21751,7 @@
 	    visible: _react.PropTypes.bool,
 	    mousePosition: _react.PropTypes.object,
 	    wrapStyle: _react.PropTypes.object,
+	    maskStyle: _react.PropTypes.object,
 	    prefixCls: _react.PropTypes.string,
 	    wrapClassName: _react.PropTypes.string
 	  },
@@ -21944,13 +21940,16 @@
 	  getWrapStyle: function getWrapStyle() {
 	    return (0, _extends3.default)({}, this.getZIndexStyle(), this.props.wrapStyle);
 	  },
+	  getMaskStyle: function getMaskStyle() {
+	    return (0, _extends3.default)({}, this.getZIndexStyle(), this.props.maskStyle);
+	  },
 	  getMaskElement: function getMaskElement() {
 	    var props = this.props;
 	    var maskElement = void 0;
 	    if (props.mask) {
 	      var maskTransition = this.getMaskTransitionName();
 	      maskElement = _react2.default.createElement(_LazyRenderBox2.default, {
-	        style: this.getZIndexStyle(),
+	        style: this.getMaskStyle(),
 	        key: 'mask',
 	        className: props.prefixCls + '-mask',
 	        hiddenClassName: props.prefixCls + '-mask-hidden',
@@ -21994,7 +21993,7 @@
 	    return this.refs[part];
 	  },
 	  setScrollbar: function setScrollbar() {
-	    if (this.bodyIsOverflowing && this.scrollbarWidth) {
+	    if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
 	      document.body.style.paddingRight = this.scrollbarWidth + 'px';
 	    }
 	  },
@@ -22029,30 +22028,14 @@
 	    }
 	    this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
 	    if (this.bodyIsOverflowing) {
-	      this.scrollbarWidth = this.measureScrollbar();
+	      this.scrollbarWidth = (0, _getScrollBarSize2.default)();
 	    }
 	  },
 	  resetScrollbar: function resetScrollbar() {
 	    document.body.style.paddingRight = '';
 	  },
-	  measureScrollbar: function measureScrollbar() {
-	    if (this.scrollbarWidth !== undefined) {
-	      return this.scrollbarWidth;
-	    }
-	    var scrollDiv = document.createElement('div');
-	    for (var scrollProp in scrollbarMeasure) {
-	      if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
-	        scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
-	      }
-	    }
-	    document.body.appendChild(scrollDiv);
-	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-	    document.body.removeChild(scrollDiv);
-	    this.scrollbarWidth = scrollbarWidth;
-	    return scrollbarWidth;
-	  },
 	  adjustDialog: function adjustDialog() {
-	    if (this.refs.wrap && this.scrollbarWidth) {
+	    if (this.refs.wrap && this.scrollbarWidth !== undefined) {
 	      var modalIsOverflowing = this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
 	      this.refs.wrap.style.paddingLeft = (!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
 	      this.refs.wrap.style.paddingRight = (this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
@@ -23534,6 +23517,53 @@
 
 /***/ },
 /* 224 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var cached = void 0;
+	
+	function getScrollBarSize(fresh) {
+	  if (fresh || cached === undefined) {
+	    var inner = document.createElement('div');
+	    inner.style.width = '100%';
+	    inner.style.height = '200px';
+	
+	    var outer = document.createElement('div');
+	    var outerStyle = outer.style;
+	
+	    outerStyle.position = 'absolute';
+	    outerStyle.top = 0;
+	    outerStyle.left = 0;
+	    outerStyle.pointerEvents = 'none';
+	    outerStyle.visibility = 'hidden';
+	    outerStyle.width = '200px';
+	    outerStyle.height = '150px';
+	    outerStyle.overflow = 'hidden';
+	
+	    outer.appendChild(inner);
+	
+	    document.body.appendChild(outer);
+	
+	    var widthContained = inner.offsetWidth;
+	    outer.style.overflow = 'scroll';
+	    var widthScroll = inner.offsetWidth;
+	
+	    if (widthContained === widthScroll) {
+	      widthScroll = outer.clientWidth;
+	    }
+	
+	    document.body.removeChild(outer);
+	
+	    cached = widthContained - widthScroll;
+	  }
+	  return cached;
+	}
+	
+	module.exports = getScrollBarSize;
+
+/***/ },
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
