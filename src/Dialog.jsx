@@ -3,18 +3,10 @@ import ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
+import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 
 let uuid = 0;
 let openCount = 0;
-
-// Measure scrollbar width for padding body during modal show/hide
-const scrollbarMeasure = {
-  position: 'absolute',
-  top: '-9999px',
-  width: '50px',
-  height: '50px',
-  overflow: 'scroll',
-};
 
 /* eslint react/no-is-mounted:0 */
 
@@ -181,29 +173,34 @@ const Dialog = React.createClass({
 
     let footer;
     if (props.footer) {
-      footer = (<div className={`${prefixCls}-footer`} ref="footer">
-        {props.footer}
-      </div>);
+      footer = (
+        <div className={`${prefixCls}-footer`} ref="footer">
+          {props.footer}
+        </div>
+      );
     }
 
     let header;
     if (props.title) {
-      header = (<div className={`${prefixCls}-header`} ref="header">
-        <div className={`${prefixCls}-title`} id={this.titleId}>
-          {props.title}
+      header = (
+        <div className={`${prefixCls}-header`} ref="header">
+          <div className={`${prefixCls}-title`} id={this.titleId}>
+            {props.title}
+          </div>
         </div>
-      </div>);
+      );
     }
 
     let closer;
     if (closable) {
-      closer = (<button
-        onClick={this.close}
-        aria-label="Close"
-        className={`${prefixCls}-close`}
-      >
-        <span className={`${prefixCls}-close-x`}/>
-      </button>);
+      closer = (
+        <button
+          onClick={this.close}
+          aria-label="Close"
+          className={`${prefixCls}-close`}
+        >
+          <span className={`${prefixCls}-close-x`}/>
+        </button>);
     }
 
     const style = {
@@ -325,7 +322,7 @@ const Dialog = React.createClass({
   },
 
   setScrollbar() {
-    if (this.bodyIsOverflowing && this.scrollbarWidth) {
+    if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
       document.body.style.paddingRight = `${this.scrollbarWidth}px`;
     }
   },
@@ -363,32 +360,14 @@ const Dialog = React.createClass({
     }
     this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
     if (this.bodyIsOverflowing) {
-      this.scrollbarWidth = this.measureScrollbar();
+      this.scrollbarWidth = getScrollBarSize();
     }
   },
   resetScrollbar() {
     document.body.style.paddingRight = '';
   },
-
-  measureScrollbar() {
-    if (this.scrollbarWidth !== undefined) {
-      return this.scrollbarWidth;
-    }
-    const scrollDiv = document.createElement('div');
-    for (const scrollProp in scrollbarMeasure) {
-      if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
-        scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
-      }
-    }
-    document.body.appendChild(scrollDiv);
-    const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-    document.body.removeChild(scrollDiv);
-    this.scrollbarWidth = scrollbarWidth;
-    return scrollbarWidth;
-  },
-
   adjustDialog() {
-    if (this.refs.wrap && this.scrollbarWidth) {
+    if (this.refs.wrap && this.scrollbarWidth !== undefined) {
       const modalIsOverflowing =
         this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
       this.refs.wrap.style.paddingLeft =
@@ -413,21 +392,23 @@ const Dialog = React.createClass({
     if (props.visible) {
       style.display = null;
     }
-    return (<div>
-      {this.getMaskElement()}
-      <div
-        tabIndex="-1"
-        onKeyDown={this.onKeyDown}
-        className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
-        ref="wrap"
-        onClick={this.onMaskClick}
-        role="dialog"
-        aria-labelledby={props.title ? this.titleId : null}
-        style={style}
-      >
-        {this.getDialogElement()}
+    return (
+      <div>
+        {this.getMaskElement()}
+        <div
+          tabIndex="-1"
+          onKeyDown={this.onKeyDown}
+          className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
+          ref="wrap"
+          onClick={this.onMaskClick}
+          role="dialog"
+          aria-labelledby={props.title ? this.titleId : null}
+          style={style}
+        >
+          {this.getDialogElement()}
+        </div>
       </div>
-    </div>);
+    );
   },
 });
 
