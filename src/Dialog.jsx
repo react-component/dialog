@@ -62,6 +62,7 @@ const Dialog = React.createClass({
     mousePosition: PropTypes.object,
     wrapStyle: PropTypes.object,
     maskStyle: PropTypes.object,
+    bodyStyle: PropTypes.object,
     prefixCls: PropTypes.string,
     wrapClassName: PropTypes.string,
   },
