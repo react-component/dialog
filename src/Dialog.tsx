@@ -1,9 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import DialogPropTypes from './DialogPropTypes';
+import assign from 'object-assign';
 
 let uuid = 0;
 let openCount = 0;
@@ -13,7 +15,7 @@ let openCount = 0;
 function noop() {
 }
 
-function getScroll(w, top) {
+function getScroll(w, top?: boolean) {
   let ret = w[`page${top ? 'Y' : 'X'}Offset`];
   const method = `scroll${top ? 'Top' : 'Left'}`;
   if (typeof ret !== 'number') {
@@ -43,32 +45,14 @@ function offset(el) {
   const doc = el.ownerDocument;
   const w = doc.defaultView || doc.parentWindow;
   pos.left += getScroll(w);
-  pos.top += getScroll(w, 1);
+  pos.top += getScroll(w, true);
   return pos;
 }
 
-const Dialog = React.createClass({
-  propTypes: {
-    className: PropTypes.string,
-    keyboard: PropTypes.bool,
-    style: PropTypes.object,
-    mask: PropTypes.bool,
-    children: PropTypes.any,
-    onAfterClose: PropTypes.func,
-    onClose: PropTypes.func,
-    closable: PropTypes.bool,
-    maskClosable: PropTypes.bool,
-    visible: PropTypes.bool,
-    mousePosition: PropTypes.object,
-    wrapStyle: PropTypes.object,
-    maskStyle: PropTypes.object,
-    prefixCls: PropTypes.string,
-    wrapClassName: PropTypes.string,
-  },
-
+const Dialog = React.createClass<DialogPropTypes, any>({
   getDefaultProps() {
     return {
-      onAfterClose: noop,
+      afterClose: noop,
       className: '',
       mask: true,
       visible: false,
@@ -125,7 +109,7 @@ const Dialog = React.createClass({
       this.refs.wrap.style.display = 'none';
     }
     this.removeScrollingEffect();
-    this.props.onAfterClose();
+    this.props.afterClose();
   },
 
   onMaskClick(e) {
@@ -162,7 +146,7 @@ const Dialog = React.createClass({
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
-    const dest = {};
+    const dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;
     }
@@ -199,14 +183,11 @@ const Dialog = React.createClass({
           aria-label="Close"
           className={`${prefixCls}-close`}
         >
-          <span className={`${prefixCls}-close-x`}/>
+          <span className={`${prefixCls}-close-x`} />
         </button>);
     }
 
-    const style = {
-      ...props.style,
-      ...dest,
-    };
+    const style = assign({}, props.style, dest);
     const transitionName = this.getTransitionName();
     const dialogElement = (
       <LazyRenderBox
@@ -244,7 +225,7 @@ const Dialog = React.createClass({
   },
 
   getZIndexStyle() {
-    const style = {};
+    const style: any = {};
     const props = this.props;
     if (props.zIndex !== undefined) {
       style.zIndex = props.zIndex;
@@ -252,18 +233,12 @@ const Dialog = React.createClass({
     return style;
   },
 
-  getWrapStyle() {
-    return {
-      ...this.getZIndexStyle(),
-      ...this.props.wrapStyle,
-    };
+  getWrapStyle(): any {
+    return assign({}, this.getZIndexStyle(), this.props.wrapStyle);
   },
 
   getMaskStyle() {
-    return {
-      ...this.getZIndexStyle(),
-      ...this.props.maskStyle,
-    };
+    return assign({}, this.getZIndexStyle(), this.props.maskStyle);
   },
 
   getMaskElement() {

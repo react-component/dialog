@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'rc-dialog/assets/bootstrap.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Dialog from 'rc-dialog';
+import Dialog from '../src/DialogWrap';
 
 const MyControl = React.createClass({
   getInitialState() {

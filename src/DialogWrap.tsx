@@ -1,11 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Dialog from './Dialog';
 import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
+import DialogPropTypes from './DialogPropTypes';
 
-const DialogWrap = React.createClass({
-  propTypes: {
-    visible: PropTypes.bool,
-  },
+const DialogWrap = React.createClass<DialogPropTypes, any>({
   mixins: [
     getContainerRenderMixin({
       isVisible(instance) {
@@ -37,7 +35,7 @@ const DialogWrap = React.createClass({
   componentWillUnmount() {
     if (this.props.visible) {
       this.renderComponent({
-        onAfterClose: this.removeContainer,
+        afterClose: this.removeContainer,
         onClose() {
         },
         visible: false,

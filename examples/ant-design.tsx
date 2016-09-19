@@ -3,7 +3,8 @@
 import 'rc-dialog/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Dialog from 'rc-dialog';
+// use import Dialog from 'rc-dialog'
+import Dialog from '../src/DialogWrap';
 
 const MyControl = React.createClass({
   getInitialState() {
@@ -69,7 +70,6 @@ const MyControl = React.createClass({
           onClose={this.onClose}
           style={style}
           mousePosition={this.state.mousePosition}
-          title={<div>第二个弹框</div>}
         >
           <input />
           <p>basic modal</p>

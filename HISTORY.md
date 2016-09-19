@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.4.0 / 2016-09-19
+
+- add rc-dialog/lib/Modal to support react-native
+
 ## 6.2.0 / 2016-07-18
 
 - use getContainerRenderMixin from 'rc-util'
