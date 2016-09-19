@@ -3,31 +3,31 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(226);
+	module.exports = __webpack_require__(227);
 
 
 /***/ },
 
-/***/ 226:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	__webpack_require__(227);
-	
 	__webpack_require__(228);
+	
+	__webpack_require__(229);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(35);
+	var _reactDom = __webpack_require__(36);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcDialog = __webpack_require__(172);
+	var _DialogWrap = __webpack_require__(174);
 	
-	var _rcDialog2 = _interopRequireDefault(_rcDialog);
+	var _DialogWrap2 = _interopRequireDefault(_DialogWrap);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -58,38 +58,20 @@ webpackJsonp([1],{
 	    var dialog = void 0;
 	    if (this.state.visible || !this.state.destroyOnClose) {
 	      dialog = _react2.default.createElement(
-	        _rcDialog2.default,
-	        {
-	          visible: this.state.visible,
-	          animation: 'slide-fade',
-	          maskAnimation: 'fade',
-	          onClose: this.onClose,
-	          style: { width: 600 },
-	          title: _react2.default.createElement(
+	        _DialogWrap2.default,
+	        { visible: this.state.visible, animation: 'slide-fade', maskAnimation: 'fade', onClose: this.onClose, style: { width: 600 }, title: _react2.default.createElement(
 	            'div',
 	            null,
 	            '第二个弹框'
-	          ),
-	          footer: [_react2.default.createElement(
+	          ), footer: [_react2.default.createElement(
 	            'button',
-	            {
-	              type: 'button',
-	              className: 'btn btn-default',
-	              key: 'close',
-	              onClick: this.onClose
-	            },
+	            { type: 'button', className: 'btn btn-default', key: 'close', onClick: this.onClose },
 	            'Close'
 	          ), _react2.default.createElement(
 	            'button',
-	            {
-	              type: 'button',
-	              className: 'btn btn-primary',
-	              key: 'save',
-	              onClick: this.onClose
-	            },
+	            { type: 'button', className: 'btn btn-primary', key: 'save', onClick: this.onClose },
 	            'Save changes'
-	          )]
-	        },
+	          )] },
 	        _react2.default.createElement(
 	          'h4',
 	          null,
@@ -173,18 +155,13 @@ webpackJsonp([1],{
 	          'label',
 	          null,
 	          'destroy on close:',
-	          _react2.default.createElement('input', {
-	            type: 'checkbox',
-	            checked: this.state.destroyOnClose,
-	            onChange: this.onDestroyOnCloseChange
-	          })
+	          _react2.default.createElement('input', { type: 'checkbox', checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })
 	        )
 	      ),
 	      dialog
 	    );
 	  }
 	});
-	
 	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
 	  null,
@@ -198,15 +175,15 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 227:
+/***/ 228:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 228:
-227
+/***/ 229:
+228
 
 });
 //# sourceMappingURL=bootstrap.js.map
