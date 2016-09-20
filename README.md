@@ -147,7 +147,7 @@ ReactDOM.render(
           <td>closable</td>
           <td>Boolean</td>
           <td>true</td>
-          <td>whether show close button and click mask to close</td>
+          <td>whether show close button</td>
       </tr>
       <tr>
           <td>mask</td>
@@ -159,8 +159,14 @@ ReactDOM.render(
           <td>maskClosable</td>
           <td>Boolean</td>
           <td>true</td>
-          <td>whether click mask to close, this prop will be ignored if set closable prop to false</td>
+          <td>whether click mask to close</td>
       </tr>
+    <tr>
+        <td>keyboard</td>
+        <td>Boolean</td>
+        <td>true</td>
+        <td>whether support press esc to close</td>
+    </tr>
       <tr>
           <td>mousePosition</td>
           <td>{x:number,y:number}</td>
