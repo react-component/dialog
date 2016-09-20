@@ -13,8 +13,10 @@ interface DialogPropTypes {
   mousePosition?: {};
   title?: ReactNode;
   footer?: ReactNode;
-  transitionName?:string;
-  maskTransitionName?:string;
+  transitionName?: string;
+  maskTransitionName?: string;
+  animation?: any;
+  maskAnimation?: any;
   wrapStyle?: {};
   bodyStyle?: {};
   maskStyle?: {};

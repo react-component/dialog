@@ -78,8 +78,16 @@ const RCModal = React.createClass<ModalPropTypes, any>({
     }
   },
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.visible || this.props.visible !== nextProps.visible;
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.visible || this.props.visible !== nextProps.visible) {
+      return true;
+    }
+    if (nextState) {
+      if (nextState.modalVisible !== this.state.modalVisible) {
+        return true;
+      }
+    }
+    return false;
   },
 
   componentDidMount() {
@@ -144,8 +152,6 @@ const RCModal = React.createClass<ModalPropTypes, any>({
         this.setState({
           modalVisible: false,
         });
-        // bug?? need force update
-        this.forceUpdate();
       }
       this.props.onAnimationEnd(visible);
     });

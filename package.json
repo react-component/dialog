@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "6.4.0",
+  "version": "6.4.1",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -28,6 +28,7 @@
     "port": 8007
   },
   "scripts": {
+    "watch-tsc": "rc-tools run watch-tsc",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
