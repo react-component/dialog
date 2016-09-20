@@ -113,17 +113,15 @@ const Dialog = React.createClass<DialogPropTypes, any>({
   },
 
   onMaskClick(e) {
-    if (e.target === e.currentTarget && this.props.closable && this.props.maskClosable) {
+    if (e.target === e.currentTarget && this.props.maskClosable) {
       this.close(e);
     }
   },
 
   onKeyDown(e) {
     const props = this.props;
-    if (props.closable && props.keyboard) {
-      if (e.keyCode === KeyCode.ESC) {
-        this.close(e);
-      }
+    if (props.keyboard && e.keyCode === KeyCode.ESC) {
+      this.close(e);
     }
     // keep focus inside dialog
     if (props.visible) {
