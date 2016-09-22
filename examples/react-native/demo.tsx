@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 });
 
 
-const Demo = React.createClass({
+const ModalDemo = React.createClass({
   getInitialState() {
     return {
       visible: false,
@@ -67,4 +67,5 @@ const Demo = React.createClass({
   },
 });
 
-AppRegistry.registerComponent('demo', () => Demo);
+export const Demo = ModalDemo;
+export const title = 'modal';

@@ -264,6 +264,13 @@ http://localhost:8007/examples/
 
 online example: http://react-component.github.io/dialog/
 
+## react-native
+
+```
+./node_modules/rc-tools run react-native-init
+react-native run-ios
+```
+
 ## Test Case
 
 ```
@@ -279,17 +286,6 @@ npm run coverage
 
 open coverage/ dir
 
-## react-native
-
-```
-npm run rn-start
-```
-
-load
-
-http://localhost:8081/examples/react-native/demo.bundle?platform=ios
-
-in [RNPlayground](https://github.com/react-component/RNPlayground)
 
 ## License
 
