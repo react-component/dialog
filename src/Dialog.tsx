@@ -117,6 +117,10 @@ const Dialog = React.createClass<DialogPropTypes, any>({
       this.close(e);
     }
   },
+  onTouchStart(e) {
+    // prevent ios background page scroll
+    e.preventDefault();
+  },
 
   onKeyDown(e) {
     const props = this.props;
@@ -374,6 +378,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref="wrap"
           onClick={this.onMaskClick}
+          onTouchStart={this.onTouchStart}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}
