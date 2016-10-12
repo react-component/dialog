@@ -22125,6 +22125,10 @@
 	    value: true
 	});
 	
+	var _extends2 = __webpack_require__(175);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -22155,6 +22159,24 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var wrapTouchHandlers = void 0;
+	var bodyTouchHandlers = void 0;
+	if (typeof navigator !== 'undefined') {
+	    var isMobile = navigator.userAgent.match(/AppleWebKit.*Mobile.*/i);
+	    var isIOS = isMobile && navigator.userAgent.match(/ipad|ipod|iphone/i);
+	    if (isIOS) {
+	        wrapTouchHandlers = {
+	            onTouchStart: function onTouchStart(e) {
+	                e.preventDefault();
+	            }
+	        };
+	        bodyTouchHandlers = {
+	            onTouchStart: function onTouchStart(e) {
+	                e.stopPropagation();
+	            }
+	        };
+	    }
+	}
 	var uuid = 0;
 	var openCount = 0;
 	/* eslint react/no-is-mounted:0 */
@@ -22325,7 +22347,7 @@
 	                header,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: prefixCls + '-body', style: props.bodyStyle, ref: 'body' },
+	                    (0, _extends3.default)({ className: prefixCls + '-body', style: props.bodyStyle, ref: 'body' }, bodyTouchHandlers, props.bodyProps),
 	                    props.children
 	                ),
 	                footer
@@ -22461,7 +22483,7 @@
 	            this.getMaskElement(),
 	            _react2.default.createElement(
 	                'div',
-	                { tabIndex: '-1', onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: 'wrap', onClick: this.onMaskClick, role: 'dialog', 'aria-labelledby': props.title ? this.titleId : null, style: style },
+	                (0, _extends3.default)({ tabIndex: '-1', onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: 'wrap' }, wrapTouchHandlers, { onClick: this.onMaskClick, role: 'dialog', 'aria-labelledby': props.title ? this.titleId : null, style: style }, props.wrapProps),
 	                this.getDialogElement()
 	            )
 	        );
