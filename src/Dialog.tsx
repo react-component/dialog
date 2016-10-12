@@ -7,6 +7,26 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import DialogPropTypes from './DialogPropTypes';
 import assign from 'object-assign';
 
+let wrapTouchHandlers;
+let bodyTouchHandlers;
+
+if (typeof navigator !== 'undefined') {
+  const isMobile = navigator.userAgent.match(/AppleWebKit.*Mobile.*/i);
+  let isIOS = isMobile && navigator.userAgent.match(/ipad|ipod|iphone/i);
+  if (isIOS) {
+    wrapTouchHandlers = {
+      onTouchStart(e) {
+        e.preventDefault();
+      },
+    };
+    bodyTouchHandlers = {
+      onTouchStart(e) {
+        e.stopPropagation();
+      },
+    };
+  }
+}
+
 let uuid = 0;
 let openCount = 0;
 
@@ -198,7 +218,13 @@ const Dialog = React.createClass<DialogPropTypes, any>({
         <div className={`${prefixCls}-content`}>
           {closer}
           {header}
-          <div className={`${prefixCls}-body`} style={props.bodyStyle} ref="body">
+          <div
+            className={`${prefixCls}-body`}
+            style={props.bodyStyle}
+            ref="body"
+            {...bodyTouchHandlers}
+            {...props.bodyProps}
+          >
             {props.children}
           </div>
           {footer}
@@ -373,10 +399,12 @@ const Dialog = React.createClass<DialogPropTypes, any>({
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref="wrap"
+          {...wrapTouchHandlers}
           onClick={this.onMaskClick}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}
+          {...props.wrapProps}
         >
           {this.getDialogElement()}
         </div>

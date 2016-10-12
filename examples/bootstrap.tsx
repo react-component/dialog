@@ -63,7 +63,7 @@ const MyControl = React.createClass({
           }
         ><h4>Text in a modal</h4>
           <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-          <hr/>
+          <hr />
           <h4>Overflowing text to show scroll behavior</h4>
           <p>Cras mattis consectetur purus sit amet fermentum.
             Cras justo odio, dapibus ac facilisis in,
@@ -136,7 +136,7 @@ const MyControl = React.createClass({
 ReactDOM.render(
   <div>
     <h2>ant-design dialog</h2>
-    <MyControl/>
+    <MyControl />
   </div>
   ,
   document.getElementById('__react-content')
