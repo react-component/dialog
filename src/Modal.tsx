@@ -30,15 +30,14 @@ const styles = StyleSheet.create({
 
 const screen = Dimensions.get('window');
 
-export type Entry = 'top'|'bottom';
-
 export interface ModalPropTypes {
   wrapStyle?: {};
   maskStyle?: {};
   style?: {};
-  entry?: Entry;
+  animationType: 'none' | 'fade' | 'slide-up' | 'slide-down';
   animationDuration?: number;
   visible: boolean;
+  maskClosable?: boolean;
   animateAppear?: boolean;
   onClose?: () => void;
   onAnimationEnd?: (visible: boolean) => void;
@@ -49,10 +48,11 @@ const RCModal = React.createClass<ModalPropTypes, any>({
     return {
       wrapStyle: styles.wrap,
       maskStyle: styles.mask,
-      entry: 'bottom' as Entry,
+      animationType: 'slide-up',
       animateAppear: false,
       animationDuration: 300,
       visible: false,
+      maskClosable: true,
       onClose() {
       },
       onAnimationEnd(visible: boolean) {
@@ -65,7 +65,8 @@ const RCModal = React.createClass<ModalPropTypes, any>({
     const { visible } = this.props;
     return {
       position: new Animated.Value(this.getPosition(visible)),
-      maskOpacity: new Animated.Value(this.getMaskOpacity(visible)),
+      scale: new Animated.Value(this.getScale(visible)),
+      opacity: new Animated.Value(this.getOpacity(visible)),
       modalVisible: visible
     };
   },
@@ -91,7 +92,10 @@ const RCModal = React.createClass<ModalPropTypes, any>({
   },
 
   componentDidMount() {
-    if (this.props.animateAppear) {
+    if (this.props.entry) {
+      console.warn('Property `entry` is deprecated, use `animationType` instead');
+    }
+    if (this.props.animateAppear && this.props.animationType !== 'none') {
       this.componentDidUpdate({});
     }
   },
@@ -105,11 +109,11 @@ const RCModal = React.createClass<ModalPropTypes, any>({
 
   animateMask(visible) {
     this.stopMaskAnim();
-    this.state.maskOpacity.setValue(this.getMaskOpacity(!visible));
+    this.state.opacity.setValue(this.getOpacity(!visible));
     this.animMask = Animated.timing(
-      this.state.maskOpacity,
+      this.state.opacity,
       {
-        toValue: this.getMaskOpacity(visible),
+        toValue: this.getOpacity(visible),
         duration: this.props.animationDuration
       }
     );
@@ -136,39 +140,80 @@ const RCModal = React.createClass<ModalPropTypes, any>({
     this.stopDialogAnim();
     this.animateMask(visible);
 
-    this.state.position.setValue(this.getPosition(!visible));
+    const { animationType } = this.props;
+    if (animationType !== 'none') {
+      if (animationType === 'slide-up' || animationType === 'slide-down') {
+        this.state.position.setValue(this.getPosition(!visible));
 
-    this.animDialog = Animated.timing(
-      this.state.position,
-      {
-        toValue: this.getPosition(visible),
-        duration: this.props.animationDuration,
-        easing: (visible ? Easing.elastic(0.8) : undefined) as any,
-      } as TimingAnimationConfig
-    );
-    this.animDialog.start(() => {
-      this.animDialog = null;
+        this.animDialog = Animated.timing(
+          this.state.position,
+          {
+            toValue: this.getPosition(visible),
+            duration: this.props.animationDuration,
+            easing: (visible ? Easing.elastic(0.8) : undefined) as any,
+          } as TimingAnimationConfig
+        );
+      } else if ( animationType === 'fade' ) {
+        this.animDialog = Animated.parallel([
+          Animated.timing(
+            this.state.opacity,
+            {
+              toValue: this.getOpacity(visible),
+              duration: this.props.animationDuration,
+              easing: (visible ? Easing.elastic(0.8) : undefined) as any,
+            } as TimingAnimationConfig
+          ),
+          Animated.spring(
+            this.state.scale,
+            {
+              toValue: this.getScale(visible),
+              duration: this.props.animationDuration,
+              easing: (visible ? Easing.elastic(0.8) : undefined) as any,
+            } as TimingAnimationConfig
+          )
+        ]);
+      }
+
+      this.animDialog.start(() => {
+        this.animDialog = null;
+        if (!visible) {
+          this.setState({
+            modalVisible: false,
+          });
+        }
+        this.props.onAnimationEnd(visible);
+      });
+    } else {
       if (!visible) {
         this.setState({
           modalVisible: false,
         });
       }
-      this.props.onAnimationEnd(visible);
-    });
+    }
   },
 
   close() {
     this.animateDialog(false);
   },
 
+  onMaskClose() {
+    if (this.props.maskClosable)  {
+      this.props.onClose();
+    }
+  },
+
   getPosition(visible) {
     if (visible) {
       return 0;
     }
-    return this.props.entry === 'top' ? -screen.height : screen.height;
+    return this.props.animationType === 'slide-down' ? -screen.height : screen.height;
   },
 
-  getMaskOpacity(visible) {
+  getScale(visible) {
+    return visible ? 1 : 1.05;
+  },
+
+  getOpacity(visible) {
     return visible ? 1 : 0;
   },
 
@@ -177,24 +222,31 @@ const RCModal = React.createClass<ModalPropTypes, any>({
     if (!this.state.modalVisible) {
       return null;
     }
+    const animationStyleMap = {
+      'none': {},
+      'slide-up': { transform: [{ translateY: this.state.position }] },
+      'slide-down': { transform: [{ translateY: this.state.position }] },
+      'fade': { transform: [{ scale: this.state.scale }], opacity: this.state.opacity },
+    };
+
     return (
       <Modal
-        visible
+        visible={this.state.modalVisible}
         transparent
         onRequestClose={this.props.onClose}
       >
         <View style={[styles.wrap, props.wrapStyle]}>
           <TouchableWithoutFeedback
-            onPress={this.props.onClose}
+            onPress={ this.onMaskClose }
           >
             <Animated.View
-              style={[styles.absolute, { opacity: this.state.maskOpacity }]}
+              style={[styles.absolute, { opacity: this.state.opacity }]}
             >
               <View style={[styles.absolute, props.maskStyle]} />
             </Animated.View>
           </TouchableWithoutFeedback>
           <Animated.View
-            style={[styles.content, props.style, { transform: [{ translateY: this.state.position }] }]}
+            style={[styles.content, props.style, animationStyleMap[props.animationType]]}
           >
             {this.props.children}
           </Animated.View>

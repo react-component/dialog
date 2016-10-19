@@ -48,6 +48,7 @@ const ModalDemo = React.createClass({
       <Modal
         visible={this.state.visible}
         onClose={this.onClose}
+        animationType={'fade'}
         wrapStyle={{
           flexDirection: 'column',
           justifyContent: 'center',
