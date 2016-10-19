@@ -11,7 +11,7 @@ export interface LazyRenderBoxPropTypes {
 
 const LazyRenderBox = React.createClass<LazyRenderBoxPropTypes, any>({
   shouldComponentUpdate(nextProps) {
-    return !!nextProps.hiddenClassName || nextProps.visible;
+    return !!nextProps.hiddenClassName || !!nextProps.visible;
   },
 
   render() {

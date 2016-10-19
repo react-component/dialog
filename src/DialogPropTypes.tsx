@@ -1,4 +1,5 @@
-import ReactNode = __React.ReactNode;
+import { ReactNode } from 'react';
+
 interface DialogPropTypes {
   className?: string;
   keyboard?: boolean;

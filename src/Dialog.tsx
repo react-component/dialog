@@ -208,7 +208,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
           </div>
           {footer}
         </div>
-        <div tabIndex="0" ref="sentinel" style={{ width: 0, height: 0, overflow: 'hidden' }}>
+        <div tabIndex={0} ref="sentinel" style={{ width: 0, height: 0, overflow: 'hidden' }}>
           sentinel
         </div>
       </LazyRenderBox>
@@ -374,7 +374,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
       <div>
         {this.getMaskElement()}
         <div
-          tabIndex="-1"
+          tabIndex={-1}
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref="wrap"

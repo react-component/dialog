@@ -5,7 +5,6 @@ import {
   StyleSheet, Dimensions,
   Easing,
 } from 'react-native';
-import TimingAnimationConfig = __React.Animated.TimingAnimationConfig;
 
 const styles = StyleSheet.create({
   wrap: {
@@ -144,7 +143,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
         toValue: this.getPosition(visible),
         duration: this.props.animationDuration,
         easing: (visible ? Easing.elastic(0.8) : undefined) as any,
-      } as TimingAnimationConfig
+      } as React.Animated.TimingAnimationConfig
     );
     this.animDialog.start(() => {
       this.animDialog = null;
@@ -175,7 +174,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
   render() {
     const { props } = this;
     if (!this.state.modalVisible) {
-      return null;
+      return null as any;
     }
     return (
       <Modal

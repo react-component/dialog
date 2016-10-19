@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Dialog from './Dialog';
 import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
 import DialogPropTypes from './DialogPropTypes';
@@ -50,7 +50,7 @@ const DialogWrap = React.createClass<DialogPropTypes, any>({
   },
 
   render() {
-    return null;
+    return (null as any);
   },
 });
 
