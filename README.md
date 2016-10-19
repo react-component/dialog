@@ -44,7 +44,7 @@ ReactDOM.render(
 // use dialog
 ```
 
-## API 
+## API
 
 ### rc-dialog(web)
 
@@ -213,10 +213,10 @@ ReactDOM.render(
           <td>style for modal</td>
       </tr>
       <tr>
-          <td>entry</td>
-          <td>top|bottom</td>
-          <td>bottom</td>
-          <td>modal entry direction</td>
+          <td>animationType</td>
+          <td>none|fade|slide-up|slide-down</td>
+          <td>slide-up</td>
+          <td>animation type for modal content</td>
       </tr>
       <tr>
           <td>animationDuration</td>
@@ -244,7 +244,7 @@ ReactDOM.render(
       </tr>
       <tr>
           <td>onAnimationEnd</td>
-          <td>(visible:boolean)=>void</td>
+          <td>(visible:boolean)=>void (animationType !== 'none')</td>
           <td></td>
           <td>called when animation end</td>
       </tr>
