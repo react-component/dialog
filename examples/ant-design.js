@@ -111,14 +111,14 @@ webpackJsonp([0],[
 	                    { className: 'btn btn-primary', onClick: this.onClick },
 	                    'show dialog'
 	                ),
-	                ' ',
+	                '\xA0',
 	                _react2.default.createElement(
 	                    'label',
 	                    null,
 	                    'destroy on close:',
 	                    _react2.default.createElement('input', { type: 'checkbox', checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })
 	                ),
-	                ' ',
+	                '\xA0',
 	                _react2.default.createElement(
 	                    'label',
 	                    null,

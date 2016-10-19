@@ -62,7 +62,7 @@ webpackJsonp([1],{
 	        { visible: this.state.visible, animation: 'slide-fade', maskAnimation: 'fade', onClose: this.onClose, style: { width: 600 }, title: _react2.default.createElement(
 	            'div',
 	            null,
-	            '第二个弹框'
+	            '\u7B2C\u4E8C\u4E2A\u5F39\u6846'
 	          ), footer: [_react2.default.createElement(
 	            'button',
 	            { type: 'button', className: 'btn btn-default', key: 'close', onClick: this.onClose },
@@ -150,7 +150,7 @@ webpackJsonp([1],{
 	          { className: 'btn btn-primary', onClick: this.onClick },
 	          'show dialog'
 	        ),
-	        ' ',
+	        '\xA0',
 	        _react2.default.createElement(
 	          'label',
 	          null,
