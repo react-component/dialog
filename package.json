@@ -56,7 +56,7 @@
     "react": "15.3.x",
     "react-addons-test-utils": "15.3.x",
     "react-dom": "15.3.x",
-    "react-native": "0.33.0",
+    "react-native": "0.34.1",
     "react-native-index-page": "~0.1.0"
   },
   "pre-commit": [
