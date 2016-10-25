@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
 });
 
 const screen = Dimensions.get('window');
@@ -66,7 +66,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
       position: new Animated.Value(this.getPosition(visible)),
       scale: new Animated.Value(this.getScale(visible)),
       opacity: new Animated.Value(this.getOpacity(visible)),
-      modalVisible: visible
+      modalVisible: visible,
     };
   },
 
@@ -91,9 +91,6 @@ const RCModal = React.createClass<ModalPropTypes, any>({
   },
 
   componentDidMount() {
-    if (this.props.entry) {
-      console.warn('Property `entry` is deprecated, use `animationType` instead');
-    }
     if (this.props.animateAppear && this.props.animationType !== 'none') {
       this.componentDidUpdate({});
     }
@@ -113,7 +110,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
       this.state.opacity,
       {
         toValue: this.getOpacity(visible),
-        duration: this.props.animationDuration
+        duration: this.props.animationDuration,
       }
     );
     this.animMask.start(() => {
@@ -151,7 +148,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
             easing: (visible ? Easing.elastic(0.8) : undefined) as any,
           } as React.Animated.TimingAnimationConfig
         );
-      } else if ( animationType === 'fade' ) {
+      } else if (animationType === 'fade') {
         this.animDialog = Animated.parallel([
           Animated.timing(
             this.state.opacity,
@@ -168,7 +165,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
               duration: this.props.animationDuration,
               easing: (visible ? Easing.elastic(0.8) : undefined) as any,
             } as React.Animated.TimingAnimationConfig
-          )
+          ),
         ]);
       }
 
@@ -195,7 +192,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
   },
 
   onMaskClose() {
-    if (this.props.maskClosable)  {
+    if (this.props.maskClosable) {
       this.props.onClose();
     }
   },
@@ -229,7 +226,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
 
     return (
       <Modal
-        visible={this.state.modalVisible}
+        visible
         transparent
         onRequestClose={this.props.onClose}
       >
@@ -251,7 +248,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
         </View>
       </Modal>
     );
-  }
+  },
 });
 
 export default RCModal;

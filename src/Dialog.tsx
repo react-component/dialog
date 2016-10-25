@@ -152,7 +152,6 @@ const Dialog = React.createClass<DialogPropTypes, any>({
       dest.height = props.height;
     }
 
-
     let footer;
     if (props.footer) {
       footer = (

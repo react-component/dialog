@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Dialog from './Dialog';
 import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
 import DialogPropTypes from './DialogPropTypes';

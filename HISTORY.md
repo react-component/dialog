@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.5.0 / 2016-10-25
+
+- remove rc-dialog/lib/Modal's entry prop, add animationType prop
+
 ## 6.4.0 / 2016-09-19
 
 - add rc-dialog/lib/Modal to support react-native

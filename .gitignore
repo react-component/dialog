@@ -30,3 +30,4 @@ coverage
 !/index*.js
 /ios/
 /android/
+yarn.lock

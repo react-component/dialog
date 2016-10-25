@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  AppRegistry,
   Text,
   StyleSheet,
   TouchableHighlight,
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
-
 
 const ModalDemo = React.createClass({
   getInitialState() {
@@ -48,14 +46,14 @@ const ModalDemo = React.createClass({
       <Modal
         visible={this.state.visible}
         onClose={this.onClose}
-        animationType={'fade'}
+        animationType="fade"
         wrapStyle={{
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
         }}
         style={{
-          width: 300
+          width: 300,
         }}
       >
         <View style={{ padding: 100 }}>
