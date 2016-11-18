@@ -255,6 +255,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
           className={`${props.prefixCls}-mask`}
           hiddenClassName={`${props.prefixCls}-mask-hidden`}
           visible={props.visible}
+          {...props.maskProps}
         />
       );
       if (maskTransition) {

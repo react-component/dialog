@@ -54,7 +54,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
       maskClosable: true,
       onClose() {
       },
-      onAnimationEnd(visible: boolean) {
+      onAnimationEnd(_visible: boolean) {
 
       },
     };
