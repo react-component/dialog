@@ -21800,7 +21800,7 @@
 	        var maskElement = void 0;
 	        if (props.mask) {
 	            var maskTransition = this.getMaskTransitionName();
-	            maskElement = _react2.default.createElement(_LazyRenderBox2.default, { style: this.getMaskStyle(), key: "mask", className: props.prefixCls + '-mask', hiddenClassName: props.prefixCls + '-mask-hidden', visible: props.visible });
+	            maskElement = _react2.default.createElement(_LazyRenderBox2.default, __assign({ style: this.getMaskStyle(), key: "mask", className: props.prefixCls + '-mask', hiddenClassName: props.prefixCls + '-mask-hidden', visible: props.visible }, props.maskProps));
 	            if (maskTransition) {
 	                maskElement = _react2.default.createElement(_rcAnimate2.default, { key: "mask", showProp: "visible", transitionAppear: true, component: "", transitionName: maskTransition }, maskElement);
 	            }
