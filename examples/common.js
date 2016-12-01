@@ -21728,7 +21728,7 @@
 	        this.props.afterClose();
 	    },
 	    onMaskClick: function onMaskClick(e) {
-	        if (e.target === e.currentTarget && this.props.maskClosable) {
+	        if (e.target === e.currentTarget) {
 	            this.close(e);
 	        }
 	    },
@@ -21883,14 +21883,16 @@
 	    },
 	    render: function render() {
 	        var props = this.props;
-	        var prefixCls = props.prefixCls;
+	        var prefixCls = props.prefixCls,
+	            maskClosable = props.maskClosable;
+	
 	        var style = this.getWrapStyle();
 	        // clear hide display
 	        // and only set display after async anim, not here for hide
 	        if (props.visible) {
 	            style.display = null;
 	        }
-	        return _react2.default.createElement("div", null, this.getMaskElement(), _react2.default.createElement("div", __assign({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: "wrap", onClick: this.onMaskClick, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
+	        return _react2.default.createElement("div", null, this.getMaskElement(), _react2.default.createElement("div", __assign({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: "wrap", onMouseDown: maskClosable ? this.onMaskClick : undefined, onTouchStart: maskClosable ? this.onMaskClick : undefined, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
 	    }
 	});
 	exports.default = Dialog;
