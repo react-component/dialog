@@ -113,7 +113,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
   },
 
   onMaskClick(e) {
-    if (e.target === e.currentTarget && this.props.maskClosable) {
+    if (e.target === e.currentTarget) {
       this.close(e);
     }
   },
@@ -362,8 +362,8 @@ const Dialog = React.createClass<DialogPropTypes, any>({
   },
 
   render() {
-    const props = this.props;
-    const prefixCls = props.prefixCls;
+    const { props } = this;
+    const { prefixCls, maskClosable } = props;
     const style = this.getWrapStyle();
     // clear hide display
     // and only set display after async anim, not here for hide
@@ -378,7 +378,9 @@ const Dialog = React.createClass<DialogPropTypes, any>({
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref="wrap"
-          onClick={this.onMaskClick}
+          // use mousedown instead of click
+          onMouseDown={maskClosable ? this.onMaskClick : undefined}
+          onTouchStart={maskClosable ? this.onMaskClick : undefined}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}
