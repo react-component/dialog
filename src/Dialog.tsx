@@ -188,6 +188,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
     const transitionName = this.getTransitionName();
     const dialogElement = (
       <LazyRenderBox
+        key="dialog-element"
         role="document"
         ref="dialog"
         style={style}
