@@ -21778,7 +21778,7 @@
 	        }
 	        var style = (0, _objectAssign2.default)({}, props.style, dest);
 	        var transitionName = this.getTransitionName();
-	        var dialogElement = _react2.default.createElement(_LazyRenderBox2.default, { role: "document", ref: "dialog", style: style, className: prefixCls + ' ' + (props.className || ''), visible: props.visible }, _react2.default.createElement("div", { className: prefixCls + '-content' }, closer, header, _react2.default.createElement("div", __assign({ className: prefixCls + '-body', style: props.bodyStyle, ref: "body" }, props.bodyProps), props.children), footer), _react2.default.createElement("div", { tabIndex: 0, ref: "sentinel", style: { width: 0, height: 0, overflow: 'hidden' } }, "sentinel"));
+	        var dialogElement = _react2.default.createElement(_LazyRenderBox2.default, { key: "dialog-element", role: "document", ref: "dialog", style: style, className: prefixCls + ' ' + (props.className || ''), visible: props.visible }, _react2.default.createElement("div", { className: prefixCls + '-content' }, closer, header, _react2.default.createElement("div", __assign({ className: prefixCls + '-body', style: props.bodyStyle, ref: "body" }, props.bodyProps), props.children), footer), _react2.default.createElement("div", { tabIndex: 0, ref: "sentinel", style: { width: 0, height: 0, overflow: 'hidden' } }, "sentinel"));
 	        return _react2.default.createElement(_rcAnimate2.default, { key: "dialog", showProp: "visible", onLeave: this.onAnimateLeave, transitionName: transitionName, component: "", transitionAppear: true }, dialogElement);
 	    },
 	    getZIndexStyle: function getZIndexStyle() {
