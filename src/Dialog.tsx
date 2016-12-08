@@ -104,7 +104,9 @@ const Dialog = React.createClass<DialogPropTypes, any>({
   },
 
   componentWillUnmount() {
-    this.removeScrollingEffect();
+    if (this.props.visible) {
+      this.removeScrollingEffect();
+    }
   },
 
   onAnimateLeave() {
