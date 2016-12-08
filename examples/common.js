@@ -21720,7 +21720,9 @@
 	        }
 	    },
 	    componentWillUnmount: function componentWillUnmount() {
-	        this.removeScrollingEffect();
+	        if (this.props.visible) {
+	            this.removeScrollingEffect();
+	        }
 	    },
 	    onAnimateLeave: function onAnimateLeave() {
 	        // need demo?
