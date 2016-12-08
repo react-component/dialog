@@ -139,10 +139,10 @@ describe('dialog', () => {
       dialog.setState({
         visible: true,
       });
-      setTimeout(done, 10);
+      setTimeout(done, 500);
     }, (done) => {
       const mask = $('.rc-dialog-wrap')[0];
-      Simulate.mouseDown(mask);
+      Simulate.click(mask);
       setTimeout(done, 10);
     }, (done) => {
       // dialog should closed after mask click
