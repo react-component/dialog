@@ -78,6 +78,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
     if (props.visible) {
       // first show
       if (!prevProps.visible) {
+        this.openTime = Date.now();
         this.lastOutSideFocusNode = document.activeElement;
         this.addScrollingEffect();
         this.refs.wrap.focus();
@@ -117,6 +118,10 @@ const Dialog = React.createClass<DialogPropTypes, any>({
   },
 
   onMaskClick(e) {
+    // android trigger click on open (fastclick??)
+    if (Date.now() - this.openTime < 300) {
+      return;
+    }
     if (e.target === e.currentTarget) {
       this.close(e);
     }
@@ -383,9 +388,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref="wrap"
-          // use mousedown instead of click
-          onMouseDown={maskClosable ? this.onMaskClick : undefined}
-          onTouchStart={maskClosable ? this.onMaskClick : undefined}
+          onClick={maskClosable ? this.onMaskClick : undefined}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}
