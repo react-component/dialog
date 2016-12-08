@@ -21696,6 +21696,7 @@
 	        if (props.visible) {
 	            // first show
 	            if (!prevProps.visible) {
+	                this.openTime = Date.now();
 	                this.lastOutSideFocusNode = document.activeElement;
 	                this.addScrollingEffect();
 	                this.refs.wrap.focus();
@@ -21718,6 +21719,9 @@
 	            }
 	        }
 	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        this.removeScrollingEffect();
+	    },
 	    onAnimateLeave: function onAnimateLeave() {
 	        // need demo?
 	        // https://github.com/react-component/dialog/pull/28
@@ -21728,6 +21732,10 @@
 	        this.props.afterClose();
 	    },
 	    onMaskClick: function onMaskClick(e) {
+	        // android trigger click on open (fastclick??)
+	        if (Date.now() - this.openTime < 300) {
+	            return;
+	        }
 	        if (e.target === e.currentTarget) {
 	            this.close(e);
 	        }
@@ -21892,7 +21900,7 @@
 	        if (props.visible) {
 	            style.display = null;
 	        }
-	        return _react2.default.createElement("div", null, this.getMaskElement(), _react2.default.createElement("div", __assign({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: "wrap", onMouseDown: maskClosable ? this.onMaskClick : undefined, onTouchStart: maskClosable ? this.onMaskClick : undefined, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
+	        return _react2.default.createElement("div", null, this.getMaskElement(), _react2.default.createElement("div", __assign({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: "wrap", onClick: maskClosable ? this.onMaskClick : undefined, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
 	    }
 	});
 	exports.default = Dialog;
