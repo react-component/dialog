@@ -102,6 +102,10 @@ const Dialog = React.createClass<DialogPropTypes, any>({
     }
   },
 
+  componentWillUnmount() {
+    this.removeScrollingEffect();
+  },
+
   onAnimateLeave() {
     // need demo?
     // https://github.com/react-component/dialog/pull/28
