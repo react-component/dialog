@@ -9,6 +9,7 @@ import assign from 'object-assign';
 
 let uuid = 0;
 let openCount = 0;
+let inTransition = false;
 
 /* eslint react/no-is-mounted:0 */
 
@@ -92,6 +93,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
         }
       }
     } else if (prevProps.visible) {
+      inTransition = true;
       if (props.mask && this.lastOutSideFocusNode) {
         try {
           this.lastOutSideFocusNode.focus();
@@ -104,7 +106,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
   },
 
   componentWillUnmount() {
-    if (this.props.visible) {
+    if (this.props.visible || inTransition) {
       this.removeScrollingEffect();
     }
   },
@@ -115,6 +117,7 @@ const Dialog = React.createClass<DialogPropTypes, any>({
     if (this.refs.wrap) {
       this.refs.wrap.style.display = 'none';
     }
+    inTransition = false;
     this.removeScrollingEffect();
     this.props.afterClose();
   },
