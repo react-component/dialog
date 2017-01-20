@@ -4,7 +4,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
-import DialogPropTypes from './DialogPropTypes';
+import IDialogPropTypes from './IDialogPropTypes';
 import assign from 'object-assign';
 
 let uuid = 0;
@@ -50,7 +50,7 @@ function offset(el) {
   return pos;
 }
 
-const Dialog = React.createClass<DialogPropTypes, any>({
+const Dialog = React.createClass<IDialogPropTypes, any>({
   getDefaultProps() {
     return {
       afterClose: noop,

@@ -1,7 +1,7 @@
 import React from 'react';
 import assign from 'object-assign';
 
-export interface LazyRenderBoxPropTypes {
+export interface ILazyRenderBoxPropTypes {
   className?: string;
   visible?: boolean;
   hiddenClassName?: string;
@@ -9,7 +9,7 @@ export interface LazyRenderBoxPropTypes {
   style?: {};
 }
 
-const LazyRenderBox = React.createClass<LazyRenderBoxPropTypes, any>({
+const LazyRenderBox = React.createClass<ILazyRenderBoxPropTypes, any>({
   shouldComponentUpdate(nextProps) {
     return !!nextProps.hiddenClassName || !!nextProps.visible;
   },

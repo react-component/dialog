@@ -137,7 +137,6 @@ ReactDOM.render(
   <div>
     <h2>ant-design dialog</h2>
     <MyControl />
-  </div>
-  ,
-  document.getElementById('__react-content')
+  </div>,
+  document.getElementById('__react-content'),
 );

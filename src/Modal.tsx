@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
 const screen = Dimensions.get('window');
 
-export interface ModalPropTypes {
+export interface IModalPropTypes {
   wrapStyle?: {};
   maskStyle?: {};
   style?: {};
@@ -42,7 +42,7 @@ export interface ModalPropTypes {
   onAnimationEnd?: (visible: boolean) => void;
 }
 
-const RCModal = React.createClass<ModalPropTypes, any>({
+const RCModal = React.createClass<IModalPropTypes, any>({
   getDefaultProps() {
     return {
       wrapStyle: styles.wrap,
@@ -111,7 +111,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
       {
         toValue: this.getOpacity(visible),
         duration: this.props.animationDuration,
-      }
+      },
     );
     this.animMask.start(() => {
       this.animMask = null;
@@ -146,7 +146,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
             toValue: this.getPosition(visible),
             duration: this.props.animationDuration,
             easing: (visible ? Easing.elastic(0.8) : undefined) as any,
-          } as React.Animated.TimingAnimationConfig
+          } as React.Animated.TimingAnimationConfig,
         );
       } else if (animationType === 'fade') {
         this.animDialog = Animated.parallel([
@@ -156,7 +156,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
               toValue: this.getOpacity(visible),
               duration: this.props.animationDuration,
               easing: (visible ? Easing.elastic(0.8) : undefined) as any,
-            } as React.Animated.TimingAnimationConfig
+            } as React.Animated.TimingAnimationConfig,
           ),
           Animated.spring(
             this.state.scale,
@@ -164,7 +164,7 @@ const RCModal = React.createClass<ModalPropTypes, any>({
               toValue: this.getScale(visible),
               duration: this.props.animationDuration,
               easing: (visible ? Easing.elastic(0.8) : undefined) as any,
-            } as React.Animated.TimingAnimationConfig
+            } as React.Animated.TimingAnimationConfig,
           ),
         ]);
       }
@@ -218,10 +218,10 @@ const RCModal = React.createClass<ModalPropTypes, any>({
       return null as any;
     }
     const animationStyleMap = {
-      'none': {},
+      none: {},
       'slide-up': { transform: [{ translateY: this.state.position }] },
       'slide-down': { transform: [{ translateY: this.state.position }] },
-      'fade': { transform: [{ scale: this.state.scale }], opacity: this.state.opacity },
+      fade: { transform: [{ scale: this.state.scale }], opacity: this.state.opacity },
     };
 
     return (
