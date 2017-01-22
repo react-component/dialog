@@ -911,12 +911,18 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
+	var validateFormat = function validateFormat(format) {};
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
 	    }
-	  }
+	  };
+	}
+	
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
 	
 	  if (!condition) {
 	    var error;
@@ -21685,6 +21691,7 @@
 	        };
 	    },
 	    componentWillMount: function componentWillMount() {
+	        this.inTransition = false;
 	        this.titleId = 'rcDialogTitle' + uuid++;
 	    },
 	    componentDidMount: function componentDidMount() {
@@ -21709,6 +21716,7 @@
 	                }
 	            }
 	        } else if (prevProps.visible) {
+	            this.inTransition = true;
 	            if (props.mask && this.lastOutSideFocusNode) {
 	                try {
 	                    this.lastOutSideFocusNode.focus();
@@ -21720,7 +21728,7 @@
 	        }
 	    },
 	    componentWillUnmount: function componentWillUnmount() {
-	        if (this.props.visible) {
+	        if (this.props.visible || this.inTransition) {
 	            this.removeScrollingEffect();
 	        }
 	    },
@@ -21730,6 +21738,7 @@
 	        if (this.refs.wrap) {
 	            this.refs.wrap.style.display = 'none';
 	        }
+	        this.inTransition = false;
 	        this.removeScrollingEffect();
 	        this.props.afterClose();
 	    },

@@ -80,9 +80,11 @@ webpackJsonp([0],[
 	            }
 	            dialog = _react2.default.createElement(_DialogWrap2.default, { visible: this.state.visible, wrapClassName: wrapClassName, animation: "zoom", maskAnimation: "fade", onClose: this.onClose, style: style, mousePosition: this.state.mousePosition }, _react2.default.createElement("input", null), _react2.default.createElement("p", null, "basic modal"), _react2.default.createElement("button", { onClick: this.changeWidth }, "change width"), _react2.default.createElement("div", { style: { height: 200 } }));
 	        }
-	        return _react2.default.createElement("div", { style: { width: '90%', margin: '0 auto' } }, _react2.default.createElement("style", null, '\n            .center {\n              display: flex;\n              align-items: center;\n              justify-content: center;\n            }\n            '), _react2.default.createElement("p", null, _react2.default.createElement("button", { className: "btn btn-primary", onClick: this.onClick }, "show dialog"), " ", _react2.default.createElement("label", null, "destroy on close:", _react2.default.createElement("input", { type: "checkbox", checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })), " ", _react2.default.createElement("label", null, "center", _react2.default.createElement("input", { type: "checkbox", checked: this.state.center, onChange: this.center }))), dialog);
+	        return _react2.default.createElement("div", { style: { width: '90%', margin: '0 auto' } }, _react2.default.createElement("style", null, '\n            .center {\n              display: flex;\n              align-items: center;\n              justify-content: center;\n            }\n            '), _react2.default.createElement("p", null, _react2.default.createElement("button", { className: "btn btn-primary", onClick: this.onClick }, "show dialog"), '\xA0', _react2.default.createElement("label", null, "destroy on close:", _react2.default.createElement("input", { type: "checkbox", checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })), '\xA0', _react2.default.createElement("label", null, "center", _react2.default.createElement("input", { type: "checkbox", checked: this.state.center, onChange: this.center }))), dialog);
 	    }
 	});
+	// use import Dialog from 'rc-dialog'
+	
 	_reactDom2.default.render(_react2.default.createElement("div", null, _react2.default.createElement("h2", null, "ant-design dialog"), _react2.default.createElement(MyControl, null)), document.getElementById('__react-content'));
 
 /***/ },
