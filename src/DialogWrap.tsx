@@ -1,9 +1,9 @@
 import React from 'react';
 import Dialog from './Dialog';
 import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
-import DialogPropTypes from './DialogPropTypes';
+import IDialogPropTypes from './IDialogPropTypes';
 
-const DialogWrap = React.createClass<DialogPropTypes, any>({
+const DialogWrap = React.createClass<IDialogPropTypes, any>({
   mixins: [
     getContainerRenderMixin({
       isVisible(instance) {

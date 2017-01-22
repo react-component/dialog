@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-interface DialogPropTypes {
+interface IDialogPropTypes {
   className?: string;
   keyboard?: boolean;
   style?: {};
@@ -25,4 +25,4 @@ interface DialogPropTypes {
   wrapClassName?: string;
 }
 
-export default DialogPropTypes;
+export default IDialogPropTypes;
