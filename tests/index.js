@@ -8,7 +8,7 @@ const ReactDOM = require('react-dom');
 const TestUtils = require('react-addons-test-utils');
 const Simulate = TestUtils.Simulate;
 const async = require('async');
-const rcUtil = require('rc-util');
+const KeyCode = require('rc-util/lib/KeyCode');
 
 describe('dialog', () => {
   const title = '第一个title';
@@ -123,7 +123,7 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       Simulate.keyDown($('.rc-dialog')[0], {
-        keyCode: rcUtil.KeyCode.ESC,
+        keyCode: KeyCode.ESC,
       });
       setTimeout(done, 10);
     }, (done) => {
