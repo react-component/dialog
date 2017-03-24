@@ -179,6 +179,12 @@ ReactDOM.render(
           <td></td>
           <td>called when click close button or mask</td>
       </tr>
+      <tr>
+          <td>getContainer</td>
+          <td>function(): HTMLElement</td>
+          <td></td>
+          <td>to determine where Dialog will be mounted</td>
+      </tr>
     </tbody>
 </table>
 

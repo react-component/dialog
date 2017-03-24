@@ -19,6 +19,14 @@ const DialogWrap = React.createClass<IDialogPropTypes, any>({
           />
         );
       },
+      getContainer(instance) {
+        if (instance.props.getContainer) {
+          return instance.props.getContainer();
+        }
+        const container = document.createElement('div');
+        document.body.appendChild(container);
+        return container;
+      },
     }),
   ],
 
