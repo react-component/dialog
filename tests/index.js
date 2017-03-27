@@ -182,4 +182,19 @@ describe('dialog', () => {
     expect($('.renderToBody').length).to.be(0);
     expect($('.rc-dialog-wrap').length).to.be(0);
   });
+
+  it('getContainer', () => {
+    const returnedContainer = document.createElement('div');
+    document.body.appendChild(returnedContainer);
+    const d = ReactDOM.render(
+      <DialogWrap getContainer={() => returnedContainer}>
+        <p className="getContainer">Hello world!</p>
+      </DialogWrap>,
+      container
+    );
+    d.setState({
+      visible: true,
+    });
+    expect($('.rc-dialog-wrap')[0].parentNode.parentNode).to.be(returnedContainer);
+  });
 });
