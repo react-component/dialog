@@ -53,9 +53,9 @@
     "jquery": "^1.11.2",
     "pre-commit": "1.x",
     "rc-tools": "5.x",
-    "react": "15.3.x",
-    "react-addons-test-utils": "15.3.x",
-    "react-dom": "15.3.x",
+    "react": "15.5.0",
+    "react-addons-test-utils": "15.5.0",
+    "react-dom": "15.5.0",
     "react-native": "0.34.1",
     "react-native-index-page": "~0.1.0"
   },
@@ -67,6 +67,7 @@
     "babel-runtime": "6.x",
     "object-assign": "~4.1.0",
     "rc-animate": "2.x",
-    "rc-util": "^4.0.2"
+    "rc-util": "^4.0.2",
+    "create-react-class": "^15.5.2"
   }
 }

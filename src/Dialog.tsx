@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
@@ -49,7 +50,8 @@ function offset(el) {
   return pos;
 }
 
-const Dialog = React.createClass<IDialogPropTypes, any>({
+const Dialog = createReactClass<IDialogPropTypes, any>({
+  displayName: 'Dialog',
   getDefaultProps() {
     return {
       afterClose: noop,

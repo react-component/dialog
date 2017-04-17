@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {
   View, Modal, Animated,
   TouchableWithoutFeedback,
@@ -42,7 +43,8 @@ export interface IModalPropTypes {
   onAnimationEnd?: (visible: boolean) => void;
 }
 
-const RCModal = React.createClass<IModalPropTypes, any>({
+const RCModal = createReactClass<IModalPropTypes, any>({
+  displayName: 'RCModal',
   getDefaultProps() {
     return {
       wrapStyle: styles.wrap,
