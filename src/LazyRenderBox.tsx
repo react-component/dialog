@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import assign from 'object-assign';
 
 export interface ILazyRenderBoxPropTypes {
@@ -10,12 +9,10 @@ export interface ILazyRenderBoxPropTypes {
   style?: {};
 }
 
-const LazyRenderBox = createReactClass<ILazyRenderBoxPropTypes, any>({
-  displayName: 'LazyRenderBox',
+export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTypes, any> {
   shouldComponentUpdate(nextProps) {
     return !!nextProps.hiddenClassName || !!nextProps.visible;
-  },
-
+  }
   render() {
     let className = this.props.className;
     if (!!this.props.hiddenClassName && !this.props.visible) {
@@ -26,7 +23,5 @@ const LazyRenderBox = createReactClass<ILazyRenderBoxPropTypes, any>({
     delete props.visible;
     props.className = className;
     return <div {...props} />;
-  },
-});
-
-export default LazyRenderBox;
+  }
+}
