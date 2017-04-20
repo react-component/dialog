@@ -42,42 +42,38 @@ export interface IModalPropTypes {
   onAnimationEnd?: (visible: boolean) => void;
 }
 
-const RCModal = React.createClass<IModalPropTypes, any>({
-  getDefaultProps() {
-    return {
-      wrapStyle: styles.wrap,
-      maskStyle: styles.mask,
-      animationType: 'slide-up',
-      animateAppear: false,
-      animationDuration: 300,
-      visible: false,
-      maskClosable: true,
-      onClose() {
-      },
-      onAnimationEnd(_visible: boolean) {
+export default class RCModal extends React.Component<IModalPropTypes, any> {
+  static defaultProps = {
+    wrapStyle: styles.wrap,
+    maskStyle: styles.mask,
+    animationType: 'slide-up',
+    animateAppear: false,
+    animationDuration: 300,
+    visible: false,
+    maskClosable: true,
+    onClose() {
+    },
+    onAnimationEnd(_visible: boolean) {
 
-      },
-    };
-  },
-
-  getInitialState() {
-    const { visible } = this.props;
-    return {
+    },
+  };
+  constructor(props) {
+    super(props);
+    const { visible } = props;
+    this.state = {
       position: new Animated.Value(this.getPosition(visible)),
       scale: new Animated.Value(this.getScale(visible)),
       opacity: new Animated.Value(this.getOpacity(visible)),
       modalVisible: visible,
     };
-  },
-
+  }
   componentWillReceiveProps(nextProps) {
     if (this.shouldComponentUpdate(nextProps)) {
       this.setState({
         modalVisible: true,
       });
     }
-  },
-
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.visible || this.props.visible !== nextProps.visible) {
       return true;
@@ -88,22 +84,19 @@ const RCModal = React.createClass<IModalPropTypes, any>({
       }
     }
     return false;
-  },
-
+  }
   componentDidMount() {
     if (this.props.animateAppear && this.props.animationType !== 'none') {
       this.componentDidUpdate({});
     }
-  },
-
+  }
   componentDidUpdate(prevProps) {
     const { props } = this;
     if (prevProps.visible !== props.visible) {
       this.animateDialog(props.visible);
     }
-  },
-
-  animateMask(visible) {
+  }
+  animateMask = (visible) => {
     this.stopMaskAnim();
     this.state.opacity.setValue(this.getOpacity(!visible));
     this.animMask = Animated.timing(
@@ -116,23 +109,20 @@ const RCModal = React.createClass<IModalPropTypes, any>({
     this.animMask.start(() => {
       this.animMask = null;
     });
-  },
-
-  stopMaskAnim() {
+  }
+  stopMaskAnim = () => {
     if (this.animMask) {
       this.animMask.stop();
       this.animMask = null;
     }
-  },
-
-  stopDialogAnim() {
+  }
+  stopDialogAnim = () => {
     if (this.animDialog) {
       this.animDialog.stop();
       this.animDialog = null;
     }
-  },
-
-  animateDialog(visible) {
+  }
+  animateDialog = (visible) => {
     this.stopDialogAnim();
     this.animateMask(visible);
 
@@ -185,33 +175,27 @@ const RCModal = React.createClass<IModalPropTypes, any>({
         });
       }
     }
-  },
-
-  close() {
+  }
+  close = () => {
     this.animateDialog(false);
-  },
-
-  onMaskClose() {
+  }
+  onMaskClose = () => {
     if (this.props.maskClosable) {
       this.props.onClose();
     }
-  },
-
-  getPosition(visible) {
+  }
+  getPosition = (visible) => {
     if (visible) {
       return 0;
     }
     return this.props.animationType === 'slide-down' ? -screen.height : screen.height;
-  },
-
-  getScale(visible) {
+  }
+  getScale = (visible) => {
     return visible ? 1 : 1.05;
-  },
-
-  getOpacity(visible) {
+  }
+  getOpacity = (visible) => {
     return visible ? 1 : 0;
-  },
-
+  }
   render() {
     const { props } = this;
     if (!this.state.modalVisible) {
@@ -248,7 +232,5 @@ const RCModal = React.createClass<IModalPropTypes, any>({
         </View>
       </Modal>
     );
-  },
-});
-
-export default RCModal;
+  }
+}

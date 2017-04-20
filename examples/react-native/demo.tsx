@@ -17,22 +17,20 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalDemo = React.createClass({
-  getInitialState() {
-    return {
-      visible: false,
-    };
-  },
-  open() {
+class ModalDemo extends React.Component {
+  state = {
+    visible: false,
+  };
+  open = () => {
     this.setState({
       visible: true,
     });
-  },
-  onClose() {
+  }
+  onClose = () => {
     this.setState({
       visible: false,
     });
-  },
+  }
   render() {
     return (<View>
       <TouchableHighlight
@@ -63,8 +61,8 @@ const ModalDemo = React.createClass({
         </View>
       </Modal>
     </View>);
-  },
-});
+  }
+}
 
 export const Demo = ModalDemo;
 export const title = 'modal';
