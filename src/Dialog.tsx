@@ -49,30 +49,25 @@ function offset(el) {
   return pos;
 }
 
-const Dialog = React.createClass<IDialogPropTypes, any>({
-  getDefaultProps() {
-    return {
-      afterClose: noop,
-      className: '',
-      mask: true,
-      visible: false,
-      keyboard: true,
-      closable: true,
-      maskClosable: true,
-      prefixCls: 'rc-dialog',
-      onClose: noop,
-    };
-  },
-
+export default class Dialog extends React.Component<IDialogPropTypes, any> {
+  static defaultProps = {
+    afterClose: noop,
+    className: '',
+    mask: true,
+    visible: false,
+    keyboard: true,
+    closable: true,
+    maskClosable: true,
+    prefixCls: 'rc-dialog',
+    onClose: noop,
+  };
   componentWillMount() {
     this.inTransition = false;
     this.titleId = `rcDialogTitle${uuid++}`;
-  },
-
+  }
   componentDidMount() {
     this.componentDidUpdate({});
-  },
-
+  }
   componentDidUpdate(prevProps) {
     const props = this.props;
     const mousePosition = this.props.mousePosition;
@@ -103,15 +98,13 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
         this.lastOutSideFocusNode = null;
       }
     }
-  },
-
+  }
   componentWillUnmount() {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-  },
-
-  onAnimateLeave() {
+  }
+  onAnimateLeave = () => {
     // need demo?
     // https://github.com/react-component/dialog/pull/28
     if (this.refs.wrap) {
@@ -120,9 +113,8 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
     this.inTransition = false;
     this.removeScrollingEffect();
     this.props.afterClose();
-  },
-
-  onMaskClick(e) {
+  }
+  onMaskClick = (e) => {
     // android trigger click on open (fastclick??)
     if (Date.now() - this.openTime < 300) {
       return;
@@ -130,9 +122,8 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
     if (e.target === e.currentTarget) {
       this.close(e);
     }
-  },
-
-  onKeyDown(e) {
+  }
+  onKeyDown = (e) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
       this.close(e);
@@ -152,9 +143,8 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
         }
       }
     }
-  },
-
-  getDialogElement() {
+  }
+  getDialogElement = () => {
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
@@ -239,26 +229,22 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
         {dialogElement}
       </Animate>
     );
-  },
-
-  getZIndexStyle() {
+  }
+  getZIndexStyle = () => {
     const style: any = {};
     const props = this.props;
     if (props.zIndex !== undefined) {
       style.zIndex = props.zIndex;
     }
     return style;
-  },
-
-  getWrapStyle(): any {
+  }
+  getWrapStyle = () : any => {
     return assign({}, this.getZIndexStyle(), this.props.wrapStyle);
-  },
-
-  getMaskStyle() {
+  }
+  getMaskStyle = () => {
     return assign({}, this.getZIndexStyle(), this.props.maskStyle);
-  },
-
-  getMaskElement() {
+  }
+  getMaskElement = () => {
     const props = this.props;
     let maskElement;
     if (props.mask) {
@@ -288,9 +274,8 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
       }
     }
     return maskElement;
-  },
-
-  getMaskTransitionName() {
+  }
+  getMaskTransitionName = () => {
     const props = this.props;
     let transitionName = props.maskTransitionName;
     const animation = props.maskAnimation;
@@ -298,9 +283,8 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
       transitionName = `${props.prefixCls}-${animation}`;
     }
     return transitionName;
-  },
-
-  getTransitionName() {
+  }
+  getTransitionName = () => {
     const props = this.props;
     let transitionName = props.transitionName;
     const animation = props.animation;
@@ -308,19 +292,16 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
       transitionName = `${props.prefixCls}-${animation}`;
     }
     return transitionName;
-  },
-
-  getElement(part) {
+  }
+  getElement = (part) => {
     return this.refs[part];
-  },
-
-  setScrollbar() {
+  }
+  setScrollbar = () => {
     if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
       document.body.style.paddingRight = `${this.scrollbarWidth}px`;
     }
-  },
-
-  addScrollingEffect() {
+  }
+  addScrollingEffect = () => {
     openCount++;
     if (openCount !== 1) {
       return;
@@ -329,9 +310,8 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
     this.setScrollbar();
     document.body.style.overflow = 'hidden';
     // this.adjustDialog();
-  },
-
-  removeScrollingEffect() {
+  }
+  removeScrollingEffect = () => {
     openCount--;
     if (openCount !== 0) {
       return;
@@ -339,13 +319,11 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
     document.body.style.overflow = '';
     this.resetScrollbar();
     // this.resetAdjustments();
-  },
-
-  close(e) {
+  }
+  close = (e) => {
     this.props.onClose(e);
-  },
-
-  checkScrollbar() {
+  }
+  checkScrollbar = () => {
     let fullWindowWidth = window.innerWidth;
     if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
       const documentElementRect = document.documentElement.getBoundingClientRect();
@@ -355,11 +333,11 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
     if (this.bodyIsOverflowing) {
       this.scrollbarWidth = getScrollBarSize();
     }
-  },
-  resetScrollbar() {
+  }
+  resetScrollbar = () => {
     document.body.style.paddingRight = '';
-  },
-  adjustDialog() {
+  }
+  adjustDialog = () => {
     if (this.refs.wrap && this.scrollbarWidth !== undefined) {
       const modalIsOverflowing =
         this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
@@ -368,14 +346,12 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
       this.refs.wrap.style.paddingRight =
         `${this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''}px`;
     }
-  },
-
-  resetAdjustments() {
+  }
+  resetAdjustments = () => {
     if (this.refs.wrap) {
       this.refs.wrap.style.paddingLeft = this.refs.wrap.style.paddingLeft = '';
     }
-  },
-
+  }
   render() {
     const { props } = this;
     const { prefixCls, maskClosable } = props;
@@ -403,7 +379,5 @@ const Dialog = React.createClass<IDialogPropTypes, any>({
         </div>
       </div>
     );
-  },
-});
-
-export default Dialog;
+  }
+}

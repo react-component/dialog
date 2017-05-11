@@ -6,17 +6,14 @@ import ReactDOM from 'react-dom';
 // use import Dialog from 'rc-dialog'
 import Dialog from '../src/DialogWrap';
 
-const MyControl = React.createClass({
-  getInitialState() {
-    return {
-      visible: false,
-      width: 600,
-      destroyOnClose: false,
-      center: false,
-    };
-  },
-
-  onClick(e) {
+class MyControl extends React.Component {
+  state = {
+    visible: false,
+    width: 600,
+    destroyOnClose: false,
+    center: false,
+  };
+  onClick = (e) => {
     this.setState({
       mousePosition: {
         x: e.pageX,
@@ -24,33 +21,28 @@ const MyControl = React.createClass({
       },
       visible: true,
     });
-  },
-
-  onClose(e) {
+  }
+  onClose = (e) => {
     // console.log(e);
     this.setState({
       visible: false,
     });
-  },
-
-  onDestroyOnCloseChange(e) {
+  }
+  onDestroyOnCloseChange = (e) => {
     this.setState({
       destroyOnClose: e.target.checked,
     });
-  },
-
-  changeWidth() {
+  }
+  changeWidth = () => {
     this.setState({
       width: this.state.width === 600 ? 800 : 600,
     });
-  },
-
-  center(e) {
+  }
+  center = (e) => {
     this.setState({
       center: e.target.checked,
     });
-  },
-
+  }
   render() {
     let dialog;
     if (this.state.visible || !this.state.destroyOnClose) {
@@ -120,8 +112,8 @@ const MyControl = React.createClass({
         {dialog}
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <div>

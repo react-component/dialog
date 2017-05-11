@@ -9,11 +9,10 @@ export interface ILazyRenderBoxPropTypes {
   style?: {};
 }
 
-const LazyRenderBox = React.createClass<ILazyRenderBoxPropTypes, any>({
+export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTypes, any> {
   shouldComponentUpdate(nextProps) {
     return !!nextProps.hiddenClassName || !!nextProps.visible;
-  },
-
+  }
   render() {
     let className = this.props.className;
     if (!!this.props.hiddenClassName && !this.props.visible) {
@@ -24,7 +23,5 @@ const LazyRenderBox = React.createClass<ILazyRenderBoxPropTypes, any>({
     delete props.visible;
     props.className = className;
     return <div {...props} />;
-  },
-});
-
-export default LazyRenderBox;
+  }
+}

@@ -1,14 +1,14 @@
 /* eslint-disable func-names */
-const expect = require('expect.js');
-const Dialog = require('../index');
-require('../assets/bootstrap.less');
-const $ = require('jquery');
-const React = require('react');
-const ReactDOM = require('react-dom');
-const TestUtils = require('react-addons-test-utils');
+import expect from 'expect.js';
+import Dialog from '../index';
+import '../assets/bootstrap.less';
+import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-dom/test-utils';
 const Simulate = TestUtils.Simulate;
-const async = require('async');
-const KeyCode = require('rc-util/lib/KeyCode');
+import async from 'async';
+import KeyCode from 'rc-util/lib/KeyCode';
 
 describe('dialog', () => {
   const title = '第一个title';
@@ -20,13 +20,11 @@ describe('dialog', () => {
 
   let callback1;
 
-  const DialogWrap = React.createClass({
-    getInitialState() {
-      return {
-        visible: false,
-        maskClosable: true,
-      };
-    },
+  class DialogWrap extends React.Component {
+    state = {
+      visible: false,
+      maskClosable: true,
+    };
     render() {
       return (
         <Dialog
@@ -35,8 +33,8 @@ describe('dialog', () => {
           maskClosable={this.state.maskClosable}
         />
       );
-    },
-  });
+    }
+  }
 
   beforeEach(() => {
     function onClose() {

@@ -4,32 +4,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from '../src/DialogWrap';
 
-const MyControl = React.createClass({
-  getInitialState() {
-    return {
-      visible: false,
-      destroyOnClose: false,
-    };
-  },
-
-  onClick() {
+class MyControl extends React.Component {
+  state = {
+    visible: false,
+    destroyOnClose: false,
+  };
+  onClick = () => {
     this.setState({
       visible: true,
     });
-  },
-
-  onClose() {
+  }
+  onClose = () => {
     this.setState({
       visible: false,
     });
-  },
-
-  onDestroyOnCloseChange(e) {
+  }
+  onDestroyOnCloseChange = (e) => {
     this.setState({
       destroyOnClose: e.target.checked,
     });
-  },
-
+  }
   render() {
     let dialog;
     if (this.state.visible || !this.state.destroyOnClose) {
@@ -130,8 +124,8 @@ const MyControl = React.createClass({
         {dialog}
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <div>
