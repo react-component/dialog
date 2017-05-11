@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>bootstrap.js - example - rc-dialog@6.5.8</title>
+  <title>bootstrap.js - example - rc-dialog@6.5.9</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-dialog@6.5.8</h1>
+      <h1>rc-dialog@6.5.9</h1>
 
       <p>dialog ui component for react</p>
     </div>
@@ -275,32 +275,26 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Dialog <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/DialogWrap'</span>;
 
-<span class="hljs-keyword">const</span> MyControl = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      visible: <span class="hljs-literal">false</span>,
-      destroyOnClose: <span class="hljs-literal">false</span>,
-    };
-  },
-
-  onClick() {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    visible: <span class="hljs-literal">false</span>,
+    destroyOnClose: <span class="hljs-literal">false</span>,
+  };
+  onClick = () =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">true</span>,
     });
-  },
-
-  onClose() {
+  }
+  onClose = () =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">false</span>,
     });
-  },
-
-  onDestroyOnCloseChange(e) {
+  }
+  onDestroyOnCloseChange = (e) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       destroyOnClose: e.target.checked,
     });
-  },
-
+  }
   render() {
     <span class="hljs-keyword">let</span> dialog;
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.visible || !<span class="hljs-keyword">this</span>.state.destroyOnClose) {
@@ -401,8 +395,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         {dialog}
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
