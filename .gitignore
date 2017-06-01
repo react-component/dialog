@@ -1,5 +1,6 @@
 *.iml
 *.log
+*.log.*
 .idea
 .ipr
 .iws
@@ -22,6 +23,7 @@ node_modules
 *.css
 build
 lib
+es
 coverage
 *.js
 *.jsx

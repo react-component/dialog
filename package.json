@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "6.5.9",
+  "version": "6.5.10",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
@@ -21,9 +21,11 @@
   "licenses": "MIT",
   "files": [
     "lib",
+    "es",
     "assets/*.css"
   ],
   "main": "./lib/DialogWrap",
+  "module": "./es/DialogWrap",
   "config": {
     "port": 8007
   },
@@ -32,13 +34,14 @@
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
+    "compile": "rc-tools run compile --babel-runtime",
     "pub": "rc-tools run pub --babel-runtime",
     "lint": "rc-tools run lint --no-js-lint",
-    "karma": "rc-tools run karma",
-    "saucelabs": "rc-tools run saucelabs",
-    "test": "rc-tools run test",
-    "chrome-test": "rc-tools run chrome-test",
-    "coverage": "rc-tools run coverage",
+    "karma": "rc-test run karma",
+    "saucelabs": "rc-test run saucelabs",
+    "test": "rc-test run test",
+    "chrome-test": "rc-test run chrome-test",
+    "coverage": "rc-test run coverage",
     "rn-start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "devDependencies": {
@@ -52,7 +55,8 @@
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
     "pre-commit": "1.x",
-    "rc-tools": "5.x",
+    "rc-test": "^6.0.1",
+    "rc-tools": "6.x",
     "react": "^15.5.0",
     "react-dom": "^15.5.0",
     "react-native": "0.34.1",
@@ -64,9 +68,9 @@
   "typings": "./lib/DialogWrap.d.ts",
   "dependencies": {
     "babel-runtime": "6.x",
+    "create-react-class": "^15.5.2",
     "object-assign": "~4.1.0",
     "rc-animate": "2.x",
-    "rc-util": "^4.0.2",
-    "create-react-class": "^15.5.2"
+    "rc-util": "^4.0.2"
   }
 }
