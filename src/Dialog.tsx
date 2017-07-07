@@ -6,6 +6,7 @@ import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import IDialogPropTypes from './IDialogPropTypes';
 import assign from 'object-assign';
+import Draggable from 'react-draggable';
 
 let uuid = 0;
 let openCount = 0;
@@ -59,6 +60,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     closable: true,
     maskClosable: true,
     prefixCls: 'rc-dialog',
+    draggable: false,
     onClose: noop,
   };
   componentWillMount() {
@@ -144,6 +146,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       }
     }
   }
+
   getDialogElement = () => {
     const props = this.props;
     const closable = props.closable;
@@ -190,6 +193,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
 
     const style = assign({}, props.style, dest);
     const transitionName = this.getTransitionName();
+    const draggableProps = assign({}, { onStart: () => props.draggable }, props.draggableProps);
     const dialogElement = (
       <LazyRenderBox
         key="dialog-element"
@@ -199,22 +203,26 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         className={`${prefixCls} ${props.className || ''}`}
         visible={props.visible}
       >
-        <div className={`${prefixCls}-content`}>
-          {closer}
-          {header}
-          <div
-            className={`${prefixCls}-body`}
-            style={props.bodyStyle}
-            ref="body"
-            {...props.bodyProps}
-          >
-            {props.children}
+        <Draggable {...draggableProps}>
+          <div>
+            <div className={`${prefixCls}-content`}>
+              {closer}
+              {header}
+              <div
+                className={`${prefixCls}-body`}
+                style={props.bodyStyle}
+                ref="body"
+                {...props.bodyProps}
+              >
+                {props.children}
+              </div>
+              {footer}
+            </div>
+            <div tabIndex={0} ref="sentinel" style={{ width: 0, height: 0, overflow: 'hidden' }}>
+              sentinel
+            </div>
           </div>
-          {footer}
-        </div>
-        <div tabIndex={0} ref="sentinel" style={{ width: 0, height: 0, overflow: 'hidden' }}>
-          sentinel
-        </div>
+        </Draggable>
       </LazyRenderBox>
     );
     return (
