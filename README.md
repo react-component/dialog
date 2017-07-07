@@ -185,6 +185,18 @@ ReactDOM.render(
           <td></td>
           <td>to determine where Dialog will be mounted</td>
       </tr>
+      <tr>
+          <td>draggable</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>to disabled draggable</td>
+      </tr>
+      <tr>
+          <td>draggableProps</td>
+          <td>Object</td>
+          <td></td>
+          <td>draggable from [react-draggable](https://github.com/mzabriskie/react-draggable) </td>
+      </tr>
     </tbody>
 </table>
 

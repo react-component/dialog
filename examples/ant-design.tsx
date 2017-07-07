@@ -12,6 +12,7 @@ class MyControl extends React.Component {
     width: 600,
     destroyOnClose: false,
     center: false,
+    draggable: false,
   };
   onClick = (e) => {
     this.setState({
@@ -43,6 +44,11 @@ class MyControl extends React.Component {
       center: e.target.checked,
     });
   }
+  draggable = (e) => {
+    this.setState({
+      draggable: e.target.checked,
+    });
+  }
   render() {
     let dialog;
     if (this.state.visible || !this.state.destroyOnClose) {
@@ -61,6 +67,7 @@ class MyControl extends React.Component {
           maskAnimation="fade"
           onClose={this.onClose}
           style={style}
+          draggable={this.state.draggable}
           mousePosition={this.state.mousePosition}
         >
           <input />
@@ -106,6 +113,15 @@ class MyControl extends React.Component {
               type="checkbox"
               checked={this.state.center}
               onChange={this.center}
+            />
+          </label>
+
+          &nbsp;
+          <label>draggable
+            <input
+              type="checkbox"
+              checked={this.state.draggable}
+              onChange={this.draggable}
             />
           </label>
         </p>
