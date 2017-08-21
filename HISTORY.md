@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.5.11 / 2017-8-21
+
+- fixed: RN modal support landscape orientation, https://github.com/react-component/dialog/pull/64 
+
 ## 6.5.0 / 2016-10-25
 
 - remove rc-dialog/lib/Modal's entry prop, add animationType prop
