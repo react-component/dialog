@@ -213,6 +213,7 @@ export default class RCModal extends React.Component<IModalPropTypes, any> {
         visible
         transparent
         onRequestClose={this.props.onClose}
+        supportedOrientations={['portrait', 'landscape']}
       >
         <View style={[styles.wrap, props.wrapStyle]}>
           <TouchableWithoutFeedback
