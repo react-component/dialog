@@ -3,7 +3,7 @@ import {
   View, Modal, Animated,
   TouchableWithoutFeedback,
   StyleSheet, Dimensions,
-  Easing,
+  Easing, KeyboardAvoidingView
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -215,7 +215,7 @@ export default class RCModal extends React.Component<IModalPropTypes, any> {
         onRequestClose={this.props.onClose}
         supportedOrientations={['portrait', 'landscape']}
       >
-        <View style={[styles.wrap, props.wrapStyle]}>
+        <KeyboardAvoidingView style={[styles.wrap, props.wrapStyle]} behavior={'padding'}>
           <TouchableWithoutFeedback
             onPress={ this.onMaskClose }
           >
@@ -230,7 +230,7 @@ export default class RCModal extends React.Component<IModalPropTypes, any> {
           >
             {this.props.children}
           </Animated.View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     );
   }
