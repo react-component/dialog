@@ -46,19 +46,20 @@
   },
   "devDependencies": {
     "@types/mocha": "~2.2.32",
-    "@types/react": "~0.14.41",
-    "@types/react-dom": "~0.14.18",
+    "@types/react": "^16.0.5",
+    "@types/react-dom": "^15.5.4",
     "@types/react-native": "~0.29.36",
     "async": "^0.9.0",
     "bluebird": "~2.9.30",
     "bootstrap": "^3.3.6",
+    "core-js": "^2.5.1",
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
     "pre-commit": "1.x",
     "rc-test": "^6.0.1",
     "rc-tools": "6.x",
-    "react": "^15.5.0",
-    "react-dom": "^15.5.0",
+    "react": "^16.0.0-rc.3",
+    "react-dom": "^16.0.0-rc.3",
     "react-native": "0.34.1",
     "react-native-index-page": "~0.1.0"
   },
@@ -71,6 +72,6 @@
     "create-react-class": "^15.5.2",
     "object-assign": "~4.1.0",
     "rc-animate": "2.x",
-    "rc-util": "^4.0.4"
+    "rc-util": "^4.1.0"
   }
 }

@@ -1,4 +1,6 @@
 /* eslint-disable func-names */
+import 'core-js/es6/map';
+import 'core-js/es6/set';
 import expect from 'expect.js';
 import Dialog from '../index';
 import '../assets/bootstrap.less';
