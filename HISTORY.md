@@ -1,9 +1,13 @@
 # History
 ----
 
+## 7.0.0 / 2017-11-02
+
+- Support React 16.
+
 ## 6.5.11 / 2017-8-21
 
-- fixed: RN modal support landscape orientation, https://github.com/react-component/dialog/pull/64 
+- fixed: RN modal support landscape orientation, https://github.com/react-component/dialog/pull/64
 
 ## 6.5.0 / 2016-10-25
 
