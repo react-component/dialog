@@ -77,8 +77,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         this.openTime = Date.now();
         this.lastOutSideFocusNode = document.activeElement;
         this.addScrollingEffect();
-        this.refs.wrap.focus();
-        const dialogNode = ReactDOM.findDOMNode(this.refs.dialog);
+        this.wrap.focus();
+        const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
           setTransformOrigin(dialogNode,
@@ -107,8 +107,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   onAnimateLeave = () => {
     // need demo?
     // https://github.com/react-component/dialog/pull/28
-    if (this.refs.wrap) {
-      this.refs.wrap.style.display = 'none';
+    if (this.wrap) {
+      this.wrap.style.display = 'none';
     }
     this.inTransition = false;
     this.removeScrollingEffect();
@@ -132,13 +132,12 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
         const activeElement = document.activeElement;
-        const dialogRoot = this.refs.wrap;
-        const sentinel = this.refs.sentinel;
+        const dialogRoot = this.wrap;
         if (e.shiftKey) {
           if (activeElement === dialogRoot) {
-            sentinel.focus();
+            this.sentinel.focus();
           }
-        } else if (activeElement === this.refs.sentinel) {
+        } else if (activeElement === this.sentinel) {
           dialogRoot.focus();
         }
       }
@@ -194,7 +193,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       <LazyRenderBox
         key="dialog-element"
         role="document"
-        ref="dialog"
+        ref={this.saveRef('dialog')}
         style={style}
         className={`${prefixCls} ${props.className || ''}`}
         visible={props.visible}
@@ -212,7 +211,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           </div>
           {footer}
         </div>
-        <div tabIndex={0} ref="sentinel" style={{ width: 0, height: 0, overflow: 'hidden' }}>
+        <div tabIndex={0} ref={this.saveRef('sentinel')} style={{ width: 0, height: 0, overflow: 'hidden' }}>
           sentinel
         </div>
       </LazyRenderBox>
@@ -294,7 +293,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     return transitionName;
   }
   getElement = (part) => {
-    return this.refs[part];
+    return this[part];
   }
   setScrollbar = () => {
     if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
@@ -338,20 +337,25 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     document.body.style.paddingRight = '';
   }
   adjustDialog = () => {
-    if (this.refs.wrap && this.scrollbarWidth !== undefined) {
+    if (this.wrap && this.scrollbarWidth !== undefined) {
       const modalIsOverflowing =
-        this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
-      this.refs.wrap.style.paddingLeft =
+        this.wrap.scrollHeight > document.documentElement.clientHeight;
+      this.wrap.style.paddingLeft =
         `${!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : ''}px`;
-      this.refs.wrap.style.paddingRight =
+      this.wrap.style.paddingRight =
         `${this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''}px`;
     }
   }
   resetAdjustments = () => {
-    if (this.refs.wrap) {
-      this.refs.wrap.style.paddingLeft = this.refs.wrap.style.paddingLeft = '';
+    if (this.wrap) {
+      this.wrap.style.paddingLeft = this.wrap.style.paddingLeft = '';
     }
   }
+
+  saveRef = (name) => (node) => {
+    this[name] = node;
+  }
+
   render() {
     const { props } = this;
     const { prefixCls, maskClosable } = props;
@@ -368,7 +372,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           tabIndex={-1}
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
-          ref="wrap"
+          ref={this.saveRef('wrap')}
           onClick={maskClosable ? this.onMaskClick : undefined}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
