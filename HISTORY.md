@@ -3,6 +3,8 @@
 
 ## 7.0.0 / 2017-11-02
 
+
+- Remove ReactNative support, please use https://github.com/react-component/m-dialog instead.
 - Support React 16.
 
 Notable change: Close animation won't trigger when dialog unmounting after React 16, see [facebook/react#10826](https://github.com/facebook/react/issues/10826)
