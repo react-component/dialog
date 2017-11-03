@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-dialog@6.5.11 - dialog ui component for react</title>
+  <title>rc-dialog@7.0.0 - dialog ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-dialog@6.5.11</h1>
+  <h1>rc-dialog@7.0.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -771,7 +771,7 @@ ReactDOM.render(
   <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
 )</span>, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'t1'</span>));
 
-<span class="hljs-comment">// use dialog</span></code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>rc-dialog(web)<a id="user-content-rc-dialog(web)" name="rc-dialog(web)" class="anchor" aria-hidden="true" href="#rc-dialog(web)"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
+<span class="hljs-comment">// use dialog</span></code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>rc-dialog<a id="user-content-rc-dialog" name="rc-dialog" class="anchor" aria-hidden="true" href="#rc-dialog"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th style="width: 100px;">name</th>
@@ -902,6 +902,12 @@ ReactDOM.render(
           <td>called when click close button or mask</td>
       </tr>
       <tr>
+          <td>afterClose</td>
+          <td>function()</td>
+          <td></td>
+          <td>called when close animation end</td>
+      </tr>
+      <tr>
           <td>getContainer</td>
           <td>function(): HTMLElement</td>
           <td></td>
@@ -910,78 +916,10 @@ ReactDOM.render(
     </tbody>
 </table>
 
-<h3>rc-dialog/lib/Modal (react-native)<a id="user-content-rc-dialog/lib/modal-(react-native)" name="rc-dialog/lib/modal-(react-native)" class="anchor" aria-hidden="true" href="#rc-dialog/lib/modal-(react-native)"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>wrapStyle</td>
-          <td></td>
-          <td>{}</td>
-          <td>style for modal wrap</td>
-      </tr>
-      <tr>
-          <td>maskStyle</td>
-          <td></td>
-          <td>{}</td>
-          <td>style for modal mask</td>
-      </tr>
-      <tr>
-          <td>style</td>
-          <td></td>
-          <td>{}</td>
-          <td>style for modal</td>
-      </tr>
-      <tr>
-          <td>animationType</td>
-          <td>none|fade|slide-up|slide-down</td>
-          <td>slide-up</td>
-          <td>animation type for modal content</td>
-      </tr>
-      <tr>
-          <td>animationDuration</td>
-          <td>number</td>
-          <td>300(ms)</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>visible</td>
-          <td>boolean</td>
-          <td></td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>animateAppear</td>
-          <td>false</td>
-          <td></td>
-          <td>whether animation on first show</td>
-      </tr>
-      <tr>
-          <td>onClose</td>
-          <td>()=&gt;void</td>
-          <td></td>
-          <td>called when close</td>
-      </tr>
-      <tr>
-          <td>onAnimationEnd</td>
-          <td>(visible:boolean)=&gt;void (animationType !== &#39;none&#39;)</td>
-          <td></td>
-          <td>called when animation end</td>
-      </tr>
-    </tbody>
-</table>
-
 <h2>Development<a id="user-content-development" name="development" class="anchor" aria-hidden="true" href="#development"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm install
 npm start</code></pre></div><h2>Example<a id="user-content-example" name="example" class="anchor" aria-hidden="true" href="#example"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8007/examples/" title="null">http://localhost:8007/examples/</a></p>
 <p>online example: <a href="http://react-component.github.io/dialog/" title="null">http://react-component.github.io/dialog/</a></p>
-<h2>react-native<a id="user-content-react-native" name="react-native" class="anchor" aria-hidden="true" href="#react-native"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">./node_modules/rc-tools run react-native-init
-react-native run-ios</code></pre></div><h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm test
+<h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm test
 npm run chrome-test</code></pre></div><h2>Coverage<a id="user-content-coverage" name="coverage" class="anchor" aria-hidden="true" href="#coverage"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm run coverage</code></pre></div><p>open coverage/ dir</p>
 <h2>License<a id="user-content-license" name="license" class="anchor" aria-hidden="true" href="#license"><span class="octicon octicon-link"></span></a></h2><p>rc-dialog is released under the MIT license.</p>
 
