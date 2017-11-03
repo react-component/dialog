@@ -47,7 +47,7 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
     return this._component.getElement(part);
   },
 
-  getComponent(instance) {
+  getComponent() {
     return (
       <Dialog
         ref={this.saveDialog}

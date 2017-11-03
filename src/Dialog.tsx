@@ -12,9 +12,6 @@ let openCount = 0;
 
 /* eslint react/no-is-mounted:0 */
 
-function noop() {
-}
-
 function getScroll(w, top?: boolean) {
   let ret = w[`page${top ? 'Y' : 'X'}Offset`];
   const method = `scroll${top ? 'Top' : 'Left'}`;
@@ -51,7 +48,6 @@ function offset(el) {
 
 export default class Dialog extends React.Component<IDialogPropTypes, any> {
   static defaultProps = {
-    afterClose: noop,
     className: '',
     mask: true,
     visible: false,
@@ -59,8 +55,18 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     closable: true,
     maskClosable: true,
     prefixCls: 'rc-dialog',
-    onClose: noop,
   };
+
+  private inTransition: boolean;
+  private titleId: string;
+  private openTime: number;
+  private lastOutSideFocusNode: HTMLElement | null;
+  private wrap: HTMLElement;
+  private dialog: LazyRenderBox;
+  private sentinel: HTMLElement;
+  private bodyIsOverflowing: boolean;
+  private scrollbarWidth: number;
+
   componentWillMount() {
     this.inTransition = false;
     this.titleId = `rcDialogTitle${uuid++}`;
@@ -75,7 +81,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
-        this.lastOutSideFocusNode = document.activeElement;
+        this.lastOutSideFocusNode = document.activeElement as HTMLElement;
         this.addScrollingEffect();
         this.wrap.focus();
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
@@ -105,6 +111,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
   }
   onAnimateLeave = () => {
+    const { afterClose } = this.props;
     // need demo?
     // https://github.com/react-component/dialog/pull/28
     if (this.wrap) {
@@ -112,7 +119,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
     this.inTransition = false;
     this.removeScrollingEffect();
-    this.props.afterClose();
+    if (afterClose) {
+      afterClose();
+    }
   }
   onMaskClick = (e) => {
     // android trigger click on open (fastclick??)
@@ -320,7 +329,10 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     // this.resetAdjustments();
   }
   close = (e) => {
-    this.props.onClose(e);
+    const { onClose } = this.props;
+    if (onClose) {
+      onClose(e);
+    }
   }
   checkScrollbar = () => {
     let fullWindowWidth = window.innerWidth;

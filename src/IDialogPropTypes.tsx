@@ -1,17 +1,20 @@
-import { ReactNode } from 'react';
+import { ReactNode, CSSProperties, SyntheticEvent } from 'react';
 
 interface IDialogPropTypes {
   className?: string;
   keyboard?: boolean;
-  style?: {};
+  style?: CSSProperties;
   mask?: boolean;
   children?: any;
-  afterClose?: () => void;
-  onClose?: () => void;
+  afterClose?: () => any;
+  onClose?: (e: SyntheticEvent<HTMLDivElement>) => any;
   closable?: boolean;
   maskClosable?: boolean;
   visible?: boolean;
-  mousePosition?: {};
+  mousePosition?: {
+    x: number,
+    y: number,
+  };
   title?: ReactNode;
   footer?: ReactNode;
   transitionName?: string;
@@ -23,6 +26,12 @@ interface IDialogPropTypes {
   maskStyle?: {};
   prefixCls?: string;
   wrapClassName?: string;
+  width?: number;
+  height?: number;
+  zIndex?: number;
+  bodyProps?: any;
+  maskProps?: any;
+  wrapProps?: any;
 }
 
 export default IDialogPropTypes;
