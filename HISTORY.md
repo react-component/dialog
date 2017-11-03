@@ -5,6 +5,8 @@
 
 - Support React 16.
 
+Notable change: Close animation won't trigger when dialog unmounting after React 16, see [facebook/react#10826](https://github.com/facebook/react/issues/10826)
+
 ## 6.5.11 / 2017-8-21
 
 - fixed: RN modal support landscape orientation, https://github.com/react-component/dialog/pull/64
