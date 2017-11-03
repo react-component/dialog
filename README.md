@@ -46,7 +46,7 @@ ReactDOM.render(
 
 ## API
 
-### rc-dialog(web)
+### rc-dialog
 
 
 <table class="table table-bordered table-striped">
@@ -188,75 +188,6 @@ ReactDOM.render(
     </tbody>
 </table>
 
-### rc-dialog/lib/Modal (react-native)
-
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>wrapStyle</td>
-          <td></td>
-          <td>{}</td>
-          <td>style for modal wrap</td>
-      </tr>
-      <tr>
-          <td>maskStyle</td>
-          <td></td>
-          <td>{}</td>
-          <td>style for modal mask</td>
-      </tr>
-      <tr>
-          <td>style</td>
-          <td></td>
-          <td>{}</td>
-          <td>style for modal</td>
-      </tr>
-      <tr>
-          <td>animationType</td>
-          <td>none|fade|slide-up|slide-down</td>
-          <td>slide-up</td>
-          <td>animation type for modal content</td>
-      </tr>
-      <tr>
-          <td>animationDuration</td>
-          <td>number</td>
-          <td>300(ms)</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>visible</td>
-          <td>boolean</td>
-          <td></td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>animateAppear</td>
-          <td>false</td>
-          <td></td>
-          <td>whether animation on first show</td>
-      </tr>
-      <tr>
-          <td>onClose</td>
-          <td>()=>void</td>
-          <td></td>
-          <td>called when close</td>
-      </tr>
-      <tr>
-          <td>onAnimationEnd</td>
-          <td>(visible:boolean)=>void (animationType !== 'none')</td>
-          <td></td>
-          <td>called when animation end</td>
-      </tr>
-    </tbody>
-</table>
-
 ## Development
 
 ```
@@ -269,13 +200,6 @@ npm start
 http://localhost:8007/examples/
 
 online example: http://react-component.github.io/dialog/
-
-## react-native
-
-```
-./node_modules/rc-tools run react-native-init
-react-native run-ios
-```
 
 ## Test Case
 
