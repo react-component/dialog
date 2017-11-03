@@ -180,6 +180,12 @@ ReactDOM.render(
           <td>called when click close button or mask</td>
       </tr>
       <tr>
+          <td>afterClose</td>
+          <td>function()</td>
+          <td></td>
+          <td>called when close animation end</td>
+      </tr>
+      <tr>
           <td>getContainer</td>
           <td>function(): HTMLElement</td>
           <td></td>
