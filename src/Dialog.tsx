@@ -301,9 +301,6 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
     return transitionName;
   }
-  getElement = (part) => {
-    return this[part];
-  }
   setScrollbar = () => {
     if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
       document.body.style.paddingRight = `${this.scrollbarWidth}px`;

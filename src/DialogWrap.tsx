@@ -43,10 +43,6 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
     this._component = node;
   },
 
-  getElement(part) {
-    return this._component.getElement(part);
-  },
-
   getComponent() {
     return (
       <Dialog
