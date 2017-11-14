@@ -65,6 +65,10 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
   render() {
     const { visible } = this.props;
 
+    if (!IS_REACT_16) {
+      return (null as any);
+    }
+
     if (visible || this._component) {
       return (
         <Portal getContainer={this.getContainer}>
@@ -72,8 +76,6 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
         </Portal>
       );
     }
-
-    return (null as any);
   },
 });
 
