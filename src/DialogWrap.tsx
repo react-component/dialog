@@ -39,15 +39,32 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
     return !!(this.props.visible || visible);
   },
 
+  componentWillUnmount() {
+    if (IS_REACT_16) {
+      return;
+    }
+    if (this.props.visible) {
+      this.renderComponent({
+        afterClose: this.removeContainer,
+        onClose() {
+        },
+        visible: false,
+      });
+    } else {
+      this.removeContainer();
+    }
+  },
+
   saveDialog(node) {
     this._component = node;
   },
 
-  getComponent() {
+  getComponent(extra) {
     return (
       <Dialog
         ref={this.saveDialog}
         {...this.props}
+        {...extra}
         key="dialog"
       />
     );
