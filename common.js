@@ -1957,7 +1957,7 @@ module.exports = focusNode;
 
 
 
-var IS_REACT_16 = !!__WEBPACK_IMPORTED_MODULE_2_react_dom__["createPortal"];
+var IS_REACT_16 = !!__WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.createPortal;
 var mixins = [];
 if (!IS_REACT_16) {
     mixins.push(Object(__WEBPACK_IMPORTED_MODULE_5_rc_util_es_getContainerRenderMixin__["a" /* default */])({
@@ -23877,10 +23877,10 @@ function getContainerRenderMixin(config) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
 
 
 
@@ -23934,7 +23934,7 @@ var Portal = function (_React$Component) {
     key: 'render',
     value: function render() {
       if (this._container) {
-        return Object(__WEBPACK_IMPORTED_MODULE_6_react_dom__["createPortal"])(this.props.children, this._container);
+        return __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.createPortal(this.props.children, this._container);
       }
       return null;
     }
@@ -23944,9 +23944,9 @@ var Portal = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
 
 Portal.propTypes = {
-  getContainer: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func.isRequired,
-  children: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node.isRequired,
-  didUpdate: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func
+  getContainer: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired,
+  children: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node.isRequired,
+  didUpdate: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
 };
 /* harmony default export */ __webpack_exports__["a"] = (Portal);
 
