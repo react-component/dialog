@@ -22,16 +22,28 @@
   "files": [
     "lib",
     "es",
-    "assets/*.css"
+    "assets/*.css",
+    "dist"
   ],
   "main": "./lib/DialogWrap",
   "module": "./es/DialogWrap",
   "config": {
-    "port": 8007
+    "port": 8007,
+    "entry": {
+      "rc-dialog": [
+        "./index.js",
+        "./assets/index.less"
+      ],
+      "rc-dialog-bootstrap": [
+        "./index.js",
+        "./assets/bootstrap.less"
+      ]
+    }
   },
   "scripts": {
     "watch-tsc": "rc-tools run watch-tsc",
     "build": "rc-tools run build",
+    "dist": "rc-tools run dist",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
     "compile": "rc-tools run compile --babel-runtime",
