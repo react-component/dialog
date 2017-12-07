@@ -1,12 +1,12 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
+import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
 import Dialog from './Dialog';
 import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
 import Portal from 'rc-util/lib/Portal';
 import IDialogPropTypes from './IDialogPropTypes';
 
-const IS_REACT_16 = !!createPortal;
+const IS_REACT_16 = !!ReactDOM.createPortal;
 
 const mixins: any[] = [];
 
