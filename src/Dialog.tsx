@@ -54,6 +54,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     keyboard: true,
     closable: true,
     maskClosable: true,
+    destroyOnHide: false,
     prefixCls: 'rc-dialog',
   };
 
@@ -198,33 +199,36 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
 
     const style = assign({}, props.style, dest);
     const transitionName = this.getTransitionName();
-    const dialogElement = (
-      <LazyRenderBox
-        key="dialog-element"
-        role="document"
-        ref={this.saveRef('dialog')}
-        style={style}
-        className={`${prefixCls} ${props.className || ''}`}
-        visible={props.visible}
-      >
-        <div className={`${prefixCls}-content`}>
-          {closer}
-          {header}
-          <div
-            className={`${prefixCls}-body`}
-            style={props.bodyStyle}
-            ref="body"
-            {...props.bodyProps}
-          >
-            {props.children}
+    let dialogElement;
+    if (props.visible || !props.destroyOnHide) {
+      dialogElement = (
+        <LazyRenderBox
+          key="dialog-element"
+          role="document"
+          ref={this.saveRef('dialog')}
+          style={style}
+          className={`${prefixCls} ${props.className || ''}`}
+          visible={props.visible}
+        >
+          <div className={`${prefixCls}-content`}>
+            {closer}
+            {header}
+            <div
+              className={`${prefixCls}-body`}
+              style={props.bodyStyle}
+              ref="body"
+              {...props.bodyProps}
+            >
+              {props.children}
+            </div>
+            {footer}
           </div>
-          {footer}
-        </div>
-        <div tabIndex={0} ref={this.saveRef('sentinel')} style={{ width: 0, height: 0, overflow: 'hidden' }}>
-          sentinel
-        </div>
-      </LazyRenderBox>
-    );
+          <div tabIndex={0} ref={this.saveRef('sentinel')} style={{ width: 0, height: 0, overflow: 'hidden' }}>
+            sentinel
+          </div>
+        </LazyRenderBox>
+      );
+    }
     return (
       <Animate
         key="dialog"
