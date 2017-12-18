@@ -197,4 +197,12 @@ describe('dialog', () => {
     });
     expect($('.rc-dialog-wrap')[0].parentNode.parentNode).to.be(returnedContainer);
   });
+
+  it('render footer padding correctly', () => {
+    async.series([() => {
+      ReactDOM.render(<DialogWrap footer={''} />, container)
+    }, () => {
+      expect($('.rc-dialog-footer').css('padding')).to.be('10px 20px');
+    }]);
+  });
 });
