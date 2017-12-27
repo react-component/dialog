@@ -115,6 +115,24 @@ describe('dialog', () => {
     }], finish);
   });
 
+  it("destroy on hide should unmount child components on close", () => {
+    const wrapper = ReactDOM.render(<DialogWrap destroyOnHide>
+      <input className="inputElem" />
+    </DialogWrap>, container);
+    wrapper.setState({
+      visible: true,
+    });
+    $(".inputElem").val("test");
+    expect($(".inputElem").val()).to.be("test")
+    wrapper.setState({
+      visible: false,
+    });
+    wrapper.setState({
+      visible: true,
+    });
+    expect($(".inputElem").val()).to.be("")
+  })
+
   it('esc to close', (finish) => {
     async.series([(done) => {
       dialog.setState({
