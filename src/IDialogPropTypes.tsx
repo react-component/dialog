@@ -11,7 +11,7 @@ interface IDialogPropTypes {
   closable?: boolean;
   maskClosable?: boolean;
   visible?: boolean;
-  destroyOnHide ?: boolean;
+  destroyOnClose ?: boolean;
   mousePosition?: {
     x: number,
     y: number,

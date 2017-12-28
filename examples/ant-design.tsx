@@ -12,8 +12,10 @@ class MyControl extends React.Component {
     width: 600,
     destroyOnClose: false,
     center: false,
+    mousePosition: {},
   };
-  onClick = (e) => {
+
+  onClick = e => {
     this.setState({
       mousePosition: {
         x: e.pageX,
@@ -22,86 +24,84 @@ class MyControl extends React.Component {
       visible: true,
     });
   }
-  onClose = (e) => {
+
+  onClose = e => {
     // console.log(e);
     this.setState({
       visible: false,
     });
   }
-  onDestroyOnCloseChange = (e) => {
+
+  onDestroyOnCloseChange = e => {
     this.setState({
       destroyOnClose: e.target.checked,
     });
   }
+
   changeWidth = () => {
     this.setState({
       width: this.state.width === 600 ? 800 : 600,
     });
   }
-  center = (e) => {
+
+  center = e => {
     this.setState({
       center: e.target.checked,
     });
   }
+
   render() {
-    let dialog;
-    if (this.state.visible || !this.state.destroyOnClose) {
-      const style = {
-        width: this.state.width,
-      };
-      let wrapClassName = '';
-      if (this.state.center) {
-        wrapClassName = 'center';
-      }
-      dialog = (
-        <Dialog
-          visible={this.state.visible}
-          wrapClassName={wrapClassName}
-          animation="zoom"
-          maskAnimation="fade"
-          onClose={this.onClose}
-          style={style}
-          mousePosition={this.state.mousePosition}
-        >
-          <input />
-          <p>basic modal</p>
-          <button onClick={this.changeWidth}>change width</button>
-          <div style={{ height: 200 }}></div>
-        </Dialog>
-      );
+    const style = {
+      width: this.state.width,
+    };
+    let wrapClassName = '';
+    if (this.state.center) {
+      wrapClassName = 'center';
     }
+    const dialog = (
+      <Dialog
+        visible={this.state.visible}
+        wrapClassName={wrapClassName}
+        animation="zoom"
+        maskAnimation="fade"
+        onClose={this.onClose}
+        style={style}
+        mousePosition={this.state.mousePosition}
+        destroyOnClose={this.state.destroyOnClose}
+      >
+        <input />
+        <p>basic modal</p>
+        <button onClick={this.changeWidth}>change width</button>
+        <div style={{ height: 200 }} />
+      </Dialog>
+    );
     return (
       <div style={{ width: '90%', margin: '0 auto' }}>
         <style>
-          {
-            `
+          {`
             .center {
               display: flex;
               align-items: center;
               justify-content: center;
             }
-            `
-          }
+            `}
         </style>
         <p>
-          <button
-            className="btn btn-primary"
-            onClick={this.onClick}
-          >
+          <button className="btn btn-primary" onClick={this.onClick}>
             show dialog
           </button>
-
           &nbsp;
-          <label>destroy on close:
+          <label>
+            destroy on close:
             <input
               type="checkbox"
               checked={this.state.destroyOnClose}
               onChange={this.onDestroyOnCloseChange}
             />
           </label>
-
           &nbsp;
-          <label>center
+          <label>
+            center
             <input
               type="checkbox"
               checked={this.state.center}

@@ -116,7 +116,7 @@ describe('dialog', () => {
   });
 
   it("destroy on hide should unmount child components on close", () => {
-    const wrapper = ReactDOM.render(<DialogWrap destroyOnHide>
+    const wrapper = ReactDOM.render(<DialogWrap destroyOnClose>
       <input className="inputElem" />
     </DialogWrap>, container);
     wrapper.setState({

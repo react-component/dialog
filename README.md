@@ -192,7 +192,7 @@ ReactDOM.render(
           <td>to determine where Dialog will be mounted</td>
       </tr>
       <tr>
-          <td>destroyOnHide</td>
+          <td>destroyOnClose</td>
           <td>Boolean</td>
           <td>false</td>
           <td>to unmount child compenents on onClose</td>
