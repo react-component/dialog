@@ -54,6 +54,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     keyboard: true,
     closable: true,
     maskClosable: true,
+    destroyOnHide: false,
     prefixCls: 'rc-dialog',
   };
 
@@ -234,7 +235,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         component=""
         transitionAppear
       >
-        {dialogElement}
+        {(props.visible || !props.destroyOnHide) ? dialogElement : null}
       </Animate>
     );
   }
