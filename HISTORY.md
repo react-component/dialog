@@ -1,6 +1,10 @@
 # History
 ----
 
+## 7.1.0 / 2017-12-28
+
+- Add destroyOnClose. [#72](https://github.com/react-component/dialog/pull/72) [@Rohanhacker](https://github.com/Rohanhacker)
+
 ## 7.0.0 / 2017-11-02
 
 
