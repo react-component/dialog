@@ -55,7 +55,8 @@ var MyControl = function (_React$Component) {
             visible: false,
             width: 600,
             destroyOnClose: false,
-            center: false
+            center: false,
+            mousePosition: {}
         };
         _this.onClick = function (e) {
             _this.setState({
@@ -91,17 +92,14 @@ var MyControl = function (_React$Component) {
     }
 
     MyControl.prototype.render = function render() {
-        var dialog = void 0;
-        if (this.state.visible || !this.state.destroyOnClose) {
-            var style = {
-                width: this.state.width
-            };
-            var wrapClassName = '';
-            if (this.state.center) {
-                wrapClassName = 'center';
-            }
-            dialog = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__src_DialogWrap__["a" /* default */], { visible: this.state.visible, wrapClassName: wrapClassName, animation: "zoom", maskAnimation: "fade", onClose: this.onClose, style: style, mousePosition: this.state.mousePosition }, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("input", null), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("button", { onClick: this.changeWidth }, "change width"), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { style: { height: 200 } }));
+        var style = {
+            width: this.state.width
+        };
+        var wrapClassName = '';
+        if (this.state.center) {
+            wrapClassName = 'center';
         }
+        var dialog = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__src_DialogWrap__["a" /* default */], { visible: this.state.visible, wrapClassName: wrapClassName, animation: "zoom", maskAnimation: "fade", onClose: this.onClose, style: style, mousePosition: this.state.mousePosition, destroyOnClose: this.state.destroyOnClose }, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("input", null), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("button", { onClick: this.changeWidth }, "change width"), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { style: { height: 200 } }));
         return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { style: { width: '90%', margin: '0 auto' } }, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("style", null, '\n            .center {\n              display: flex;\n              align-items: center;\n              justify-content: center;\n            }\n            '), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("p", null, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("button", { className: "btn btn-primary", onClick: this.onClick }, "show dialog"), '\xA0', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("label", null, "destroy on close:", __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("input", { type: "checkbox", checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })), '\xA0', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("label", null, "center", __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("input", { type: "checkbox", checked: this.state.center, onChange: this.center }))), dialog);
     };
 
