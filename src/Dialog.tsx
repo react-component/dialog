@@ -5,7 +5,6 @@ import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import IDialogPropTypes from './IDialogPropTypes';
-import assign from 'object-assign';
 
 let uuid = 0;
 let openCount = 0;
@@ -197,7 +196,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         </button>);
     }
 
-    const style = assign({}, props.style, dest);
+    const style = { ... props.style, ...dest };
     const transitionName = this.getTransitionName();
     const dialogElement = (
       <LazyRenderBox
@@ -248,10 +247,10 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     return style;
   }
   getWrapStyle = () : any => {
-    return assign({}, this.getZIndexStyle(), this.props.wrapStyle);
+    return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
   }
   getMaskStyle = () => {
-    return assign({}, this.getZIndexStyle(), this.props.maskStyle);
+    return { ...this.getZIndexStyle(), ...this.props.maskStyle };
   }
   getMaskElement = () => {
     const props = this.props;
