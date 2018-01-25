@@ -13,11 +13,6 @@ declare module "rc-util/lib/getContainerRenderMixin" {
   export default Ret;
 }
 
-declare module "object-assign" {
-  var Ret: any;
-  export default Ret;
-}
-
 declare module "rc-animate" {
   var Ret: any;
   export default Ret;

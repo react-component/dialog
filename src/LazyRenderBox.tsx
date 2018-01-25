@@ -1,5 +1,4 @@
 import React from 'react';
-import assign from 'object-assign';
 
 export interface ILazyRenderBoxPropTypes {
   className?: string;
@@ -18,7 +17,7 @@ export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTyp
     if (!!this.props.hiddenClassName && !this.props.visible) {
       className += ` ${this.props.hiddenClassName}`;
     }
-    const props: any = assign({}, this.props);
+    const props: any = { ...this.props };
     delete props.hiddenClassName;
     delete props.visible;
     props.className = className;
