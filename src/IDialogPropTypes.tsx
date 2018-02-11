@@ -33,6 +33,7 @@ interface IDialogPropTypes {
   bodyProps?: any;
   maskProps?: any;
   wrapProps?: any;
+  getContainer?: () => HTMLElement;
 }
 
 export default IDialogPropTypes;

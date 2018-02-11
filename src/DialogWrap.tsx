@@ -1,43 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createReactClass from 'create-react-class';
 import Dialog from './Dialog';
-import getContainerRenderMixin from 'rc-util/lib/getContainerRenderMixin';
+import ContainerRender from 'rc-util/lib/ContainerRender';
 import Portal from 'rc-util/lib/Portal';
 import IDialogPropTypes from './IDialogPropTypes';
 
 const IS_REACT_16 = !!ReactDOM.createPortal;
 
-const mixins: any[] = [];
+class DialogWrap extends React.Component<IDialogPropTypes, any> {
+  static defaultProps  = {
+    visible: false,
+  };
 
-if (!IS_REACT_16) {
-  mixins.push(
-    getContainerRenderMixin({
-      isVisible(instance) {
-        return instance.props.visible;
-      },
-      autoDestroy: false,
-      getContainer(instance) {
-        return instance.getContainer();
-      },
-    }),
-  );
-};
+  _component: React.ReactElement<any>;
 
-const DialogWrap = createReactClass<IDialogPropTypes, any>({
-  displayName: 'DialogWrap',
+  renderComponent: (props) => void;
 
-  mixins,
-
-  getDefaultProps() {
-    return {
-      visible: false,
-    };
-  },
+  removeContainer: () => void;
 
   shouldComponentUpdate({ visible }) {
     return !!(this.props.visible || visible);
-  },
+  }
 
   componentWillUnmount() {
     if (IS_REACT_16) {
@@ -53,13 +36,13 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
     } else {
       this.removeContainer();
     }
-  },
+  }
 
-  saveDialog(node) {
+  saveDialog = (node) => {
     this._component = node;
-  },
+ }
 
-  getComponent(extra) {
+  getComponent = (extra = {}) => {
     return (
       <Dialog
         ref={this.saveDialog}
@@ -68,16 +51,16 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
         key="dialog"
       />
     );
-  },
+  }
 
-  getContainer() {
+  getContainer = () => {
     if (this.props.getContainer) {
       return this.props.getContainer();
     }
     const container = document.createElement('div');
     document.body.appendChild(container);
     return container;
-  },
+  }
 
   render() {
     const { visible } = this.props;
@@ -85,7 +68,21 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
     let portal: any = null;
 
     if (!IS_REACT_16) {
-      return portal;
+      return (
+        <ContainerRender
+          parent={this}
+          visible={visible}
+          autoDestroy={false}
+          getComponent={this.getComponent}
+          getContainer={this.getContainer}
+        >
+          {({ renderComponent, removeContainer }) => {
+            this.renderComponent = renderComponent;
+            this.removeContainer = removeContainer;
+            return null;
+          }}
+        </ContainerRender>
+      );
     }
 
     if (visible || this._component) {
@@ -97,7 +94,7 @@ const DialogWrap = createReactClass<IDialogPropTypes, any>({
     }
 
     return portal;
-  },
-});
+  }
+}
 
 export default DialogWrap;
