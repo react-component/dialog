@@ -11069,7 +11069,7 @@ module.exports = getHostComponentFromComposite;
 
 
 
-var IS_REACT_16 = !!__WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.createPortal;
+var IS_REACT_16 = !!__WEBPACK_IMPORTED_MODULE_5_react_dom__["createPortal"];
 
 var DialogWrap = function (_React$Component) {
     __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(DialogWrap, _React$Component);
@@ -11085,7 +11085,7 @@ var DialogWrap = function (_React$Component) {
         _this.getComponent = function () {
             var extra = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Dialog__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ ref: _this.saveDialog }, _this.props, extra, { key: "dialog" }));
+            return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_6__Dialog__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ ref: _this.saveDialog }, _this.props, extra, { key: "dialog" }));
         };
         _this.getContainer = function () {
             if (_this.props.getContainer) {
@@ -11127,7 +11127,7 @@ var DialogWrap = function (_React$Component) {
 
         var portal = null;
         if (!IS_REACT_16) {
-            return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_ContainerRender__["a" /* default */], { parent: this, visible: visible, autoDestroy: false, getComponent: this.getComponent, getContainer: this.getContainer }, function (_ref2) {
+            return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_7_rc_util_es_ContainerRender__["a" /* default */], { parent: this, visible: visible, autoDestroy: false, getComponent: this.getComponent, getContainer: this.getContainer }, function (_ref2) {
                 var renderComponent = _ref2.renderComponent,
                     removeContainer = _ref2.removeContainer;
 
@@ -11137,13 +11137,13 @@ var DialogWrap = function (_React$Component) {
             });
         }
         if (visible || this._component) {
-            portal = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_Portal__["a" /* default */], { getContainer: this.getContainer }, this.getComponent());
+            portal = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_8_rc_util_es_Portal__["a" /* default */], { getContainer: this.getContainer }, this.getComponent());
         }
         return portal;
     };
 
     return DialogWrap;
-}(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_4_react__["Component"]);
 
 DialogWrap.defaultProps = {
     visible: false
@@ -24100,20 +24100,20 @@ var Dialog = function (_React$Component) {
             }
             var footer = void 0;
             if (props.footer) {
-                footer = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { className: prefixCls + '-footer', ref: "footer" }, props.footer);
+                footer = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", { className: prefixCls + '-footer', ref: "footer" }, props.footer);
             }
             var header = void 0;
             if (props.title) {
-                header = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { className: prefixCls + '-header', ref: "header" }, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { className: prefixCls + '-title', id: _this.titleId }, props.title));
+                header = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", { className: prefixCls + '-header', ref: "header" }, __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", { className: prefixCls + '-title', id: _this.titleId }, props.title));
             }
             var closer = void 0;
             if (closable) {
-                closer = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("button", { onClick: _this.close, "aria-label": "Close", className: prefixCls + '-close' }, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("span", { className: prefixCls + '-close-x' }));
+                closer = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("button", { onClick: _this.close, "aria-label": "Close", className: prefixCls + '-close' }, __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("span", { className: prefixCls + '-close-x' }));
             }
             var style = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, props.style, dest);
             var transitionName = _this.getTransitionName();
-            var dialogElement = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__LazyRenderBox__["a" /* default */], { key: "dialog-element", role: "document", ref: _this.saveRef('dialog'), style: style, className: prefixCls + ' ' + (props.className || ''), visible: props.visible }, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { className: prefixCls + '-content' }, closer, header, __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ className: prefixCls + '-body', style: props.bodyStyle, ref: "body" }, props.bodyProps), props.children), footer), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", { tabIndex: 0, ref: _this.saveRef('sentinel'), style: { width: 0, height: 0, overflow: 'hidden' } }, "sentinel"));
-            return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_animate__["a" /* default */], { key: "dialog", showProp: "visible", onLeave: _this.onAnimateLeave, transitionName: transitionName, component: "", transitionAppear: true }, props.visible || !props.destroyOnClose ? dialogElement : null);
+            var dialogElement = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_8__LazyRenderBox__["a" /* default */], { key: "dialog-element", role: "document", ref: _this.saveRef('dialog'), style: style, className: prefixCls + ' ' + (props.className || ''), visible: props.visible }, __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", { className: prefixCls + '-content' }, closer, header, __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ className: prefixCls + '-body', style: props.bodyStyle, ref: "body" }, props.bodyProps), props.children), footer), __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", { tabIndex: 0, ref: _this.saveRef('sentinel'), style: { width: 0, height: 0, overflow: 'hidden' } }, "sentinel"));
+            return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_7_rc_animate__["a" /* default */], { key: "dialog", showProp: "visible", onLeave: _this.onAnimateLeave, transitionName: transitionName, component: "", transitionAppear: true }, props.visible || !props.destroyOnClose ? dialogElement : null);
         };
         _this.getZIndexStyle = function () {
             var style = {};
@@ -24134,9 +24134,9 @@ var Dialog = function (_React$Component) {
             var maskElement = void 0;
             if (props.mask) {
                 var maskTransition = _this.getMaskTransitionName();
-                maskElement = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__LazyRenderBox__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ style: _this.getMaskStyle(), key: "mask", className: props.prefixCls + '-mask', hiddenClassName: props.prefixCls + '-mask-hidden', visible: props.visible }, props.maskProps));
+                maskElement = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_8__LazyRenderBox__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ style: _this.getMaskStyle(), key: "mask", className: props.prefixCls + '-mask', hiddenClassName: props.prefixCls + '-mask-hidden', visible: props.visible }, props.maskProps));
                 if (maskTransition) {
-                    maskElement = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_animate__["a" /* default */], { key: "mask", showProp: "visible", transitionAppear: true, component: "", transitionName: maskTransition }, maskElement);
+                    maskElement = __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_7_rc_animate__["a" /* default */], { key: "mask", showProp: "visible", transitionAppear: true, component: "", transitionName: maskTransition }, maskElement);
                 }
             }
             return maskElement;
@@ -24243,7 +24243,7 @@ var Dialog = function (_React$Component) {
                 this.lastOutSideFocusNode = document.activeElement;
                 this.addScrollingEffect();
                 this.wrap.focus();
-                var dialogNode = __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.findDOMNode(this.dialog);
+                var dialogNode = __WEBPACK_IMPORTED_MODULE_5_react_dom__["findDOMNode"](this.dialog);
                 if (mousePosition) {
                     var elOffset = offset(dialogNode);
                     setTransformOrigin(dialogNode, mousePosition.x - elOffset.left + 'px ' + (mousePosition.y - elOffset.top) + 'px');
@@ -24281,11 +24281,11 @@ var Dialog = function (_React$Component) {
         if (props.visible) {
             style.display = null;
         }
-        return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", null, this.getMaskElement(), __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: this.saveRef('wrap'), onClick: maskClosable ? this.onMaskClick : undefined, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
+        return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", null, this.getMaskElement(), __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: this.saveRef('wrap'), onClick: maskClosable ? this.onMaskClick : undefined, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
     };
 
     return Dialog;
-}(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_4_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Dialog);
 
@@ -26083,11 +26083,11 @@ var LazyRenderBox = function (_React$Component) {
         delete props.hiddenClassName;
         delete props.visible;
         props.className = className;
-        return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, props));
+        return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, props));
     };
 
     return LazyRenderBox;
-}(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_4_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (LazyRenderBox);
 
