@@ -14,7 +14,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
 
   _component: React.ReactElement<any>;
 
-  renderComponent: (props) => void;
+  renderComponent: (props: any) => void;
 
   removeContainer: () => void;
 
