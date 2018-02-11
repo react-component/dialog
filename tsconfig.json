@@ -2,8 +2,8 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
     "jsx": "react",
-    "target": "es6"
+    "target": "es6",
+    "noImplicitAny": true
   }
 }

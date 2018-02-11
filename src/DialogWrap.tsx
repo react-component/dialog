@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 import ContainerRender from 'rc-util/lib/ContainerRender';
 import Portal from 'rc-util/lib/Portal';
@@ -18,7 +18,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
 
   removeContainer: () => void;
 
-  shouldComponentUpdate({ visible }) {
+  shouldComponentUpdate({ visible }: { visible: boolean }) {
     return !!(this.props.visible || visible);
   }
 
@@ -38,7 +38,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
     }
   }
 
-  saveDialog = (node) => {
+  saveDialog = (node: any) => {
     this._component = node;
  }
 
@@ -76,7 +76,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
           getComponent={this.getComponent}
           getContainer={this.getContainer}
         >
-          {({ renderComponent, removeContainer }) => {
+          {({ renderComponent, removeContainer }: { renderComponent: any, removeContainer: any }) => {
             this.renderComponent = renderComponent;
             this.removeContainer = removeContainer;
             return null;

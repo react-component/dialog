@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
@@ -11,7 +11,7 @@ let openCount = 0;
 
 /* eslint react/no-is-mounted:0 */
 
-function getScroll(w, top?: boolean) {
+function getScroll(w: any, top?: boolean) {
   let ret = w[`page${top ? 'Y' : 'X'}Offset`];
   const method = `scroll${top ? 'Top' : 'Left'}`;
   if (typeof ret !== 'number') {
@@ -24,15 +24,15 @@ function getScroll(w, top?: boolean) {
   return ret;
 }
 
-function setTransformOrigin(node, value) {
+function setTransformOrigin(node: any, value: string) {
   const style = node.style;
-  ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix) => {
+  ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix: string) => {
     style[`${prefix}TransformOrigin`] = value;
   });
   style[`transformOrigin`] = value;
 }
 
-function offset(el) {
+function offset(el: any) {
   const rect = el.getBoundingClientRect();
   const pos = {
     left: rect.left,
@@ -62,7 +62,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private openTime: number;
   private lastOutSideFocusNode: HTMLElement | null;
   private wrap: HTMLElement;
-  private dialog: LazyRenderBox;
+  private dialog: any;
   private sentinel: HTMLElement;
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
@@ -74,7 +74,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   componentDidMount() {
     this.componentDidUpdate({});
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
     const mousePosition = this.props.mousePosition;
     if (props.visible) {
@@ -123,7 +123,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       afterClose();
     }
   }
-  onMaskClick = (e) => {
+  onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // android trigger click on open (fastclick??)
     if (Date.now() - this.openTime < 300) {
       return;
@@ -132,7 +132,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       this.close(e);
     }
   }
-  onKeyDown = (e) => {
+  onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
       this.close(e);
@@ -325,7 +325,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     this.resetScrollbar();
     // this.resetAdjustments();
   }
-  close = (e) => {
+  close = (e: any) => {
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
@@ -361,8 +361,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
   }
 
-  saveRef = (name) => (node) => {
-    this[name] = node;
+  saveRef = (name: string) => (node: any) => {
+    (this as any)[name] = node;
   }
 
   render() {

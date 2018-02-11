@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 export interface ILazyRenderBoxPropTypes {
   className?: string;
@@ -9,7 +9,7 @@ export interface ILazyRenderBoxPropTypes {
 }
 
 export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTypes, any> {
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: ILazyRenderBoxPropTypes) {
     return !!nextProps.hiddenClassName || !!nextProps.visible;
   }
   render() {

@@ -3,12 +3,7 @@ declare module "rc-util/lib/KeyCode" {
   export default Ret;
 }
 
-declare module "rc-util/lib/getScrollBarSize" {
-  var Ret: any;
-  export default Ret;
-}
-
-declare module "rc-util/lib/getContainerRenderMixin" {
+declare module "rc-util/lib/*" {
   var Ret: any;
   export default Ret;
 }
