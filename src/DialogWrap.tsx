@@ -5,7 +5,7 @@ import ContainerRender from 'rc-util/lib/ContainerRender';
 import Portal from 'rc-util/lib/Portal';
 import IDialogPropTypes from './IDialogPropTypes';
 
-const IS_REACT_16 = !!ReactDOM.createPortal;
+const IS_REACT_16 = 'createPortal' in ReactDOM;
 
 class DialogWrap extends React.Component<IDialogPropTypes, any> {
   static defaultProps  = {
