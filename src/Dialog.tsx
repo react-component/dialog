@@ -365,6 +365,14 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     (this as any)[name] = node;
   }
 
+  saveWrapRef = (node: any) => {
+    this.saveRef('wrap')(node);
+
+    if (this.wrap && !this.props.visible) {
+      this.wrap.style.display = 'none';
+    }
+  }
+
   render() {
     const { props } = this;
     const { prefixCls, maskClosable } = props;
@@ -381,7 +389,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           tabIndex={-1}
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
-          ref={this.saveRef('wrap')}
+          ref={this.saveWrapRef}
           onClick={maskClosable ? this.onMaskClick : undefined}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
