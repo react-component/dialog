@@ -167,7 +167,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     let footer;
     if (props.footer) {
       footer = (
-        <div className={`${prefixCls}-footer`} ref="footer">
+        <div className={`${prefixCls}-footer`} ref={this.saveRef('footer')}>
           {props.footer}
         </div>
       );
@@ -176,7 +176,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     let header;
     if (props.title) {
       header = (
-        <div className={`${prefixCls}-header`} ref="header">
+        <div className={`${prefixCls}-header`} ref={this.saveRef('header')}>
           <div className={`${prefixCls}-title`} id={this.titleId}>
             {props.title}
           </div>
@@ -213,7 +213,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           <div
             className={`${prefixCls}-body`}
             style={props.bodyStyle}
-            ref="body"
+            ref={this.saveRef('body')}
             {...props.bodyProps}
           >
             {props.children}
