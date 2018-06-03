@@ -213,7 +213,9 @@ describe('dialog', () => {
     d.setState({
       visible: true,
     });
-    expect($('.rc-dialog-wrap')[0].parentNode.parentNode).to.be(returnedContainer);
+    // fix issue #10656, must change this test
+    // expect($('.rc-dialog-wrap')[0].parentNode.parentNode).to.be(returnedContainer);
+    expect($('.rc-dialog-wrap')[0].parentNode.parentNode.parentNode).to.be(returnedContainer);
   });
 
   it('render footer padding correctly', () => {
