@@ -232,7 +232,6 @@ describe('dialog', () => {
     d.setState({
       visible: true
     });
-    console.log(document.activeElement);
     expect(document.activeElement).to.be(document.querySelector('input'));
   });
 });
