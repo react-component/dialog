@@ -69,7 +69,7 @@ class MyControl extends React.Component {
         mousePosition={this.state.mousePosition}
         destroyOnClose={this.state.destroyOnClose}
       >
-        <input />
+        <input autoFocus />
         <p>basic modal</p>
         <button onClick={this.changeWidth}>change width</button>
         <div style={{ height: 200 }} />

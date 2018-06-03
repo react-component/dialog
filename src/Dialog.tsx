@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
+import contains from 'rc-util/lib/Dom/contains';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
@@ -81,9 +82,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
-        this.lastOutSideFocusNode = document.activeElement as HTMLElement;
         this.addScrollingEffect();
-        this.wrap.focus();
+        this.tryFocus();
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
@@ -110,6 +110,14 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       this.removeScrollingEffect();
     }
   }
+
+  tryFocus() {
+    if (!contains(this.wrap, document.activeElement)) {
+      this.lastOutSideFocusNode = document.activeElement as HTMLElement;
+      this.wrap.focus();
+    }
+  }
+
   onAnimateLeave = () => {
     const { afterClose } = this.props;
     // need demo?

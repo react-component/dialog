@@ -223,4 +223,16 @@ describe('dialog', () => {
       expect($('.rc-dialog-footer').css('padding')).to.be('10px 20px');
     }]);
   });
+
+  it('support input autoFocus', () => {
+    const d = ReactDOM.render(
+      <DialogWrap><input autoFocus /></DialogWrap>,
+      container
+    );
+    d.setState({
+      visible: true
+    });
+    console.log(document.activeElement);
+    expect(document.activeElement).to.be(document.querySelector('input'));
+  });
 });
