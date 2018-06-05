@@ -1827,12 +1827,20 @@ var DialogWrap = function (_React$Component) {
 
             return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"](__WEBPACK_IMPORTED_MODULE_6__Dialog__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ ref: _this.saveDialog }, _this.props, extra, { key: "dialog" }));
         };
+        // fix issue #10656
+        /*
+        * Custom container should not be return, because in the Portal component, it will remove the
+        * return container element here, if the custom container is the only child of it's component,
+        * like issue #10656, It will has a conflict with removeChild method in react-dom.
+        * So here should add a child (div element) to custom container.
+        * */
         _this.getContainer = function () {
-            if (_this.props.getContainer) {
-                return _this.props.getContainer();
-            }
             var container = document.createElement('div');
-            document.body.appendChild(container);
+            if (_this.props.getContainer) {
+                _this.props.getContainer().appendChild(container);
+            } else {
+                document.body.appendChild(container);
+            }
             return container;
         };
         return _this;
