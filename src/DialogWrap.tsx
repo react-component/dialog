@@ -53,12 +53,20 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
     );
   }
 
+  // fix issue #10656
+  /*
+  * Custom container should not be return, because in the Portal component, it will remove the
+  * return container element here, if the custom container is the only child of it's component,
+  * like issue #10656, It will has a conflict with removeChild method in react-dom.
+  * So here should add a child (div element) to custom container.
+  * */
   getContainer = () => {
-    if (this.props.getContainer) {
-      return this.props.getContainer();
-    }
     const container = document.createElement('div');
-    document.body.appendChild(container);
+    if (this.props.getContainer) {
+      this.props.getContainer().appendChild(container);
+    } else {
+      document.body.appendChild(container);
+    }
     return container;
   }
 
