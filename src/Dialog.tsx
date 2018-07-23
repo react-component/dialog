@@ -143,7 +143,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
+      e.stopPropagation();
       this.close(e);
+      return;
     }
     // keep focus inside dialog
     if (props.visible) {
