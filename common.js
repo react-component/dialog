@@ -22143,7 +22143,9 @@ var Dialog = function (_React$Component) {
         _this.onKeyDown = function (e) {
             var props = _this.props;
             if (props.keyboard && e.keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ESC) {
+                e.stopPropagation();
                 _this.close(e);
+                return;
             }
             // keep focus inside dialog
             if (props.visible) {
