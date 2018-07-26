@@ -202,7 +202,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           aria-label="Close"
           className={`${prefixCls}-close`}
         >
-          <span className={`${prefixCls}-close-x`} />
+          {props.closeIcon || <span className={`${prefixCls}-close-x`} />}
         </button>);
     }
 
