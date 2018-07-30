@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ant-design.js - example - rc-dialog@7.1.8</title>
+  <title>ant-design.js - example - rc-dialog@7.2.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-dialog@7.1.8</h1>
+      <h1>rc-dialog@7.2.0</h1>
 
       <p>dialog ui component for react</p>
     </div>
@@ -277,6 +277,28 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-comment">// use import Dialog from 'rc-dialog'</span>
 <span class="hljs-keyword">import</span> Dialog <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/DialogWrap'</span>;
 
+<span class="hljs-keyword">const</span> clearPath = <span class="hljs-string">'M793 242H366v-74c0-6.7-7.7-10.4-12.9'</span> +
+  <span class="hljs-string">'-6.3l-142 112c-4.1 3.2-4.1 9.4 0 12.6l142 112c'</span> +
+  <span class="hljs-string">'5.2 4.1 12.9 0.4 12.9-6.3v-74h415v470H175c-4.4'</span> +
+  <span class="hljs-string">' 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h618c35.3 0 64-'</span> +
+  <span class="hljs-string">'28.7 64-64V306c0-35.3-28.7-64-64-64z'</span>;
+
+<span class="hljs-keyword">const</span> getSvg = (path: string, props = {}, align = <span class="hljs-literal">false</span>) =&gt; {
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">i</span> {<span class="hljs-attribute">...props</span>}&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">svg</span>
+        <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 1024 1024"</span>
+        <span class="hljs-attribute">width</span>=<span class="hljs-value">"1em"</span>
+        <span class="hljs-attribute">height</span>=<span class="hljs-value">"1em"</span>
+        <span class="hljs-attribute">fill</span>=<span class="hljs-value">"currentColor"</span>
+        <span class="hljs-attribute">style</span>=<span class="hljs-value">{align</span> ? { <span class="hljs-attribute">verticalAlign:</span> '<span class="hljs-attribute">-.125em</span> ' } <span class="hljs-attribute">:</span> {}}
+      &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">{path}</span> <span class="hljs-attribute">p-id</span>=<span class="hljs-value">"5827"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">path</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span>
+  )</span>;
+};
+
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   state = {
     visible: <span class="hljs-literal">false</span>,
@@ -284,6 +306,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     destroyOnClose: <span class="hljs-literal">false</span>,
     center: <span class="hljs-literal">false</span>,
     mousePosition: {},
+    useIcon: <span class="hljs-literal">false</span>,
   };
 
   onClick = e =&gt; {
@@ -321,6 +344,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   }
 
+  toggleCloseIcon = () =&gt; {
+    <span class="hljs-keyword">this</span>.setState({
+      useIcon: !<span class="hljs-keyword">this</span>.state.useIcon,
+    });
+  }
+
   render() {
     <span class="hljs-keyword">const</span> style = {
       width: <span class="hljs-keyword">this</span>.state.width,
@@ -339,10 +368,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>
         <span class="hljs-attribute">mousePosition</span>=<span class="hljs-value">{this.state.mousePosition}</span>
         <span class="hljs-attribute">destroyOnClose</span>=<span class="hljs-value">{this.state.destroyOnClose}</span>
+        <span class="hljs-attribute">closeIcon</span>=<span class="hljs-value">{this.state.useIcon</span> ? <span class="hljs-attribute">getSvg</span>(<span class="hljs-attribute">clearPath</span>, {}, <span class="hljs-attribute">true</span>) <span class="hljs-attribute">:</span> <span class="hljs-attribute">undefined</span>}
       &gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">autoFocus</span> /&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.changeWidth}</span>&gt;</span>change width<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleCloseIcon}</span>&gt;</span>
+          use custom icon, is using icon: {this.state.useIcon &amp;&amp; 'true' || 'false'}.
+        <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">height:</span> <span class="hljs-attribute">200</span> }} /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
     )</span>;
