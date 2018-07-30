@@ -34,6 +34,7 @@ interface IDialogPropTypes {
   maskProps?: any;
   wrapProps?: any;
   getContainer?: () => HTMLElement;
+  closeIcon?: ReactNode;
 }
 
 export default IDialogPropTypes;

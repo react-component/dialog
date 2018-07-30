@@ -197,6 +197,12 @@ ReactDOM.render(
           <td>false</td>
           <td>to unmount child compenents on onClose</td>
       </tr>
+      <tr>
+          <td>closeIcon</td>
+          <td>ReactNode</td>
+          <td></td>
+          <td>specific the close icon.</td>
+      </tr>
     </tbody>
 </table>
 

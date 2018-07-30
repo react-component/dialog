@@ -52,6 +52,7 @@ describe('dialog', () => {
         style={{ width: 600 }}
         title={title}
         onClose={onClose}
+        closeIcon={'test-text'}
       >
         <p>第一个dialog</p>
       </DialogWrap>), container);
@@ -105,6 +106,7 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       const btn = $('.rc-dialog-close')[0];
+      expect(btn.innerText).to.be('test-text');
       Simulate.click(btn);
       setTimeout(done, 10);
     }, (done) => {
