@@ -1,6 +1,10 @@
 # History
 ----
 
+## 7.2.0 / 2018-07-30
+
+- Add closeIcon. [#89](*https://github.com/react-component/dialog/pull/89) [@HeskeyBaozi ](https://github.com/HeskeyBaozi)
+
 ## 7.1.0 / 2017-12-28
 
 - Add destroyOnClose. [#72](https://github.com/react-component/dialog/pull/72) [@Rohanhacker](https://github.com/Rohanhacker)
