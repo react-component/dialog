@@ -64,7 +64,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private lastOutSideFocusNode: HTMLElement | null;
   private wrap: HTMLElement;
   private dialog: any;
-  private sentinel: HTMLElement;
+  private sentinelStart: HTMLElement;
+  private sentinelEnd: HTMLElement;
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
 
@@ -114,7 +115,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   tryFocus() {
     if (!contains(this.wrap, document.activeElement)) {
       this.lastOutSideFocusNode = document.activeElement as HTMLElement;
-      this.wrap.focus();
+      this.sentinelStart.focus();
     }
   }
 
@@ -151,13 +152,13 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (props.visible) {
       if (e.keyCode === KeyCode.TAB) {
         const activeElement = document.activeElement;
-        const dialogRoot = this.wrap;
+        const sentinelStart = this.sentinelStart;
         if (e.shiftKey) {
-          if (activeElement === dialogRoot) {
-            this.sentinel.focus();
+          if (activeElement === sentinelStart) {
+            this.sentinelEnd.focus();
           }
-        } else if (activeElement === this.sentinel) {
-          dialogRoot.focus();
+        } else if (activeElement === this.sentinelEnd) {
+          sentinelStart.focus();
         }
       }
     }
@@ -207,6 +208,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
 
     const style = { ... props.style, ...dest };
+    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden' };
     const transitionName = this.getTransitionName();
     const dialogElement = (
       <LazyRenderBox
@@ -217,6 +219,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         className={`${prefixCls} ${props.className || ''}`}
         visible={props.visible}
       >
+        <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle}>
+          sentinelStart
+        </div>
         <div className={`${prefixCls}-content`}>
           {closer}
           {header}
@@ -230,8 +235,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           </div>
           {footer}
         </div>
-        <div tabIndex={0} ref={this.saveRef('sentinel')} style={{ width: 0, height: 0, overflow: 'hidden' }}>
-          sentinel
+        <div tabIndex={0} ref={this.saveRef('sentinelEnd')} style={sentinelStyle}>
+          sentinelEnd
         </div>
       </LazyRenderBox>
     );
@@ -300,6 +305,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (!transitionName && animation) {
       transitionName = `${props.prefixCls}-${animation}`;
     }
+
     return transitionName;
   }
   getTransitionName = () => {
