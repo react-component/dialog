@@ -238,4 +238,20 @@ describe('dialog', () => {
     });
     expect(document.activeElement).to.be(document.querySelector('input'));
   });
+
+  it('trap focus after shift-tabbing', () => {
+    dialog.setState({
+      visible: true
+    });
+    const dialogEl = $('.rc-dialog-wrap')[0];
+    const shiftTabbingDescriptor = {
+      key: 'TAB',
+      keyCode: 9,
+      which: 9,
+      shiftKey: true
+    }
+    Simulate.keyDown(dialogEl, shiftTabbingDescriptor);
+    const sentinelEnd = $('.rc-dialog-content + div')[0];
+    expect(document.activeElement).to.be(sentinelEnd);
+  });
 });
