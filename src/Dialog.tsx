@@ -58,6 +58,18 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     prefixCls: 'rc-dialog',
   };
 
+  state = {
+    transform: '',
+    dx: 0, // 偏移量x
+    dy: 0, // 偏移量y
+  };
+
+  position = {
+    initX: 0, // 浮框的初始位置x
+    initY: 0, // 浮框的初始位置x
+    startX: 0, // 本次拖拽开始的初始位置x
+    startY: 0, // 本次拖拽开始的初始位置y
+  };
   private inTransition: boolean;
   private titleId: string;
   private openTime: number;
@@ -68,6 +80,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private sentinelEnd: HTMLElement;
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
+  private content: HTMLElement;
 
   componentWillMount() {
     this.inTransition = false;
@@ -75,6 +88,11 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   componentDidMount() {
     this.componentDidUpdate({});
+    // 用document移除对mousemove事件的监听
+    document.addEventListener('mouseup', this.docMouseUp);
+    let rect =  this.content.getBoundingClientRect();
+    this.position.initX = (rect as any).x;
+    this.position.initY = (rect as any).y;
   }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
@@ -110,6 +128,52 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
+    document.removeEventListener('mouseup', this.docMouseUp);
+  }
+  // 开始本次拖拽
+  start = (e: any): void => {
+    if (e.button !== 0) {
+      // 只允许左键，右键问题在于不选择conextmenu就不会触发mouseup事件
+      return;
+    }
+    document.addEventListener('mousemove', this.docMove);
+    this.position.startX = e.pageX - this.state.dx;
+    this.position.startY = e.pageY - this.state.dy;
+  }
+  // 拖拽中
+  docMove = (e: any): void => {
+    const tx = e.pageX - this.position.startX;
+    const ty = e.pageY - this.position.startY;
+    let checkedData = this.checkBorder(  tx, ty);
+    this.setState({
+      dx: checkedData.tx,
+      dy: checkedData.ty,
+    });
+  }
+  // 拖拽结束
+  docMouseUp = (e: any): void => {
+    document.removeEventListener('mousemove', this.docMove);
+  }
+  // 检查边界限定
+  checkBorder = ( tx: number, ty: number) => {
+    let {position} = this;
+    let rect = this.content.getBoundingClientRect();
+    let {width} = rect;
+    let {saveDistance = 80} = this.props;
+    let result = {tx, ty};
+    if (position.initX + tx < -(width - saveDistance)) {
+      result.tx = -(width - saveDistance) - position.initX;
+    }
+    if (position.initX + tx > (document.documentElement.clientWidth - saveDistance)) {
+      result.tx = (document.documentElement.clientWidth - saveDistance) - position.initX;
+    }
+    if (position.initY + ty < 0) {
+      result.ty = -position.initY;
+    }
+    if (position.initY + ty > (document.documentElement.clientHeight - saveDistance)) {
+      result.ty = (document.documentElement.clientHeight - saveDistance) - position.initY;
+    }
+    return result;
   }
 
   tryFocus() {
@@ -137,9 +201,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (Date.now() - this.openTime < 300) {
       return;
     }
-    if (e.target === e.currentTarget) {
-      this.close(e);
-    }
+    this.close(e);
   }
   onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
@@ -162,6 +224,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         }
       }
     }
+  }
+  stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
   }
   getDialogElement = () => {
     const props = this.props;
@@ -187,7 +252,12 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     let header;
     if (props.title) {
       header = (
-        <div className={`${prefixCls}-header`} ref={this.saveRef('header')}>
+        <div
+          onMouseDown={this.start}
+          style={{cursor: 'move', userSelect: 'none'}}
+          className={`${prefixCls}-header`}
+          ref={this.saveRef('header')}
+        >
           <div className={`${prefixCls}-title`} id={this.titleId}>
             {props.title}
           </div>
@@ -222,7 +292,12 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle}>
           sentinelStart
         </div>
-        <div className={`${prefixCls}-content`}>
+        <div
+          onClick={this.stopPropagation}
+          className={`${prefixCls}-content`}
+          ref={this.saveRef('content')}
+          style={{overflow: 'hidden' }}
+        >
           {closer}
           {header}
           <div
@@ -262,7 +337,11 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     return style;
   }
   getWrapStyle = () : any => {
-    return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
+    return {
+      transform: `translate(${this.state.dx}px,${this.state.dy}px)`,
+      ...this.getZIndexStyle(),
+      ...this.props.wrapStyle,
+    };
   }
   getMaskStyle = () => {
     return { ...this.getZIndexStyle(), ...this.props.maskStyle };
@@ -391,14 +470,15 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       style.display = null;
     }
     return (
-      <div>
+      <div
+        onClick={maskClosable ? this.onMaskClick : undefined}
+      >
         {this.getMaskElement()}
         <div
           tabIndex={-1}
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref={this.saveRef('wrap')}
-          onClick={maskClosable ? this.onMaskClick : undefined}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}

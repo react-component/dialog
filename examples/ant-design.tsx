@@ -98,6 +98,7 @@ class MyControl extends React.Component {
         mousePosition={this.state.mousePosition}
         destroyOnClose={this.state.destroyOnClose}
         closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
+        title="drag me"
       >
         <input autoFocus />
         <p>basic modal</p>
