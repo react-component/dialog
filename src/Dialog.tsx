@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
+import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
@@ -59,7 +60,6 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   };
 
   state = {
-    transform: '',
     dx: 0, // 偏移量x
     dy: 0, // 偏移量y
   };
@@ -81,6 +81,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
   private content: HTMLElement;
+  private removeMouseUpListener: Function;
+  private removeMouseMoveListener: Function;
 
   componentWillMount() {
     this.inTransition = false;
@@ -88,11 +90,12 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   componentDidMount() {
     this.componentDidUpdate({});
-    // 用document移除对mousemove事件的监听
-    document.addEventListener('mouseup', this.docMouseUp);
-    let rect =  this.content.getBoundingClientRect();
-    this.position.initX = (rect as any).x;
-    this.position.initY = (rect as any).y;
+    if (this.props.draggable) {
+      this.removeMouseUpListener = addEventListener(document, 'mouseup', this.docMouseUp).remove;
+      let rect =  this.content.getBoundingClientRect();
+      this.position.initX = (rect as any).x;
+      this.position.initY = (rect as any).y;
+    }
   }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
@@ -128,15 +131,20 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-    document.removeEventListener('mouseup', this.docMouseUp);
+    if (this.props.draggable || this.removeMouseUpListener) {
+      this.removeMouseUpListener();
+    }
   }
   // 开始本次拖拽
   start = (e: any): void => {
+    if (!this.props.draggable) {
+      return;
+    }
     if (e.button !== 0) {
       // 只允许左键，右键问题在于不选择conextmenu就不会触发mouseup事件
       return;
     }
-    document.addEventListener('mousemove', this.docMove);
+    this.removeMouseMoveListener = addEventListener(document, 'mousemove', this.docMove).remove;
     this.position.startX = e.pageX - this.state.dx;
     this.position.startY = e.pageY - this.state.dy;
   }
@@ -152,7 +160,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   // 拖拽结束
   docMouseUp = (e: any): void => {
-    document.removeEventListener('mousemove', this.docMove);
+    if (this.removeMouseMoveListener) {
+      this.removeMouseMoveListener();
+    }
   }
   // 检查边界限定
   checkBorder = ( tx: number, ty: number) => {
@@ -228,6 +238,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   }
+  getDragHeadStyle = () => this.props.draggable ? {cursor: 'move', userSelect: 'none'} : {};
   getDialogElement = () => {
     const props = this.props;
     const closable = props.closable;
@@ -254,7 +265,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       header = (
         <div
           onMouseDown={this.start}
-          style={{cursor: 'move', userSelect: 'none'}}
+          style={{...this.getDragHeadStyle()}}
           className={`${prefixCls}-header`}
           ref={this.saveRef('header')}
         >

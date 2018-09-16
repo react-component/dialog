@@ -36,6 +36,7 @@ interface IDialogPropTypes {
   getContainer?: () => HTMLElement;
   closeIcon?: ReactNode;
   saveDistance?: number;
+  draggable?: boolean;
 }
 
 export default IDialogPropTypes;
