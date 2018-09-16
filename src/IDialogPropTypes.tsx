@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties, SyntheticEvent } from 'react';
+import { ReactNode, CSSProperties, SyntheticEvent, StatelessComponent } from 'react';
 
 interface IDialogPropTypes {
   className?: string;
@@ -37,6 +37,8 @@ interface IDialogPropTypes {
   closeIcon?: ReactNode;
   saveDistance?: number;
   draggable?: boolean;
+  DragWrapper?: StatelessComponent<any>;
+  offset?: {dx: number,  dy: number};
 }
 
 export default IDialogPropTypes;

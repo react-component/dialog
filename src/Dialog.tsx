@@ -4,6 +4,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import Animate from 'rc-animate';
+import Draggable from './Draggable';
 import LazyRenderBox from './LazyRenderBox';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import IDialogPropTypes from './IDialogPropTypes';
@@ -47,7 +48,7 @@ function offset(el: any) {
   return pos;
 }
 
-export default class Dialog extends React.Component<IDialogPropTypes, any> {
+class Dialog extends React.Component<IDialogPropTypes, any> {
   static defaultProps = {
     className: '',
     mask: true,
@@ -59,17 +60,11 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     prefixCls: 'rc-dialog',
   };
 
-  state = {
-    dx: 0, // 偏移量x
-    dy: 0, // 偏移量y
+  position = {
+    initX: 0,
+    initY: 0,
   };
 
-  position = {
-    initX: 0, // 浮框的初始位置x
-    initY: 0, // 浮框的初始位置x
-    startX: 0, // 本次拖拽开始的初始位置x
-    startY: 0, // 本次拖拽开始的初始位置y
-  };
   private inTransition: boolean;
   private titleId: string;
   private openTime: number;
@@ -81,8 +76,6 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
   private content: HTMLElement;
-  private removeMouseUpListener: Function;
-  private removeMouseMoveListener: Function;
 
   componentWillMount() {
     this.inTransition = false;
@@ -90,12 +83,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   componentDidMount() {
     this.componentDidUpdate({});
-    if (this.props.draggable) {
-      this.removeMouseUpListener = addEventListener(document, 'mouseup', this.docMouseUp).remove;
-      let rect =  this.content.getBoundingClientRect();
-      this.position.initX = (rect as any).x;
-      this.position.initY = (rect as any).y;
-    }
+    let rect =  this.content.getBoundingClientRect();
+    this.position.initX = (rect as any).x;
+    this.position.initY = (rect as any).y;
   }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
@@ -131,57 +121,33 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-    if (this.props.draggable || this.removeMouseUpListener) {
-      this.removeMouseUpListener();
-    }
-  }
-  // 开始本次拖拽
-  start = (e: any): void => {
-    if (!this.props.draggable) {
-      return;
-    }
-    if (e.button !== 0) {
-      // 只允许左键，右键问题在于不选择conextmenu就不会触发mouseup事件
-      return;
-    }
-    this.removeMouseMoveListener = addEventListener(document, 'mousemove', this.docMove).remove;
-    this.position.startX = e.pageX - this.state.dx;
-    this.position.startY = e.pageY - this.state.dy;
-  }
-  // 拖拽中
-  docMove = (e: any): void => {
-    const tx = e.pageX - this.position.startX;
-    const ty = e.pageY - this.position.startY;
-    let checkedData = this.checkBorder(  tx, ty);
-    this.setState({
-      dx: checkedData.tx,
-      dy: checkedData.ty,
-    });
-  }
-  // 拖拽结束
-  docMouseUp = (e: any): void => {
-    if (this.removeMouseMoveListener) {
-      this.removeMouseMoveListener();
-    }
   }
   // 检查边界限定
-  checkBorder = ( tx: number, ty: number) => {
-    let {position} = this;
+  checkBorder = () => {
+    let {offset = {}} = this.props;
+    let {dx = 0, dy = 0} = offset as any;
+    let position = this.position;
+    if (!this.content) {
+      return {
+        dx: 0,
+        dy: 0,
+      };
+    }
     let rect = this.content.getBoundingClientRect();
     let {width} = rect;
     let {saveDistance = 80} = this.props;
-    let result = {tx, ty};
-    if (position.initX + tx < -(width - saveDistance)) {
-      result.tx = -(width - saveDistance) - position.initX;
+    let result = {dx, dy};
+    if (position.initX + dx < -(width - saveDistance)) {
+      result.dx = -(width - saveDistance) - position.initX;
     }
-    if (position.initX + tx > (document.documentElement.clientWidth - saveDistance)) {
-      result.tx = (document.documentElement.clientWidth - saveDistance) - position.initX;
+    if (position.initX + dx > (document.documentElement.clientWidth - saveDistance)) {
+      result.dx = (document.documentElement.clientWidth - saveDistance) - position.initX;
     }
-    if (position.initY + ty < 0) {
-      result.ty = -position.initY;
+    if (position.initY + dy < 0) {
+      result.dy = -position.initY;
     }
-    if (position.initY + ty > (document.documentElement.clientHeight - saveDistance)) {
-      result.ty = (document.documentElement.clientHeight - saveDistance) - position.initY;
+    if (position.initY + dy > (document.documentElement.clientHeight - saveDistance)) {
+      result.dy = (document.documentElement.clientHeight - saveDistance) - position.initY;
     }
     return result;
   }
@@ -243,6 +209,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
+    let DragWrapper: any = props.DragWrapper;
     const dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;
@@ -263,16 +230,13 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     let header;
     if (props.title) {
       header = (
-        <div
-          onMouseDown={this.start}
-          style={{...this.getDragHeadStyle()}}
+        <DragWrapper
           className={`${prefixCls}-header`}
-          ref={this.saveRef('header')}
         >
           <div className={`${prefixCls}-title`} id={this.titleId}>
             {props.title}
           </div>
-        </div>
+        </DragWrapper>
       );
     }
 
@@ -348,8 +312,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     return style;
   }
   getWrapStyle = () : any => {
+    let {dx, dy} = this.checkBorder();
     return {
-      transform: `translate(${this.state.dx}px,${this.state.dy}px)`,
+      transform: `translate(${dx}px,${dy}px)`,
       ...this.getZIndexStyle(),
       ...this.props.wrapStyle,
     };
@@ -501,3 +466,5 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     );
   }
 }
+
+export default Draggable(Dialog);
