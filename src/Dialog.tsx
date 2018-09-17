@@ -60,9 +60,9 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     prefixCls: 'rc-dialog',
   };
 
-  position = {
-    initX: 0,
-    initY: 0,
+  state = {
+    dx: 0,
+    dy: 0,
   };
 
   private inTransition: boolean;
@@ -76,16 +76,23 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
   private content: HTMLElement;
+  private removeWindowResize: Function;
 
   componentWillMount() {
     this.inTransition = false;
     this.titleId = `rcDialogTitle${uuid++}`;
   }
+  componentWillReceiveProps(newProps: any) {
+    let offset: any = this.props.offset;
+    let newOffset: any = newProps.offset;
+    if (newProps.draggable && newOffset.dx !== offset.dx || newOffset.dy !== offset.dy) {
+      let {dx, dy} = this.checkBorder(newOffset.dx, newOffset.dy);
+      this.setState({dx, dy});
+    }
+  }
   componentDidMount() {
     this.componentDidUpdate({});
-    let rect =  this.content.getBoundingClientRect();
-    this.position.initX = (rect as any).x;
-    this.position.initY = (rect as any).y;
+    this.removeWindowResize = addEventListener(window, 'resize', this.windowResize).remove;
   }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
@@ -121,33 +128,44 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
+    this.removeWindowResize();
+  }
+  windowResize = () => {
+    if (!this.props.draggable) {
+      return;
+    }
+    let offset: any = this.props.offset;
+    let {dx, dy} = this.checkBorder(offset.dx, offset.dy);
+    this.setState({dx, dy});
   }
   // 检查边界限定
-  checkBorder = () => {
-    let {offset = {}} = this.props;
-    let {dx = 0, dy = 0} = offset as any;
-    let position = this.position;
-    if (!this.content) {
+  checkBorder = (dx: number, dy: number) => {
+    let initX = 0;
+    let initY: any = 0;
+    if (!this.content || !this.dialog) {
       return {
         dx: 0,
         dy: 0,
       };
     }
-    let rect = this.content.getBoundingClientRect();
-    let {width} = rect;
+    let {width}  = this.content.getBoundingClientRect();
     let {saveDistance = 80} = this.props;
     let result = {dx, dy};
-    if (position.initX + dx < -(width - saveDistance)) {
-      result.dx = -(width - saveDistance) - position.initX;
+    const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
+    let style = window.getComputedStyle(dialogNode);
+    initX = parseInt(style.marginLeft as any, 10);
+    initY = parseInt(style.marginTop as any, 10);
+    if (initX + dx < -(width - saveDistance)) {
+      result.dx = -(width - saveDistance) - initX;
     }
-    if (position.initX + dx > (document.documentElement.clientWidth - saveDistance)) {
-      result.dx = (document.documentElement.clientWidth - saveDistance) - position.initX;
+    if (initX + dx > (document.documentElement.clientWidth - saveDistance)) {
+      result.dx = (document.documentElement.clientWidth - saveDistance) - initX;
     }
-    if (position.initY + dy < 0) {
-      result.dy = -position.initY;
+    if (initY + dy < 0) {
+      result.dy = -initY;
     }
-    if (position.initY + dy > (document.documentElement.clientHeight - saveDistance)) {
-      result.dy = (document.documentElement.clientHeight - saveDistance) - position.initY;
+    if (initY + dy > (document.documentElement.clientHeight - saveDistance)) {
+      result.dy = (document.documentElement.clientHeight - saveDistance) - initY;
     }
     return result;
   }
@@ -252,7 +270,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
         </button>);
     }
 
-    const style = { ... props.style, ...dest };
+    const style = { ...props.style, ...dest };
     const sentinelStyle = { width: 0, height: 0, overflow: 'hidden' };
     const transitionName = this.getTransitionName();
     const dialogElement = (
@@ -312,7 +330,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     return style;
   }
   getWrapStyle = () : any => {
-    let {dx, dy} = this.checkBorder();
+    let {dx, dy} = this.state;
     return {
       transform: `translate(${dx}px,${dy}px)`,
       ...this.getZIndexStyle(),
