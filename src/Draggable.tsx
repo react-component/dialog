@@ -23,6 +23,7 @@ function Draggable(WrappedComponent: any) {
     private removeMouseUpListener: Function;
     private removeMouseMoveListener: Function;
     private dragDom: HTMLDivElement | null;
+    private removeWindowResize: Function;
 
     componentDidMount() {
       if (this.props.draggable && this.dragDom) {
@@ -30,6 +31,7 @@ function Draggable(WrappedComponent: any) {
         let rect =  this.dragDom.getBoundingClientRect();
         this.position.initX = (rect as any).x;
         this.position.initY = (rect as any).y;
+        this.removeWindowResize = addEventListener(window, 'resize', this.windowResize).remove;
       }
     }
 
@@ -37,6 +39,7 @@ function Draggable(WrappedComponent: any) {
       if (this.props.draggable || this.removeMouseUpListener) {
         this.removeMouseUpListener();
       }
+      this.removeWindowResize();
     }
 
     // 开始本次拖拽
@@ -64,6 +67,13 @@ function Draggable(WrappedComponent: any) {
       if (this.removeMouseMoveListener) {
         this.removeMouseMoveListener();
       }
+    }
+
+    windowResize = () => {
+      if (!this.props.draggable) {
+        return;
+      }
+      this.setState({dx: 0, dy: 0});
     }
 
     getDragHeadStyle = () => this.props.draggable ? {cursor: 'move', userSelect: 'none'} : {};

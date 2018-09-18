@@ -76,7 +76,6 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
   private content: HTMLElement;
-  private removeWindowResize: Function;
 
   componentWillMount() {
     this.inTransition = false;
@@ -92,7 +91,6 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   componentDidMount() {
     this.componentDidUpdate({});
-    this.removeWindowResize = addEventListener(window, 'resize', this.windowResize).remove;
   }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
@@ -128,15 +126,6 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-    this.removeWindowResize();
-  }
-  windowResize = () => {
-    if (!this.props.draggable) {
-      return;
-    }
-    let offset: any = this.props.offset;
-    let {dx, dy} = this.checkBorder(offset.dx, offset.dy);
-    this.setState({dx, dy});
   }
   // 检查边界限定
   checkBorder = (dx: number, dy: number) => {
