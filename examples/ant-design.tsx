@@ -100,7 +100,6 @@ class MyControl extends React.Component {
         closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
         title="drag me"
         draggable
-        // saveDistance={200}
       >
         <input autoFocus />
         <p>basic modal</p>
