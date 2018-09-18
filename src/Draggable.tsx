@@ -24,11 +24,12 @@ function Draggable(WrappedComponent: any) {
     private removeMouseMoveListener: Function;
     private dragDom: HTMLDivElement | null;
     private removeWindowResize: Function;
+    private offsetDom: HTMLDivElement | null;
 
     componentDidMount() {
-      if (this.props.draggable && this.dragDom) {
+      if (this.props.draggable && this.offsetDom) {
         this.removeMouseUpListener = addEventListener(document, 'mouseup', this.docMouseUp).remove;
-        let rect =  this.dragDom.getBoundingClientRect();
+        let rect =  this.offsetDom.getBoundingClientRect();
         this.position.initX = (rect as any).x;
         this.position.initY = (rect as any).y;
         this.removeWindowResize = addEventListener(window, 'resize', this.windowResize).remove;
@@ -57,9 +58,10 @@ function Draggable(WrappedComponent: any) {
     }
     // 拖拽中
     docMove = (e: any): void => {
+      let {dx, dy} = this.checkBorder(e.pageX - this.position.startX, e.pageY - this.position.startY);
       this.setState({
-        dx: e.pageX - this.position.startX,
-        dy: e.pageY - this.position.startY,
+        dx,
+        dy,
       });
     }
     // 拖拽结束
@@ -73,7 +75,20 @@ function Draggable(WrappedComponent: any) {
       if (!this.props.draggable) {
         return;
       }
-      this.setState({dx: 0, dy: 0});
+      this.setState({dx: 0, dy: 0}, () => {
+        let rect =  (this.offsetDom as HTMLElement).getBoundingClientRect();
+        this.position.initX = (rect as any).x;
+        this.position.initY = (rect as any).y;
+      });
+    }
+
+    saveRef = (getRef?: Function) => {
+      return (dom: any) => {
+        this.offsetDom = dom;
+        if (getRef) {
+          getRef(dom);
+        }
+      };
     }
 
     getDragHeadStyle = () => this.props.draggable ? {cursor: 'move', userSelect: 'none'} : {};
@@ -91,11 +106,61 @@ function Draggable(WrappedComponent: any) {
         </div>
       );
     }
+
+    OffsetWrapper = (props: any) => {
+      let {dx, dy} = this.state;
+      let { style = {}, getRef, ...extraStyles } = props;
+      return (
+        <div
+          style={{
+            ...style,
+            // transform: `translate(${dx}px,${dy}px)`,
+            position: 'relative',
+            left: `${dx}px`,
+            top: `${dy}px`,
+          }}
+          ref={this.saveRef(getRef)}
+          {...extraStyles}
+        >
+          {props.children}
+        </div>
+      );
+    }
+
+    // 检查边界限定
+    checkBorder = (dx: number, dy: number) => {
+      let {offsetDom} = this;
+      if (!offsetDom) {
+        return {
+          dx: 0,
+          dy: 0,
+        };
+      }
+      let {width}  = offsetDom.getBoundingClientRect();
+      let {saveDistance = 80} = this.props;
+      let result = {dx, dy};
+      let {initX, initY} = this.position;
+      if (initX + dx < -(width - saveDistance)) {
+        result.dx = -(width - saveDistance) - initX;
+      }
+      if (initX + dx > (document.documentElement.clientWidth - saveDistance)) {
+        result.dx = (document.documentElement.clientWidth - saveDistance) - initX;
+      }
+      if (initY + dy < 0) {
+        result.dy = -initY;
+      }
+      if (initY + dy > (document.documentElement.clientHeight - saveDistance)) {
+        result.dy = (document.documentElement.clientHeight - saveDistance) - initY;
+      }
+      return result;
+    }
+
     render() {
       return (
         <WrappedComponent
           {...this.props}
           DragWrapper={this.DragWrapper}
+          OffsetWrapper={this.OffsetWrapper}
           offset={{dx: this.state.dx, dy: this.state.dy}}
         />
       );

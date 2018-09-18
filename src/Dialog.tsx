@@ -60,11 +60,6 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     prefixCls: 'rc-dialog',
   };
 
-  state = {
-    dx: 0,
-    dy: 0,
-  };
-
   private inTransition: boolean;
   private titleId: string;
   private openTime: number;
@@ -80,14 +75,6 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
   componentWillMount() {
     this.inTransition = false;
     this.titleId = `rcDialogTitle${uuid++}`;
-  }
-  componentWillReceiveProps(newProps: any) {
-    let offset: any = this.props.offset;
-    let newOffset: any = newProps.offset;
-    if (newProps.draggable && newOffset.dx !== offset.dx || newOffset.dy !== offset.dy) {
-      let {dx, dy} = this.checkBorder(newOffset.dx, newOffset.dy);
-      this.setState({dx, dy});
-    }
   }
   componentDidMount() {
     this.componentDidUpdate({});
@@ -126,37 +113,6 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-  }
-  // 检查边界限定
-  checkBorder = (dx: number, dy: number) => {
-    let initX = 0;
-    let initY: any = 0;
-    if (!this.content || !this.dialog) {
-      return {
-        dx: 0,
-        dy: 0,
-      };
-    }
-    let {width}  = this.content.getBoundingClientRect();
-    let {saveDistance = 80} = this.props;
-    let result = {dx, dy};
-    const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
-    let style = window.getComputedStyle(dialogNode);
-    initX = parseInt(style.marginLeft as any, 10);
-    initY = parseInt(style.marginTop as any, 10);
-    if (initX + dx < -(width - saveDistance)) {
-      result.dx = -(width - saveDistance) - initX;
-    }
-    if (initX + dx > (document.documentElement.clientWidth - saveDistance)) {
-      result.dx = (document.documentElement.clientWidth - saveDistance) - initX;
-    }
-    if (initY + dy < 0) {
-      result.dy = -initY;
-    }
-    if (initY + dy > (document.documentElement.clientHeight - saveDistance)) {
-      result.dy = (document.documentElement.clientHeight - saveDistance) - initY;
-    }
-    return result;
   }
 
   tryFocus() {
@@ -217,6 +173,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     const closable = props.closable;
     const prefixCls = props.prefixCls;
     let DragWrapper: any = props.DragWrapper;
+    let OffsetWrapper: any = props.OffsetWrapper;
     const dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;
@@ -274,10 +231,10 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
         <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle}>
           sentinelStart
         </div>
-        <div
+        <OffsetWrapper
           onClick={this.stopPropagation}
           className={`${prefixCls}-content`}
-          ref={this.saveRef('content')}
+          getRef={this.saveRef('content')}
           style={{overflow: 'hidden' }}
         >
           {closer}
@@ -291,7 +248,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
             {props.children}
           </div>
           {footer}
-        </div>
+        </OffsetWrapper>
         <div tabIndex={0} ref={this.saveRef('sentinelEnd')} style={sentinelStyle}>
           sentinelEnd
         </div>
@@ -319,12 +276,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     return style;
   }
   getWrapStyle = () : any => {
-    let {dx, dy} = this.state;
-    return {
-      transform: `translate(${dx}px,${dy}px)`,
-      ...this.getZIndexStyle(),
-      ...this.props.wrapStyle,
-    };
+    return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
   }
   getMaskStyle = () => {
     return { ...this.getZIndexStyle(), ...this.props.maskStyle };
@@ -445,7 +397,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
 
   render() {
     const { props } = this;
-    const { prefixCls, maskClosable } = props;
+    const { prefixCls, maskClosable  } = props;
     const style = this.getWrapStyle();
     // clear hide display
     // and only set display after async anim, not here for hide

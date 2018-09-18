@@ -38,6 +38,7 @@ interface IDialogPropTypes {
   saveDistance?: number;
   draggable?: boolean;
   DragWrapper?: StatelessComponent<any>;
+  OffsetWrapper?: StatelessComponent<any>;
   offset?: {dx: number,  dy: number};
 }
 
