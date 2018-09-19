@@ -172,8 +172,9 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
-    let DragWrapper: any = props.DragWrapper;
-    let OffsetWrapper: any = props.OffsetWrapper;
+    // DragWrapper and OffsetWrapper are not for user, so i delete them on the interface
+    let DragWrapper: any = (props as any).DragWrapper;
+    let OffsetWrapper: any = (props as any).OffsetWrapper;
     const dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;

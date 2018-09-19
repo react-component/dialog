@@ -37,9 +37,6 @@ interface IDialogPropTypes {
   closeIcon?: ReactNode;
   saveDistance?: number;
   draggable?: boolean;
-  DragWrapper?: StatelessComponent<any>;
-  OffsetWrapper?: StatelessComponent<any>;
-  offset?: {dx: number,  dy: number};
 }
 
 export default IDialogPropTypes;

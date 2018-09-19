@@ -9,15 +9,15 @@ interface IDraggablePropTypes {
 function Draggable(WrappedComponent: any) {
   return class extends React.Component<IDraggablePropTypes, any> {
     state = {
-      dx: 0, // 偏移量x
-      dy: 0, // 偏移量y
+      dx: 0, // x of offset
+      dy: 0, // y of offset
     };
 
     position = {
-      initX: 0, // 浮框的初始位置x
-      initY: 0, // 浮框的初始位置x
-      startX: 0, // 本次拖拽开始的初始位置x
-      startY: 0, // 本次拖拽开始的初始位置y
+      initX: 0, // x of initial position
+      initY: 0, // y of initial position
+      startX: 0, // x of dragging start position
+      startY: 0, // x of dragging start position
     };
 
     private removeMouseUpListener: Function;
@@ -43,20 +43,20 @@ function Draggable(WrappedComponent: any) {
       this.removeWindowResize();
     }
 
-    // 开始本次拖拽
+    // start to drag
     start = (e: any): void => {
       if (!this.props.draggable) {
         return;
       }
       if (e.button !== 0) {
-        // 只允许左键，右键问题在于不选择conextmenu就不会触发mouseup事件
+        // only the right button is allowed
         return;
       }
       this.removeMouseMoveListener = addEventListener(document, 'mousemove', this.docMove).remove;
       this.position.startX = e.pageX - this.state.dx;
       this.position.startY = e.pageY - this.state.dy;
     }
-    // 拖拽中
+    // in dragging
     docMove = (e: any): void => {
       let {dx, dy} = this.checkBorder(e.pageX - this.position.startX, e.pageY - this.position.startY);
       this.setState({
@@ -64,7 +64,7 @@ function Draggable(WrappedComponent: any) {
         dy,
       });
     }
-    // 拖拽结束
+    // end of drag
     docMouseUp = (e: any): void => {
       if (this.removeMouseMoveListener) {
         this.removeMouseMoveListener();
@@ -127,7 +127,7 @@ function Draggable(WrappedComponent: any) {
       );
     }
 
-    // 检查边界限定
+    // check the distance over the window border to avoid dragging too far
     checkBorder = (dx: number, dy: number) => {
       let {offsetDom} = this;
       if (!offsetDom) {
