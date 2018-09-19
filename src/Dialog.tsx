@@ -172,9 +172,9 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
-    // DragWrapper and OffsetWrapper are not for user, so i delete them on the interface
+    // DragWrapper and OffsetWrapper are not for user, so i delete them in the interface
     let DragWrapper: any = (props as any).DragWrapper;
-    let OffsetWrapper: any = (props as any).OffsetWrapper;
+    let CheckWrapper: any = (props as any).CheckWrapper;
     const dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;
@@ -232,7 +232,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
         <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle}>
           sentinelStart
         </div>
-        <OffsetWrapper
+        <CheckWrapper
           onClick={this.stopPropagation}
           className={`${prefixCls}-content`}
           getRef={this.saveRef('content')}
@@ -249,7 +249,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
             {props.children}
           </div>
           {footer}
-        </OffsetWrapper>
+        </CheckWrapper>
         <div tabIndex={0} ref={this.saveRef('sentinelEnd')} style={sentinelStyle}>
           sentinelEnd
         </div>
@@ -399,6 +399,7 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
   render() {
     const { props } = this;
     const { prefixCls, maskClosable  } = props;
+    let OffsetWrapper: any = (props as any).OffsetWrapper;
     const style = this.getWrapStyle();
     // clear hide display
     // and only set display after async anim, not here for hide
@@ -410,18 +411,18 @@ class Dialog extends React.Component<IDialogPropTypes, any> {
         onClick={maskClosable ? this.onMaskClick : undefined}
       >
         {this.getMaskElement()}
-        <div
+        <OffsetWrapper
           tabIndex={-1}
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
-          ref={this.saveRef('wrap')}
+          getRef={this.saveRef('wrap')}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}
           {...props.wrapProps}
         >
           {this.getDialogElement()}
-        </div>
+        </OffsetWrapper>
       </div>
     );
   }

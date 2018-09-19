@@ -22,14 +22,14 @@ function Draggable(WrappedComponent: any) {
 
     private removeMouseUpListener: Function;
     private removeMouseMoveListener: Function;
-    private dragDom: HTMLDivElement | null;
     private removeWindowResize: Function;
     private offsetDom: HTMLDivElement | null;
+    private checkDom: HTMLDivElement | null;
 
     componentDidMount() {
-      if (this.props.draggable && this.offsetDom) {
+      if (this.props.draggable && this.checkDom) {
         this.removeMouseUpListener = addEventListener(document, 'mouseup', this.docMouseUp).remove;
-        let rect =  this.offsetDom.getBoundingClientRect();
+        let rect =  this.checkDom.getBoundingClientRect();
         this.position.initX = (rect as any).x;
         this.position.initY = (rect as any).y;
         this.removeWindowResize = addEventListener(window, 'resize', this.windowResize).remove;
@@ -40,7 +40,9 @@ function Draggable(WrappedComponent: any) {
       if (this.props.draggable || this.removeMouseUpListener) {
         this.removeMouseUpListener();
       }
-      this.removeWindowResize();
+      if (this.props.draggable || this.removeWindowResize) {
+        this.removeWindowResize();
+      }
     }
 
     // start to drag
@@ -76,15 +78,15 @@ function Draggable(WrappedComponent: any) {
         return;
       }
       this.setState({dx: 0, dy: 0}, () => {
-        let rect =  (this.offsetDom as HTMLElement).getBoundingClientRect();
+        let rect =  (this.checkDom as HTMLElement).getBoundingClientRect();
         this.position.initX = (rect as any).x;
         this.position.initY = (rect as any).y;
       });
     }
 
-    saveRef = (getRef?: Function) => {
+    saveRef = (domName: string, getRef?: Function) => {
       return (dom: any) => {
-        this.offsetDom = dom;
+        (this as any)[domName] = dom;
         if (getRef) {
           getRef(dom);
         }
@@ -98,7 +100,6 @@ function Draggable(WrappedComponent: any) {
       return (
         <div
           style={{...this.getDragHeadStyle(), ...style}}
-          ref={ref => {this.dragDom = ref; }}
           {...extraProps}
           onMouseDown={this.start}
         >
@@ -114,12 +115,22 @@ function Draggable(WrappedComponent: any) {
         <div
           style={{
             ...style,
-            // transform: `translate(${dx}px,${dy}px)`,
-            position: 'relative',
-            left: `${dx}px`,
-            top: `${dy}px`,
+            transform: `translate(${dx}px,${dy}px)`,
           }}
-          ref={this.saveRef(getRef)}
+          ref={this.saveRef('offsetDom', getRef)}
+          {...extraStyles}
+        >
+          {props.children}
+        </div>
+      );
+    }
+
+    CheckWrapper  = (props: any) => {
+      let {dx, dy} = this.state;
+      let { style = {}, getRef, ...extraStyles } = props;
+      return (
+        <div
+          ref={this.saveRef('checkDom', getRef)}
           {...extraStyles}
         >
           {props.children}
@@ -129,14 +140,14 @@ function Draggable(WrappedComponent: any) {
 
     // check the distance over the window border to avoid dragging too far
     checkBorder = (dx: number, dy: number) => {
-      let {offsetDom} = this;
-      if (!offsetDom) {
+      let {checkDom} = this;
+      if (!checkDom) {
         return {
           dx: 0,
           dy: 0,
         };
       }
-      let {width}  = offsetDom.getBoundingClientRect();
+      let {width}  = checkDom.getBoundingClientRect();
       let {saveDistance = 80} = this.props;
       let result = {dx, dy};
       let {initX, initY} = this.position;
@@ -161,7 +172,7 @@ function Draggable(WrappedComponent: any) {
           {...this.props}
           DragWrapper={this.DragWrapper}
           OffsetWrapper={this.OffsetWrapper}
-          offset={{dx: this.state.dx, dy: this.state.dy}}
+          CheckWrapper={this.CheckWrapper}
         />
       );
     }
