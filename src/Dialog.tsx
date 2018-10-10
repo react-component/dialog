@@ -90,8 +90,6 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           const elOffset = offset(dialogNode);
           setTransformOrigin(dialogNode,
             `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`);
-        } else {
-          setTransformOrigin(dialogNode, '');
         }
       }
     } else if (prevProps.visible) {
