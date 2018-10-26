@@ -254,4 +254,17 @@ describe('dialog', () => {
     const sentinelEnd = $('.rc-dialog-content + div')[0];
     expect(document.activeElement).to.be(sentinelEnd);
   });
+
+  it('sets transform-origin when property mousePosition is set', () => {
+    const d = ReactDOM.render((
+      <Dialog
+        style={{ width: 600 }}
+        title={title}
+        mousePosition={{x:100, y:100}}
+        visible
+      >
+        <p>the dialog</p>
+      </Dialog>), container);
+    expect($('.rc-dialog').css('transform-origin')).to.not.be.empty();
+  });
 });
