@@ -8,8 +8,9 @@ import IDialogPropTypes from './IDialogPropTypes';
 const IS_REACT_16 = 'createPortal' in ReactDOM;
 
 class DialogWrap extends React.Component<IDialogPropTypes, any> {
-  static defaultProps  = {
+  static defaultProps = {
     visible: false,
+    forceRender: false,
   };
 
   _component: React.ReactElement<any>;
@@ -18,8 +19,8 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
 
   removeContainer: () => void;
 
-  shouldComponentUpdate({ visible }: { visible: boolean }) {
-    return !!(this.props.visible || visible);
+  shouldComponentUpdate({ visible, forceRender }: { visible: boolean, forceRender: boolean }) {
+    return !!(this.props.visible || visible) || (this.props.forceRender || forceRender);
   }
 
   componentWillUnmount() {
@@ -40,7 +41,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
 
   saveDialog = (node: any) => {
     this._component = node;
- }
+  }
 
   getComponent = (extra = {}) => {
     return (
@@ -71,7 +72,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
   }
 
   render() {
-    const { visible } = this.props;
+    const { visible, forceRender } = this.props;
 
     let portal: any = null;
 
@@ -83,6 +84,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
           autoDestroy={false}
           getComponent={this.getComponent}
           getContainer={this.getContainer}
+          forceRender={forceRender}
         >
           {({ renderComponent, removeContainer }: { renderComponent: any, removeContainer: any }) => {
             this.renderComponent = renderComponent;
@@ -93,7 +95,7 @@ class DialogWrap extends React.Component<IDialogPropTypes, any> {
       );
     }
 
-    if (visible || this._component) {
+    if (visible || forceRender || this._component) {
       portal = (
         <Portal getContainer={this.getContainer}>
           {this.getComponent()}

@@ -75,6 +75,10 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   componentDidMount() {
     this.componentDidUpdate({});
+    // if forceRender is true, set element style display to be none;
+    if (this.props.forceRender && this.wrap) {
+      this.wrap.style.display = 'none';
+    }
   }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
@@ -207,7 +211,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         </button>);
     }
 
-    const style = { ... props.style, ...dest };
+    const style = { ...props.style, ...dest };
     const sentinelStyle = { width: 0, height: 0, overflow: 'hidden' };
     const transitionName = this.getTransitionName();
     const dialogElement = (
@@ -261,7 +265,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
     return style;
   }
-  getWrapStyle = () : any => {
+  getWrapStyle = (): any => {
     return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
   }
   getMaskStyle = () => {

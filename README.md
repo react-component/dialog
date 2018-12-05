@@ -203,6 +203,12 @@ ReactDOM.render(
           <td></td>
           <td>specific the close icon.</td>
       </tr>
+      <tr>
+          <td>forceRender</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>Create dialog dom node before dialog first show </td>
+      </tr>
     </tbody>
 </table>
 

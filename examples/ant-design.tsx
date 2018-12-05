@@ -36,6 +36,7 @@ class MyControl extends React.Component {
     center: false,
     mousePosition: {},
     useIcon: false,
+    forceRender: false,
   };
 
   onClick = e => {
@@ -49,7 +50,6 @@ class MyControl extends React.Component {
   }
 
   onClose = e => {
-    // console.log(e);
     this.setState({
       visible: false,
     });
@@ -58,6 +58,12 @@ class MyControl extends React.Component {
   onDestroyOnCloseChange = e => {
     this.setState({
       destroyOnClose: e.target.checked,
+    });
+  }
+
+  onForceRenderChange = e => {
+    this.setState({
+      forceRender: e.target.checked,
     });
   }
 
@@ -98,6 +104,7 @@ class MyControl extends React.Component {
         mousePosition={this.state.mousePosition}
         destroyOnClose={this.state.destroyOnClose}
         closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
+        forceRender={this.state.forceRender}
       >
         <input autoFocus />
         <p>basic modal</p>
@@ -139,6 +146,15 @@ class MyControl extends React.Component {
               type="checkbox"
               checked={this.state.center}
               onChange={this.center}
+            />
+          </label>
+          &nbsp;
+          <label>
+            force render
+            <input
+              type="checkbox"
+              checked={this.state.forceRender}
+              onChange={this.onForceRenderChange}
             />
           </label>
         </p>
