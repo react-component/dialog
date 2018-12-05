@@ -387,7 +387,10 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     const style = this.getWrapStyle();
     // clear hide display
     // and only set display after async anim, not here for hide
-    if (props.visible) {
+    // if the forceRender is true, change display value to none
+    if (props.forceRender && !props.visible) {
+      style.display = 'none';
+    } else if (props.visible) {
       style.display = null;
     }
     return (

@@ -267,4 +267,15 @@ describe('dialog', () => {
       </Dialog>), container);
     expect($('.rc-dialog').css('transform-origin')).to.not.be.empty();
   });
+
+  it('can get dom element before dialog first show when forceRender is set true ',()=>{
+    const d = ReactDOM.render((
+      <Dialog
+        forceRender
+      >
+        <div>forceRender element</div>
+      </Dialog>
+    ),container)
+    expect($('.rc-dialog-body > div').text()).to.be('forceRender element')
+  })
 });
