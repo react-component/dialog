@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ant-design.js - example - rc-dialog@7.2.1</title>
+  <title>ant-design.js - example - rc-dialog@7.3.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-dialog@7.2.1</h1>
+      <h1>rc-dialog@7.3.0</h1>
 
       <p>dialog ui component for react</p>
     </div>
@@ -272,8 +272,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0 */</span>
 
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-dialog/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-comment">// use import Dialog from 'rc-dialog'</span>
 <span class="hljs-keyword">import</span> Dialog <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/DialogWrap'</span>;
 
@@ -299,17 +299,18 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   )</span>;
 };
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span>&lt;<span class="hljs-title">any</span>, <span class="hljs-title">any</span>&gt; </span>{
   state = {
     visible: <span class="hljs-literal">false</span>,
     width: <span class="hljs-number">600</span>,
     destroyOnClose: <span class="hljs-literal">false</span>,
     center: <span class="hljs-literal">false</span>,
-    mousePosition: {},
+    mousePosition: <span class="hljs-literal">undefined</span>,
     useIcon: <span class="hljs-literal">false</span>,
+    forceRender: <span class="hljs-literal">false</span>,
   };
 
-  onClick = e =&gt; {
+  onClick = (e: React.MouseEvent) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       mousePosition: {
         x: e.pageX,
@@ -319,16 +320,21 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   }
 
-  onClose = e =&gt; {
-    <span class="hljs-comment">// console.log(e);</span>
+  onClose = (e: React.SyntheticEvent) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">false</span>,
     });
   }
 
-  onDestroyOnCloseChange = e =&gt; {
+  onDestroyOnCloseChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       destroyOnClose: e.target.checked,
+    });
+  }
+
+  onForceRenderChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    <span class="hljs-keyword">this</span>.setState({
+      forceRender: e.target.checked,
     });
   }
 
@@ -338,7 +344,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   }
 
-  center = e =&gt; {
+  center = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       center: e.target.checked,
     });
@@ -369,6 +375,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-attribute">mousePosition</span>=<span class="hljs-value">{this.state.mousePosition}</span>
         <span class="hljs-attribute">destroyOnClose</span>=<span class="hljs-value">{this.state.destroyOnClose}</span>
         <span class="hljs-attribute">closeIcon</span>=<span class="hljs-value">{this.state.useIcon</span> ? <span class="hljs-attribute">getSvg</span>(<span class="hljs-attribute">clearPath</span>, {}, <span class="hljs-attribute">true</span>) <span class="hljs-attribute">:</span> <span class="hljs-attribute">undefined</span>}
+        <span class="hljs-attribute">forceRender</span>=<span class="hljs-value">{this.state.forceRender}</span>
       &gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">autoFocus</span> /&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
@@ -410,6 +417,15 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
               <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
               <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.center}</span>
               <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.center}</span>
+            /&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+          &amp;nbsp;
+          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>
+            force render
+            <span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+              <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
+              <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.forceRender}</span>
+              <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onForceRenderChange}</span>
             /&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
