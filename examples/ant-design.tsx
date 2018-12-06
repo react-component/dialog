@@ -1,8 +1,8 @@
 /* eslint no-console:0 */
 
 import 'rc-dialog/assets/index.less';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 // use import Dialog from 'rc-dialog'
 import Dialog from '../src/DialogWrap';
 
@@ -28,18 +28,18 @@ const getSvg = (path: string, props = {}, align = false) => {
   );
 };
 
-class MyControl extends React.Component {
+class MyControl extends React.Component<any, any> {
   state = {
     visible: false,
     width: 600,
     destroyOnClose: false,
     center: false,
-    mousePosition: {},
+    mousePosition: undefined,
     useIcon: false,
     forceRender: false,
   };
 
-  onClick = e => {
+  onClick = (e: React.MouseEvent) => {
     this.setState({
       mousePosition: {
         x: e.pageX,
@@ -49,19 +49,19 @@ class MyControl extends React.Component {
     });
   }
 
-  onClose = e => {
+  onClose = (e: React.SyntheticEvent) => {
     this.setState({
       visible: false,
     });
   }
 
-  onDestroyOnCloseChange = e => {
+  onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       destroyOnClose: e.target.checked,
     });
   }
 
-  onForceRenderChange = e => {
+  onForceRenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       forceRender: e.target.checked,
     });
@@ -73,7 +73,7 @@ class MyControl extends React.Component {
     });
   }
 
-  center = e => {
+  center = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       center: e.target.checked,
     });
