@@ -1,6 +1,10 @@
 # History
 ----
 
+## 7.3.0 / 2018-12-06
+
+- Support `forceRender` for dialog.
+
 ## 7.2.0 / 2018-07-30
 
 - Add closeIcon. [#89](*https://github.com/react-component/dialog/pull/89) [@HeskeyBaozi ](https://github.com/HeskeyBaozi)
