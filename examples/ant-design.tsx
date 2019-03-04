@@ -37,6 +37,7 @@ class MyControl extends React.Component<any, any> {
     mousePosition: undefined,
     useIcon: false,
     forceRender: false,
+    closeOnScroll: false,
   };
 
   onClick = (e: React.MouseEvent) => {
@@ -52,6 +53,12 @@ class MyControl extends React.Component<any, any> {
   onClose = (e: React.SyntheticEvent) => {
     this.setState({
       visible: false,
+    });
+  }
+
+  onCloseScroll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      closeOnScroll: e.target.checked,
     });
   }
 
@@ -105,6 +112,7 @@ class MyControl extends React.Component<any, any> {
         destroyOnClose={this.state.destroyOnClose}
         closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
         forceRender={this.state.forceRender}
+        closeOnScroll={this.state.closeOnScroll}
       >
         <input autoFocus />
         <p>basic modal</p>
@@ -157,6 +165,16 @@ class MyControl extends React.Component<any, any> {
               onChange={this.onForceRenderChange}
             />
           </label>
+          &nbsp;
+          <label>
+            close on scroll
+            <input
+              type="checkbox"
+              checked={this.state.closeOnScroll}
+              onChange={this.onCloseScroll}
+            />
+          </label>
+          &nbsp;
         </p>
         {dialog}
       </div>

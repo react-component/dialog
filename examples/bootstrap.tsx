@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import 'rc-dialog/assets/bootstrap.less';
 import React from 'react';
 import ReactDOM from 'react-dom';

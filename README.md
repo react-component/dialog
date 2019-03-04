@@ -198,6 +198,12 @@ ReactDOM.render(
           <td>to unmount child compenents on onClose</td>
       </tr>
       <tr>
+          <td>closeOnScroll</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>to unmount child compenents on scroll event</td>
+      </tr>
+      <tr>
           <td>closeIcon</td>
           <td>ReactNode</td>
           <td></td>

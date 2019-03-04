@@ -133,7 +133,42 @@ describe('dialog', () => {
       visible: true,
     });
     expect($(".inputElem").val()).to.be("")
-  })
+  });
+
+  it('scroll to close', (finish)=>{
+    const onClose = () => {
+      dialogScroll.setState({
+        visible: false,
+      });
+    }
+    const dialogScroll = ReactDOM.render((
+      <DialogWrap
+        style={{ width: 600 }}
+        title={title}
+        onClose={onClose}
+        closeOnScroll
+        closeIcon={'test-text'}
+      >
+        <p>scroll dialog</p>
+      </DialogWrap>), container);
+    async.series([(done) => {
+      dialogScroll.setState({
+        visible: true,
+      });
+      setTimeout(done, 10);
+    }, (done) => {
+      // mock scroll event
+      const evt = document.createEvent('HTMLEvents');
+      evt.initEvent('scroll', false, true);
+      window.dispatchEvent(evt);
+
+      setTimeout(done, 10);
+    }, (done) => {
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('none');
+      done();
+    }], finish);
+  });
 
   it('esc to close', (finish) => {
     async.series([(done) => {
@@ -277,5 +312,5 @@ describe('dialog', () => {
       </Dialog>
     ),container)
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element')
-  })
+  });
 });

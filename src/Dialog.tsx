@@ -55,6 +55,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     closable: true,
     maskClosable: true,
     destroyOnClose: false,
+    closeOnScroll: false,
     prefixCls: 'rc-dialog',
   };
 
@@ -80,10 +81,16 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       this.wrap.style.display = 'none';
     }
   }
+  onCloseScroll = () => {
+    this.close();
+  }
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
     const mousePosition = this.props.mousePosition;
     if (props.visible) {
+      if (this.props.closeOnScroll && this.wrap) {
+        window.addEventListener('scroll', this.onCloseScroll);
+      }
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
@@ -113,6 +120,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   componentWillUnmount() {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
+    }
+    if (this.props.closeOnScroll) {
+      window.removeEventListener('scroll', this.onCloseScroll);
     }
   }
 
@@ -333,7 +343,9 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
     this.checkScrollbar();
     this.setScrollbar();
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = !this.props.closeOnScroll
+      ? 'hidden'
+      : '';
     // this.adjustDialog();
   }
   removeScrollingEffect = () => {
@@ -345,7 +357,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     this.resetScrollbar();
     // this.resetAdjustments();
   }
-  close = (e: any) => {
+  close = (e?: any) => {
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
