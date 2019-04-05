@@ -277,5 +277,16 @@ describe('dialog', () => {
       </Dialog>
     ),container)
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element')
-  })
+  });
+
+  it('should not close if mouse down in dialog', () => {
+    dialog.setState({
+      visible: true,
+    });
+    const dialogBody = $('.rc-dialog-body')[0];
+    Simulate.mouseDown(dialogBody);
+    const wrapper = $('.rc-dialog-wrap')[0];
+    Simulate.mouseUp(wrapper);
+    expect(dialog.state.visible).to.be(true);
+  });
 });

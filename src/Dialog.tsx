@@ -68,6 +68,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private sentinelEnd: HTMLElement;
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
+  private dialogMouseDown: boolean;
+  private timeoutId: number;
 
   componentWillMount() {
     this.inTransition = false;
@@ -114,6 +116,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
+    clearTimeout(this.timeoutId);
   }
 
   tryFocus() {
@@ -136,12 +139,25 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       afterClose();
     }
   }
+
+  onDialogMouseDown = () => {
+    this.dialogMouseDown = true;
+  }
+
+  onMaskMouseUp: React.MouseEventHandler<HTMLDivElement> = () => {
+    if (this.dialogMouseDown) {
+      this.timeoutId = setTimeout(() => {
+        this.dialogMouseDown = false;
+      }, 0);
+    }
+  }
+
   onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // android trigger click on open (fastclick??)
     if (Date.now() - this.openTime < 300) {
       return;
     }
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && !this.dialogMouseDown) {
       this.close(e);
     }
   }
@@ -222,6 +238,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         style={style}
         className={`${prefixCls} ${props.className || ''}`}
         visible={props.visible}
+        onMouseDown={this.onDialogMouseDown}
       >
         <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle}>
           sentinelStart
@@ -402,7 +419,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           onKeyDown={this.onKeyDown}
           className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
           ref={this.saveRef('wrap')}
-          onClick={maskClosable ? this.onMaskClick : undefined}
+          onClick={maskClosable ? this.onMaskClick : null}
+          onMouseUp={maskClosable ? this.onMaskMouseUp : null}
           role="dialog"
           aria-labelledby={props.title ? this.titleId : null}
           style={style}
