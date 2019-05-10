@@ -240,9 +240,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         visible={props.visible}
         onMouseDown={this.onDialogMouseDown}
       >
-        <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle}>
-          sentinelStart
-        </div>
+        <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle} aria-hidden="true" />
         <div className={`${prefixCls}-content`}>
           {closer}
           {header}
@@ -256,9 +254,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           </div>
           {footer}
         </div>
-        <div tabIndex={0} ref={this.saveRef('sentinelEnd')} style={sentinelStyle}>
-          sentinelEnd
-        </div>
+        <div tabIndex={0} ref={this.saveRef('sentinelEnd')} style={sentinelStyle} aria-hidden="true" />
       </LazyRenderBox>
     );
     return (
