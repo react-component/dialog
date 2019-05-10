@@ -1,6 +1,10 @@
 # History
 ----
 
+## 7.4.0 / 2019-05-10
+
+- Update accessibility.
+
 ## 7.3.0 / 2018-12-06
 
 - Support `forceRender` for dialog.
