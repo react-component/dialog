@@ -5,6 +5,7 @@ import contains from 'rc-util/lib/Dom/contains';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
+import Draggable from 'react-draggable';
 
 let uuid = 0;
 
@@ -60,6 +61,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     destroyOnClose: false,
     prefixCls: 'rc-dialog',
     focusTriggerAfterClose: true,
+    draggable: false,
   };
 
   private inTransition: boolean = false;
@@ -251,7 +253,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     const style = { ...props.style, ...dest };
     const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
     const transitionName = this.getTransitionName();
-    const dialogElement = (
+    const dialog = (
       <LazyRenderBox
         key="dialog-element"
         role="document"
@@ -289,6 +291,11 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         />
       </LazyRenderBox>
     );
+    const dialogElement = props.draggable ? (
+      <Draggable handle={`.${prefixCls}`} {...props.draggableProps}>
+        {dialog}
+      </Draggable>
+    ) : dialog;
 
     return (
       <Animate

@@ -221,6 +221,18 @@ ReactDOM.render(
           <td>true</td>
           <td>focus trigger element when dialog closed</td>
       </tr>
+      <tr>
+          <td>draggable</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>whether dialog should be draggable based on  react-draggble https://github.com/mzabriskie/react-draggable. default handle is the dialog element</td>
+      </tr>
+      <tr>
+          <td>draggableProps</td>
+          <td>Object</td>
+          <td>{}</td>
+          <td>draggable props to be passed to `<Draggable/>` component, pass `handle` prop to override the default handle</td>
+      </tr>
     </tbody>
 </table>
 
