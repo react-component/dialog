@@ -219,12 +219,14 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (closable) {
       closer = (
         <button
+          type="button"
           onClick={this.close}
           aria-label="Close"
           className={`${prefixCls}-close`}
         >
           {props.closeIcon || <span className={`${prefixCls}-close-x`} />}
-        </button>);
+        </button>
+      );
     }
 
     const style = { ...props.style, ...dest };
