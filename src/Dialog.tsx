@@ -353,6 +353,10 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
   removeScrollingEffect = () => {
     openCount--;
+	if (openCount < 0) {
+      openCount = 0;
+      return;
+    }
     if (openCount !== 0) {
       return;
     }
@@ -361,6 +365,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     // this.resetAdjustments();
   }
   close = (e: any) => {
+    this.removeScrollingEffect();
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
