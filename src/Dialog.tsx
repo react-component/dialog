@@ -2,13 +2,12 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
+import switchScrollingEffect from 'rc-util/lib/switchScrollingEffect';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import IDialogPropTypes from './IDialogPropTypes';
 
 let uuid = 0;
-let openCount = 0;
 
 /* eslint react/no-is-mounted:0 */
 
@@ -66,8 +65,6 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private dialog: any;
   private sentinelStart: HTMLElement;
   private sentinelEnd: HTMLElement;
-  private bodyIsOverflowing: boolean;
-  private scrollbarWidth: number;
   private dialogMouseDown: boolean;
   private timeoutId: number;
 
@@ -336,63 +333,26 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
     return transitionName;
   }
-  setScrollbar = () => {
-    if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
-      document.body.style.paddingRight = `${this.scrollbarWidth}px`;
-    }
-  }
   addScrollingEffect = () => {
-    openCount++;
+    const { openCount } = this.props;
     if (openCount !== 1) {
       return;
     }
-    this.checkScrollbar();
-    this.setScrollbar();
+    switchScrollingEffect();
     document.body.style.overflow = 'hidden';
-    // this.adjustDialog();
   }
   removeScrollingEffect = () => {
-    openCount--;
+    const { openCount } = this.props;
     if (openCount !== 0) {
       return;
     }
     document.body.style.overflow = '';
-    this.resetScrollbar();
-    // this.resetAdjustments();
+    switchScrollingEffect(true);
   }
   close = (e: any) => {
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
-    }
-  }
-  checkScrollbar = () => {
-    let fullWindowWidth = window.innerWidth;
-    if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
-      const documentElementRect = document.documentElement.getBoundingClientRect();
-      fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
-    }
-    this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
-    if (this.bodyIsOverflowing) {
-      this.scrollbarWidth = getScrollBarSize();
-    }
-  }
-  resetScrollbar = () => {
-    document.body.style.paddingRight = '';
-  }
-  adjustDialog = () => {
-    if (this.wrap && this.scrollbarWidth !== undefined) {
-      const modalIsOverflowing =
-        this.wrap.scrollHeight > document.documentElement.clientHeight;
-      this.wrap.style.paddingLeft =
-        `${!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : ''}px`;
-      this.wrap.style.paddingRight =
-        `${this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''}px`;
-    }
-  }
-  resetAdjustments = () => {
-    if (this.wrap) {
-      this.wrap.style.paddingLeft = this.wrap.style.paddingLeft = '';
     }
   }
 

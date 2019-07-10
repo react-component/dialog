@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'rc-dialog/assets/bootstrap.less';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import Dialog from '../src/DialogWrap';
 
 class MyControl extends React.Component {
@@ -19,7 +19,7 @@ class MyControl extends React.Component {
       visible: false,
     });
   }
-  onDestroyOnCloseChange = (e) => {
+  onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       destroyOnClose: e.target.checked,
     });

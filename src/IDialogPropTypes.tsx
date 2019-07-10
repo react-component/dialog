@@ -36,6 +36,7 @@ interface IDialogPropTypes {
   getContainer?: () => HTMLElement;
   closeIcon?: ReactNode;
   forceRender?: boolean;
+  openCount?: number;
 }
 
 export default IDialogPropTypes;

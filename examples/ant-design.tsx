@@ -1,5 +1,6 @@
 /* eslint no-console:0 */
-
+import Drawer from 'rc-drawer';
+import 'rc-drawer/assets/index.css';
 import 'rc-dialog/assets/index.less';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -37,6 +38,7 @@ class MyControl extends React.Component<any, any> {
     mousePosition: undefined,
     useIcon: false,
     forceRender: false,
+    visibleDrawer: false,
   };
 
   onClick = (e: React.MouseEvent) => {
@@ -64,6 +66,18 @@ class MyControl extends React.Component<any, any> {
   onForceRenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       forceRender: e.target.checked,
+    });
+  }
+
+  onShowDrawer = () => {
+    this.setState({
+      visibleDrawer: true,
+    });
+  }
+
+  onCloseDrawer = () => {
+    this.setState({
+      visibleDrawer: false,
     });
   }
 
@@ -112,8 +126,19 @@ class MyControl extends React.Component<any, any> {
         <button onClick={this.toggleCloseIcon}>
           use custom icon, is using icon: {this.state.useIcon && 'true' || 'false'}.
         </button>
+        <p><button onClick={this.onShowDrawer}>show drawer</button></p>
         <div style={{ height: 200 }} />
       </Dialog>
+    );
+    const drawer = (
+      <Drawer
+        open={this.state.visibleDrawer}
+        handler={false}
+        onClose={this.onCloseDrawer}
+        level={null}
+      >
+        <button onClick={this.onCloseDrawer}>close drawer</button>
+      </Drawer>
     );
     return (
       <div style={{ width: '90%', margin: '0 auto' }}>
@@ -158,7 +183,9 @@ class MyControl extends React.Component<any, any> {
             />
           </label>
         </p>
+        
         {dialog}
+        {drawer}
       </div>
     );
   }
