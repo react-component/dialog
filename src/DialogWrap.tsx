@@ -14,11 +14,12 @@ import IDialogPropTypes from './IDialogPropTypes';
 * */
 
 export default (props: IDialogPropTypes) => {
-  const { visible, getContainer } = props;
+  const { visible, getContainer, forceRender } = props;
 
   return (
     <Portal
       visible={visible}
+      forceRender={forceRender}
       getContainer={getContainer}
     >
       {({

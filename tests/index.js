@@ -275,7 +275,7 @@ describe('dialog', () => {
       >
         <div>forceRender element</div>
       </Dialog>
-    ),container)
+    ),container);
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element')
   });
 

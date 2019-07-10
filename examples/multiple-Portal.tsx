@@ -23,6 +23,7 @@ const Demo = () => {
       animation="zoom"
       maskAnimation="fade"
       onClose={onToggleDialog}
+      forceRender
     >
       <p>basic modal</p>
       <p><button onClick={onToggleDrawer}>show drawer</button></p>
