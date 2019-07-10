@@ -8,7 +8,7 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import IDialogPropTypes from './IDialogPropTypes';
 
 let uuid = 0;
-let openCount = 0;
+let open = false;
 
 /* eslint react/no-is-mounted:0 */
 
@@ -342,20 +342,16 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
   }
   addScrollingEffect = () => {
-    openCount++;
-    if (openCount !== 1) {
-      return;
-    }
+    if (open) return;
+    open = true;
     this.checkScrollbar();
     this.setScrollbar();
     document.body.style.overflow = 'hidden';
     // this.adjustDialog();
   }
   removeScrollingEffect = () => {
-    openCount--;
-    if (openCount !== 0) {
-      return;
-    }
+    if (!open) return;
+    open = false;
     document.body.style.overflow = '';
     this.resetScrollbar();
     // this.resetAdjustments();
