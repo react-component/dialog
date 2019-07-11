@@ -1240,7 +1240,13 @@ module.exports = ReactPropTypesSecret;
     var visible = props.visible,
         getContainer = props.getContainer,
         forceRender = props.forceRender;
+    // 渲染在当前 dom 里；
 
+    if (getContainer === false) {
+        return __WEBPACK_IMPORTED_MODULE_1_react__["createElement"](__WEBPACK_IMPORTED_MODULE_2__Dialog__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, props, { getOpenCount: function getOpenCount() {
+                return 2;
+            } }));
+    }
     return __WEBPACK_IMPORTED_MODULE_1_react__["createElement"](__WEBPACK_IMPORTED_MODULE_3_rc_util_es_PortalWrapper__["a" /* default */], { visible: visible, forceRender: forceRender, getContainer: getContainer }, function (_ref) {
         var getOpenCount = _ref.getOpenCount,
             getCurrentContainer = _ref.getContainer;
