@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 import Portal from 'rc-util/lib/PortalWrapper';
 import IDialogPropTypes from './IDialogPropTypes';
