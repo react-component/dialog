@@ -1,6 +1,6 @@
 {
   "name": "rc-dialog",
-  "version": "7.4.1",
+  "version": "7.5.0-alpha.0",
   "description": "dialog ui component for react",
   "keywords": [
     "react",
