@@ -80,6 +80,6 @@
   "dependencies": {
     "babel-runtime": "6.x",
     "rc-animate": "2.x",
-    "rc-util": "^4.8.0"
+    "rc-util": "^4.8.1"
   }
 }
