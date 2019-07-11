@@ -1,5 +1,7 @@
 import { ReactNode, CSSProperties, SyntheticEvent } from 'react';
 
+type IStringOrHtmlElement = string | HTMLElement;
+
 interface IDialogPropTypes {
   className?: string;
   keyboard?: boolean;
@@ -33,7 +35,7 @@ interface IDialogPropTypes {
   bodyProps?: any;
   maskProps?: any;
   wrapProps?: any;
-  getContainer?: () => HTMLElement;
+  getContainer?: IStringOrHtmlElement | (() => IStringOrHtmlElement) | false;
   closeIcon?: ReactNode;
   forceRender?: boolean;
 }

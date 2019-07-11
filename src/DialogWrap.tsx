@@ -14,6 +14,15 @@ import IDialogPropTypes from './IDialogPropTypes';
 
 export default (props: IDialogPropTypes) => {
   const { visible, getContainer, forceRender } = props;
+  // 渲染在当前 dom 里；
+  if (getContainer === false) {
+    return (
+      <Dialog
+        {...props}
+        getOpenCount={() => 2} // 不对 body 做任何操作。。
+      />
+    );
+  }
 
   return (
     <Portal
