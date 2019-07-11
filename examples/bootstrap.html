@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>bootstrap.js - example - rc-dialog@7.4.1</title>
+  <title>bootstrap.js - example - rc-dialog@7.5.0-alpha.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-dialog@7.4.1</h1>
+      <h1>rc-dialog@7.5.0-alpha.0</h1>
 
       <p>dialog ui component for react</p>
     </div>
@@ -271,8 +271,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
     <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'bootstrap/dist/css/bootstrap.css'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-dialog/assets/bootstrap.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Dialog <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/DialogWrap'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
@@ -290,7 +290,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       visible: <span class="hljs-literal">false</span>,
     });
   }
-  onDestroyOnCloseChange = (e) =&gt; {
+  onDestroyOnCloseChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       destroyOnClose: e.target.checked,
     });
