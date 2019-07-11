@@ -45,7 +45,11 @@ function offset(el: any) {
   return pos;
 }
 
-export default class Dialog extends React.Component<IDialogPropTypes, any> {
+interface IDialogChildProps extends IDialogPropTypes {
+  getOpenCount: () => number;
+}
+
+export default class Dialog extends React.Component<IDialogChildProps, any> {
   static defaultProps = {
     className: '',
     mask: true,
@@ -110,7 +114,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     }
   }
   componentWillUnmount() {
-    if (this.props.visible || this.inTransition) {
+    const { visible, getOpenCount } = this.props;
+    if ((visible || this.inTransition) && getOpenCount()) {
       this.removeScrollingEffect();
     }
     clearTimeout(this.timeoutId);
@@ -334,7 +339,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     return transitionName;
   }
   addScrollingEffect = () => {
-    const { openCount } = this.props;
+    const { getOpenCount } = this.props;
+    const openCount = getOpenCount();
     if (openCount !== 1) {
       return;
     }
@@ -342,7 +348,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     document.body.style.overflow = 'hidden';
   }
   removeScrollingEffect = () => {
-    const { openCount } = this.props;
+    const { getOpenCount } = this.props;
+    const openCount = getOpenCount();
     if (openCount !== 0) {
       return;
     }

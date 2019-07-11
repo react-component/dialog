@@ -23,15 +23,15 @@ export default (props: IDialogPropTypes) => {
       getContainer={getContainer}
     >
       {({
-        openCount,
+        getOpenCount,
         getContainer: getCurrentContainer,
       }: {
-        openCount: number,
+        getOpenCount: () => number,
         getContainer: () => HTMLElement,
       }) => (
           <Dialog
             {...props}
-            openCount={openCount}
+            getOpenCount={getOpenCount}
             getContainer={getCurrentContainer}
           />
         )}
