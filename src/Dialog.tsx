@@ -115,7 +115,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
   componentWillUnmount() {
     const { visible, getOpenCount } = this.props;
-    if ((visible || this.inTransition) && getOpenCount()) {
+    if ((visible || this.inTransition) && !getOpenCount()) {
       this.removeScrollingEffect();
     }
     clearTimeout(this.timeoutId);
