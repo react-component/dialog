@@ -1,5 +1,4 @@
 /* eslint no-console:0 */
-
 import 'rc-dialog/assets/index.less';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -115,6 +114,7 @@ class MyControl extends React.Component<any, any> {
         <div style={{ height: 200 }} />
       </Dialog>
     );
+
     return (
       <div style={{ width: '90%', margin: '0 auto' }}>
         <style>
