@@ -45,7 +45,7 @@ function offset(el: any) {
   return pos;
 }
 
-interface IDialogChildProps extends IDialogPropTypes {
+export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
 }
 

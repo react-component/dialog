@@ -2,6 +2,7 @@ import * as React from 'react';
 import Dialog from './Dialog';
 import Portal from 'rc-util/lib/PortalWrapper';
 import IDialogPropTypes from './IDialogPropTypes';
+import { IDialogChildProps } from './Dialog';
 
 // fix issue #10656
 /*
@@ -30,19 +31,12 @@ export default (props: IDialogPropTypes) => {
       forceRender={forceRender}
       getContainer={getContainer}
     >
-      {({
-        getOpenCount,
-        getContainer: getCurrentContainer,
-      }: {
-        getOpenCount: () => number,
-        getContainer: () => HTMLElement,
-      }) => (
-          <Dialog
-            {...props}
-            getOpenCount={getOpenCount}
-            getContainer={getCurrentContainer}
-          />
-        )}
+      {(childProps: IDialogChildProps) => (
+        <Dialog
+          {...props}
+          {...childProps}
+        />
+      )}
     </Portal>
   );
 };
