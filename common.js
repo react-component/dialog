@@ -2205,6 +2205,10 @@ KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (function (close) {
+  var bodyIsOverflowing = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight) && window.innerWidth > document.body.offsetWidth;
+  if (!bodyIsOverflowing) {
+    return;
+  }
   if (close) {
     document.body.style.position = '';
     document.body.style.width = '';
@@ -2424,14 +2428,6 @@ var PortalWrapper = function (_React$Component) {
   }
 
   __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(PortalWrapper, [{
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(_ref) {
-      var visible = _ref.visible,
-          forceRender = _ref.forceRender;
-
-      return !!(this.props.visible || visible || this.props.forceRender || forceRender);
-    }
-  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       this.setWrapperClassName();
@@ -2485,14 +2481,16 @@ var PortalWrapper = function (_React$Component) {
             autoDestroy: false,
             getComponent: function getComponent() {
               var extra = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-              return children(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, extra, childProps));
+              return children(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, extra, childProps, {
+                ref: _this2.savePortal
+              }));
             },
             getContainer: this.getContainer,
             forceRender: forceRender
           },
-          function (_ref2) {
-            var renderComponent = _ref2.renderComponent,
-                removeContainer = _ref2.removeContainer;
+          function (_ref) {
+            var renderComponent = _ref.renderComponent,
+                removeContainer = _ref.removeContainer;
 
             _this2.renderComponent = renderComponent;
             _this2.removeContainer = removeContainer;
@@ -2511,8 +2509,8 @@ var PortalWrapper = function (_React$Component) {
     }
   }], [{
     key: 'getDerivedStateFromProps',
-    value: function getDerivedStateFromProps(props, _ref3) {
-      var prevVisible = _ref3.visible;
+    value: function getDerivedStateFromProps(props, _ref2) {
+      var prevVisible = _ref2.visible;
       var visible = props.visible;
 
       if (prevVisible !== undefined && visible !== prevVisible) {
@@ -28316,7 +28314,7 @@ var Dialog = function (_React$Component) {
     Dialog.prototype.componentDidMount = function componentDidMount() {
         this.componentDidUpdate({});
         // if forceRender is true, set element style display to be none;
-        if (this.props.forceRender && this.wrap) {
+        if ((this.props.forceRender || this.props.getContainer === false) && this.wrap) {
             this.wrap.style.display = 'none';
         }
     };
