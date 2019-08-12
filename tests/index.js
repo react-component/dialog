@@ -276,7 +276,7 @@ describe('dialog', () => {
         <div>forceRender element</div>
       </Dialog>
     ),container);
-    expect($('.rc-dialog-body > div').text()).to.be('forceRender element')
+    expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
   });
 
   it('should not close if mouse down in dialog', () => {
@@ -289,4 +289,27 @@ describe('dialog', () => {
     Simulate.mouseUp(wrapper);
     expect(dialog.state.visible).to.be(true);
   });
+  it('getContainer is false', () => {
+    ReactDOM.render((
+      <Dialog
+        getContainer={false}
+      >
+        <div>forceRender element</div>
+      </Dialog>
+    ),container);
+    expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
+    expect($('.rc-dialog-wrap')[0].style.display).to.be('none');
+  });
+  it('getContainer is false and visible is true', () => {
+    ReactDOM.render((
+      <Dialog
+        getContainer={false}
+        visible
+      >
+        <div>forceRender element</div>
+      </Dialog>
+    ),container);
+    expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
+    expect($('.rc-dialog-wrap')[0].style.display).to.be('');
+  })
 });
