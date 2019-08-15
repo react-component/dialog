@@ -61,7 +61,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     prefixCls: 'rc-dialog',
   };
 
-  private inTransition: boolean;
+  private inTransition: boolean = false;
   private titleId: string;
   private openTime: number;
   private lastOutSideFocusNode: HTMLElement | null;
@@ -72,10 +72,11 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   private dialogMouseDown: boolean;
   private timeoutId: number;
 
-  componentWillMount() {
-    this.inTransition = false;
+  constructor(props: IDialogChildProps) {
+    super(props);
     this.titleId = `rcDialogTitle${uuid++}`;
   }
+
   componentDidMount() {
     this.componentDidUpdate({});
     // if forceRender is true, set element style display to be none;
