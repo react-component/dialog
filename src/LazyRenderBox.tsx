@@ -6,11 +6,15 @@ export interface ILazyRenderBoxPropTypes {
   hiddenClassName?: string;
   role?: string;
   style?: {};
+  forceRender?: boolean;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTypes, any> {
   shouldComponentUpdate(nextProps: ILazyRenderBoxPropTypes) {
+    if (nextProps.forceRender) {
+      return true;
+    }
     return !!nextProps.hiddenClassName || !!nextProps.visible;
   }
   render() {
