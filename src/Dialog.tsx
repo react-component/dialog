@@ -80,11 +80,14 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   componentDidMount() {
     this.componentDidUpdate({});
     // if forceRender is true, set element style display to be none;
-    if ((this.props.forceRender || this.props.getContainer === false && !this.props.visible)
-      && this.wrap) {
+    if (
+      (this.props.forceRender || (this.props.getContainer === false && !this.props.visible)) &&
+      this.wrap
+    ) {
       this.wrap.style.display = 'none';
     }
   }
+
   componentDidUpdate(prevProps: IDialogPropTypes) {
     const props = this.props;
     const mousePosition = this.props.mousePosition;
@@ -97,8 +100,10 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
-          setTransformOrigin(dialogNode,
-            `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`);
+          setTransformOrigin(
+            dialogNode,
+            `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`,
+          );
         } else {
           setTransformOrigin(dialogNode, '');
         }
@@ -115,6 +120,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     }
   }
+
   componentWillUnmount() {
     const { visible, getOpenCount } = this.props;
     if ((visible || this.inTransition) && !getOpenCount()) {
@@ -165,6 +171,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       this.close(e);
     }
   }
+
   onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
@@ -187,6 +194,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     }
   }
+
   getDialogElement = () => {
     const props = this.props;
     const closable = props.closable;
@@ -244,9 +252,15 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         style={style}
         className={`${prefixCls} ${props.className || ''}`}
         visible={props.visible}
+        forceRender={props.forceRender}
         onMouseDown={this.onDialogMouseDown}
       >
-        <div tabIndex={0} ref={this.saveRef('sentinelStart')} style={sentinelStyle} aria-hidden="true" />
+        <div
+          tabIndex={0}
+          ref={this.saveRef('sentinelStart')}
+          style={sentinelStyle}
+          aria-hidden="true"
+        />
         <div className={`${prefixCls}-content`}>
           {closer}
           {header}
@@ -260,9 +274,15 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
           </div>
           {footer}
         </div>
-        <div tabIndex={0} ref={this.saveRef('sentinelEnd')} style={sentinelStyle} aria-hidden="true" />
+        <div
+          tabIndex={0}
+          ref={this.saveRef('sentinelEnd')}
+          style={sentinelStyle}
+          aria-hidden="true"
+        />
       </LazyRenderBox>
     );
+
     return (
       <Animate
         key="dialog"
@@ -272,10 +292,11 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         component=""
         transitionAppear
       >
-        {(props.visible || !props.destroyOnClose) ? dialogElement : null}
+        {props.visible || !props.destroyOnClose ? dialogElement : null}
       </Animate>
     );
   }
+
   getZIndexStyle = () => {
     const style: any = {};
     const props = this.props;
@@ -284,12 +305,15 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     }
     return style;
   }
+
   getWrapStyle = (): any => {
     return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
   }
+
   getMaskStyle = () => {
     return { ...this.getZIndexStyle(), ...this.props.maskStyle };
   }
+
   getMaskElement = () => {
     const props = this.props;
     let maskElement;
@@ -321,6 +345,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     }
     return maskElement;
   }
+
   getMaskTransitionName = () => {
     const props = this.props;
     let transitionName = props.maskTransitionName;
@@ -331,6 +356,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
 
     return transitionName;
   }
+
   getTransitionName = () => {
     const props = this.props;
     let transitionName = props.transitionName;
@@ -340,6 +366,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     }
     return transitionName;
   }
+
   addScrollingEffect = () => {
     const { getOpenCount } = this.props;
     const openCount = getOpenCount();
@@ -349,6 +376,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     switchScrollingEffect();
     document.body.style.overflow = 'hidden';
   }
+
   removeScrollingEffect = () => {
     const { getOpenCount } = this.props;
     const openCount = getOpenCount();
@@ -358,6 +386,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     document.body.style.overflow = '';
     switchScrollingEffect(true);
   }
+
   close = (e: any) => {
     const { onClose } = this.props;
     if (onClose) {
