@@ -21,7 +21,7 @@ export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTyp
     const { className, hiddenClassName, visible, forceRender, ...restProps } = this.props;
     let useClassName = className;
     if (!!hiddenClassName && !visible) {
-      useClassName += ` ${this.props.hiddenClassName}`;
+      useClassName += ` ${hiddenClassName}`;
     }
     return <div {...restProps} className={useClassName} />;
   }
