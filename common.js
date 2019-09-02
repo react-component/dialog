@@ -35215,6 +35215,14 @@ ClassList.prototype.contains = function(name){
 
 
 
+var __rest = this && this.__rest || function (s, e) {
+    var t = {};
+    for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+    }if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+        if (e.indexOf(p[i]) < 0) t[p[i]] = s[p[i]];
+    }return t;
+};
 
 
 var LazyRenderBox = function (_React$Component) {
@@ -35234,15 +35242,17 @@ var LazyRenderBox = function (_React$Component) {
     };
 
     LazyRenderBox.prototype.render = function render() {
-        var className = this.props.className;
-        if (!!this.props.hiddenClassName && !this.props.visible) {
-            className += " " + this.props.hiddenClassName;
+        var _a = this.props,
+            className = _a.className,
+            hiddenClassName = _a.hiddenClassName,
+            visible = _a.visible,
+            forceRender = _a.forceRender,
+            restProps = __rest(_a, ["className", "hiddenClassName", "visible", "forceRender"]);
+        var useClassName = className;
+        if (!!hiddenClassName && !visible) {
+            useClassName += " " + this.props.hiddenClassName;
         }
-        var props = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, this.props);
-        delete props.hiddenClassName;
-        delete props.visible;
-        props.className = className;
-        return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, props));
+        return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, restProps, { className: useClassName }));
     };
 
     return LazyRenderBox;
