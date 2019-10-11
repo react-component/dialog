@@ -98,6 +98,13 @@ describe('dialog', () => {
     expect($('.rc-dialog-mask').length).to.be(1);
   });
 
+  it('root', () => {
+    dialog.setState({
+      visible: true,
+    });
+    expect($('.rc-dialog-root').length).to.be(1);
+  });
+
   it('click close', (finish) => {
     async.series([(done) => {
       dialog.setState({
