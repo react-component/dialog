@@ -430,7 +430,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       style.display = null;
     }
     return (
-      <div>
+      <div className={`${prefixCls}-root`}>
         {this.getMaskElement()}
         <div
           tabIndex={-1}
