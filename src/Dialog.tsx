@@ -71,6 +71,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   private sentinelEnd: HTMLElement;
   private dialogMouseDown: boolean;
   private timeoutId: number;
+  private cacheOverflow: { overflowX: string | null; overflowY: string | null};
 
   constructor(props: IDialogChildProps) {
     super(props);
@@ -374,6 +375,10 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       return;
     }
     switchScrollingEffect();
+    this.cacheOverflow = {
+      overflowX: document.body.style.overflowX,
+      overflowY: document.body.style.overflowY,
+    };
     document.body.style.overflow = 'hidden';
   }
 
@@ -383,7 +388,8 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     if (openCount !== 0) {
       return;
     }
-    document.body.style.overflow = '';
+    document.body.style.overflowX = this.cacheOverflow.overflowX;
+    document.body.style.overflowY = this.cacheOverflow.overflowY;
     switchScrollingEffect(true);
   }
 
