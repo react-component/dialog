@@ -1,27 +1,27 @@
 webpackJsonp([0],{
 
-/***/ 136:
+/***/ 135:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(137);
+module.exports = __webpack_require__(136);
 
 
 /***/ }),
 
-/***/ 137:
+/***/ 136:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_DialogWrap__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_drawer__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_drawer_assets_index_css__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_DialogWrap__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_drawer__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_drawer_assets_index_css__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_drawer_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rc_drawer_assets_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_dialog_assets_index_less__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_dialog_assets_index_less__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_dialog_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_dialog_assets_index_less__);
 
 
@@ -56,26 +56,26 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 138:
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DrawerWrapper__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DrawerWrapper__ = __webpack_require__(138);
 // export this package's api
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__DrawerWrapper__["a" /* default */]);
 
 /***/ }),
 
-/***/ 139:
+/***/ 138:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rc_util_es_PortalWrapper__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rc_util_es_PortalWrapper__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_lifecycles_compat__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DrawerChild__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_lifecycles_compat__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DrawerChild__ = __webpack_require__(139);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -162,13 +162,8 @@ function (_React$Component) {
   }
 
   _createClass(DrawerWrapper, [{
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      console.log('wrapper');
-    } // tslint:disable-next-line:member-ordering
-
-  }, {
     key: "render",
+    // tslint:disable-next-line:member-ordering
     value: function render() {
       var _this2 = this;
 
@@ -207,16 +202,19 @@ function (_React$Component) {
         getContainer: getContainer,
         wrapperClassName: wrapperClassName
       }, function (_ref) {
-        var getOpenCount = _ref.getOpenCount,
-            getCurrentContainer = _ref.getContainer;
-        return __WEBPACK_IMPORTED_MODULE_1_react__["createElement"](__WEBPACK_IMPORTED_MODULE_3__DrawerChild__["a" /* default */], Object.assign({}, props, {
-          getOpenCount: getOpenCount,
-          open: open,
-          getContainer: getCurrentContainer,
-          handler: handler,
-          onClose: _this2.onClose,
-          onHandleClick: _this2.onHandleClick
-        }));
+        var visible = _ref.visible,
+            afterClose = _ref.afterClose,
+            rest = _objectWithoutProperties(_ref, ["visible", "afterClose"]);
+
+        return (// react 15，componentWillUnmount 时 Portal 返回 afterClose, visible.
+          __WEBPACK_IMPORTED_MODULE_1_react__["createElement"](__WEBPACK_IMPORTED_MODULE_3__DrawerChild__["a" /* default */], Object.assign({}, props, rest, {
+            open: visible !== undefined ? visible : open,
+            afterVisibleChange: afterClose !== undefined ? afterClose : props.afterVisibleChange,
+            handler: handler,
+            onClose: _this2.onClose,
+            onHandleClick: _this2.onHandleClick
+          }))
+        );
       });
     }
   }], [{
@@ -265,19 +263,19 @@ DrawerWrapper.defaultProps = {
 
 /***/ }),
 
-/***/ 140:
+/***/ 139:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_util_es_KeyCode__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_util_es_KeyCode__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_lifecycles_compat__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_lifecycles_compat__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(141);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -407,41 +405,46 @@ function (_React$Component) {
       var contentValue = _this.contentDom ? _this.contentDom.getBoundingClientRect()[isHorizontal ? 'width' : 'height'] : 0;
       var value = (isHorizontal ? width : height) || contentValue;
 
-      _this.setLevelDomTransform(open, placementName, value);
+      _this.setLevelAndScrolling(open, placementName, value);
     };
 
-    _this.setLevelDomTransform = function (open, placementName, value) {
+    _this.setLevelTransform = function (open, placementName, value, right) {
       var _this$props3 = _this.props,
           placement = _this$props3.placement,
           levelMove = _this$props3.levelMove,
           duration = _this$props3.duration,
           ease = _this$props3.ease,
-          onChange = _this$props3.onChange,
-          showMask = _this$props3.showMask;
+          showMask = _this$props3.showMask; // router 切换时可能会导至页面失去滚动条，所以需要时时获取。
+
+      _this.levelDom.forEach(function (dom) {
+        dom.style.transition = "transform ".concat(duration, " ").concat(ease);
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* addEventListener */])(dom, __WEBPACK_IMPORTED_MODULE_6__utils__["g" /* transitionEnd */], _this.transitionEnd);
+        var levelValue = open ? value : 0;
+
+        if (levelMove) {
+          var $levelMove = Object(__WEBPACK_IMPORTED_MODULE_6__utils__["f" /* transformArguments */])(levelMove, {
+            target: dom,
+            open: open
+          });
+          levelValue = open ? $levelMove[0] : $levelMove[1] || 0;
+        }
+
+        var $value = typeof levelValue === 'number' ? "".concat(levelValue, "px") : levelValue;
+        var placementPos = placement === 'left' || placement === 'top' ? $value : "-".concat($value);
+        placementPos = showMask && placement === 'right' && right ? "calc(".concat(placementPos, " + ").concat(right, "px)") : placementPos;
+        dom.style.transform = levelValue ? "".concat(placementName, "(").concat(placementPos, ")") : '';
+      });
+    };
+
+    _this.setLevelAndScrolling = function (open, placementName, value) {
+      var onChange = _this.props.onChange;
 
       if (!__WEBPACK_IMPORTED_MODULE_6__utils__["i" /* windowIsUndefined */]) {
-        var right = Object(__WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__["a" /* default */])(true); // router 切换时可能会导至页面失去滚动条，所以需要时时获取。
+        var right = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight) && window.innerWidth > document.body.offsetWidth ? Object(__WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__["a" /* default */])(true) : 0;
 
-        _this.levelDom.forEach(function (dom) {
-          dom.style.transition = "transform ".concat(duration, " ").concat(ease);
-          Object(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* addEventListener */])(dom, __WEBPACK_IMPORTED_MODULE_6__utils__["g" /* transitionEnd */], _this.transitionEnd);
-          var levelValue = open ? value : 0;
+        _this.setLevelTransform(open, placementName, value, right);
 
-          if (levelMove) {
-            var $levelMove = Object(__WEBPACK_IMPORTED_MODULE_6__utils__["f" /* transformArguments */])(levelMove, {
-              target: dom,
-              open: open
-            });
-            levelValue = open ? $levelMove[0] : $levelMove[1] || 0;
-          }
-
-          var $value = typeof levelValue === 'number' ? "".concat(levelValue, "px") : levelValue;
-          var placementPos = placement === 'left' || placement === 'top' ? $value : "-".concat($value);
-          placementPos = showMask && placement === 'right' && right ? "calc(".concat(placementPos, " + ").concat(right, "px)") : placementPos;
-          dom.style.transform = levelValue ? "".concat(placementName, "(").concat(placementPos, ")") : '';
-        });
-
-        _this.toggleDrawerAndBody(right);
+        _this.toggleScrollingToDrawerAndBody(right);
       }
 
       if (onChange) {
@@ -449,7 +452,7 @@ function (_React$Component) {
       }
     };
 
-    _this.toggleDrawerAndBody = function (right) {
+    _this.toggleScrollingToDrawerAndBody = function (right) {
       var _this$props4 = _this.props,
           getOpenCount = _this$props4.getOpenCount,
           getContainer = _this$props4.getContainer,
@@ -464,9 +467,7 @@ function (_React$Component) {
 
         if (open && document.body.style.overflow !== 'hidden') {
           if (right) {
-            _this.addScrollingEffect();
-
-            _this.openDrawer(right);
+            _this.addScrollingEffect(right);
           }
 
           if (openCount === 1) {
@@ -491,9 +492,7 @@ function (_React$Component) {
           document.body.style.touchAction = '';
 
           if (right) {
-            _this.remScrollingEffect();
-
-            _this.closeDrawer(right);
+            _this.remScrollingEffect(right);
           } // 恢复事件
 
 
@@ -508,11 +507,18 @@ function (_React$Component) {
       }
     };
 
-    _this.openDrawer = function (right) {
+    _this.addScrollingEffect = function (right) {
       var _this$props5 = _this.props,
           placement = _this$props5.placement,
           duration = _this$props5.duration,
-          ease = _this$props5.ease;
+          ease = _this$props5.ease,
+          getOpenCount = _this$props5.getOpenCount;
+      var openCount = getOpenCount && getOpenCount();
+
+      if (openCount === 1) {
+        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])();
+      }
+
       var widthTransition = "width ".concat(duration, " ").concat(ease);
       var transformTransition = "transform ".concat(duration, " ").concat(ease);
       _this.dom.style.transition = 'none';
@@ -542,11 +548,17 @@ function (_React$Component) {
       });
     };
 
-    _this.closeDrawer = function (right) {
+    _this.remScrollingEffect = function (right) {
       var _this$props6 = _this.props,
           placement = _this$props6.placement,
           duration = _this$props6.duration,
-          ease = _this$props6.ease;
+          ease = _this$props6.ease,
+          getOpenCount = _this$props6.getOpenCount;
+      var openCount = getOpenCount && getOpenCount();
+
+      if (!openCount) {
+        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
+      }
 
       if (__WEBPACK_IMPORTED_MODULE_6__utils__["h" /* transitionStr */]) {
         document.body.style.overflowX = 'hidden';
@@ -558,6 +570,13 @@ function (_React$Component) {
       var transformTransition = "transform ".concat(duration, " ").concat(ease);
 
       switch (placement) {
+        case 'left':
+          {
+            _this.dom.style.width = '100%';
+            widthTransition = "width 0s ".concat(ease, " ").concat(duration);
+            break;
+          }
+
         case 'right':
           {
             _this.dom.style.transform = "translateX(".concat(right, "px)");
@@ -595,24 +614,6 @@ function (_React$Component) {
           _this.dom.style.height = '';
         }
       });
-    };
-
-    _this.addScrollingEffect = function () {
-      var getOpenCount = _this.props.getOpenCount;
-      var openCount = getOpenCount && getOpenCount();
-
-      if (openCount === 1) {
-        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])();
-      }
-    };
-
-    _this.remScrollingEffect = function () {
-      var getOpenCount = _this.props.getOpenCount;
-      var openCount = getOpenCount && getOpenCount();
-
-      if (!openCount) {
-        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
-      }
     };
 
     _this.getCurrentDrawerSome = function () {
@@ -715,12 +716,12 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       var _this$props7 = this.props,
           getOpenCount = _this$props7.getOpenCount,
-          getContainer = _this$props7.getContainer,
           open = _this$props7.open;
       delete currentDrawer[this.drawerId];
 
       if (open) {
-        this.setLevelDomTransform(false);
+        this.setLevelTransform(false);
+        document.body.style.touchAction = '';
       }
 
       if (typeof getOpenCount === 'function' && !getOpenCount()) {
@@ -856,7 +857,7 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ 141:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -916,7 +917,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 142:
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -998,24 +999,13 @@ var getTouchParentScroll = function getTouchParentScroll(root, currentTarget, di
   var isX = Math.max(Math.abs(differX), Math.abs(differY)) === Math.abs(differX);
   var scrollY = currentTarget.scrollHeight - currentTarget.clientHeight;
   var scrollX = currentTarget.scrollWidth - currentTarget.clientWidth;
-  /**
-   * <div style="height: 300px">
-   *   <div style="height: 900px"></div>
-   * </div>
-   * 在没设定 overflow: auto 或 scroll 时，currentTarget 里获取不到 scrollTop 或 scrollLeft,
-   * 预先用 scrollTo 来滚动，如果取出的值跟滚动前取出不同，则 currnetTarget 被设定了 overflow; 否则就是上面这种。
-   */
+  var style = document.defaultView.getComputedStyle(currentTarget);
+  var overflowY = style.overflowY === 'auto' || style.overflowY === 'scroll';
+  var overflowX = style.overflowX === 'auto' || style.overflowX === 'scroll';
+  var y = scrollY && overflowY;
+  var x = scrollX && overflowX;
 
-  var t = currentTarget.scrollTop;
-  var l = currentTarget.scrollLeft;
-  currentTarget.scrollTop += 1;
-  currentTarget.scrollLeft += 1;
-  var currentT = currentTarget.scrollTop;
-  var currentL = currentTarget.scrollLeft;
-  currentTarget.scrollTop -= 1;
-  currentTarget.scrollLeft -= 1;
-
-  if (isY && (!scrollY || !(currentT - t) || scrollY && (currentTarget.scrollTop >= scrollY && differY < 0 || currentTarget.scrollTop <= 0 && differY > 0)) || isX && (!scrollX || !(currentL - l) || scrollX && (currentTarget.scrollLeft >= scrollX && differX < 0 || currentTarget.scrollLeft <= 0 && differX > 0))) {
+  if (isY && (!y || y && (currentTarget.scrollTop >= scrollY && differY < 0 || currentTarget.scrollTop <= 0 && differY > 0)) || isX && (!x || x && (currentTarget.scrollLeft >= scrollX && scrollX < 0 || currentTarget.scrollLeft <= 0 && scrollX > 0))) {
     return getTouchParentScroll(root, currentTarget.parentNode, differX, differY);
   }
 
@@ -1024,19 +1014,19 @@ var getTouchParentScroll = function getTouchParentScroll(root, currentTarget, di
 
 /***/ }),
 
-/***/ 143:
+/***/ 142:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 41:
+/***/ 40:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[136]);
+},[135]);
 //# sourceMappingURL=multiple-Portal.js.map
