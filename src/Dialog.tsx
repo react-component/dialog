@@ -385,12 +385,11 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   removeScrollingEffect = () => {
     const { getOpenCount } = this.props;
     const openCount = getOpenCount();
-    if (openCount !== 0) {
-      return;
+    if (!openCount && this.cacheOverflow) {
+      document.body.style.overflowX = this.cacheOverflow.overflowX;
+      document.body.style.overflowY = this.cacheOverflow.overflowY;
+      switchScrollingEffect(true);
     }
-    document.body.style.overflowX = this.cacheOverflow.overflowX;
-    document.body.style.overflowY = this.cacheOverflow.overflowY;
-    switchScrollingEffect(true);
   }
 
   close = (e: any) => {
