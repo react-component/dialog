@@ -35849,12 +35849,11 @@ var Dialog = function (_React$Component) {
             var getOpenCount = _this.props.getOpenCount;
 
             var openCount = getOpenCount();
-            if (openCount !== 0) {
-                return;
+            if (!openCount && _this.cacheOverflow) {
+                document.body.style.overflowX = _this.cacheOverflow.overflowX;
+                document.body.style.overflowY = _this.cacheOverflow.overflowY;
+                Object(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
             }
-            document.body.style.overflowX = _this.cacheOverflow.overflowX;
-            document.body.style.overflowY = _this.cacheOverflow.overflowY;
-            Object(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
         };
         _this.close = function (e) {
             var onClose = _this.props.onClose;
