@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import Dialog from '../src/DialogWrap';
 import Drawer from 'rc-drawer';
 import 'rc-drawer/assets/index.css';
 import 'rc-dialog/assets/index.less';
+
+const { useState } = React;
 
 const Demo = () => {
   const [showDialog, setShowDialog] = useState(false);
