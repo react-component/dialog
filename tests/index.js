@@ -312,4 +312,85 @@ describe('dialog', () => {
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
     expect($('.rc-dialog-wrap')[0].style.display).to.be('');
   })
+  it('Single Dialog body overflow set correctly', () => {
+    document.body.style.overflow = "scroll"
+
+    dialog.setState({
+      visible: true
+    });
+    expect(document.body.style.overflow).to.be('hidden');
+
+    dialog.setState({
+      visible: false
+    });
+    expect(document.body.style.overflow).to.be('scroll');
+  })
+
+  it('Multiple Dialog body overflow set correctly', () => {
+    document.body.style.overflow = "scroll"
+
+    class MultipleDialogWrap extends React.Component {
+      state = {
+        visible: false,
+        visible2: false,
+      };
+      render() {
+        return (
+          <div>
+            <Dialog
+              {...this.props}
+              visible={this.state.visible}
+            />
+            <Dialog
+              {...this.props}
+              visible={this.state.visible2}
+            />
+          </div>
+        );
+      }
+    }
+
+    const d = ReactDOM.render((
+      <MultipleDialogWrap>
+        <div>forceRender element</div>
+      </MultipleDialogWrap>
+    ),container);
+
+    expect($('.rc-dialog').length).to.be(0);
+
+    d.setState({
+      visible: true,
+    })
+    expect($('.rc-dialog').length).to.be(1);
+    expect(document.body.style.overflow).to.be('hidden');
+
+    d.setState({
+      visible2: true,
+    })
+    expect($('.rc-dialog').length).to.be(2);
+    expect(document.body.style.overflow).to.be('hidden');
+
+    d.setState({
+      visible: false,
+      visible2: false,
+    })
+    expect(document.body.style.overflow).to.be('scroll');
+
+    d.setState({
+      visible: true,
+    })
+    expect(document.body.style.overflow).to.be('hidden');
+
+    d.setState({
+      visible: false,
+      visible2: true,
+    })
+    expect(document.body.style.overflow).to.be('hidden');
+
+    d.setState({
+      visible: false,
+      visible2: false,
+    })
+    expect(document.body.style.overflow).to.be('scroll');
+  })
 });
