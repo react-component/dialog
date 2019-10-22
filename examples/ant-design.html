@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ant-design.js - example - rc-dialog@7.5.10</title>
+  <title>ant-design.js - example - rc-dialog@7.5.11</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-dialog@7.5.10</h1>
+      <h1>rc-dialog@7.5.11</h1>
 
       <p>dialog ui component for react</p>
     </div>
@@ -301,6 +301,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span>&lt;<span class="hljs-title">any</span>, <span class="hljs-title">any</span>&gt; </span>{
   state = {
     visible: <span class="hljs-literal">false</span>,
+    visible2: <span class="hljs-literal">false</span>,
     width: <span class="hljs-number">600</span>,
     destroyOnClose: <span class="hljs-literal">false</span>,
     center: <span class="hljs-literal">false</span>,
@@ -322,6 +323,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   onClose = (e: React.SyntheticEvent) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">false</span>,
+    });
+  }
+
+  onClose2 = (e: React.SyntheticEvent) =&gt; {
+    <span class="hljs-keyword">this</span>.setState({
+      visible: <span class="hljs-literal">false</span>,
+      visible2: <span class="hljs-literal">false</span>,
     });
   }
 
@@ -378,6 +386,39 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       &gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">autoFocus</span> /&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> {
+          this.setState({
+            visible: false,
+            visible2: true,
+          });
+        }}&gt;打开第二个并关闭当前的<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> {
+          this.setState({
+            visible: true,
+            visible2: true,
+          });
+        }}&gt;打开第二个<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.changeWidth}</span>&gt;</span>change width<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleCloseIcon}</span>&gt;</span>
+          use custom icon, is using icon: {this.state.useIcon &amp;&amp; 'true' || 'false'}.
+        <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">height:</span> <span class="hljs-attribute">200</span> }} /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
+    )</span>;
+
+    <span class="hljs-keyword">const</span> dialog2 = (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span>
+        <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible2}</span>
+        <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.onClose2}</span>
+      &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">autoFocus</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> {
+          this.setState({
+            visible2: false,
+          });
+        }}&gt;关闭当前<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClose2}</span>&gt;</span>关闭所有<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.changeWidth}</span>&gt;</span>change width<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleCloseIcon}</span>&gt;</span>
           use custom icon, is using icon: {this.state.useIcon &amp;&amp; 'true' || 'false'}.
@@ -430,6 +471,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
         {dialog}
+        {dialog2}
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
   }

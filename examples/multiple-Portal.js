@@ -29,12 +29,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+var useState = __WEBPACK_IMPORTED_MODULE_0_react__["useState"];
+
 var Demo = function Demo() {
-    var _useState = Object(__WEBPACK_IMPORTED_MODULE_0_react__["useState"])(false),
+    var _useState = useState(false),
         showDialog = _useState[0],
         setShowDialog = _useState[1];
 
-    var _useState2 = Object(__WEBPACK_IMPORTED_MODULE_0_react__["useState"])(false),
+    var _useState2 = useState(false),
         showDrawer = _useState2[0],
         setShowDrawer = _useState2[1];
 
@@ -48,11 +50,11 @@ var Demo = function Demo() {
             return !value;
         });
     };
-    var dialog = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__src_DialogWrap__["a" /* default */], { visible: showDialog, animation: "zoom", maskAnimation: "fade", onClose: onToggleDialog, forceRender: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("p", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", { onClick: onToggleDrawer }, "show drawer")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { style: { height: 200 } }));
-    var drawer = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_rc_drawer__["a" /* default */], { open: showDrawer, handler: false, onClose: onToggleDrawer, level: null }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", { onClick: onToggleDrawer }, "close drawer"));
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", { onClick: onToggleDialog }, "open dialog"), dialog, drawer);
+    var dialog = __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_2__src_DialogWrap__["a" /* default */], { visible: showDialog, animation: "zoom", maskAnimation: "fade", onClose: onToggleDialog, forceRender: true }, __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("p", null, __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("button", { onClick: onToggleDrawer }, "show drawer")), __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { style: { height: 200 } }));
+    var drawer = __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_3_rc_drawer__["a" /* default */], { open: showDrawer, handler: false, onClose: onToggleDrawer, level: null }, __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("button", { onClick: onToggleDrawer }, "close drawer"));
+    return __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", null, __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("button", { onClick: onToggleDialog }, "open dialog"), dialog, drawer);
 };
-__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("h2", null, "multiple dialog"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Demo, null)), document.getElementById('__react-content'));
+__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"](__WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", null, __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("h2", null, "multiple dialog"), __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](Demo, null)), document.getElementById('__react-content'));
 
 /***/ }),
 

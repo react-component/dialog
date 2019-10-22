@@ -35693,6 +35693,7 @@ function offset(el) {
     pos.top += getScroll(w, true);
     return pos;
 }
+var cacheOverflow = {};
 
 var Dialog = function (_React$Component) {
     __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(Dialog, _React$Component);
@@ -35712,7 +35713,7 @@ var Dialog = function (_React$Component) {
                 _this.wrap.style.display = 'none';
             }
             _this.inTransition = false;
-            _this.removeScrollingEffect();
+            _this.switchScrollingEffect();
             if (afterClose) {
                 afterClose();
             }
@@ -35831,27 +35832,28 @@ var Dialog = function (_React$Component) {
             }
             return transitionName;
         };
-        _this.addScrollingEffect = function () {
+        _this.switchScrollingEffect = function () {
             var getOpenCount = _this.props.getOpenCount;
 
             var openCount = getOpenCount();
-            if (openCount !== 1) {
-                return;
-            }
-            Object(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_switchScrollingEffect__["a" /* default */])();
-            _this.cacheOverflow = {
-                overflowX: document.body.style.overflowX,
-                overflowY: document.body.style.overflowY
-            };
-            document.body.style.overflow = 'hidden';
-        };
-        _this.removeScrollingEffect = function () {
-            var getOpenCount = _this.props.getOpenCount;
-
-            var openCount = getOpenCount();
-            if (!openCount && _this.cacheOverflow) {
-                document.body.style.overflowX = _this.cacheOverflow.overflowX;
-                document.body.style.overflowY = _this.cacheOverflow.overflowY;
+            if (openCount === 1) {
+                if (cacheOverflow.hasOwnProperty('overflowX')) {
+                    return;
+                }
+                cacheOverflow = {
+                    overflowX: document.body.style.overflowX,
+                    overflowY: document.body.style.overflowY
+                };
+                document.body.style.overflow = 'hidden';
+                Object(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_switchScrollingEffect__["a" /* default */])();
+            } else if (!openCount) {
+                if (cacheOverflow.overflowX !== undefined) {
+                    document.body.style.overflowX = cacheOverflow.overflowX;
+                }
+                if (cacheOverflow.overflowY !== undefined) {
+                    document.body.style.overflowY = cacheOverflow.overflowY;
+                }
+                cacheOverflow = {};
                 Object(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
             }
         };
@@ -35886,7 +35888,7 @@ var Dialog = function (_React$Component) {
             // first show
             if (!prevProps.visible) {
                 this.openTime = Date.now();
-                this.addScrollingEffect();
+                this.switchScrollingEffect();
                 this.tryFocus();
                 var dialogNode = __WEBPACK_IMPORTED_MODULE_5_react_dom__["findDOMNode"](this.dialog);
                 if (mousePosition) {
@@ -35915,7 +35917,7 @@ var Dialog = function (_React$Component) {
             getOpenCount = _props.getOpenCount;
 
         if ((visible || this.inTransition) && !getOpenCount()) {
-            this.removeScrollingEffect();
+            this.switchScrollingEffect();
         }
         clearTimeout(this.timeoutId);
     };
