@@ -123,9 +123,6 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         }
         this.lastOutSideFocusNode = null;
       }
-      // if (!props.visible) {
-      //   this.switchScrollingEffect();
-      // }
     }
   }
 
