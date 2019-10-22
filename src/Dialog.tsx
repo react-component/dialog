@@ -45,6 +45,10 @@ function offset(el: any) {
   return pos;
 }
 
+// https://github.com/ant-design/ant-design/issues/19340
+// https://github.com/ant-design/ant-design/issues/19332
+let cacheOverflow = {};
+
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
 }
@@ -96,7 +100,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
-        this.addScrollingEffect();
+        this.switchScrollingEffect();
         this.tryFocus();
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
@@ -119,13 +123,16 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         }
         this.lastOutSideFocusNode = null;
       }
+      // if (!props.visible) {
+      //   this.switchScrollingEffect();
+      // }
     }
   }
 
   componentWillUnmount() {
     const { visible, getOpenCount } = this.props;
     if ((visible || this.inTransition) && !getOpenCount()) {
-      this.removeScrollingEffect();
+      this.switchScrollingEffect();
     }
     clearTimeout(this.timeoutId);
   }
@@ -145,7 +152,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       this.wrap.style.display = 'none';
     }
     this.inTransition = false;
-    this.removeScrollingEffect();
+    this.switchScrollingEffect();
     if (afterClose) {
       afterClose();
     }
@@ -368,26 +375,26 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     return transitionName;
   }
 
-  addScrollingEffect = () => {
+  switchScrollingEffect = () => {
     const { getOpenCount } = this.props;
     const openCount = getOpenCount();
-    if (openCount !== 1) {
-      return;
-    }
-    switchScrollingEffect();
-    this.cacheOverflow = {
-      overflowX: document.body.style.overflowX,
-      overflowY: document.body.style.overflowY,
-    };
-    document.body.style.overflow = 'hidden';
-  }
 
-  removeScrollingEffect = () => {
-    const { getOpenCount } = this.props;
-    const openCount = getOpenCount();
-    if (!openCount && this.cacheOverflow) {
-      document.body.style.overflowX = this.cacheOverflow.overflowX;
-      document.body.style.overflowY = this.cacheOverflow.overflowY;
+    if (openCount === 1) {
+      if (cacheOverflow.hasOwnProperty('overflowX')) {
+        return;
+      }
+      cacheOverflow = {
+        overflowX: document.body.style.overflowX,
+        overflowY: document.body.style.overflowY,
+      };
+      document.body.style.overflow = 'hidden';
+      switchScrollingEffect();
+    } else if (!openCount) {
+      if (cacheOverflow.overflowX !== undefined || cacheOverflow.overflowY !== undefined) {
+        document.body.style.overflowX = cacheOverflow.overflowX;
+        document.body.style.overflowY = cacheOverflow.overflowY;
+      }
+      cacheOverflow = {};
       switchScrollingEffect(true);
     }
   }
