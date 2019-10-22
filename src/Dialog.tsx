@@ -47,7 +47,11 @@ function offset(el: any) {
 
 // https://github.com/ant-design/ant-design/issues/19340
 // https://github.com/ant-design/ant-design/issues/19332
-let cacheOverflow = {};
+interface ICacheOverflow {
+  overflowX?: string;
+  overflowY?: string;
+}
+let cacheOverflow: ICacheOverflow = {};
 
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
@@ -75,7 +79,6 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   private sentinelEnd: HTMLElement;
   private dialogMouseDown: boolean;
   private timeoutId: number;
-  private cacheOverflow: { overflowX: string | null; overflowY: string | null};
 
   constructor(props: IDialogChildProps) {
     super(props);
@@ -383,12 +386,14 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       cacheOverflow = {
         overflowX: document.body.style.overflowX,
         overflowY: document.body.style.overflowY,
-      };
+      } as ICacheOverflow;
       document.body.style.overflow = 'hidden';
       switchScrollingEffect();
     } else if (!openCount) {
-      if (cacheOverflow.overflowX !== undefined || cacheOverflow.overflowY !== undefined) {
+      if (cacheOverflow.overflowX !== undefined) {
         document.body.style.overflowX = cacheOverflow.overflowX;
+      }
+      if (cacheOverflow.overflowY !== undefined) {
         document.body.style.overflowY = cacheOverflow.overflowY;
       }
       cacheOverflow = {};

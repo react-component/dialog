@@ -49,6 +49,7 @@
     "compile": "rc-tools run compile --babel-runtime",
     "pub": "rc-tools run pub --babel-runtime",
     "lint": "rc-tools run lint --no-js-lint",
+    "lint:ts": "tsc",
     "karma": "rc-test run karma",
     "saucelabs": "rc-test run saucelabs",
     "test": "rc-test run test",
