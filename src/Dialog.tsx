@@ -50,6 +50,7 @@ function offset(el: any) {
 interface ICacheOverflow {
   overflowX?: string;
   overflowY?: string;
+  overflow?: string;
 }
 let cacheOverflow: ICacheOverflow = {};
 
@@ -386,10 +387,16 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       cacheOverflow = {
         overflowX: document.body.style.overflowX,
         overflowY: document.body.style.overflowY,
+        overflow:  document.body.style.overflow,
       } as ICacheOverflow;
       document.body.style.overflow = 'hidden';
       switchScrollingEffect();
     } else if (!openCount) {
+      // IE browser doesn't merge overflow style, need to set it separately
+      // https://github.com/ant-design/ant-design/issues/19393
+      if (cacheOverflow.overflow  !== undefined) {
+        document.body.style.overflow = cacheOverflow.overflow;
+      }
       if (cacheOverflow.overflowX !== undefined) {
         document.body.style.overflowX = cacheOverflow.overflowX;
       }
