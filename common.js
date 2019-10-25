@@ -35842,11 +35842,17 @@ var Dialog = function (_React$Component) {
                 }
                 cacheOverflow = {
                     overflowX: document.body.style.overflowX,
-                    overflowY: document.body.style.overflowY
+                    overflowY: document.body.style.overflowY,
+                    overflow: document.body.style.overflow
                 };
                 document.body.style.overflow = 'hidden';
                 Object(__WEBPACK_IMPORTED_MODULE_8_rc_util_es_switchScrollingEffect__["a" /* default */])();
             } else if (!openCount) {
+                // IE browser doesn't merge overflow style, need to set it separately
+                // https://github.com/ant-design/ant-design/issues/19393
+                if (cacheOverflow.overflow !== undefined) {
+                    document.body.style.overflow = cacheOverflow.overflow;
+                }
                 if (cacheOverflow.overflowX !== undefined) {
                     document.body.style.overflowX = cacheOverflow.overflowX;
                 }
