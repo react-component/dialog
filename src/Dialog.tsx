@@ -389,8 +389,9 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         overflowY: document.body.style.overflowY,
         overflow:  document.body.style.overflow,
       } as ICacheOverflow;
-      document.body.style.overflow = 'hidden';
       switchScrollingEffect();
+      // Must be set after switchScrollingEffect
+      document.body.style.overflow = 'hidden';
     } else if (!openCount) {
       // IE browser doesn't merge overflow style, need to set it separately
       // https://github.com/ant-design/ant-design/issues/19393
