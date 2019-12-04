@@ -112,7 +112,7 @@ class MyControl extends React.Component<any, any> {
         destroyOnClose={this.state.destroyOnClose}
         closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
         forceRender={this.state.forceRender}
-        disableFocus
+        focusTriggerAfterClose={false}
       >
         <input autoFocus />
         <p>basic modal</p>
