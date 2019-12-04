@@ -68,6 +68,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     maskClosable: true,
     destroyOnClose: false,
     prefixCls: 'rc-dialog',
+    focusTriggerAfterClose: true,
   };
 
   private inTransition: boolean = false;
@@ -98,7 +99,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const {visible, mask, disableFocus} = this.props;
+    const {visible, mask, focusTriggerAfterClose} = this.props;
     const mousePosition = this.props.mousePosition;
     if (visible) {
       // first show
@@ -119,7 +120,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     } else if (prevProps.visible) {
       this.inTransition = true;
-      if (mask && this.lastOutSideFocusNode && !disableFocus) {
+      if (mask && this.lastOutSideFocusNode && focusTriggerAfterClose) {
         try {
           this.lastOutSideFocusNode.focus();
         } catch (e) {

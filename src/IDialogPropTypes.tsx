@@ -40,7 +40,7 @@ interface IDialogPropTypes {
   forceRender?: boolean;
   // https://github.com/ant-design/ant-design/issues/19771
   // https://github.com/react-component/dialog/issues/95
-  disableFocus?: boolean;
+  focusTriggerAfterClose?: boolean;
 }
 
 export default IDialogPropTypes;

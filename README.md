@@ -210,10 +210,10 @@ ReactDOM.render(
           <td>Create dialog dom node before dialog first show </td>
       </tr>
       <tr>
-          <td>disableFocus</td>
+          <td>focusTriggerAfterClose</td>
           <td>Boolean</td>
-          <td>false</td>
-          <td>Disable focus target element when invisible</td>
+          <td>true</td>
+          <td>focus trigger element when dialog closed</td>
       </tr>
     </tbody>
 </table>
