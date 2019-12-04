@@ -98,9 +98,9 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const props = this.props;
+    const {visible, mask, disableFocus} = this.props;
     const mousePosition = this.props.mousePosition;
-    if (props.visible) {
+    if (visible) {
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
@@ -119,7 +119,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     } else if (prevProps.visible) {
       this.inTransition = true;
-      if (props.mask && this.lastOutSideFocusNode) {
+      if (mask && this.lastOutSideFocusNode && !disableFocus) {
         try {
           this.lastOutSideFocusNode.focus();
         } catch (e) {
