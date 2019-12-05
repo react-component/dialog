@@ -129,7 +129,7 @@ var MyControl = function (_React$Component) {
         if (this.state.center) {
             wrapClassName = 'center';
         }
-        var dialog = __WEBPACK_IMPORTED_MODULE_5_react__["createElement"](__WEBPACK_IMPORTED_MODULE_7__src_DialogWrap__["a" /* default */], { visible: this.state.visible, wrapClassName: wrapClassName, animation: "zoom", maskAnimation: "fade", onClose: this.onClose, style: style, mousePosition: this.state.mousePosition, destroyOnClose: this.state.destroyOnClose, closeIcon: this.state.useIcon ? getSvg(clearPath, {}, true) : undefined, forceRender: this.state.forceRender }, __WEBPACK_IMPORTED_MODULE_5_react__["createElement"]("input", { autoFocus: true }), __WEBPACK_IMPORTED_MODULE_5_react__["createElement"]("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_5_react__["createElement"]("button", { onClick: function onClick() {
+        var dialog = __WEBPACK_IMPORTED_MODULE_5_react__["createElement"](__WEBPACK_IMPORTED_MODULE_7__src_DialogWrap__["a" /* default */], { visible: this.state.visible, wrapClassName: wrapClassName, animation: "zoom", maskAnimation: "fade", onClose: this.onClose, style: style, mousePosition: this.state.mousePosition, destroyOnClose: this.state.destroyOnClose, closeIcon: this.state.useIcon ? getSvg(clearPath, {}, true) : undefined, forceRender: this.state.forceRender, focusTriggerAfterClose: false }, __WEBPACK_IMPORTED_MODULE_5_react__["createElement"]("input", { autoFocus: true }), __WEBPACK_IMPORTED_MODULE_5_react__["createElement"]("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_5_react__["createElement"]("button", { onClick: function onClick() {
                 _this2.setState({
                     visible: false,
                     visible2: true
