@@ -393,4 +393,20 @@ describe('dialog', () => {
     })
     expect(document.body.style.overflow).to.be('scroll');
   })
+
+  it('afterClose', (done) => {
+    const dialog = ReactDOM.render((
+      <DialogWrap
+        afterClose={done}
+      >
+        <div>afterClose</div>
+      </DialogWrap>
+    ),container);
+    dialog.setState({
+      visible: true,
+    });
+    dialog.setState({
+      visible: false,
+    });
+  });
 });
