@@ -409,4 +409,20 @@ describe('dialog', () => {
       visible: false,
     });
   });
+
+  it('zIndex', () => {
+    const dialog = ReactDOM.render((
+      <DialogWrap
+        zIndex={1000}
+      >
+        <div>afterClose</div>
+      </DialogWrap>
+    ),container);
+    dialog.setState({
+      visible: true,
+    });
+
+    expect($('.rc-dialog-wrap').css("zIndex")).to.be('1000');
+
+  });
 });
