@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
-import switchScrollingEffect from 'rc-util/lib/switchScrollingEffect';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
@@ -45,17 +44,9 @@ function offset(el: any) {
   return pos;
 }
 
-// https://github.com/ant-design/ant-design/issues/19340
-// https://github.com/ant-design/ant-design/issues/19332
-interface ICacheOverflow {
-  overflowX?: string;
-  overflowY?: string;
-  overflow?: string;
-}
-let cacheOverflow: ICacheOverflow = {};
-
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
+  switchScrollingEffect?: () => void;
 }
 
 export default class Dialog extends React.Component<IDialogChildProps, any> {
@@ -81,10 +72,12 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   private sentinelEnd: HTMLElement;
   private dialogMouseDown: boolean;
   private timeoutId: number;
+  private switchScrollingEffect: () => void;
 
   constructor(props: IDialogChildProps) {
     super(props);
     this.titleId = `rcDialogTitle${uuid++}`;
+    this.switchScrollingEffect = props.switchScrollingEffect || (() => {});
   }
 
   componentDidMount() {
@@ -375,39 +368,6 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       transitionName = `${props.prefixCls}-${animation}`;
     }
     return transitionName;
-  }
-
-  switchScrollingEffect = () => {
-    const { getOpenCount } = this.props;
-    const openCount = getOpenCount();
-
-    if (openCount === 1) {
-      if (cacheOverflow.hasOwnProperty('overflowX')) {
-        return;
-      }
-      cacheOverflow = {
-        overflowX: document.body.style.overflowX,
-        overflowY: document.body.style.overflowY,
-        overflow:  document.body.style.overflow,
-      } as ICacheOverflow;
-      switchScrollingEffect();
-      // Must be set after switchScrollingEffect
-      document.body.style.overflow = 'hidden';
-    } else if (!openCount) {
-      // IE browser doesn't merge overflow style, need to set it separately
-      // https://github.com/ant-design/ant-design/issues/19393
-      if (cacheOverflow.overflow  !== undefined) {
-        document.body.style.overflow = cacheOverflow.overflow;
-      }
-      if (cacheOverflow.overflowX !== undefined) {
-        document.body.style.overflowX = cacheOverflow.overflowX;
-      }
-      if (cacheOverflow.overflowY !== undefined) {
-        document.body.style.overflowY = cacheOverflow.overflowY;
-      }
-      cacheOverflow = {};
-      switchScrollingEffect(true);
-    }
   }
 
   close = (e: any) => {
