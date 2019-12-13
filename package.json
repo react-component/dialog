@@ -68,7 +68,7 @@
     "expect.js": "~0.3.1",
     "jquery": "^3.3.1",
     "pre-commit": "1.x",
-    "rc-drawer": "3.0.2",
+    "rc-drawer": "3.1.1",
     "rc-test": "^6.0.1",
     "rc-tools": "7.x",
     "react": "^16.0.0",
