@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
-import switchScrollingEffect from 'rc-util/lib/switchScrollingEffect';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
@@ -47,6 +46,7 @@ function offset(el: any) {
 
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
+  switchScrollingEffect?: () => void;
 }
 
 export default class Dialog extends React.Component<IDialogChildProps, any> {
@@ -59,6 +59,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     maskClosable: true,
     destroyOnClose: false,
     prefixCls: 'rc-dialog',
+    focusTriggerAfterClose: true,
   };
 
   private inTransition: boolean = false;
@@ -71,10 +72,12 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   private sentinelEnd: HTMLElement;
   private dialogMouseDown: boolean;
   private timeoutId: number;
+  private switchScrollingEffect: () => void;
 
   constructor(props: IDialogChildProps) {
     super(props);
     this.titleId = `rcDialogTitle${uuid++}`;
+    this.switchScrollingEffect = props.switchScrollingEffect || (() => {});
   }
 
   componentDidMount() {
@@ -89,13 +92,13 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const props = this.props;
+    const {visible, mask, focusTriggerAfterClose} = this.props;
     const mousePosition = this.props.mousePosition;
-    if (props.visible) {
+    if (visible) {
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
-        this.addScrollingEffect();
+        this.switchScrollingEffect();
         this.tryFocus();
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
@@ -110,7 +113,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     } else if (prevProps.visible) {
       this.inTransition = true;
-      if (props.mask && this.lastOutSideFocusNode) {
+      if (mask && this.lastOutSideFocusNode && focusTriggerAfterClose) {
         try {
           this.lastOutSideFocusNode.focus();
         } catch (e) {
@@ -124,7 +127,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   componentWillUnmount() {
     const { visible, getOpenCount } = this.props;
     if ((visible || this.inTransition) && !getOpenCount()) {
-      this.removeScrollingEffect();
+      this.switchScrollingEffect();
     }
     clearTimeout(this.timeoutId);
   }
@@ -144,7 +147,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       this.wrap.style.display = 'none';
     }
     this.inTransition = false;
-    this.removeScrollingEffect();
+    this.switchScrollingEffect();
     if (afterClose) {
       afterClose();
     }
@@ -367,26 +370,6 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     return transitionName;
   }
 
-  addScrollingEffect = () => {
-    const { getOpenCount } = this.props;
-    const openCount = getOpenCount();
-    if (openCount !== 1) {
-      return;
-    }
-    switchScrollingEffect();
-    document.body.style.overflow = 'hidden';
-  }
-
-  removeScrollingEffect = () => {
-    const { getOpenCount } = this.props;
-    const openCount = getOpenCount();
-    if (openCount !== 0) {
-      return;
-    }
-    document.body.style.overflow = '';
-    switchScrollingEffect(true);
-  }
-
   close = (e: any) => {
     const { onClose } = this.props;
     if (onClose) {
@@ -408,7 +391,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       style.display = null;
     }
     return (
-      <div>
+      <div className={`${prefixCls}-root`}>
         {this.getMaskElement()}
         <div
           tabIndex={-1}

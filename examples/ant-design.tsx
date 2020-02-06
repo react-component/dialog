@@ -30,6 +30,7 @@ const getSvg = (path: string, props = {}, align = false) => {
 class MyControl extends React.Component<any, any> {
   state = {
     visible: false,
+    visible2: false,
     width: 600,
     destroyOnClose: false,
     center: false,
@@ -51,6 +52,13 @@ class MyControl extends React.Component<any, any> {
   onClose = (e: React.SyntheticEvent) => {
     this.setState({
       visible: false,
+    });
+  }
+
+  onClose2 = (e: React.SyntheticEvent) => {
+    this.setState({
+      visible: false,
+      visible2: false,
     });
   }
 
@@ -104,9 +112,43 @@ class MyControl extends React.Component<any, any> {
         destroyOnClose={this.state.destroyOnClose}
         closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
         forceRender={this.state.forceRender}
+        focusTriggerAfterClose={false}
       >
         <input autoFocus />
         <p>basic modal</p>
+        <button onClick={() => {
+          this.setState({
+            visible: false,
+            visible2: true,
+          });
+        }}>打开第二个并关闭当前的</button>
+        <button onClick={() => {
+          this.setState({
+            visible: true,
+            visible2: true,
+          });
+        }}>打开第二个</button>
+        <button onClick={this.changeWidth}>change width</button>
+        <button onClick={this.toggleCloseIcon}>
+          use custom icon, is using icon: {this.state.useIcon && 'true' || 'false'}.
+        </button>
+        <div style={{ height: 200 }} />
+      </Dialog>
+    );
+
+    const dialog2 = (
+      <Dialog
+        visible={this.state.visible2}
+        onClose={this.onClose2}
+      >
+        <input autoFocus />
+        <p>basic modal</p>
+        <button onClick={() => {
+          this.setState({
+            visible2: false,
+          });
+        }}>关闭当前</button>
+        <button onClick={this.onClose2}>关闭所有</button>
         <button onClick={this.changeWidth}>change width</button>
         <button onClick={this.toggleCloseIcon}>
           use custom icon, is using icon: {this.state.useIcon && 'true' || 'false'}.
@@ -159,6 +201,7 @@ class MyControl extends React.Component<any, any> {
           </label>
         </p>
         {dialog}
+        {dialog2}
       </div>
     );
   }
