@@ -271,13 +271,12 @@ DrawerWrapper.defaultProps = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_util_es_KeyCode__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_lifecycles_compat__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(143);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -301,7 +300,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -349,14 +347,14 @@ function (_React$Component) {
       var differX = e.changedTouches[0].clientX - _this.startPos.x;
       var differY = e.changedTouches[0].clientY - _this.startPos.y;
 
-      if (currentTarget === _this.maskDom || currentTarget === _this.handlerDom || currentTarget === _this.contentDom && Object(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* getTouchParentScroll */])(currentTarget, e.target, differX, differY)) {
+      if (currentTarget === _this.maskDom || currentTarget === _this.handlerDom || currentTarget === _this.contentDom && Object(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* getTouchParentScroll */])(currentTarget, e.target, differX, differY)) {
         e.preventDefault();
       }
     };
 
     _this.transitionEnd = function (e) {
       var dom = e.target;
-      Object(__WEBPACK_IMPORTED_MODULE_6__utils__["e" /* removeEventListener */])(dom, __WEBPACK_IMPORTED_MODULE_6__utils__["g" /* transitionEnd */], _this.transitionEnd);
+      Object(__WEBPACK_IMPORTED_MODULE_5__utils__["e" /* removeEventListener */])(dom, __WEBPACK_IMPORTED_MODULE_5__utils__["g" /* transitionEnd */], _this.transitionEnd);
       dom.style.transition = '';
     };
 
@@ -420,11 +418,11 @@ function (_React$Component) {
 
       _this.levelDom.forEach(function (dom) {
         dom.style.transition = "transform ".concat(duration, " ").concat(ease);
-        Object(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* addEventListener */])(dom, __WEBPACK_IMPORTED_MODULE_6__utils__["g" /* transitionEnd */], _this.transitionEnd);
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils__["a" /* addEventListener */])(dom, __WEBPACK_IMPORTED_MODULE_5__utils__["g" /* transitionEnd */], _this.transitionEnd);
         var levelValue = open ? value : 0;
 
         if (levelMove) {
-          var $levelMove = Object(__WEBPACK_IMPORTED_MODULE_6__utils__["f" /* transformArguments */])(levelMove, {
+          var $levelMove = Object(__WEBPACK_IMPORTED_MODULE_5__utils__["f" /* transformArguments */])(levelMove, {
             target: dom,
             open: open
           });
@@ -441,7 +439,7 @@ function (_React$Component) {
     _this.setLevelAndScrolling = function (open, placementName, value) {
       var onChange = _this.props.onChange;
 
-      if (!__WEBPACK_IMPORTED_MODULE_6__utils__["i" /* windowIsUndefined */]) {
+      if (!__WEBPACK_IMPORTED_MODULE_5__utils__["i" /* windowIsUndefined */]) {
         var right = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight) && window.innerWidth > document.body.offsetWidth ? Object(__WEBPACK_IMPORTED_MODULE_1_rc_util_es_getScrollBarSize__["a" /* default */])(true) : 0;
 
         _this.setLevelTransform(open, placementName, value, right);
@@ -483,7 +481,7 @@ function (_React$Component) {
               return;
             }
 
-            Object(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* addEventListener */])(item, eventArray[i] || 'touchmove', i ? _this.removeMoveHandler : _this.removeStartHandler, _this.passive);
+            Object(__WEBPACK_IMPORTED_MODULE_5__utils__["a" /* addEventListener */])(item, eventArray[i] || 'touchmove', i ? _this.removeMoveHandler : _this.removeStartHandler, _this.passive);
           });
         } else if (_this.getCurrentDrawerSome()) {
           // 没有弹框的状态下清除 overflow;
@@ -503,7 +501,7 @@ function (_React$Component) {
               return;
             }
 
-            Object(__WEBPACK_IMPORTED_MODULE_6__utils__["e" /* removeEventListener */])(item, eventArray[i] || 'touchmove', i ? _this.removeMoveHandler : _this.removeStartHandler, _this.passive);
+            Object(__WEBPACK_IMPORTED_MODULE_5__utils__["e" /* removeEventListener */])(item, eventArray[i] || 'touchmove', i ? _this.removeMoveHandler : _this.removeStartHandler, _this.passive);
           });
         }
       }
@@ -514,11 +512,12 @@ function (_React$Component) {
           placement = _this$props5.placement,
           duration = _this$props5.duration,
           ease = _this$props5.ease,
-          getOpenCount = _this$props5.getOpenCount;
+          getOpenCount = _this$props5.getOpenCount,
+          switchScrollingEffect = _this$props5.switchScrollingEffect;
       var openCount = getOpenCount && getOpenCount();
 
       if (openCount === 1) {
-        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])();
+        switchScrollingEffect();
       }
 
       var widthTransition = "width ".concat(duration, " ").concat(ease);
@@ -555,14 +554,15 @@ function (_React$Component) {
           placement = _this$props6.placement,
           duration = _this$props6.duration,
           ease = _this$props6.ease,
-          getOpenCount = _this$props6.getOpenCount;
+          getOpenCount = _this$props6.getOpenCount,
+          switchScrollingEffect = _this$props6.switchScrollingEffect;
       var openCount = getOpenCount && getOpenCount();
 
       if (!openCount) {
-        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
+        switchScrollingEffect(true);
       }
 
-      if (__WEBPACK_IMPORTED_MODULE_6__utils__["h" /* transitionStr */]) {
+      if (__WEBPACK_IMPORTED_MODULE_5__utils__["h" /* transitionStr */]) {
         document.body.style.overflowX = 'hidden';
       }
 
@@ -628,7 +628,7 @@ function (_React$Component) {
       var level = _ref.level,
           getContainer = _ref.getContainer;
 
-      if (__WEBPACK_IMPORTED_MODULE_6__utils__["i" /* windowIsUndefined */]) {
+      if (__WEBPACK_IMPORTED_MODULE_5__utils__["i" /* windowIsUndefined */]) {
         return;
       }
 
@@ -644,7 +644,7 @@ function (_React$Component) {
           }
         });
       } else if (level) {
-        Object(__WEBPACK_IMPORTED_MODULE_6__utils__["b" /* dataToArray */])(level).forEach(function (key) {
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* dataToArray */])(level).forEach(function (key) {
           document.querySelectorAll(key).forEach(function (item) {
             _this.levelDom.push(item);
           });
@@ -673,14 +673,18 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      if (!__WEBPACK_IMPORTED_MODULE_6__utils__["i" /* windowIsUndefined */]) {
+      if (!__WEBPACK_IMPORTED_MODULE_5__utils__["i" /* windowIsUndefined */]) {
         var passiveSupported = false;
-        window.addEventListener('test', function () {}, Object.defineProperty({}, 'passive', {
-          get: function get() {
-            passiveSupported = true;
-            return null;
-          }
-        }));
+
+        try {
+          window.addEventListener('test', null, Object.defineProperty({}, 'passive', {
+            get: function get() {
+              passiveSupported = true;
+              return null;
+            }
+          }));
+        } catch (err) {}
+
         this.passive = passiveSupported ? {
           passive: false
         } : false;
@@ -718,7 +722,8 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       var _this$props7 = this.props,
           getOpenCount = _this$props7.getOpenCount,
-          open = _this$props7.open;
+          open = _this$props7.open,
+          switchScrollingEffect = _this$props7.switchScrollingEffect;
       var openCount = typeof getOpenCount === 'function' && getOpenCount();
       delete currentDrawer[this.drawerId];
 
@@ -729,7 +734,7 @@ function (_React$Component) {
 
       if (!openCount) {
         document.body.style.overflow = '';
-        Object(__WEBPACK_IMPORTED_MODULE_3_rc_util_es_switchScrollingEffect__["a" /* default */])(true);
+        switchScrollingEffect(true);
       }
     } // tslint:disable-next-line:member-ordering
 
@@ -764,7 +769,8 @@ function (_React$Component) {
           onHandleClick = _this$props8.onHandleClick,
           keyboard = _this$props8.keyboard,
           getOpenCount = _this$props8.getOpenCount,
-          props = _objectWithoutProperties(_this$props8, ["className", "children", "style", "width", "height", "defaultOpen", "open", "prefixCls", "placement", "level", "levelMove", "ease", "duration", "getContainer", "handler", "onChange", "afterVisibleChange", "showMask", "maskClosable", "maskStyle", "onClose", "onHandleClick", "keyboard", "getOpenCount"]); // 首次渲染都将是关闭状态。
+          switchScrollingEffect = _this$props8.switchScrollingEffect,
+          props = _objectWithoutProperties(_this$props8, ["className", "children", "style", "width", "height", "defaultOpen", "open", "prefixCls", "placement", "level", "levelMove", "ease", "duration", "getContainer", "handler", "onChange", "afterVisibleChange", "showMask", "maskClosable", "maskStyle", "onClose", "onHandleClick", "keyboard", "getOpenCount", "switchScrollingEffect"]); // 首次渲染都将是关闭状态。
 
 
       var open = this.dom ? $open : false;
@@ -777,7 +783,7 @@ function (_React$Component) {
 
       var placementPos = placement === 'left' || placement === 'top' ? '-100%' : '100%';
       var transform = open ? '' : "".concat(placementName, "(").concat(placementPos, ")");
-      var handlerChildren = handler && __WEBPACK_IMPORTED_MODULE_4_react__["cloneElement"](handler, {
+      var handlerChildren = handler && __WEBPACK_IMPORTED_MODULE_3_react__["cloneElement"](handler, {
         onClick: function onClick(e) {
           if (handler.props.onClick) {
             handler.props.onClick();
@@ -791,7 +797,7 @@ function (_React$Component) {
           _this3.handlerDom = c;
         }
       });
-      return __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", Object.assign({}, props, {
+      return __WEBPACK_IMPORTED_MODULE_3_react__["createElement"]("div", Object.assign({}, props, {
         tabIndex: -1,
         className: wrapperClassName,
         style: style,
@@ -800,25 +806,25 @@ function (_React$Component) {
         },
         onKeyDown: open && keyboard ? this.onKeyDown : undefined,
         onTransitionEnd: this.onWrapperTransitionEnd
-      }), showMask && __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", {
+      }), showMask && __WEBPACK_IMPORTED_MODULE_3_react__["createElement"]("div", {
         className: "".concat(prefixCls, "-mask"),
         onClick: maskClosable ? onClose : undefined,
         style: maskStyle,
         ref: function ref(c) {
           _this3.maskDom = c;
         }
-      }), __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", {
+      }), __WEBPACK_IMPORTED_MODULE_3_react__["createElement"]("div", {
         className: "".concat(prefixCls, "-content-wrapper"),
         style: {
           transform: transform,
           msTransform: transform,
-          width: Object(__WEBPACK_IMPORTED_MODULE_6__utils__["d" /* isNumeric */])(width) ? "".concat(width, "px") : width,
-          height: Object(__WEBPACK_IMPORTED_MODULE_6__utils__["d" /* isNumeric */])(height) ? "".concat(height, "px") : height
+          width: Object(__WEBPACK_IMPORTED_MODULE_5__utils__["d" /* isNumeric */])(width) ? "".concat(width, "px") : width,
+          height: Object(__WEBPACK_IMPORTED_MODULE_5__utils__["d" /* isNumeric */])(height) ? "".concat(height, "px") : height
         },
         ref: function ref(c) {
           _this3.contentWrapper = c;
         }
-      }, __WEBPACK_IMPORTED_MODULE_4_react__["createElement"]("div", {
+      }, __WEBPACK_IMPORTED_MODULE_3_react__["createElement"]("div", {
         className: "".concat(prefixCls, "-content"),
         ref: function ref(c) {
           _this3.contentDom = c;
@@ -855,9 +861,12 @@ function (_React$Component) {
   }]);
 
   return DrawerChild;
-}(__WEBPACK_IMPORTED_MODULE_4_react__["Component"]);
+}(__WEBPACK_IMPORTED_MODULE_3_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_5_react_lifecycles_compat__["a" /* polyfill */])(DrawerChild));
+DrawerChild.defaultProps = {
+  switchScrollingEffect: function switchScrollingEffect() {}
+};
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__["a" /* polyfill */])(DrawerChild));
 
 /***/ }),
 
