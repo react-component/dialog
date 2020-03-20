@@ -245,7 +245,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     }
 
     const style = { ...props.style, ...dest };
-    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden' };
+    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
     const transitionName = this.getTransitionName();
     const dialogElement = (
       <LazyRenderBox
