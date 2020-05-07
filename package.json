@@ -80,7 +80,7 @@
   "typings": "./lib/DialogWrap.d.ts",
   "dependencies": {
     "babel-runtime": "6.x",
-    "rc-animate": "2.x",
+    "rc-animate": "3.x",
     "rc-util": "^4.16.1"
   }
 }
