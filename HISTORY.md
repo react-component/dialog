@@ -1,6 +1,10 @@
 # History
 ----
 
+## 7.7.0 / 2020-05-05
+
+- upgrade `rc-animate` to `3.0.0`.
+
 ## 7.4.0 / 2019-05-10
 
 - Update accessibility.
