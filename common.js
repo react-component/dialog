@@ -30941,7 +30941,9 @@ var Dialog = function (_React$Component) {
 
         _this.inTransition = false;
         _this.onAnimateLeave = function () {
-            var afterClose = _this.props.afterClose;
+            var _this$props = _this.props,
+                afterClose = _this$props.afterClose,
+                getOpenCount = _this$props.getOpenCount;
             // need demo?
             // https://github.com/react-component/dialog/pull/28
 
@@ -30949,7 +30951,11 @@ var Dialog = function (_React$Component) {
                 _this.wrap.style.display = 'none';
             }
             _this.inTransition = false;
-            _this.switchScrollingEffect();
+            // 如果没有打开的状态，则清除 effect 和 overflow: hidden;
+            // https://github.com/ant-design/ant-design/issues/21539
+            if (!getOpenCount()) {
+                _this.switchScrollingEffect();
+            }
             if (afterClose) {
                 afterClose();
             }
@@ -32973,7 +32979,7 @@ var PortalWrapper = /*#__PURE__*/function (_React$Component) {
     _this.switchScrollingEffect = function () {
       if (openCount === 1 && !Object.keys(cacheOverflow).length) {
         Object(__WEBPACK_IMPORTED_MODULE_4__switchScrollingEffect__["a" /* default */])(); // Must be set after switchScrollingEffect
-
+        console.log(2123123)
         cacheOverflow = Object(__WEBPACK_IMPORTED_MODULE_5__setStyle__["a" /* default */])({
           overflow: 'hidden',
           overflowX: 'hidden',
@@ -33326,6 +33332,7 @@ function isBodyOverflowing() {
 
 var cacheStyle = {};
 /* harmony default export */ __webpack_exports__["a"] = (function (close) {
+  console.log(close)
   if (!isBodyOverflowing() && !close) {
     return;
   } // https://github.com/ant-design/ant-design/issues/19729
@@ -33334,7 +33341,7 @@ var cacheStyle = {};
   var scrollingEffectClassName = 'ant-scrolling-effect';
   var scrollingEffectClassNameReg = new RegExp("".concat(scrollingEffectClassName), 'g');
   var bodyClassName = document.body.className;
-
+  console.log(cacheStyle)
   if (close) {
     if (!scrollingEffectClassNameReg.test(bodyClassName)) return;
     Object(__WEBPACK_IMPORTED_MODULE_1__setStyle__["a" /* default */])(cacheStyle);
