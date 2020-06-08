@@ -140,14 +140,18 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   onAnimateLeave = () => {
-    const { afterClose } = this.props;
+    const { afterClose, getOpenCount } = this.props;
     // need demo?
     // https://github.com/react-component/dialog/pull/28
     if (this.wrap) {
       this.wrap.style.display = 'none';
     }
     this.inTransition = false;
-    this.switchScrollingEffect();
+    // 如果没有打开的状态，则清除 effect 和 overflow: hidden;
+    // https://github.com/ant-design/ant-design/issues/21539
+    if (!getOpenCount()) {
+      this.switchScrollingEffect();
+    }
     if (afterClose) {
       afterClose();
     }
