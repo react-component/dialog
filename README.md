@@ -6,21 +6,27 @@ react dialog component
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
-[![gemnasium deps][gemnasium-image]][gemnasium-url]
+[![Dependencies][david-image]][david-url]
+[![DevDependencies][david-dev-image]][david-dev-url]
 [![npm download][download-image]][download-url]
+[![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-dialog.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-dialog
-[travis-image]: https://img.shields.io/travis/react-component/dialog.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/react-component/dialog/master?style=flat-square
 [travis-url]: https://travis-ci.org/react-component/dialog
+[circleci-image]: https://img.shields.io/circleci/react-component/dialog/master?style=flat-square
+[circleci-url]: https://circleci.com/gh/react-component/dialog
 [coveralls-image]: https://img.shields.io/coveralls/react-component/dialog.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/react-component/dialog?branch=master
-[gemnasium-image]: http://img.shields.io/gemnasium/react-component/dialog.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/react-component/dialog
-[node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
-[node-url]: http://nodejs.org/download/
+[david-url]: https://david-dm.org/react-component/dialog
+[david-image]: https://david-dm.org/react-component/dialog/status.svg?style=flat-square
+[david-dev-url]: https://david-dm.org/react-component/dialog?type=dev
+[david-dev-image]: https://david-dm.org/react-component/dialog/dev-status.svg?style=flat-square
 [download-image]: https://img.shields.io/npm/dm/rc-dialog.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-dialog
+[bundlephobia-url]: https://bundlephobia.com/result?p=rc-dialog
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-dialog
 
 ## Screenshot
 
