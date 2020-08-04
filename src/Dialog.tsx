@@ -85,7 +85,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     // if forceRender is true, set element style display to be none;
     if (
       (this.props.forceRender || (this.props.getContainer === false && !this.props.visible)) &&
-      this.wrap
+      this.wrap && !this.prop.visible
     ) {
       this.wrap.style.display = 'none';
     }
