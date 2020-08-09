@@ -31,6 +31,7 @@ class MyControl extends React.Component<any, any> {
   state = {
     visible: false,
     visible2: false,
+    visible3: true,
     width: 600,
     destroyOnClose: false,
     center: false,
@@ -60,6 +61,10 @@ class MyControl extends React.Component<any, any> {
       visible: false,
       visible2: false,
     });
+  }
+
+  onClose3 = (e: React.SyntheticEvent) => {
+    this.setState({ visible3: false });
   }
 
   onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,7 +150,35 @@ class MyControl extends React.Component<any, any> {
         <p>basic modal</p>
         <button onClick={() => {
           this.setState({
+            visible: true,
+            visible2: true,
+            visible3: true,
+          });
+        }}>打开第三个</button>
+        <button onClick={() => {
+          this.setState({
             visible2: false,
+          });
+        }}>关闭当前</button>
+        <button onClick={this.onClose2}>关闭所有</button>
+        <button onClick={this.changeWidth}>change width</button>
+        <button onClick={this.toggleCloseIcon}>
+          use custom icon, is using icon: {this.state.useIcon && 'true' || 'false'}.
+        </button>
+        <div style={{ height: 200 }} />
+      </Dialog>
+    );
+
+    const dialog3 = (
+      <Dialog
+        forceRender
+        visible={this.state.visible3}
+        onClose={this.onClose3}
+      >
+        <p>initialized with forceRender and visbile true</p>
+        <button onClick={() => {
+          this.setState({
+            visible3: false,
           });
         }}>关闭当前</button>
         <button onClick={this.onClose2}>关闭所有</button>
@@ -202,6 +235,7 @@ class MyControl extends React.Component<any, any> {
         </p>
         {dialog}
         {dialog2}
+        {dialog3}
       </div>
     );
   }
