@@ -84,7 +84,7 @@ describe('dialog', () => {
       visible: false,
     });
     setTimeout(() => {
-      expect($('.rc-dialog-wrap').css('display')).to.be('block');
+      expect($('.rc-dialog-wrap').css('display')).to.be('none');
       done();
     }, 10);
   });
