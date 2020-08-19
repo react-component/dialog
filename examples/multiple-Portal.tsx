@@ -1,9 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import Dialog from '../src/DialogWrap';
 import Drawer from 'rc-drawer';
+import Dialog from '../src/DialogWrap';
 import 'rc-drawer/assets/index.css';
-import 'rc-dialog/assets/index.less';
+import '../assets/index.less';
 
 const { useState } = React;
 
@@ -51,10 +50,4 @@ const Demo = () => {
   );
 };
 
-ReactDOM.render(
-  <div>
-    <h2>multiple dialog</h2>
-    <Demo />
-  </div>,
-  document.getElementById('__react-content'),
-);
+export default Demo;

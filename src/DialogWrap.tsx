@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Dialog from './Dialog';
 import Portal from 'rc-util/lib/PortalWrapper';
+import Dialog, { IDialogChildProps } from './Dialog';
 import IDialogPropTypes from './IDialogPropTypes';
-import { IDialogChildProps } from './Dialog';
 
 // fix issue #10656
 /*
