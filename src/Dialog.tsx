@@ -191,7 +191,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
 
   onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyboard, visible } = this.props;
-    if ( keyboard && e.keyCode === KeyCode.ESC) {
+    if (keyboard && e.keyCode === KeyCode.ESC) {
       e.stopPropagation();
       this.close(e);
       return;
