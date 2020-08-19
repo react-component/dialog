@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ant-design.js - example - rc-dialog@8.1.0</title>
+  <title>ant-design.js - example - rc-dialog@8.1.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-dialog@8.1.0</h1>
+      <h1>rc-dialog@8.1.1</h1>
 
       <p>dialog ui component for react</p>
     </div>
@@ -302,6 +302,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   state = {
     visible: <span class="hljs-literal">false</span>,
     visible2: <span class="hljs-literal">false</span>,
+    visible3: <span class="hljs-literal">true</span>,
     width: <span class="hljs-number">600</span>,
     destroyOnClose: <span class="hljs-literal">false</span>,
     center: <span class="hljs-literal">false</span>,
@@ -331,6 +332,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       visible: <span class="hljs-literal">false</span>,
       visible2: <span class="hljs-literal">false</span>,
     });
+  }
+
+  onClose3 = (e: React.SyntheticEvent) =&gt; {
+    <span class="hljs-keyword">this</span>.setState({ visible3: <span class="hljs-literal">false</span> });
   }
 
   onDestroyOnCloseChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
@@ -416,7 +421,35 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>basic modal<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> {
           this.setState({
+            visible: true,
+            visible2: true,
+            visible3: true,
+          });
+        }}&gt;打开第三个<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> {
+          this.setState({
             visible2: false,
+          });
+        }}&gt;关闭当前<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClose2}</span>&gt;</span>关闭所有<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.changeWidth}</span>&gt;</span>change width<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleCloseIcon}</span>&gt;</span>
+          use custom icon, is using icon: {this.state.useIcon &amp;&amp; 'true' || 'false'}.
+        <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">height:</span> <span class="hljs-attribute">200</span> }} /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Dialog</span>&gt;</span>
+    )</span>;
+
+    <span class="hljs-keyword">const</span> dialog3 = (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Dialog</span>
+        <span class="hljs-attribute">forceRender</span>
+        <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible3}</span>
+        <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.onClose3}</span>
+      &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>initialized with forceRender and visbile true<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> {
+          this.setState({
+            visible3: false,
           });
         }}&gt;关闭当前<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.onClose2}</span>&gt;</span>关闭所有<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
@@ -473,6 +506,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
         {dialog}
         {dialog2}
+        {dialog3}
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
   }

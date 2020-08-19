@@ -29470,6 +29470,9 @@ var Dialog = function (_React$Component) {
     Dialog.prototype.componentDidMount = function componentDidMount() {
         this.componentDidUpdate({});
         // if forceRender is true, set element style display to be none;
+        if (this.props.forceRender && this.props.visible) {
+            return;
+        }
         if ((this.props.forceRender || this.props.getContainer === false && !this.props.visible) && this.wrap) {
             this.wrap.style.display = 'none';
         }

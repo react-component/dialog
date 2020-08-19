@@ -53,6 +53,7 @@ var MyControl = function (_React$Component) {
         _this.state = {
             visible: false,
             visible2: false,
+            visible3: true,
             width: 600,
             destroyOnClose: false,
             center: false,
@@ -79,6 +80,9 @@ var MyControl = function (_React$Component) {
                 visible: false,
                 visible2: false
             });
+        };
+        _this.onClose3 = function (e) {
+            _this.setState({ visible3: false });
         };
         _this.onDestroyOnCloseChange = function (e) {
             _this.setState({
@@ -131,10 +135,21 @@ var MyControl = function (_React$Component) {
             } }, '\u6253\u5F00\u7B2C\u4E8C\u4E2A'), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.changeWidth }, "change width"), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.toggleCloseIcon }, "use custom icon, is using icon: ", this.state.useIcon && 'true' || 'false', "."), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("div", { style: { height: 200 } }));
         var dialog2 = __WEBPACK_IMPORTED_MODULE_1_react__["createElement"](__WEBPACK_IMPORTED_MODULE_3__src_DialogWrap__["a" /* default */], { visible: this.state.visible2, onClose: this.onClose2 }, __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { autoFocus: true }), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("p", null, "basic modal"), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: function onClick() {
                 _this2.setState({
+                    visible: true,
+                    visible2: true,
+                    visible3: true
+                });
+            } }, '\u6253\u5F00\u7B2C\u4E09\u4E2A'), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: function onClick() {
+                _this2.setState({
                     visible2: false
                 });
             } }, '\u5173\u95ED\u5F53\u524D'), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.onClose2 }, '\u5173\u95ED\u6240\u6709'), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.changeWidth }, "change width"), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.toggleCloseIcon }, "use custom icon, is using icon: ", this.state.useIcon && 'true' || 'false', "."), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("div", { style: { height: 200 } }));
-        return __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("div", { style: { width: '90%', margin: '0 auto' } }, __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("style", null, '\n            .center {\n              display: flex;\n              align-items: center;\n              justify-content: center;\n            }\n            '), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("p", null, __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { className: "btn btn-primary", onClick: this.onClick }, "show dialog"), '\xA0', __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("label", null, "destroy on close:", __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { type: "checkbox", checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })), '\xA0', __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("label", null, "center", __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { type: "checkbox", checked: this.state.center, onChange: this.center })), '\xA0', __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("label", null, "force render", __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { type: "checkbox", checked: this.state.forceRender, onChange: this.onForceRenderChange }))), dialog, dialog2);
+        var dialog3 = __WEBPACK_IMPORTED_MODULE_1_react__["createElement"](__WEBPACK_IMPORTED_MODULE_3__src_DialogWrap__["a" /* default */], { forceRender: true, visible: this.state.visible3, onClose: this.onClose3 }, __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("p", null, "initialized with forceRender and visbile true"), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: function onClick() {
+                _this2.setState({
+                    visible3: false
+                });
+            } }, '\u5173\u95ED\u5F53\u524D'), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.onClose2 }, '\u5173\u95ED\u6240\u6709'), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.changeWidth }, "change width"), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { onClick: this.toggleCloseIcon }, "use custom icon, is using icon: ", this.state.useIcon && 'true' || 'false', "."), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("div", { style: { height: 200 } }));
+        return __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("div", { style: { width: '90%', margin: '0 auto' } }, __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("style", null, '\n            .center {\n              display: flex;\n              align-items: center;\n              justify-content: center;\n            }\n            '), __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("p", null, __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("button", { className: "btn btn-primary", onClick: this.onClick }, "show dialog"), '\xA0', __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("label", null, "destroy on close:", __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { type: "checkbox", checked: this.state.destroyOnClose, onChange: this.onDestroyOnCloseChange })), '\xA0', __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("label", null, "center", __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { type: "checkbox", checked: this.state.center, onChange: this.center })), '\xA0', __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("label", null, "force render", __WEBPACK_IMPORTED_MODULE_1_react__["createElement"]("input", { type: "checkbox", checked: this.state.forceRender, onChange: this.onForceRenderChange }))), dialog, dialog2, dialog3);
     };
 
     return MyControl;
