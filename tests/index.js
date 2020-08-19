@@ -432,4 +432,34 @@ describe('dialog', () => {
     expect($('.rc-dialog-wrap').css("zIndex")).to.be('1000');
 
   });
+
+  it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
+    class DialogWrap extends React.Component {
+      state = {
+        visible: true,
+        forceRender: true,
+      };
+      render() {
+        return (
+          <Dialog
+            forceRender={this.state.forceRender}
+            visible={this.state.visible}
+          />
+        );
+      }
+    }
+    ReactDOM.render((
+      <DialogWrap
+        visible
+        forceRender
+      >
+        <div>Show dialog with forceRender and visible is true</div>
+      </DialogWrap>
+    ),container);
+    setTimeout(() => {
+      expect($('.rc-dialog-wrap').css('display'))
+        .to.be('block');
+      done();
+    }, 10);
+  });
 });
