@@ -2,15 +2,17 @@
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import expect from 'expect.js';
-import Dialog from '../index';
-import '../assets/bootstrap.less';
+import KeyCode from 'rc-util/lib/KeyCode';
+import async from 'async';
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
-const Simulate = TestUtils.Simulate;
-import async from 'async';
-import KeyCode from 'rc-util/lib/KeyCode';
+import { mount } from 'enzyme';
+import Dialog from '../index';
+import '../assets/bootstrap.less';
+
+const { Simulate } = TestUtils;
 
 describe('dialog', () => {
   const title = '第一个title';
@@ -27,6 +29,7 @@ describe('dialog', () => {
       visible: false,
       maskClosable: true,
     };
+
     render() {
       return (
         <Dialog
@@ -52,7 +55,7 @@ describe('dialog', () => {
         style={{ width: 600 }}
         title={title}
         onClose={onClose}
-        closeIcon={'test-text'}
+        closeIcon="test-text"
       >
         <p>第一个dialog</p>
       </DialogWrap>), container);
@@ -81,8 +84,7 @@ describe('dialog', () => {
       visible: false,
     });
     setTimeout(() => {
-      expect($('.rc-dialog-wrap').css('display'))
-        .to.be('none');
+      expect($('.rc-dialog-wrap').css('display')).to.be('block');
       done();
     }, 10);
   });
@@ -125,9 +127,9 @@ describe('dialog', () => {
   });
 
   it("destroy on hide should unmount child components on close", () => {
-    const wrapper = ReactDOM.render(<DialogWrap destroyOnClose>
+    const wrapper = mount(<DialogWrap destroyOnClose>
       <input className="inputElem" />
-    </DialogWrap>, container);
+    </DialogWrap>);
     wrapper.setState({
       visible: true,
     });
@@ -194,9 +196,9 @@ describe('dialog', () => {
   });
 
   it('renderToBody', () => {
-    const d = ReactDOM.render(<DialogWrap>
+    const d = mount(<DialogWrap>
       <p className="renderToBody">1</p>
-    </DialogWrap>, container);
+    </DialogWrap>);
     expect($('.renderToBody').length).to.be(0);
     expect($('.rc-dialog-wrap').length).to.be(0);
     d.setState({
@@ -213,12 +215,10 @@ describe('dialog', () => {
   it('getContainer', () => {
     const returnedContainer = document.createElement('div');
     document.body.appendChild(returnedContainer);
-    const d = ReactDOM.render(
+    const d = mount(
       <DialogWrap getContainer={() => returnedContainer}>
         <p className="getContainer">Hello world!</p>
-      </DialogWrap>,
-      container
-    );
+      </DialogWrap>);
     d.setState({
       visible: true,
     });
@@ -229,16 +229,15 @@ describe('dialog', () => {
 
   it('render footer padding correctly', () => {
     async.series([() => {
-      ReactDOM.render(<DialogWrap footer={''} />, container)
+      ReactDOM.render(<DialogWrap footer="" />, container)
     }, () => {
       expect($('.rc-dialog-footer').css('padding')).to.be('10px 20px');
     }]);
   });
 
   it('support input autoFocus', () => {
-    const d = ReactDOM.render(
-      <DialogWrap><input autoFocus /></DialogWrap>,
-      container
+    const d = mount(
+      <DialogWrap><input autoFocus /></DialogWrap>
     );
     d.setState({
       visible: true
@@ -263,7 +262,7 @@ describe('dialog', () => {
   });
 
   it('sets transform-origin when property mousePosition is set', () => {
-    const d = ReactDOM.render((
+    mount(
       <Dialog
         style={{ width: 600 }}
         title={title}
@@ -271,18 +270,18 @@ describe('dialog', () => {
         visible
       >
         <p>the dialog</p>
-      </Dialog>), container);
+      </Dialog>);
     expect($('.rc-dialog').css('transform-origin')).to.not.be.empty();
   });
 
   it('can get dom element before dialog first show when forceRender is set true ',()=>{
-    const d = ReactDOM.render((
+    mount(
       <Dialog
         forceRender
       >
         <div>forceRender element</div>
       </Dialog>
-    ),container);
+    );
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
   });
 
@@ -296,29 +295,32 @@ describe('dialog', () => {
     Simulate.mouseUp(wrapper);
     expect(dialog.state.visible).to.be(true);
   });
+
   it('getContainer is false', () => {
-    ReactDOM.render((
+    mount(
       <Dialog
         getContainer={false}
       >
         <div>forceRender element</div>
       </Dialog>
-    ),container);
+    );
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
     expect($('.rc-dialog-wrap')[0].style.display).to.be('none');
   });
+
   it('getContainer is false and visible is true', () => {
-    ReactDOM.render((
+    mount(
       <Dialog
         getContainer={false}
         visible
       >
         <div>forceRender element</div>
       </Dialog>
-    ),container);
+    );
     expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
     expect($('.rc-dialog-wrap')[0].style.display).to.be('');
-  })
+  });
+
   it('Single Dialog body overflow set correctly', () => {
     document.body.style.overflow = "scroll"
 
@@ -341,6 +343,7 @@ describe('dialog', () => {
         visible: false,
         visible2: false,
       };
+
       render() {
         return (
           <div>
@@ -357,11 +360,11 @@ describe('dialog', () => {
       }
     }
 
-    const d = ReactDOM.render((
+    const d = mount(
       <MultipleDialogWrap>
         <div>forceRender element</div>
       </MultipleDialogWrap>
-    ),container);
+    );
 
     expect($('.rc-dialog').length).to.be(0);
 
@@ -402,34 +405,36 @@ describe('dialog', () => {
   })
 
   it('afterClose', (done) => {
-    const dialog = ReactDOM.render((
+    const dialogTest = mount(
       <DialogWrap
         afterClose={done}
       >
         <div>afterClose</div>
       </DialogWrap>
-    ),container);
-    dialog.setState({
+    );
+
+    dialogTest.setState({
       visible: true,
     });
-    dialog.setState({
+
+    dialogTest.setState({
       visible: false,
     });
   });
 
   it('zIndex', () => {
-    const dialog = ReactDOM.render((
+    const dialogTest = mount(
       <DialogWrap
         zIndex={1000}
       >
         <div>afterClose</div>
       </DialogWrap>
-    ),container);
-    dialog.setState({
+    );
+
+    dialogTest.setState({
       visible: true,
     });
 
     expect($('.rc-dialog-wrap').css("zIndex")).to.be('1000');
-
   });
 });

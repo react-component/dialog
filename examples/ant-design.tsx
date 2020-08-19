@@ -1,8 +1,6 @@
 /* eslint no-console:0 */
-import 'rc-dialog/assets/index.less';
+import '../assets/index.less';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-// use import Dialog from 'rc-dialog'
 import Dialog from '../src/DialogWrap';
 
 const clearPath = 'M793 242H366v-74c0-6.7-7.7-10.4-12.9' +
@@ -27,190 +25,158 @@ const getSvg = (path: string, props = {}, align = false) => {
   );
 };
 
-class MyControl extends React.Component<any, any> {
-  state = {
-    visible: false,
-    visible2: false,
-    width: 600,
-    destroyOnClose: false,
-    center: false,
-    mousePosition: undefined,
-    useIcon: false,
-    forceRender: false,
-  };
+const MyControl = () => {
+  const [visible, setVisible] = React.useState(false);
+  const [visible2, setVisible2] = React.useState(false);
+  const [width, setWidth] = React.useState(600);
+  const [destroyOnClose, setDestroyOnClose] = React.useState(false);
+  const [center, setCenter] = React.useState(false);
+  const [mousePosition, setMousePosition] = React.useState({});
+  const [useIcon, setUseIcon] = React.useState(false);
+  const [forceRender, setForceRender] = React.useState(false);
 
-  onClick = (e: React.MouseEvent) => {
-    this.setState({
-      mousePosition: {
-        x: e.pageX,
-        y: e.pageY,
-      },
-      visible: true,
+  const onClick = (e: React.MouseEvent) => {
+    setMousePosition({
+      x: e.pageX,
+      y: e.pageY,
     });
+    setVisible(true);
   }
 
-  onClose = (e: React.SyntheticEvent) => {
-    this.setState({
-      visible: false,
-    });
+  const onClose = () => {
+    setVisible(false);
   }
 
-  onClose2 = (e: React.SyntheticEvent) => {
-    this.setState({
-      visible: false,
-      visible2: false,
-    });
+  const onClose2 = () => {
+    setVisible(false);
+    setVisible2(false);
   }
 
-  onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      destroyOnClose: e.target.checked,
-    });
+  const onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDestroyOnClose(e.target.checked);
   }
 
-  onForceRenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      forceRender: e.target.checked,
-    });
+  const onForceRenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForceRender(e.target.checked);
   }
 
-  changeWidth = () => {
-    this.setState({
-      width: this.state.width === 600 ? 800 : 600,
-    });
+  const changeWidth = () => {
+    setWidth(width === 600 ? 800 : 600);
   }
 
-  center = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      center: e.target.checked,
-    });
+  const centerEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCenter(e.target.checked);
   }
 
-  toggleCloseIcon = () => {
-    this.setState({
-      useIcon: !this.state.useIcon,
-    });
+  const toggleCloseIcon = () => {
+    setUseIcon(!useIcon);
   }
 
-  render() {
-    const style = {
-      width: this.state.width,
-    };
-    let wrapClassName = '';
-    if (this.state.center) {
-      wrapClassName = 'center';
-    }
-    const dialog = (
-      <Dialog
-        visible={this.state.visible}
-        wrapClassName={wrapClassName}
-        animation="zoom"
-        maskAnimation="fade"
-        onClose={this.onClose}
-        style={style}
-        mousePosition={this.state.mousePosition}
-        destroyOnClose={this.state.destroyOnClose}
-        closeIcon={this.state.useIcon ? getSvg(clearPath, {}, true) : undefined}
-        forceRender={this.state.forceRender}
-        focusTriggerAfterClose={false}
-      >
-        <input autoFocus />
-        <p>basic modal</p>
-        <button onClick={() => {
-          this.setState({
-            visible: false,
-            visible2: true,
-          });
-        }}>打开第二个并关闭当前的</button>
-        <button onClick={() => {
-          this.setState({
-            visible: true,
-            visible2: true,
-          });
-        }}>打开第二个</button>
-        <button onClick={this.changeWidth}>change width</button>
-        <button onClick={this.toggleCloseIcon}>
-          use custom icon, is using icon: {this.state.useIcon && 'true' || 'false'}.
+  const style = { width };
+
+  let wrapClassName = '';
+  if (center) {
+    wrapClassName = 'center';
+  }
+
+  const dialog = (
+    <Dialog
+      visible={visible}
+      wrapClassName={wrapClassName}
+      animation="zoom"
+      maskAnimation="fade"
+      onClose={onClose}
+      style={style}
+      mousePosition={mousePosition}
+      destroyOnClose={destroyOnClose}
+      closeIcon={useIcon ? getSvg(clearPath, {}, true) : undefined}
+      forceRender={forceRender}
+      focusTriggerAfterClose={false}
+    >
+      <input autoFocus />
+      <p>basic modal</p>
+      <button onClick={() => {
+        setVisible(false);
+        setVisible2(true);
+      }}>打开第二个并关闭当前的</button>
+      <button onClick={() => {
+        setVisible(true);
+        setVisible2(true);
+      }}>打开第二个</button>
+      <button onClick={changeWidth}>change width</button>
+      <button onClick={toggleCloseIcon}>
+        use custom icon, is using icon: {useIcon && 'true' || 'false'}.
+      </button>
+      <div style={{ height: 200 }} />
+    </Dialog>
+  );
+
+  const dialog2 = (
+    <Dialog
+      visible={visible2}
+      onClose={onClose2}
+    >
+      <input autoFocus />
+      <p>basic modal</p>
+      <button onClick={() => {
+        setVisible2(true);
+      }}>关闭当前</button>
+      <button onClick={onClose2}>关闭所有</button>
+      <button onClick={changeWidth}>change width</button>
+      <button onClick={toggleCloseIcon}>
+        use custom icon, is using icon: {useIcon && 'true' || 'false'}.
+      </button>
+      <div style={{ height: 200 }} />
+    </Dialog>
+  );
+
+  return (
+    <div style={{ width: '90%', margin: '0 auto' }}>
+      <style>
+        {`
+          .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          `}
+      </style>
+      <p>
+        <button className="btn btn-primary" onClick={onClick}>
+          show dialog
         </button>
-        <div style={{ height: 200 }} />
-      </Dialog>
-    );
+        &nbsp;
+        <label>
+          destroy on close:
+          <input
+            type="checkbox"
+            checked={destroyOnClose}
+            onChange={onDestroyOnCloseChange}
+          />
+        </label>
+        &nbsp;
+        <label>
+          center
+          <input
+            type="checkbox"
+            checked={center}
+            onChange={centerEvent}
+          />
+        </label>
+        &nbsp;
+        <label>
+          force render
+          <input
+            type="checkbox"
+            checked={forceRender}
+            onChange={onForceRenderChange}
+          />
+        </label>
+      </p>
+      {dialog}
+      {dialog2}
+    </div>
+  );
+};
 
-    const dialog2 = (
-      <Dialog
-        visible={this.state.visible2}
-        onClose={this.onClose2}
-      >
-        <input autoFocus />
-        <p>basic modal</p>
-        <button onClick={() => {
-          this.setState({
-            visible2: false,
-          });
-        }}>关闭当前</button>
-        <button onClick={this.onClose2}>关闭所有</button>
-        <button onClick={this.changeWidth}>change width</button>
-        <button onClick={this.toggleCloseIcon}>
-          use custom icon, is using icon: {this.state.useIcon && 'true' || 'false'}.
-        </button>
-        <div style={{ height: 200 }} />
-      </Dialog>
-    );
-
-    return (
-      <div style={{ width: '90%', margin: '0 auto' }}>
-        <style>
-          {`
-            .center {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-            `}
-        </style>
-        <p>
-          <button className="btn btn-primary" onClick={this.onClick}>
-            show dialog
-          </button>
-          &nbsp;
-          <label>
-            destroy on close:
-            <input
-              type="checkbox"
-              checked={this.state.destroyOnClose}
-              onChange={this.onDestroyOnCloseChange}
-            />
-          </label>
-          &nbsp;
-          <label>
-            center
-            <input
-              type="checkbox"
-              checked={this.state.center}
-              onChange={this.center}
-            />
-          </label>
-          &nbsp;
-          <label>
-            force render
-            <input
-              type="checkbox"
-              checked={this.state.forceRender}
-              onChange={this.onForceRenderChange}
-            />
-          </label>
-        </p>
-        {dialog}
-        {dialog2}
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(
-  <div>
-    <h2>ant-design dialog</h2>
-    <MyControl />
-  </div>,
-  document.getElementById('__react-content'),
-);
+export default MyControl;
