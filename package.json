@@ -64,7 +64,6 @@
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
     "eslint": "^7.1.0",
-    "expect.js": "~0.3.1",
     "father": "^2.29.6",
     "jquery": "^3.3.1",
     "rc-drawer": "4.1.0",

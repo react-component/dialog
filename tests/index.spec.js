@@ -2,7 +2,6 @@
 /* eslint-disable func-names */
 import 'core-js/es6/map';
 import 'core-js/es6/set';
-import expect from 'expect.js';
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -73,7 +72,7 @@ describe('dialog', () => {
     });
     setTimeout(() => {
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('block');
+        .toBe('block');
       done();
     }, 10);
   });
@@ -87,27 +86,27 @@ describe('dialog', () => {
     });
     setTimeout(() => {
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('none');
+        .toBe('none');
       done();
     }, 10);
   });
 
   it('create', () => {
-    expect($('.rc-dialog').length).to.be(0);
+    expect($('.rc-dialog').length).toBe(0);
   });
 
   it('mask', () => {
     dialog.setState({
       visible: true,
     });
-    expect($('.rc-dialog-mask').length).to.be(1);
+    expect($('.rc-dialog-mask').length).toBe(1);
   });
 
   it('root', () => {
     dialog.setState({
       visible: true,
     });
-    expect($('.rc-dialog-root').length).to.be(1);
+    expect($('.rc-dialog-root').length).toBe(1);
   });
 
   it('click close', (finish) => {
@@ -118,13 +117,13 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       const btn = $('.rc-dialog-close')[0];
-      expect(btn.textContent).to.be('test-text');
+      expect(btn.textContent).toBe('test-text');
       Simulate.click(btn);
       setTimeout(done, 10);
     }, (done) => {
-      expect(callback1).to.be(1);
+      expect(callback1).toBe(1);
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('none');
+        .toBe('none');
       done();
     }], finish);
   });
@@ -137,14 +136,14 @@ describe('dialog', () => {
       visible: true,
     });
     $(".inputElem").val("test");
-    expect($(".inputElem").val()).to.be("test")
+    expect($(".inputElem").val()).toBe("test")
     wrapper.setState({
       visible: false,
     });
     wrapper.setState({
       visible: true,
     });
-    expect($(".inputElem").val()).to.be("")
+    expect($(".inputElem").val()).toBe("")
   })
 
   it('esc to close', (finish) => {
@@ -159,9 +158,9 @@ describe('dialog', () => {
       });
       setTimeout(done, 10);
     }, (done) => {
-      expect(callback1).to.be(1);
+      expect(callback1).toBe(1);
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('none');
+        .toBe('none');
       done();
     }], finish);
   });
@@ -178,9 +177,9 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       // dialog should closed after mask click
-      expect(callback1).to.be(1);
+      expect(callback1).toBe(1);
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('none');
+        .toBe('none');
       done();
     }, (done) => {
       dialog.setState({
@@ -191,9 +190,9 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       // dialog should stay on visible after mask click if set maskClosable to false
-      // expect(callback1).to.be(0);
+      // expect(callback1).toBe(0);
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('block');
+        .toBe('block');
       done();
     }], finish);
   });
@@ -202,17 +201,17 @@ describe('dialog', () => {
     const d = ReactDOM.render(<DialogWrap>
       <p className="renderToBody">1</p>
     </DialogWrap>, container);
-    expect($('.renderToBody').length).to.be(0);
-    expect($('.rc-dialog-wrap').length).to.be(0);
+    expect($('.renderToBody').length).toBe(0);
+    expect($('.rc-dialog-wrap').length).toBe(0);
     d.setState({
       visible: true,
     });
-    expect($('.rc-dialog-wrap').length).to.be(1);
-    expect($('.renderToBody').length).to.be(1);
-    expect($('.rc-dialog-wrap')[0].parentNode.parentNode).not.to.be(container);
+    expect($('.rc-dialog-wrap').length).toBe(1);
+    expect($('.renderToBody').length).toBe(1);
+    expect($('.rc-dialog-wrap')[0].parentNode.parentNode).not.toBe(container);
     ReactDOM.unmountComponentAtNode(container);
-    expect($('.renderToBody').length).to.be(0);
-    expect($('.rc-dialog-wrap').length).to.be(0);
+    expect($('.renderToBody').length).toBe(0);
+    expect($('.rc-dialog-wrap').length).toBe(0);
   });
 
   it('getContainer', () => {
@@ -228,15 +227,15 @@ describe('dialog', () => {
       visible: true,
     });
     // fix issue #10656, must change this test
-    // expect($('.rc-dialog-wrap')[0].parentNode.parentNode).to.be(returnedContainer);
-    expect($('.rc-dialog-wrap')[0].parentNode.parentNode.parentNode).to.be(returnedContainer);
+    // expect($('.rc-dialog-wrap')[0].parentNode.parentNode).toBe(returnedContainer);
+    expect($('.rc-dialog-wrap')[0].parentNode.parentNode.parentNode).toBe(returnedContainer);
   });
 
   it('render footer padding correctly', () => {
     async.series([() => {
       ReactDOM.render(<DialogWrap footer="" />, container)
     }, () => {
-      expect($('.rc-dialog-footer').css('padding')).to.be('10px 20px');
+      expect($('.rc-dialog-footer').css('padding')).toBe('10px 20px');
     }]);
   });
 
@@ -248,7 +247,7 @@ describe('dialog', () => {
     d.setState({
       visible: true
     });
-    expect(document.activeElement).to.be(document.querySelector('input'));
+    expect(document.activeElement).toBe(document.querySelector('input'));
   });
 
   it('trap focus after shift-tabbing', () => {
@@ -264,7 +263,7 @@ describe('dialog', () => {
     }
     Simulate.keyDown(dialogEl, shiftTabbingDescriptor);
     const sentinelEnd = $('.rc-dialog-content + div')[0];
-    expect(document.activeElement).to.be(sentinelEnd);
+    expect(document.activeElement).toBe(sentinelEnd);
   });
 
   it('sets transform-origin when property mousePosition is set', () => {
@@ -277,7 +276,7 @@ describe('dialog', () => {
       >
         <p>the dialog</p>
       </Dialog>), container);
-    expect($('.rc-dialog').css('transform-origin')).to.not.be.empty();
+    expect($('.rc-dialog').css('transform-origin')).not.toBeNull();
   });
 
   it('can get dom element before dialog first show when forceRender is set true ',()=>{
@@ -288,7 +287,7 @@ describe('dialog', () => {
         <div>forceRender element</div>
       </Dialog>
     ),container);
-    expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
+    expect($('.rc-dialog-body > div').text()).toBe('forceRender element');
   });
 
   it('should not close if mouse down in dialog', () => {
@@ -299,8 +298,9 @@ describe('dialog', () => {
     Simulate.mouseDown(dialogBody);
     const wrapper = $('.rc-dialog-wrap')[0];
     Simulate.mouseUp(wrapper);
-    expect(dialog.state.visible).to.be(true);
+    expect(dialog.state.visible).toBe(true);
   });
+
   it('getContainer is false', () => {
     ReactDOM.render((
       <Dialog
@@ -309,9 +309,10 @@ describe('dialog', () => {
         <div>forceRender element</div>
       </Dialog>
     ),container);
-    expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
-    expect($('.rc-dialog-wrap')[0].style.display).to.be('none');
+    expect($('.rc-dialog-body > div').text()).toBe('forceRender element');
+    expect($('.rc-dialog-wrap')[0].style.display).toBe('none');
   });
+
   it('getContainer is false and visible is true', () => {
     ReactDOM.render((
       <Dialog
@@ -321,22 +322,23 @@ describe('dialog', () => {
         <div>forceRender element</div>
       </Dialog>
     ),container);
-    expect($('.rc-dialog-body > div').text()).to.be('forceRender element');
-    expect($('.rc-dialog-wrap')[0].style.display).to.be('');
-  })
+    expect($('.rc-dialog-body > div').text()).toBe('forceRender element');
+    expect($('.rc-dialog-wrap')[0].style.display).toBe('');
+  });
+
   it('Single Dialog body overflow set correctly', () => {
     document.body.style.overflow = "scroll"
 
     dialog.setState({
       visible: true
     });
-    expect(document.body.style.overflow).to.be('hidden');
+    expect(document.body.style.overflow).toBe('hidden');
 
     dialog.setState({
       visible: false
     });
-    expect(document.body.style.overflow).to.be('scroll');
-  })
+    expect(document.body.style.overflow).toBe('scroll');
+  });
 
   it('Multiple Dialog body overflow set correctly', () => {
     document.body.style.overflow = "scroll"
@@ -369,43 +371,43 @@ describe('dialog', () => {
       </MultipleDialogWrap>
     ),container);
 
-    expect($('.rc-dialog').length).to.be(0);
+    expect($('.rc-dialog').length).toBe(0);
 
     d.setState({
       visible: true,
     })
-    expect($('.rc-dialog').length).to.be(1);
-    expect(document.body.style.overflow).to.be('hidden');
+    expect($('.rc-dialog').length).toBe(1);
+    expect(document.body.style.overflow).toBe('hidden');
 
     d.setState({
       visible2: true,
     })
-    expect($('.rc-dialog').length).to.be(2);
-    expect(document.body.style.overflow).to.be('hidden');
+    expect($('.rc-dialog').length).toBe(2);
+    expect(document.body.style.overflow).toBe('hidden');
 
     d.setState({
       visible: false,
       visible2: false,
     })
-    expect(document.body.style.overflow).to.be('scroll');
+    expect(document.body.style.overflow).toBe('scroll');
 
     d.setState({
       visible: true,
     })
-    expect(document.body.style.overflow).to.be('hidden');
+    expect(document.body.style.overflow).toBe('hidden');
 
     d.setState({
       visible: false,
       visible2: true,
     })
-    expect(document.body.style.overflow).to.be('hidden');
+    expect(document.body.style.overflow).toBe('hidden');
 
     d.setState({
       visible: false,
       visible2: false,
     })
-    expect(document.body.style.overflow).to.be('scroll');
-  })
+    expect(document.body.style.overflow).toBe('scroll');
+  });
 
   it('afterClose', (done) => {
     ReactDOM.render((
@@ -435,8 +437,7 @@ describe('dialog', () => {
       visible: true,
     });
 
-    expect($('.rc-dialog-wrap').css("zIndex")).to.be('1000');
-
+    expect($('.rc-dialog-wrap').css("zIndex")).toBe('1000');
   });
 
   it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
@@ -466,7 +467,7 @@ describe('dialog', () => {
     ),container);
     setTimeout(() => {
       expect($('.rc-dialog-wrap').css('display'))
-        .to.be('block');
+        .toBe('block');
     }, 10);
   });
 });

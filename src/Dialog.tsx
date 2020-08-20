@@ -86,7 +86,8 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
 
   constructor(props: IDialogChildProps) {
     super(props);
-    this.titleId = `rcDialogTitle${uuid += 1}`;
+    this.titleId = `rcDialogTitle${uuid}`;
+    uuid += 1;
     this.switchScrollingEffect = props.switchScrollingEffect || (() => {});
   }
 
