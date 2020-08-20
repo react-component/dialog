@@ -46,7 +46,8 @@
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-react": "^7.20.6",
     "rc-animate": "3.x",
-    "rc-util": "^5.0.1"
+    "rc-util": "^5.0.1",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.0",
