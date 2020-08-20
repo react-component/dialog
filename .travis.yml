@@ -17,11 +17,11 @@ before_install:
       echo "Only docs were updated, stopping build process."
       exit
     fi
+    phantomjs --version
 script:
 - |
     if [ "$TEST_TYPE" = test ]; then
-      npm test -- --coverage && \
-      bash <(curl -s https://codecov.io/bash)
+      npm test
     else
       npm run $TEST_TYPE
     fi
