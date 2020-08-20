@@ -1,14 +1,14 @@
 declare module "rc-util/lib/KeyCode" {
-  const Ret: {ESC:any;TAB:any;};
+  var Ret: {ESC:any;TAB:any;};
   export default Ret;
 }
 
 declare module "rc-util/lib/*" {
-  const Ret: any;
+  var Ret: any;
   export default Ret;
 }
 
 declare module "rc-animate" {
-  const Ret: any;
+  var Ret: any;
   export default Ret;
 }

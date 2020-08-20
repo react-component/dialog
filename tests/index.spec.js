@@ -1,16 +1,20 @@
+/* eslint-disable react/no-render-return-value */
 /* eslint-disable func-names */
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import expect from 'expect.js';
-import Dialog from '../index';
-import '../assets/bootstrap.less';
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
-const Simulate = TestUtils.Simulate;
+
 import async from 'async';
 import KeyCode from 'rc-util/lib/KeyCode';
+
+import Dialog from '../index';
+import '../assets/bootstrap.less';
+
+const {Simulate} = TestUtils;
 
 describe('dialog', () => {
   const title = '第一个title';
@@ -27,6 +31,7 @@ describe('dialog', () => {
       visible: false,
       maskClosable: true,
     };
+
     render() {
       return (
         <Dialog
@@ -52,7 +57,7 @@ describe('dialog', () => {
         style={{ width: 600 }}
         title={title}
         onClose={onClose}
-        closeIcon={'test-text'}
+        closeIcon="test-text"
       >
         <p>第一个dialog</p>
       </DialogWrap>), container);
@@ -113,7 +118,7 @@ describe('dialog', () => {
       setTimeout(done, 10);
     }, (done) => {
       const btn = $('.rc-dialog-close')[0];
-      expect(btn.innerText).to.be('test-text');
+      expect(btn.textContent).to.be('test-text');
       Simulate.click(btn);
       setTimeout(done, 10);
     }, (done) => {
@@ -229,7 +234,7 @@ describe('dialog', () => {
 
   it('render footer padding correctly', () => {
     async.series([() => {
-      ReactDOM.render(<DialogWrap footer={''} />, container)
+      ReactDOM.render(<DialogWrap footer="" />, container)
     }, () => {
       expect($('.rc-dialog-footer').css('padding')).to.be('10px 20px');
     }]);
@@ -263,7 +268,7 @@ describe('dialog', () => {
   });
 
   it('sets transform-origin when property mousePosition is set', () => {
-    const d = ReactDOM.render((
+    ReactDOM.render((
       <Dialog
         style={{ width: 600 }}
         title={title}
@@ -276,7 +281,7 @@ describe('dialog', () => {
   });
 
   it('can get dom element before dialog first show when forceRender is set true ',()=>{
-    const d = ReactDOM.render((
+    ReactDOM.render((
       <Dialog
         forceRender
       >
@@ -341,6 +346,7 @@ describe('dialog', () => {
         visible: false,
         visible2: false,
       };
+
       render() {
         return (
           <div>
@@ -402,7 +408,7 @@ describe('dialog', () => {
   })
 
   it('afterClose', (done) => {
-    const dialog = ReactDOM.render((
+    ReactDOM.render((
       <DialogWrap
         afterClose={done}
       >
@@ -418,7 +424,7 @@ describe('dialog', () => {
   });
 
   it('zIndex', () => {
-    const dialog = ReactDOM.render((
+    ReactDOM.render((
       <DialogWrap
         zIndex={1000}
       >
@@ -434,11 +440,12 @@ describe('dialog', () => {
   });
 
   it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
-    class DialogWrap extends React.Component {
+    class DialogWrapTest extends React.Component {
       state = {
         visible: true,
         forceRender: true,
       };
+
       render() {
         return (
           <Dialog
@@ -448,18 +455,18 @@ describe('dialog', () => {
         );
       }
     }
+
     ReactDOM.render((
-      <DialogWrap
+      <DialogWrapTest
         visible
         forceRender
       >
         <div>Show dialog with forceRender and visible is true</div>
-      </DialogWrap>
+      </DialogWrapTest>
     ),container);
     setTimeout(() => {
       expect($('.rc-dialog-wrap').css('display'))
         .to.be('block');
-      done();
     }, 10);
   });
 });
