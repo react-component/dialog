@@ -33,3 +33,4 @@ coverage
 /android/
 yarn.lock
 .storybook
+.doc
