@@ -6,7 +6,7 @@ import { mount } from 'enzyme';
 import async from 'async';
 import KeyCode from 'rc-util/lib/KeyCode';
 
-import Dialog from '../index';
+import Dialog from '../src';
 import '../assets/bootstrap.less';
 
 describe('dialog', () => {
@@ -40,7 +40,7 @@ describe('dialog', () => {
     dialog.setState({ visible: true });
     jest.runAllTimers();
     dialog.update();
-    expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual('block');
+    expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual(null);
   });
 
   // it('close', () => {
@@ -54,7 +54,7 @@ describe('dialog', () => {
   //   // jest.runAllTimers();
   //   expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual('none');
   //   // setTimeout(() => {
-      
+
   //   // }, 10);
   // });
 
