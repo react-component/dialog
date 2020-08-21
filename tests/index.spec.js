@@ -3,7 +3,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import async from 'async';
 import KeyCode from 'rc-util/lib/KeyCode';
 
 import Dialog from '../src';
@@ -43,94 +42,77 @@ describe('dialog', () => {
     expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual(null);
   });
 
-  // it('close', () => {
-  //   const dialog = mount(<DialogWrap />);
-  //   dialog.setState({
-  //     visible: true,
-  //   });
-  //   dialog.setState({
-  //     visible: false,
-  //   });
-  //   // jest.runAllTimers();
-  //   expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual('none');
-  //   // setTimeout(() => {
+  it('close', () => {
+    const dialog = mount(<DialogWrap />);
+    dialog.setState({ visible: true });
+    dialog.setState({ visible: false });
+    jest.runAllTimers();
+    dialog.update();
+    expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
+  });
 
-  //   // }, 10);
-  // });
+  it('create & root & mask', () => {
+    const dialog = mount(<DialogWrap />);
+    expect(dialog.find('.rc-dialog').length).toBe(0);
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    expect(dialog.find('.rc-dialog-root').length).toBe(1);
+    expect(dialog.find('.rc-dialog-mask').length).toBe(1);
+  });
 
-  // it('create', () => {
-  //   const dialog = mount(<DialogWrap />);
-  //   expect(dialog.find('.rc-dialog').length)
-  //   expect($('.rc-dialog').length).toBe(0);
-  // });
+  it('click close', () => {
+    let callback = 0;
+    const onClose = () =>{
+      callback = 1;
+    }
+    const dialog = mount(
+      <DialogWrap 
+        onClose={onClose}
+        closeIcon="test"
+      />
+    );
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    const btn = dialog.find('.rc-dialog-close');
+    expect(btn.props().children).toBe('test');
+    btn.simulate('click');
+    jest.runAllTimers();
+    dialog.update();
+    expect(callback).toBe(1);
+  });
 
-  // it('mask', () => {
-  //   dialog.setState({
-  //     visible: true,
-  //   });
-  //   expect($('.rc-dialog-mask').length).toBe(1);
-  // });
+  it("destroy on hide should unmount child components on close", () => {
+    const dialog = mount(
+      <DialogWrap destroyOnClose >
+        <input />
+      </DialogWrap>
+    );
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    const input = dialog.find('input');
+    input.simulate('change', { target: { value: '111' } });
+    expect(input.prop('value')).toEqual('111');
+    
+    dialog.setState({ visible: false });
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    expect(input.prop('value')).toEqual('');
+  })
 
-  // it('root', () => {
-  //   dialog.setState({
-  //     visible: true,
-  //   });
-  //   expect($('.rc-dialog-root').length).toBe(1);
-  // });
-
-  // it('click close', (finish) => {
-  //   async.series([(done) => {
-  //     dialog.setState({
-  //       visible: true,
-  //     });
-  //     setTimeout(done, 10);
-  //   }, (done) => {
-  //     const btn = dialog.find('.rc-dialog-close');
-  //     expect(btn.textContent).toBe('test-text');
-  //     btn.simulate('click');
-  //     setTimeout(done, 10);
-  //   }, (done) => {
-  //     expect(callback1).toBe(1);
-  //     expect($('.rc-dialog-wrap').css('display'))
-  //       .toBe('none');
-  //     done();
-  //   }], finish);
-  // });
-
-  // it("destroy on hide should unmount child components on close", () => {
-  //   const wrapper = ReactDOM.render(<DialogWrap destroyOnClose>
-  //     <input className="inputElem" />
-  //   </DialogWrap>, container);
-  //   wrapper.setState({
-  //     visible: true,
-  //   });
-  //   $(".inputElem").val("test");
-  //   expect($(".inputElem").val()).toBe("test")
-  //   wrapper.setState({
-  //     visible: false,
-  //   });
-  //   wrapper.setState({
-  //     visible: true,
-  //   });
-  //   expect($(".inputElem").val()).toBe("")
-  // })
-
-  // it('esc to close', (finish) => {
-  //   async.series([(done) => {
-  //     dialog.setState({
-  //       visible: true,
-  //     });
-  //     setTimeout(done, 10);
-  //   }, (done) => {
-  //     $('.rc-dialog')[0].simulate('keyDown', { keyCode: KeyCode.ESC });
-  //     setTimeout(done, 10);
-  //   }, (done) => {
-  //     expect(callback1).toBe(1);
-  //     expect($('.rc-dialog-wrap').css('display'))
-  //       .toBe('none');
-  //     done();
-  //   }], finish);
-  // });
+  it('esc to close', () => {
+    const dialog = mount(<DialogWrap />);
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    dialog.find('.rc-dialog').at(0).simulate('keyDown', { keyCode: KeyCode.ESC });
+    jest.runAllTimers();
+    dialog.update();
+    expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
+  });
 
   // it('mask to close', (finish) => {
   //   async.series([(done) => {
