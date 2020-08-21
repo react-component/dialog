@@ -1,5 +1,6 @@
-import Dialog, { IDialogChildProps as DialogProps } from './Dialog';
+import DialogWrap from './DialogWrap';
+import { IDialogPropTypes as DialogProps } from './IDialogPropTypes';
 
 export { DialogProps };
 
-export default Dialog;
+export default DialogWrap;

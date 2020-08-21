@@ -25,8 +25,8 @@
     "assets/*.css",
     "dist"
   ],
-  "main": "./lib/DialogWrap",
-  "module": "./es/DialogWrap",
+  "main": "./lib/index",
+  "module": "./es/index",
   "scripts": {
     "start": "cross-env NODE_ENV=development father doc dev --storybook",
     "build": "father doc build --storybook",
