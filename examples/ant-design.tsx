@@ -26,13 +26,16 @@ const getSvg = (path: string, props = {}, align = false) => {
 };
 
 const MyControl = () => {
-  const [visible, setVisible] = React.useState(false);
+  const [visible1, setVisible1] = React.useState(false);
   const [visible2, setVisible2] = React.useState(false);
-  const [visible3, setVisible3] = React.useState(false);
+  const [visible3, setVisible3] = React.useState(true);
   const [width, setWidth] = React.useState(600);
   const [destroyOnClose, setDestroyOnClose] = React.useState(false);
   const [center, setCenter] = React.useState(false);
-  const [mousePosition, setMousePosition] = React.useState({});
+  const [mousePosition, setMousePosition] = React.useState({
+    x: null,
+    y: null
+  });
   const [useIcon, setUseIcon] = React.useState(false);
   const [forceRender, setForceRender] = React.useState(false);
 
@@ -41,19 +44,24 @@ const MyControl = () => {
       x: e.pageX,
       y: e.pageY,
     });
-    setVisible(true);
+    setVisible1(true);
   }
 
   const onClose = () => {
-    setVisible(false);
+    setVisible1(false);
   }
 
   const onClose2 = () => {
-    setVisible(false);
     setVisible2(false);
   }
 
   const onClose3 = () => {
+    setVisible3(false);
+  }
+
+  const closeAll = () => {
+    setVisible1(false);
+    setVisible2(false);
     setVisible3(false);
   }
 
@@ -86,12 +94,13 @@ const MyControl = () => {
 
   const dialog = (
     <Dialog
-      visible={visible}
+      visible={visible1}
       wrapClassName={wrapClassName}
       animation="zoom"
       maskAnimation="fade"
       onClose={onClose}
       style={style}
+      title="dialog1"
       mousePosition={mousePosition}
       destroyOnClose={destroyOnClose}
       closeIcon={useIcon ? getSvg(clearPath, {}, true) : undefined}
@@ -101,11 +110,10 @@ const MyControl = () => {
       <input autoFocus />
       <p>basic modal</p>
       <button onClick={() => {
-        setVisible(false);
+        setVisible1(false);
         setVisible2(true);
       }}>打开第二个并关闭当前的</button>
       <button onClick={() => {
-        setVisible(true);
         setVisible2(true);
       }}>打开第二个</button>
       <button onClick={changeWidth}>change width</button>
@@ -119,19 +127,18 @@ const MyControl = () => {
   const dialog2 = (
     <Dialog
       visible={visible2}
+      title="dialog2"
       onClose={onClose2}
     >
       <input autoFocus />
       <p>basic modal</p>
       <button onClick={() => {
-        setVisible1(true);
-        setVisible2(true);
         setVisible3(true);
       }}>打开第三个</button>
       <button onClick={() => {
-        setVisible2(true);
+        setVisible2(false);
       }}>关闭当前</button>
-      <button onClick={onClose2}>关闭所有</button>
+      <button onClick={closeAll}>关闭所有</button>
       <button onClick={changeWidth}>change width</button>
       <button onClick={toggleCloseIcon}>
         use custom icon, is using icon: {useIcon && 'true' || 'false'}.
@@ -143,14 +150,15 @@ const MyControl = () => {
   const dialog3 = (
     <Dialog
       forceRender
+      title="dialog3"
       visible={visible3}
       onClose={onClose3}
     >
       <p>initialized with forceRender and visbile true</p>
       <button onClick={() => {
-        setVisible3(true);
+        setVisible3(false);
       }}>关闭当前</button>
-      <button onClick={onClose2}>关闭所有</button>
+      <button onClick={closeAll}>关闭所有</button>
       <button onClick={changeWidth}>change width</button>
       <button onClick={toggleCloseIcon}>
         use custom icon, is using icon: {useIcon && 'true' || 'false'}.
