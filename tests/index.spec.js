@@ -254,6 +254,19 @@ describe('dialog', () => {
     expect(d.find('.rc-dialog-wrap').at(0).props().style).toEqual({});
   });
 
+  it('getContainer is false and visible is true', () => {
+    const d = mount(
+      <Dialog
+        getContainer={false}
+        visible
+      >
+        <div>forceRender element</div>
+      </Dialog>
+    );
+    expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
+    expect(d.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+  });
+
   it('should not close if mouse down in dialog', () => {
     dialog.setState({ visible: true });
     jest.runAllTimers();
@@ -265,30 +278,17 @@ describe('dialog', () => {
     expect(dialog.state().visible).toBe(true);
   });
 
-  // it('getContainer is false and visible is true', () => {
-  //   ReactDOM.render((
-  //     <Dialog
-  //       getContainer={false}
-  //       visible
-  //     >
-  //       <div>forceRender element</div>
-  //     </Dialog>
-  //   ),container);
-  //   expect($('.rc-dialog-body > div').text()).toBe('forceRender element');
-  //   expect($('.rc-dialog-wrap')[0].style.display).toBe('');
-  // });
-
   // it('Single Dialog body overflow set correctly', () => {
   //   document.body.style.overflow = "scroll"
 
-  //   dialog.setState({
-  //     visible: true
-  //   });
+  //   dialog.setState({ visible: true });
+  //   jest.runAllTimers();
+  //   dialog.update();
   //   expect(document.body.style.overflow).toBe('hidden');
 
-  //   dialog.setState({
-  //     visible: false
-  //   });
+  //   dialog.setState({ visible: false });
+  //   jest.runAllTimers();
+  //   dialog.update();
   //   expect(document.body.style.overflow).toBe('scroll');
   // });
 
@@ -361,65 +361,63 @@ describe('dialog', () => {
   //   expect(document.body.style.overflow).toBe('scroll');
   // });
 
-  // it('afterClose', (done) => {
-  //   ReactDOM.render((
-  //     <DialogWrap
-  //       afterClose={done}
-  //     >
-  //       <div>afterClose</div>
-  //     </DialogWrap>
-  //   ),container);
-  //   dialog.setState({
-  //     visible: true,
-  //   });
-  //   dialog.setState({
-  //     visible: false,
-  //   });
-  // });
+  it('afterClose', () => {
+    const afterCloseMock = jest.fn();
+    const d = mount(
+      <DialogWrap
+        afterClose={afterCloseMock}
+      >
+        <div>afterClose</div>
+      </DialogWrap>
+    );
+    d.setState({ visible: true });
+    jest.runAllTimers();
+    d.update();
+    d.setState({ visible: false });
+    jest.runAllTimers();
+    d.update();
+    expect(afterCloseMock).toHaveBeenCalledTimes(1);
+  });
 
-  // it('zIndex', () => {
-  //   ReactDOM.render((
-  //     <DialogWrap
-  //       zIndex={1000}
-  //     >
-  //       <div>afterClose</div>
-  //     </DialogWrap>
-  //   ),container);
-  //   dialog.setState({
-  //     visible: true,
-  //   });
+  it('zIndex', () => {
+    const d = mount(
+      <DialogWrap
+        zIndex={1000}
+      />
+    )
+    d.setState({ visible: true });
+    jest.runAllTimers();
+    d.update();
+    expect(d.find('.rc-dialog-wrap').props().style.zIndex).toBe(1000);
+  });
 
-  //   expect($('.rc-dialog-wrap').css("zIndex")).toBe('1000');
-  // });
+  it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
+    class DialogWrapTest extends React.Component {
+      state = {
+        visible: true,
+        forceRender: true,
+      };
 
-  // it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
-  //   class DialogWrapTest extends React.Component {
-  //     state = {
-  //       visible: true,
-  //       forceRender: true,
-  //     };
+      render() {
+        return (
+          <Dialog
+            forceRender={this.state.forceRender}
+            visible={this.state.visible}
+          />
+        );
+      }
+    }
 
-  //     render() {
-  //       return (
-  //         <Dialog
-  //           forceRender={this.state.forceRender}
-  //           visible={this.state.visible}
-  //         />
-  //       );
-  //     }
-  //   }
-
-  //   ReactDOM.render((
-  //     <DialogWrapTest
-  //       visible
-  //       forceRender
-  //     >
-  //       <div>Show dialog with forceRender and visible is true</div>
-  //     </DialogWrapTest>
-  //   ),container);
-  //   setTimeout(() => {
-  //     expect($('.rc-dialog-wrap').css('display'))
-  //       .toBe('block');
-  //   }, 10);
-  // });
+    const d = mount(
+      <DialogWrapTest
+        visible
+        forceRender
+      >
+        <div>Show dialog with forceRender and visible is true</div>
+      </DialogWrapTest>
+    );
+    jest.runAllTimers();
+    d.update();
+    expect(d.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+  });
 });
