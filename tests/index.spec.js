@@ -38,13 +38,10 @@ describe('dialog', () => {
 
     callback = 0;
     dialog = mount(
-      <DialogWrap
-        style={{ width: 600 }}
-        onClose={onClose}
-        closeIcon="test"
-      >
+      <DialogWrap style={{ width: 600 }} onClose={onClose} closeIcon="test">
         <p>第一个dialog</p>
-      </DialogWrap>);
+      </DialogWrap>,
+    );
 
     jest.useFakeTimers();
   });
@@ -113,7 +110,10 @@ describe('dialog', () => {
     dialog.setState({ visible: true });
     jest.runAllTimers();
     dialog.update();
-    dialog.find('.rc-dialog').at(0).simulate('keyDown', { keyCode: KeyCode.ESC });
+    dialog
+      .find('.rc-dialog')
+      .at(0)
+      .simulate('keyDown', { keyCode: KeyCode.ESC });
     jest.runAllTimers();
     dialog.update();
     expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
@@ -141,7 +141,7 @@ describe('dialog', () => {
     const d = mount(
       <DialogWrap>
         <p className="renderToBody">1</p>
-      </DialogWrap>
+      </DialogWrap>,
     );
     expect(d.find('.renderToBody').length).toBe(0);
     expect(d.find('.rc-dialog-wrap').length).toBe(0);
@@ -178,9 +178,7 @@ describe('dialog', () => {
   // });
 
   it('render footer correctly', () => {
-    const d = mount(
-      <DialogWrap footer="test" />
-    )
+    const d = mount(<DialogWrap footer="test" />);
     d.setState({ visible: true });
     jest.runAllTimers();
     d.update();
@@ -190,7 +188,9 @@ describe('dialog', () => {
 
   it('support input autoFocus', () => {
     const d = mount(
-      <DialogWrap><input autoFocus /></DialogWrap>
+      <DialogWrap>
+        <input autoFocus />
+      </DialogWrap>,
     );
     d.setState({ visible: true });
     jest.runAllTimers();
@@ -214,54 +214,53 @@ describe('dialog', () => {
   //   expect(document.activeElement).toBe(sentinelEnd);
   // });
 
-  // style 里面 没有 transformOrigin QAQ
   it('sets transform-origin when property mousePosition is set', () => {
     const d = mount(
-      <Dialog
-        style={{ width: 600 }}
-        mousePosition={{x:100, y:100}}
-        visible
-      >
+      <Dialog style={{ width: 600 }} mousePosition={{ x: 100, y: 100 }} visible>
         <p>the dialog</p>
-      </Dialog>
+      </Dialog>,
     );
     jest.runAllTimers();
     d.update();
-    console.log(d.find('.rc-dialog').at(0).props().style)
-    // expect($('.rc-dialog').css('transform-origin')).not.toBeNull();
+    expect(
+      d
+        .find('.rc-dialog')
+        .at(0)
+        .html(),
+    ).toEqual(
+      '<div role="document" style="width: 600px; transform-origin: 100px 100px;" class="rc-dialog "><div tabindex="0" style="width: 0px; height: 0px; overflow: hidden; outline: none;" aria-hidden="true"></div><div class="rc-dialog-content"><button type="button" aria-label="Close" class="rc-dialog-close"><span class="rc-dialog-close-x"></span></button><div class="rc-dialog-body"><p>the dialog</p></div></div><div tabindex="0" style="width: 0px; height: 0px; overflow: hidden; outline: none;" aria-hidden="true"></div></div>',
+    );
   });
 
-  it('can get dom element before dialog first show when forceRender is set true ',()=>{
+  it('can get dom element before dialog first show when forceRender is set true ', () => {
     const d = mount(
-      <Dialog
-        forceRender
-      >
+      <Dialog forceRender>
         <div>forceRender element</div>
-      </Dialog>
+      </Dialog>,
     );
     expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
   });
 
   it('getContainer is false', () => {
     const d = mount(
-      <Dialog
-        getContainer={false}
-      >
+      <Dialog getContainer={false}>
         <div>forceRender element</div>
-      </Dialog>
+      </Dialog>,
     );
     expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
-    expect(d.find('.rc-dialog-wrap').at(0).props().style).toEqual({});
+    expect(
+      d
+        .find('.rc-dialog-wrap')
+        .at(0)
+        .props().style,
+    ).toEqual({});
   });
 
   it('getContainer is false and visible is true', () => {
     const d = mount(
-      <Dialog
-        getContainer={false}
-        visible
-      >
+      <Dialog getContainer={false} visible>
         <div>forceRender element</div>
-      </Dialog>
+      </Dialog>,
     );
     expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
     expect(d.find('.rc-dialog-wrap').props().style.display).toEqual(null);
@@ -280,12 +279,12 @@ describe('dialog', () => {
 
   // 感觉是没有渲染到 body 上，所以没有改变 overflow
   it('Single Dialog body overflow set correctly', () => {
-    document.body.style.overflow = "scroll"
+    document.body.style.overflow = 'scroll';
 
     dialog.setState({ visible: true });
     jest.runAllTimers();
     dialog.update();
-    console.log(document.body.style.overflow)
+    console.log(document.body.style.overflow);
 
     dialog.setState({ visible: false });
     jest.runAllTimers();
@@ -364,11 +363,9 @@ describe('dialog', () => {
   it('afterClose', () => {
     const afterCloseMock = jest.fn();
     const d = mount(
-      <DialogWrap
-        afterClose={afterCloseMock}
-      >
+      <DialogWrap afterClose={afterCloseMock}>
         <div>afterClose</div>
-      </DialogWrap>
+      </DialogWrap>,
     );
     d.setState({ visible: true });
     jest.runAllTimers();
@@ -380,11 +377,7 @@ describe('dialog', () => {
   });
 
   it('zIndex', () => {
-    const d = mount(
-      <DialogWrap
-        zIndex={1000}
-      />
-    )
+    const d = mount(<DialogWrap zIndex={1000} />);
     d.setState({ visible: true });
     jest.runAllTimers();
     d.update();
@@ -399,22 +392,14 @@ describe('dialog', () => {
       };
 
       render() {
-        return (
-          <Dialog
-            forceRender={this.state.forceRender}
-            visible={this.state.visible}
-          />
-        );
+        return <Dialog forceRender={this.state.forceRender} visible={this.state.visible} />;
       }
     }
 
     const d = mount(
-      <DialogWrapTest
-        visible
-        forceRender
-      >
+      <DialogWrapTest visible forceRender>
         <div>Show dialog with forceRender and visible is true</div>
-      </DialogWrapTest>
+      </DialogWrapTest>,
     );
     jest.runAllTimers();
     d.update();
