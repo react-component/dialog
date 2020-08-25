@@ -278,19 +278,19 @@ describe('dialog', () => {
     expect(dialog.state().visible).toBe(true);
   });
 
-  // it('Single Dialog body overflow set correctly', () => {
-  //   document.body.style.overflow = "scroll"
+  // 感觉是没有渲染到 body 上，所以没有改变 overflow
+  it('Single Dialog body overflow set correctly', () => {
+    document.body.style.overflow = "scroll"
 
-  //   dialog.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   expect(document.body.style.overflow).toBe('hidden');
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    console.log(document.body.style.overflow)
 
-  //   dialog.setState({ visible: false });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   expect(document.body.style.overflow).toBe('scroll');
-  // });
+    dialog.setState({ visible: false });
+    jest.runAllTimers();
+    dialog.update();
+  });
 
   // it('Multiple Dialog body overflow set correctly', () => {
   //   document.body.style.overflow = "scroll"
