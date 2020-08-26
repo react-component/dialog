@@ -87,24 +87,26 @@ describe('dialog', () => {
     expect(callback).toBe(1);
   });
 
-  // failed input 输入没成功
-  // it("destroy on hide should unmount child components on close", () => {
-  //   const wrapper = mount(
-  //     <DialogWrap destroyOnClose>
-  //       <input />
-  //     </DialogWrap>
-  //   );
-  //   wrapper.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   wrapper.update();
-  //   wrapper.find('input').simulate('change', { target: { value: '111' } });
-  //   expect(wrapper.find('input').getDOMNode().value).toEqual('111');
-  //   wrapper.setState({ visible: false });
-  //   wrapper.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   wrapper.update();
-  //   expect(wrapper.find('input').getDOMNode().value).toEqual('');
-  // })
+  it("destroy on hide should unmount child components on close", () => {
+    const wrapper = mount(
+      <DialogWrap destroyOnClose>
+        <input className="test-input"/>
+      </DialogWrap>
+    );
+    wrapper.setState({ visible: true });
+    jest.runAllTimers();
+    wrapper.update();
+    document.getElementsByClassName('.test-input').value = 'test';
+    expect(document.getElementsByClassName('.test-input').value).toBe('test');
+    wrapper.setState({ visible: false });
+    jest.runAllTimers();
+    wrapper.update();
+    wrapper.setState({ visible: true });
+    jest.runAllTimers();
+    wrapper.update();
+    expect(document.getElementsByClassName('.test-input').value).toBeUndefined();
+    wrapper.unmount();
+  })
 
   it('esc to close', () => {
     dialog.setState({ visible: true });
