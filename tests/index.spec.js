@@ -121,23 +121,32 @@ describe('dialog', () => {
     expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
   });
 
-  // failed click 没有关闭弹窗
-  // it('mask to close', () => {
-  //   dialog.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   const mask = dialog.find('.rc-dialog-wrap').first();
-  //   // mask.props().onClick();
-  //   mask.simulate('click');
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   expect(callback).toBe(1);
-  //   expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
-  //   dialog.setState({ visible: true, maskClosable: false });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual(null);
-  // });
+  it('mask to close', () => {
+    let now = 0;
+    const originDateNow = Date.now;
+
+    // disable https://github.com/react-component/dialog/blob/d9604fa6ad40e949999456d8c020e47593e48f0d/src/Dialog.tsx#L188 
+    Date.now = () => {
+      now += 500
+      return now
+    };
+
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    const mask = dialog.find('.rc-dialog-wrap').first();
+    mask.simulate('click');
+    jest.runAllTimers();
+    dialog.update();
+    expect(callback).toBe(1);
+    expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
+    dialog.setState({ visible: true, maskClosable: false });
+    jest.runAllTimers();
+    dialog.update();
+    expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+
+    Date.now = originDateNow;
+  });
 
   it('renderToBody', () => {
     const d = mount(
