@@ -25,7 +25,6 @@ build
 lib
 es
 coverage
-*.js
 *.jsx
 *.map
 !tests/index.js
@@ -33,3 +32,5 @@ coverage
 /ios/
 /android/
 yarn.lock
+.storybook
+.doc

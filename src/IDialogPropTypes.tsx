@@ -2,7 +2,7 @@ import { ReactNode, CSSProperties, SyntheticEvent } from 'react';
 
 type IStringOrHtmlElement = string | HTMLElement;
 
-interface IDialogPropTypes {
+export interface IDialogPropTypes {
   className?: string;
   keyboard?: boolean;
   style?: CSSProperties;
@@ -42,5 +42,3 @@ interface IDialogPropTypes {
   // https://github.com/react-component/dialog/issues/95
   focusTriggerAfterClose?: boolean;
 }
-
-export default IDialogPropTypes;

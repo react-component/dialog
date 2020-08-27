@@ -4,7 +4,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
 import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
-import IDialogPropTypes from './IDialogPropTypes';
+import { IDialogPropTypes } from './IDialogPropTypes';
 
 let uuid = 0;
 
@@ -24,11 +24,11 @@ function getScroll(w: any, top?: boolean) {
 }
 
 function setTransformOrigin(node: any, value: string) {
-  const style = node.style;
+  const { style } = node;
   ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix: string) => {
     style[`${prefix}TransformOrigin`] = value;
   });
-  style[`transformOrigin`] = value;
+  style.transformOrigin = value;
 }
 
 function offset(el: any) {
@@ -63,20 +63,31 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   };
 
   private inTransition: boolean = false;
+
   private titleId: string;
+
   private openTime: number;
+
   private lastOutSideFocusNode: HTMLElement | null;
+
   private wrap: HTMLElement;
+
   private dialog: any;
+
   private sentinelStart: HTMLElement;
+
   private sentinelEnd: HTMLElement;
+
   private dialogMouseDown: boolean;
-  private timeoutId: number;
+
+  private timeoutId: any;
+
   private switchScrollingEffect: () => void;
 
   constructor(props: IDialogChildProps) {
     super(props);
-    this.titleId = `rcDialogTitle${uuid++}`;
+    this.titleId = `rcDialogTitle${uuid}`;
+    uuid += 1;
     this.switchScrollingEffect = props.switchScrollingEffect || (() => {});
   }
 
@@ -95,14 +106,15 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const {visible, mask, focusTriggerAfterClose} = this.props;
-    const mousePosition = this.props.mousePosition;
+    const { visible, mask, focusTriggerAfterClose } = this.props;
+    const { mousePosition } = this.props;
     if (visible) {
       // first show
       if (!prevProps.visible) {
         this.openTime = Date.now();
         this.switchScrollingEffect();
         this.tryFocus();
+        // eslint-disable-next-line react/no-find-dom-node
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
@@ -158,11 +170,11 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     if (afterClose) {
       afterClose();
     }
-  }
+  };
 
   onDialogMouseDown = () => {
     this.dialogMouseDown = true;
-  }
+  };
 
   onMaskMouseUp: React.MouseEventHandler<HTMLDivElement> = () => {
     if (this.dialogMouseDown) {
@@ -170,7 +182,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         this.dialogMouseDown = false;
       }, 0);
     }
-  }
+  };
 
   onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // android trigger click on open (fastclick??)
@@ -180,58 +192,71 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     if (e.target === e.currentTarget && !this.dialogMouseDown) {
       this.close(e);
     }
-  }
+  };
 
   onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const props = this.props;
-    if (props.keyboard && e.keyCode === KeyCode.ESC) {
+    const { keyboard, visible } = this.props;
+    if (keyboard && e.keyCode === KeyCode.ESC) {
       e.stopPropagation();
       this.close(e);
       return;
     }
     // keep focus inside dialog
-    if (props.visible) {
+    if (visible) {
       if (e.keyCode === KeyCode.TAB) {
-        const activeElement = document.activeElement;
-        const sentinelStart = this.sentinelStart;
+        const { activeElement } = document;
         if (e.shiftKey) {
-          if (activeElement === sentinelStart) {
+          if (activeElement === this.sentinelStart) {
             this.sentinelEnd.focus();
           }
         } else if (activeElement === this.sentinelEnd) {
-          sentinelStart.focus();
+          this.sentinelStart.focus();
         }
       }
     }
-  }
+  };
 
   getDialogElement = () => {
-    const props = this.props;
-    const closable = props.closable;
-    const prefixCls = props.prefixCls;
+    const {
+      closable,
+      prefixCls,
+      width,
+      height,
+      footer,
+      title,
+      closeIcon,
+      style,
+      className,
+      visible,
+      forceRender,
+      bodyStyle,
+      bodyProps,
+      children,
+      destroyOnClose,
+    } = this.props;
     const dest: any = {};
-    if (props.width !== undefined) {
-      dest.width = props.width;
+    if (width !== undefined) {
+      dest.width = width;
     }
-    if (props.height !== undefined) {
-      dest.height = props.height;
+    if (height !== undefined) {
+      dest.height = height;
     }
 
-    let footer;
-    if (props.footer) {
-      footer = (
+    let footerNode;
+    if (footer) {
+      footerNode = (
         <div className={`${prefixCls}-footer`} ref={this.saveRef('footer')}>
-          {props.footer}
+          {footer}
         </div>
       );
     }
 
-    let header;
-    if (props.title) {
-      header = (
+    let headerNode;
+    if (title) {
+      headerNode = (
         <div className={`${prefixCls}-header`} ref={this.saveRef('header')}>
           <div className={`${prefixCls}-title`} id={this.titleId}>
-            {props.title}
+            {title}
           </div>
         </div>
       );
@@ -246,12 +271,12 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
           aria-label="Close"
           className={`${prefixCls}-close`}
         >
-          {props.closeIcon || <span className={`${prefixCls}-close-x`} />}
+          {closeIcon || <span className={`${prefixCls}-close-x`} />}
         </button>
       );
     }
 
-    const style = { ...props.style, ...dest };
+    const styleBox = { ...style, ...dest };
     const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
     const transitionName = this.getTransitionName();
     const dialogElement = (
@@ -259,10 +284,10 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         key="dialog-element"
         role="document"
         ref={this.saveRef('dialog')}
-        style={style}
-        className={`${prefixCls} ${props.className || ''}`}
-        visible={props.visible}
-        forceRender={props.forceRender}
+        style={styleBox}
+        className={`${prefixCls} ${className || ''}`}
+        visible={visible}
+        forceRender={forceRender}
         onMouseDown={this.onDialogMouseDown}
       >
         <div
@@ -273,16 +298,16 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         />
         <div className={`${prefixCls}-content`}>
           {closer}
-          {header}
+          {headerNode}
           <div
             className={`${prefixCls}-body`}
-            style={props.bodyStyle}
+            style={bodyStyle}
             ref={this.saveRef('body')}
-            {...props.bodyProps}
+            {...bodyProps}
           >
-            {props.children}
+            {children}
           </div>
-          {footer}
+          {footerNode}
         </div>
         <div
           tabIndex={0}
@@ -302,41 +327,41 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         component=""
         transitionAppear
       >
-        {props.visible || !props.destroyOnClose ? dialogElement : null}
+        {visible || !destroyOnClose ? dialogElement : null}
       </Animate>
     );
-  }
+  };
 
   getZIndexStyle = () => {
     const style: any = {};
-    const props = this.props;
-    if (props.zIndex !== undefined) {
-      style.zIndex = props.zIndex;
+    const { zIndex } = this.props;
+    if (zIndex !== undefined) {
+      style.zIndex = zIndex;
     }
     return style;
-  }
+  };
 
   getWrapStyle = (): any => {
     return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
-  }
+  };
 
   getMaskStyle = () => {
     return { ...this.getZIndexStyle(), ...this.props.maskStyle };
-  }
+  };
 
   getMaskElement = () => {
-    const props = this.props;
+    const { mask, prefixCls, visible, maskProps } = this.props;
     let maskElement;
-    if (props.mask) {
+    if (mask) {
       const maskTransition = this.getMaskTransitionName();
       maskElement = (
         <LazyRenderBox
           style={this.getMaskStyle()}
           key="mask"
-          className={`${props.prefixCls}-mask`}
-          hiddenClassName={`${props.prefixCls}-mask-hidden`}
-          visible={props.visible}
-          {...props.maskProps}
+          className={`${prefixCls}-mask`}
+          hiddenClassName={`${prefixCls}-mask-hidden`}
+          visible={visible}
+          {...maskProps}
         />
       );
       if (maskTransition) {
@@ -354,39 +379,38 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     }
     return maskElement;
-  }
+  };
 
   getMaskTransitionName = () => {
-    const props = this.props;
-    let transitionName = props.maskTransitionName;
-    const animation = props.maskAnimation;
+    const { maskTransitionName, maskAnimation, prefixCls } = this.props;
+    let transitionName = maskTransitionName;
+    const animation = maskAnimation;
     if (!transitionName && animation) {
-      transitionName = `${props.prefixCls}-${animation}`;
+      transitionName = `${prefixCls}-${animation}`;
     }
 
     return transitionName;
-  }
+  };
 
   getTransitionName = () => {
-    const props = this.props;
-    let transitionName = props.transitionName;
-    const animation = props.animation;
+    const { transitionName, animation, prefixCls } = this.props;
+    let transitionNameResult = transitionName;
     if (!transitionName && animation) {
-      transitionName = `${props.prefixCls}-${animation}`;
+      transitionNameResult = `${prefixCls}-${animation}`;
     }
-    return transitionName;
-  }
+    return transitionNameResult;
+  };
 
   close = (e: any) => {
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
     }
-  }
+  };
 
   saveRef = (name: string) => (node: any) => {
     (this as any)[name] = node;
-  }
+  };
 
   render() {
     const { props } = this;
