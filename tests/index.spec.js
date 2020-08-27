@@ -229,14 +229,7 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
     d.update();
-    expect(
-      d
-        .find('.rc-dialog')
-        .at(0)
-        .html(),
-    ).toEqual(
-      '<div role="document" style="width: 600px; transform-origin: 100px 100px;" class="rc-dialog "><div tabindex="0" style="width: 0px; height: 0px; overflow: hidden; outline: none;" aria-hidden="true"></div><div class="rc-dialog-content"><button type="button" aria-label="Close" class="rc-dialog-close"><span class="rc-dialog-close-x"></span></button><div class="rc-dialog-body"><p>the dialog</p></div></div><div tabindex="0" style="width: 0px; height: 0px; overflow: hidden; outline: none;" aria-hidden="true"></div></div>',
-    );
+    expect(d.find('.rc-dialog').at(0).getDOMNode().style['transform-origin']).toBeTruthy();
   });
 
   it('can get dom element before dialog first show when forceRender is set true ', () => {
