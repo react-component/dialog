@@ -195,6 +195,7 @@ describe('dialog', () => {
     d.update();
     expect(d.find('.rc-dialog-footer').length).toBeTruthy();
     expect(d.find('.rc-dialog-footer').props().children).toBe('test');
+    d.unmount();
   });
 
   it('support input autoFocus', () => {
@@ -207,23 +208,23 @@ describe('dialog', () => {
     jest.runAllTimers();
     d.update();
     expect(document.activeElement).toBe(document.querySelector('input'));
+    d.unmount();
   });
 
-  // failed 激活的不对，可看输出
-  // it('trap focus after shift-tabbing', () => {
-  //   dialog.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   const shiftTabbingDescriptor = {
-  //     key: 'TAB',
-  //     keyCode: 9,
-  //     which: 9,
-  //     shiftKey: true
-  //   }
-  //   dialog.find('.rc-dialog-wrap').at(0).simulate('keyDown', shiftTabbingDescriptor);
-  //   const sentinelEnd = dialog.find('.rc-dialog-content + div').at(0);
-  //   expect(document.activeElement).toBe(sentinelEnd);
-  // });
+  it('trap focus after shift-tabbing', () => {
+    dialog.setState({ visible: true });
+    jest.runAllTimers();
+    dialog.update();
+    const shiftTabbingDescriptor = {
+      key: 'TAB',
+      keyCode: 9,
+      which: 9,
+      shiftKey: true
+    }
+    dialog.find('.rc-dialog-wrap').at(0).simulate('keyDown', shiftTabbingDescriptor);
+    const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+    expect(document.activeElement).toBe(sentinelEnd);
+  });
 
   it('sets transform-origin when property mousePosition is set', () => {
     const d = mount(
