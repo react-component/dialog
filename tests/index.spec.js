@@ -181,6 +181,7 @@ describe('dialog', () => {
     d.update();
     // fix issue #10656, must change this test
     expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode.parentNode).toBe(returnedContainer);
+    d.unmount();
   });
 
   it('render footer correctly', () => {
@@ -230,6 +231,7 @@ describe('dialog', () => {
     jest.runAllTimers();
     d.update();
     expect(d.find('.rc-dialog').at(0).getDOMNode().style['transform-origin']).toBeTruthy();
+    d.unmount();
   });
 
   it('can get dom element before dialog first show when forceRender is set true ', () => {
@@ -239,6 +241,7 @@ describe('dialog', () => {
       </Dialog>,
     );
     expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
+    d.unmount();
   });
 
   it('getContainer is false', () => {
@@ -254,6 +257,7 @@ describe('dialog', () => {
         .at(0)
         .props().style,
     ).toEqual({});
+    d.unmount();
   });
 
   it('getContainer is false and visible is true', () => {
@@ -264,6 +268,7 @@ describe('dialog', () => {
     );
     expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
     expect(d.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+    d.unmount();
   });
 
   it('should not close if mouse down in dialog', () => {
@@ -277,88 +282,103 @@ describe('dialog', () => {
     expect(dialog.state().visible).toBe(true);
   });
 
-  // 感觉是没有渲染到 body 上，所以没有改变 overflow
   it('Single Dialog body overflow set correctly', () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const d = mount(<DialogWrap />, { attachTo: container });
     document.body.style.overflow = 'scroll';
-
-    dialog.setState({ visible: true });
+    d.setState({ visible: true });
     jest.runAllTimers();
-    dialog.update();
-    console.log(document.body.style.overflow);
-
-    dialog.setState({ visible: false });
+    d.update();
+    expect(document.body.style.overflow).toBe('hidden');
+    d.setState({ visible: false });
     jest.runAllTimers();
-    dialog.update();
+    d.update();
+    expect(document.body.style.overflow).toBe('scroll');
+    d.unmount();
   });
 
-  // it('Multiple Dialog body overflow set correctly', () => {
-  //   document.body.style.overflow = "scroll"
+  it('Multiple Dialog body overflow set correctly', () => {
+    const container = document.createElement('div');
+    document.body.style.overflow = "scroll"
 
-  //   class MultipleDialogWrap extends React.Component {
-  //     state = {
-  //       visible: false,
-  //       visible2: false,
-  //     };
+    class MultipleDialogWrap extends React.Component {
+      state = {
+        visible: false,
+        visible2: false,
+      };
 
-  //     render() {
-  //       return (
-  //         <div>
-  //           <Dialog
-  //             {...this.props}
-  //             visible={this.state.visible}
-  //           />
-  //           <Dialog
-  //             {...this.props}
-  //             visible={this.state.visible2}
-  //           />
-  //         </div>
-  //       );
-  //     }
-  //   }
+      render() {
+        return (
+          <div>
+            <Dialog
+              {...this.props}
+              visible={this.state.visible}
+            />
+            <Dialog
+              {...this.props}
+              visible={this.state.visible2}
+            />
+          </div>
+        );
+      }
+    }
 
-  //   const d = ReactDOM.render((
-  //     <MultipleDialogWrap>
-  //       <div>forceRender element</div>
-  //     </MultipleDialogWrap>
-  //   ),container);
+    const d = mount((
+      <MultipleDialogWrap>
+        <div>forceRender element</div>
+      </MultipleDialogWrap>
+    ), { attachTo: container });
 
-  //   expect($('.rc-dialog').length).toBe(0);
+    expect(d.find('.rc-dialog').length).toBe(0);
 
-  //   d.setState({
-  //     visible: true,
-  //   })
-  //   expect($('.rc-dialog').length).toBe(1);
-  //   expect(document.body.style.overflow).toBe('hidden');
+    d.setState({ visible: true });
+    jest.runAllTimers();
+    d.update();
+    
+    expect(d.find('div.rc-dialog').length).toBe(1);
+    expect(document.body.style.overflow).toBe('hidden');
 
-  //   d.setState({
-  //     visible2: true,
-  //   })
-  //   expect($('.rc-dialog').length).toBe(2);
-  //   expect(document.body.style.overflow).toBe('hidden');
+    d.setState({ visible2: true });
+    jest.runAllTimers();
+    d.update();
 
-  //   d.setState({
-  //     visible: false,
-  //     visible2: false,
-  //   })
-  //   expect(document.body.style.overflow).toBe('scroll');
+    expect(d.find('div.rc-dialog').length).toBe(2);
+    expect(document.body.style.overflow).toBe('hidden');
 
-  //   d.setState({
-  //     visible: true,
-  //   })
-  //   expect(document.body.style.overflow).toBe('hidden');
+    d.setState({
+      visible: false,
+      visible2: false,
+    })
+    jest.runAllTimers();
+    d.update();
 
-  //   d.setState({
-  //     visible: false,
-  //     visible2: true,
-  //   })
-  //   expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body.style.overflow).toBe('scroll');
 
-  //   d.setState({
-  //     visible: false,
-  //     visible2: false,
-  //   })
-  //   expect(document.body.style.overflow).toBe('scroll');
-  // });
+    d.setState({
+      visible: true,
+    })
+    jest.runAllTimers();
+    d.update();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    d.setState({
+      visible: false,
+      visible2: true,
+    })
+    jest.runAllTimers();
+    d.update();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    d.setState({
+      visible: false,
+      visible2: false,
+    })
+    jest.runAllTimers();
+    d.update();
+    expect(document.body.style.overflow).toBe('scroll');
+    d.unmount();
+  });
 
   it('afterClose', () => {
     const afterCloseMock = jest.fn();
