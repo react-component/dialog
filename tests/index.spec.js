@@ -169,24 +169,19 @@ describe('dialog', () => {
     expect(d.find('.rc-dialog-wrap').length).toBe(0);
   });
 
-  // failed parent() 两层获取不到
-  // it('getContainer', () => {
-  //   const returnedContainer = document.createElement('div');
-  //   document.body.appendChild(returnedContainer);
-  //   const d = mount(
-  //     <DialogWrap getContainer={() => returnedContainer}>
-  //       <p className="getContainer">Hello world!</p>
-  //     </DialogWrap>
-  //   );
-  //   d.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   // fix issue #10656, must change this test
-  //   // expect($('.rc-dialog-wrap')[0].parentNode.parentNode).toBe(returnedContainer);
-  //   // expect($('.rc-dialog-wrap')[0].parentNode.parentNode.parentNode).toBe(returnedContainer);
-  //   // expect($('.rc-dialog-wrap')[0].parentNode.parentNode.parentNode).toBe(returnedContainer);
-  //   console.log(d.find('.rc-dialog-wrap').first().parent().parent().props())
-  // });
+  it('getContainer', () => {
+    const returnedContainer = document.createElement('div');
+    const d = mount(
+      <DialogWrap getContainer={() => returnedContainer}>
+        <p className="getContainer">Hello world!</p>
+      </DialogWrap>
+    );
+    d.setState({ visible: true });
+    jest.runAllTimers();
+    d.update();
+    // fix issue #10656, must change this test
+    expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode.parentNode).toBe(returnedContainer);
+  });
 
   it('render footer correctly', () => {
     const d = mount(<DialogWrap footer="test" />);
