@@ -109,15 +109,15 @@ const MyControl = () => {
     >
       <input autoFocus />
       <p>basic modal</p>
-      <button onClick={() => {
+      <button type="button" onClick={() => {
         setVisible1(false);
         setVisible2(true);
       }}>打开第二个并关闭当前的</button>
-      <button onClick={() => {
+      <button type="button" onClick={() => {
         setVisible2(true);
       }}>打开第二个</button>
-      <button onClick={changeWidth}>change width</button>
-      <button onClick={toggleCloseIcon}>
+      <button type="button" onClick={changeWidth}>change width</button>
+      <button type="button" onClick={toggleCloseIcon}>
         use custom icon, is using icon: {useIcon && 'true' || 'false'}.
       </button>
       <div style={{ height: 200 }} />
@@ -132,15 +132,15 @@ const MyControl = () => {
     >
       <input autoFocus />
       <p>basic modal</p>
-      <button onClick={() => {
+      <button type="button" onClick={() => {
         setVisible3(true);
       }}>打开第三个</button>
-      <button onClick={() => {
+      <button type="button" onClick={() => {
         setVisible2(false);
       }}>关闭当前</button>
-      <button onClick={closeAll}>关闭所有</button>
-      <button onClick={changeWidth}>change width</button>
-      <button onClick={toggleCloseIcon}>
+      <button type="button" onClick={closeAll}>关闭所有</button>
+      <button type="button" onClick={changeWidth}>change width</button>
+      <button type="button" onClick={toggleCloseIcon}>
         use custom icon, is using icon: {useIcon && 'true' || 'false'}.
       </button>
       <div style={{ height: 200 }} />
@@ -155,12 +155,12 @@ const MyControl = () => {
       onClose={onClose3}
     >
       <p>initialized with forceRender and visbile true</p>
-      <button onClick={() => {
+      <button type="button" onClick={() => {
         setVisible3(false);
       }}>关闭当前</button>
-      <button onClick={closeAll}>关闭所有</button>
-      <button onClick={changeWidth}>change width</button>
-      <button onClick={toggleCloseIcon}>
+      <button type="button" onClick={closeAll}>关闭所有</button>
+      <button type="button" onClick={changeWidth}>change width</button>
+      <button type="button" onClick={toggleCloseIcon}>
         use custom icon, is using icon: {useIcon && 'true' || 'false'}.
       </button>
       <div style={{ height: 200 }} />
@@ -179,7 +179,7 @@ const MyControl = () => {
           `}
       </style>
       <p>
-        <button className="btn btn-primary" onClick={onClick}>
+        <button type="button" className="btn btn-primary" onClick={onClick}>
           show dialog
         </button>
         &nbsp;

@@ -115,7 +115,7 @@ const MyControl = () => {
   return (
     <div style={{ margin: 20 }}>
       <p>
-        <button className="btn btn-primary" onClick={onClick}>show dialog</button>
+        <button type="button" className="btn btn-primary" onClick={onClick}>show dialog</button>
         &nbsp;
         <label>destroy on close:
           <input

@@ -114,6 +114,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         this.openTime = Date.now();
         this.switchScrollingEffect();
         this.tryFocus();
+        // eslint-disable-next-line react/no-find-dom-node
         const dialogNode = ReactDOM.findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);

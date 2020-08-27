@@ -27,7 +27,7 @@ const Demo = () => {
       forceRender
     >
       <p>basic modal</p>
-      <p><button onClick={onToggleDrawer}>show drawer</button></p>
+      <p><button type="button" onClick={onToggleDrawer}>show drawer</button></p>
       <div style={{ height: 200 }} />
     </Dialog>
   );
@@ -38,12 +38,12 @@ const Demo = () => {
       onClose={onToggleDrawer}
       level={null}
     >
-      <button onClick={onToggleDrawer}>close drawer</button>
+      <button type="button" onClick={onToggleDrawer}>close drawer</button>
     </Drawer>
   );
   return (
     <div>
-      <button onClick={onToggleDialog}>open dialog</button>
+      <button type="button" onClick={onToggleDialog}>open dialog</button>
       {dialog}
       {drawer}
     </div>

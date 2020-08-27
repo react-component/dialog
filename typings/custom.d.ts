@@ -3,11 +3,6 @@ declare module "rc-util/lib/KeyCode" {
   export default Ret;
 }
 
-declare module "rc-util/lib/*" {
-  const Ret: any;
-  export default Ret;
-}
-
 declare module "rc-animate" {
   const Ret: any;
   export default Ret;
