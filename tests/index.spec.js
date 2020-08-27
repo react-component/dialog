@@ -149,10 +149,12 @@ describe('dialog', () => {
   });
 
   it('renderToBody', () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
     const d = mount(
       <DialogWrap>
         <p className="renderToBody">1</p>
-      </DialogWrap>,
+      </DialogWrap>, { attachTo: container }
     );
     expect(d.find('.renderToBody').length).toBe(0);
     expect(d.find('.rc-dialog-wrap').length).toBe(0);
@@ -161,9 +163,7 @@ describe('dialog', () => {
     d.update();
     expect(d.find('.rc-dialog-wrap').length).toBeTruthy();
     expect(d.find('.renderToBody').length).toBeTruthy();
-    // 原来有个这，不知道在测啥？？？
-    // expect($('.rc-dialog-wrap')[0].parentNode.parentNode).not.to.be(container);
-    // console.log(d.find('.rc-dialog-wrap').first().parent().parent().debug())
+    expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode).not.toBe(container);
     d.unmount();
     expect(d.find('.renderToBody').length).toBe(0);
     expect(d.find('.rc-dialog-wrap').length).toBe(0);
