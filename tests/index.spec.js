@@ -50,7 +50,7 @@ describe('dialog', () => {
     dialog.unmount();
     jest.useRealTimers();
   });
-  
+
   it('show', () => {
     dialog.setState({ visible: true });
     jest.runAllTimers();
