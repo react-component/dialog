@@ -1,6 +1,6 @@
 /* eslint-disable react/no-render-return-value */
 /* eslint-disable func-names */
-import React from 'react';
+import React, { cloneElement } from 'react';
 import { mount } from 'enzyme';
 
 import KeyCode from 'rc-util/lib/KeyCode';
@@ -50,7 +50,7 @@ describe('dialog', () => {
     dialog.unmount();
     jest.useRealTimers();
   });
-
+  
   it('show', () => {
     dialog.setState({ visible: true });
     jest.runAllTimers();
@@ -424,5 +424,17 @@ describe('dialog', () => {
     jest.runAllTimers();
     d.update();
     expect(d.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+  });
+
+  it('modalRender', () => {
+    const modalRender = mount(
+      <DialogWrap modalRender={node => cloneElement(node, { ...node.props, style: { background: '#1890ff' }})}>
+      </DialogWrap>
+    );
+    modalRender.setState({ visible: true });
+    jest.runAllTimers();
+    modalRender.update();
+    expect(modalRender.find('.rc-dialog-content').props().style.background).toEqual('#1890ff');
+    modalRender.unmount();
   });
 });

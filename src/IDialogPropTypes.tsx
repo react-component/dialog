@@ -37,6 +37,7 @@ export interface IDialogPropTypes {
   wrapProps?: any;
   getContainer?: IStringOrHtmlElement | (() => IStringOrHtmlElement) | false;
   closeIcon?: ReactNode;
+  modalRender?: (node: ReactNode) => ReactNode;
   forceRender?: boolean;
   // https://github.com/ant-design/ant-design/issues/19771
   // https://github.com/react-component/dialog/issues/95
