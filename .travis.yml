@@ -5,7 +5,6 @@ sudo: false
 notifications:
   email:
   - yiminghe@gmail.com
-  - hust2012jiangkai@gmail.com
 
 node_js:
 - 12
@@ -17,6 +16,7 @@ before_install:
       echo "Only docs were updated, stopping build process."
       exit
     fi
+    npm install npm@6.x -g
     phantomjs --version
 script:
 - |
