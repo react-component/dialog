@@ -9,13 +9,6 @@ notifications:
 node_js:
 - 12
 
-before_install:
-- |
-    if ! git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(\.md$)|(^(docs|examples))/'
-    then
-      echo "Only docs were updated, stopping build process."
-      exit
-    fi
 script:
 - |
     if [ "$TEST_TYPE" = test ]; then
