@@ -233,7 +233,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       bodyProps,
       children,
       destroyOnClose,
-      modalRender = modalNode => modalNode,
+      modalRender,
     } = this.props;
     const dest: any = {};
     if (width !== undefined) {
@@ -313,7 +313,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
           style={sentinelStyle}
           aria-hidden="true"
         />
-        {modalRender(content)}
+        {modalRender ? modalRender(content) : content }
         <div
           tabIndex={0}
           ref={this.saveRef('sentinelEnd')}
