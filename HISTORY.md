@@ -1,5 +1,7 @@
 # History
 ----
+## 8.3.0 / 2020-08-31
+- fate: add `modalRender`. [#195](https://github.com/react-component/dialog/pull/195)
 
 ## 8.2.0 / 2020-08-27
 - use `father`. [#197](https://github.com/react-component/dialog/pull/197)
