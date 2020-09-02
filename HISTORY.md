@@ -1,6 +1,27 @@
 # History
 ----
 
+## 8.3.2 / 2020-09-02
+- fix: remove typing from package.json. [#201](https://github.com/react-component/dialog/pull/201)
+
+## 8.3.1 / 2020-09-02
+- fix: add displayName. [#200](https://github.com/react-component/dialog/pull/200)
+
+## 8.3.0 / 2020-08-31
+- fate: add `modalRender`. [#195](https://github.com/react-component/dialog/pull/195)
+
+## 8.2.0 / 2020-08-27
+- use `father`. [#197](https://github.com/react-component/dialog/pull/197)
+
+## 8.1.1 / 2020-08-19
+
+- Fix dialog component will only show mask, if initialize a Dialog component with both forceRender and visible are true. [#194](https://github.com/react-component/dialog/pull/194)
+
+## 8.1.0 / 2020-07-09
+
+- remove babel runtime.
+- up `rc-drawer` to `4.1.0`.
+
 ## 8.0.0 / 2020-05-29
 
 - upgrade `rc-util` to `5.0.0`.

@@ -12,7 +12,7 @@ import { IDialogPropTypes } from './IDialogPropTypes';
  * So here should add a child (div element) to custom container.
  * */
 
-export default (props: IDialogPropTypes) => {
+const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
   const { visible, getContainer, forceRender } = props;
   // 渲染在当前 dom 里；
   if (getContainer === false) {
@@ -30,3 +30,7 @@ export default (props: IDialogPropTypes) => {
     </Portal>
   );
 };
+
+DialogWrap.displayName = 'Dialog';
+
+export default DialogWrap;

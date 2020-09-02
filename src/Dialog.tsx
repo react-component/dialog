@@ -106,8 +106,8 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const { visible } = this.props;
-    const { mousePosition } = this.props;
+    const { visible, mousePosition } = this.props;
+
     if (visible) {
       // first show
       if (!prevProps.visible) {
@@ -233,6 +233,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       bodyProps,
       children,
       destroyOnClose,
+      modalRender,
     } = this.props;
     const dest: any = {};
     if (width !== undefined) {
@@ -276,6 +277,22 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       );
     }
 
+    const content = (
+      <div className={`${prefixCls}-content`}>
+        {closer}
+        {headerNode}
+        <div
+          className={`${prefixCls}-body`}
+          style={bodyStyle}
+          ref={this.saveRef('body')}
+          {...bodyProps}
+        >
+          {children}
+        </div>
+        {footerNode}
+      </div>
+    )
+
     const styleBox = { ...style, ...dest };
     const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
     const transitionName = this.getTransitionName();
@@ -296,19 +313,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
           style={sentinelStyle}
           aria-hidden="true"
         />
-        <div className={`${prefixCls}-content`}>
-          {closer}
-          {headerNode}
-          <div
-            className={`${prefixCls}-body`}
-            style={bodyStyle}
-            ref={this.saveRef('body')}
-            {...bodyProps}
-          >
-            {children}
-          </div>
-          {footerNode}
-        </div>
+        {modalRender ? modalRender(content) : content }
         <div
           tabIndex={0}
           ref={this.saveRef('sentinelEnd')}

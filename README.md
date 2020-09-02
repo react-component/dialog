@@ -54,175 +54,34 @@ ReactDOM.render(
 
 ### rc-dialog
 
-
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>prefixCls</td>
-          <td>String</td>
-          <td>rc-dialog</td>
-          <td>The dialog dom node's prefixCls</td>
-      </tr>
-      <tr>
-          <td>className</td>
-          <td>String</td>
-          <td></td>
-          <td>additional className for dialog</td>
-      </tr>
-      <tr>
-          <td>wrapClassName</td>
-          <td>String</td>
-          <td></td>
-          <td>additional className for dialog wrap</td>
-      </tr>
-      <tr>
-          <td>style</td>
-          <td>Object</td>
-          <td>{}</td>
-          <td>Root style for dialog element.Such as width, height</td>
-      </tr>
-      <tr>
-          <td>zIndex</td>
-          <td>Number</td>
-          <td></td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>bodyStyle</td>
-          <td>Object</td>
-          <td>{}</td>
-          <td>body style for dialog body element.Such as height</td>
-      </tr>
-      <tr>
-          <td>maskStyle</td>
-          <td>Object</td>
-          <td>{}</td>
-          <td>style for mask element.</td>
-      </tr>
-      <tr>
-          <td>visible</td>
-          <td>Boolean</td>
-          <td>false</td>
-          <td>current dialog's visible status</td>
-      </tr>
-      <tr>
-          <td>animation</td>
-          <td>String</td>
-          <td></td>
-          <td>part of dialog animation css class name</td>
-      </tr>
-      <tr>
-          <td>maskAnimation</td>
-          <td>String</td>
-          <td></td>
-          <td>part of dialog's mask animation css class name</td>
-      </tr>
-      <tr>
-          <td>transitionName</td>
-          <td>String</td>
-          <td></td>
-          <td>dialog animation css class name</td>
-      </tr>
-      <tr>
-          <td>maskTransitionName</td>
-          <td>String</td>
-          <td></td>
-          <td>mask animation css class name</td>
-      </tr>
-      <tr>
-          <td>title</td>
-          <td>String|React.Element</td>
-          <td></td>
-          <td>Title of the dialog</td>
-      </tr>
-      <tr>
-          <td>footer</td>
-          <td>React.Element</td>
-          <td></td>
-          <td>footer of the dialog</td>
-      </tr>
-      <tr>
-          <td>closable</td>
-          <td>Boolean</td>
-          <td>true</td>
-          <td>whether show close button</td>
-      </tr>
-      <tr>
-          <td>mask</td>
-          <td>Boolean</td>
-          <td>true</td>
-          <td>whether show mask</td>
-      </tr>
-      <tr>
-          <td>maskClosable</td>
-          <td>Boolean</td>
-          <td>true</td>
-          <td>whether click mask to close</td>
-      </tr>
-    <tr>
-        <td>keyboard</td>
-        <td>Boolean</td>
-        <td>true</td>
-        <td>whether support press esc to close</td>
-    </tr>
-      <tr>
-          <td>mousePosition</td>
-          <td>{x:number,y:number}</td>
-          <td></td>
-          <td>set pageX and pageY of current mouse(it will cause transform origin to be set).</td>
-      </tr>
-      <tr>
-          <td>onClose</td>
-          <td>function()</td>
-          <td></td>
-          <td>called when click close button or mask</td>
-      </tr>
-      <tr>
-          <td>afterClose</td>
-          <td>function()</td>
-          <td></td>
-          <td>called when close animation end</td>
-      </tr>
-      <tr>
-          <td>getContainer</td>
-          <td>function(): HTMLElement</td>
-          <td></td>
-          <td>to determine where Dialog will be mounted</td>
-      </tr>
-      <tr>
-          <td>destroyOnClose</td>
-          <td>Boolean</td>
-          <td>false</td>
-          <td>to unmount child compenents on onClose</td>
-      </tr>
-      <tr>
-          <td>closeIcon</td>
-          <td>ReactNode</td>
-          <td></td>
-          <td>specific the close icon.</td>
-      </tr>
-      <tr>
-          <td>forceRender</td>
-          <td>Boolean</td>
-          <td>false</td>
-          <td>Create dialog dom node before dialog first show </td>
-      </tr>
-      <tr>
-          <td>focusTriggerAfterClose</td>
-          <td>Boolean</td>
-          <td>true</td>
-          <td>focus trigger element when dialog closed</td>
-      </tr>
-    </tbody>
-</table>
+| Name                   | Type                           | Default   | Description                                                                     | Version |
+| ---------------------- | ------------------------------ | --------- | ------------------------------------------------------------------------------- | ------- |
+| prefixCls              | String                         | rc-dialog | The dialog dom node's prefixCls                                                 |         |
+| className              | String                         |           | additional className for dialog                                                 |         |
+| style                  | Object                         | {}        | Root style for dialog element.Such as width, height                             |         |
+| zIndex                 | Number                         |           |                                                                                 |         |
+| bodyStyle              | Object                         | {}        | body style for dialog body element.Such as height                               |         |
+| maskStyle              | Object                         | {}        | style for mask element                                                          |         |
+| visible                | Boolean                        | false     | current dialog's visible status                                                 |         |
+| animation              | String                         |           | part of dialog animation css class name                                         |         |
+| maskAnimation          | String                         |           | part of dialog's mask animation css class name                                  |         |
+| transitionName         | String                         |           | dialog animation css class name                                                 |         |
+| maskTransitionName     | String                         |           | mask animation css class name                                                   |         |
+| title                  | String\|React.Element          |           | Title of the dialog                                                             |         |
+| footer                 | React.Element                  |           | footer of the dialog                                                            |         |
+| closable               | Boolean                        | true      | whether show close button                                                       |         |
+| mask                   | Boolean                        | true      | whether show mask                                                               |         |
+| maskClosable           | Boolean                        | true      | whether click mask to close                                                     |         |
+| keyboard               | Boolean                        | true      | whether support press esc to close                                              |         |
+| mousePosition          | {x:number,y:number}            |           | set pageX and pageY of current mouse(it will cause transform origin to be set). |         |
+| onClose                | function()                     |           | called when click close button or mask                                          |         |
+| afterClose             | function()                     |           | called when close animation end                                                 |         |
+| getContainer           | function(): HTMLElement        |           | to determine where Dialog will be mounted                                       |         |
+| destroyOnClose         | Boolean                        | false     | to unmount child compenents on onClose                                          |         |
+| closeIcon              | ReactNode                      |           | specific the close icon.                                                        |         |
+| forceRender            | Boolean                        | false     | Create dialog dom node before dialog first show                                 |         |
+| focusTriggerAfterClose | Boolean                        | true      | focus trigger element when dialog closed                                        |         |
+| modalRender            | (node: ReactNode) => ReactNode |           | Custom modal content render                                                     | 8.3.0   |
 
 ## Development
 
