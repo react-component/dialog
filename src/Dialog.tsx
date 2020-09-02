@@ -106,7 +106,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const { visible, mask, focusTriggerAfterClose } = this.props;
+    const { visible } = this.props;
     const { mousePosition } = this.props;
     if (visible) {
       // first show
@@ -128,14 +128,6 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       }
     } else if (prevProps.visible) {
       this.inTransition = true;
-      if (mask && this.lastOutSideFocusNode && focusTriggerAfterClose) {
-        try {
-          this.lastOutSideFocusNode.focus();
-        } catch (e) {
-          this.lastOutSideFocusNode = null;
-        }
-        this.lastOutSideFocusNode = null;
-      }
     }
   }
 
@@ -155,7 +147,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   onAnimateLeave = () => {
-    const { afterClose, getOpenCount } = this.props;
+    const { afterClose, getOpenCount, focusTriggerAfterClose, mask } = this.props;
     // need demo?
     // https://github.com/react-component/dialog/pull/28
     if (this.wrap) {
@@ -166,6 +158,14 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
     // https://github.com/ant-design/ant-design/issues/21539
     if (!getOpenCount()) {
       this.switchScrollingEffect();
+    }
+    if (mask && this.lastOutSideFocusNode && focusTriggerAfterClose) {
+      try {
+        this.lastOutSideFocusNode.focus();
+      } catch (e) {
+        this.lastOutSideFocusNode = null;
+      }
+      this.lastOutSideFocusNode = null;
     }
     if (afterClose) {
       afterClose();
