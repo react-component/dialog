@@ -106,8 +106,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const { visible, mask, focusTriggerAfterClose } = this.props;
-    const { mousePosition } = this.props;
+    const { visible, mask, focusTriggerAfterClose, mousePosition } = this.props;
     if (visible) {
       // first show
       if (!prevProps.visible) {
