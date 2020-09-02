@@ -1,5 +1,12 @@
 # History
 ----
+
+## 8.3.2 / 2020-09-02
+- fix: remove typing from package.json. [#201](https://github.com/react-component/dialog/pull/201)
+
+## 8.3.1 / 2020-09-02
+- fix: add displayName. [#200](https://github.com/react-component/dialog/pull/200)
+
 ## 8.3.0 / 2020-08-31
 - fate: add `modalRender`. [#195](https://github.com/react-component/dialog/pull/195)
 
