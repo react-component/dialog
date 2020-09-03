@@ -1,6 +1,9 @@
 # History
 ----
 
+## 8.3.3 / 2020-09-02
+- fix: page scroll position will jump after dialog is closed. [#202](https://github.com/react-component/dialog/pull/202)
+
 ## 8.3.2 / 2020-09-02
 - fix: remove typing from package.json. [#201](https://github.com/react-component/dialog/pull/201)
 
