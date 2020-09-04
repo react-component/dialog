@@ -350,8 +350,7 @@
 .drawer.drawer-open .drawer-mask {
   opacity: 0.3;
   height: 100%;
-  animation: rcDrawerFadeIn 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-  transition: none;
+  transition: opacity 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
 }
 .drawer.drawer-open .drawer-handle-icon {
   background: transparent;
@@ -361,14 +360,6 @@
 }
 .drawer.drawer-open .drawer-handle-icon:after {
   transform: translateY(-5px) rotate(-45deg);
-}
-@keyframes rcDrawerFadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0.3;
-  }
 }
 
 /*# sourceMappingURL=multiple-Portal.css.map*/
