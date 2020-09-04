@@ -118,6 +118,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       this.inTransition = true;
       if (mask && this.lastOutSideFocusNode && focusTriggerAfterClose) {
         try {
+          // @ts-ignore
           this.lastOutSideFocusNode.focus({ preventScroll: true });
         } catch (e) {
           this.lastOutSideFocusNode = null;
