@@ -1,6 +1,9 @@
 # History
 ----
 
+## 8.3.4 (8.2.2, 8.1.2) / 2020-09-04
+- fix: prevent scroll behavior when focus trigger. [ant-design/ant-design#26582](https://github.com/ant-design/ant-design/issues/26582)
+
 ## 8.3.3 / 2020-09-02
 - fix: page scroll position will jump after dialog is closed. [#202](https://github.com/react-component/dialog/pull/202)
 
