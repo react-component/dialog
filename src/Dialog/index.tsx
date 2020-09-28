@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
-import LazyRenderBox from './LazyRenderBox';
-import { IDialogPropTypes } from './IDialogPropTypes';
+import LazyRenderBox from '../LazyRenderBox';
+import { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
-import { getMotionName } from './util/motionUtil';
+import { getMotionName } from '../util/motionUtil';
 
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
