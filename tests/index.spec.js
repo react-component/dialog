@@ -1,5 +1,4 @@
-/* eslint-disable react/no-render-return-value */
-/* eslint-disable func-names */
+/* eslint-disable react/no-render-return-value, max-classes-per-file, func-names */
 import React, { cloneElement } from 'react';
 import { mount } from 'enzyme';
 
@@ -87,11 +86,11 @@ describe('dialog', () => {
     expect(callback).toBe(1);
   });
 
-  it("destroy on hide should unmount child components on close", () => {
+  it('destroy on hide should unmount child components on close', () => {
     const wrapper = mount(
       <DialogWrap destroyOnClose>
-        <input className="test-input"/>
-      </DialogWrap>
+        <input className="test-input" />
+      </DialogWrap>,
     );
     wrapper.setState({ visible: true });
     jest.runAllTimers();
@@ -106,7 +105,7 @@ describe('dialog', () => {
     wrapper.update();
     expect(document.getElementsByClassName('.test-input').value).toBeUndefined();
     wrapper.unmount();
-  })
+  });
 
   it('esc to close', () => {
     dialog.setState({ visible: true });
@@ -125,10 +124,10 @@ describe('dialog', () => {
     let now = 0;
     const originDateNow = Date.now;
 
-    // disable https://github.com/react-component/dialog/blob/d9604fa6ad40e949999456d8c020e47593e48f0d/src/Dialog.tsx#L188 
+    // disable https://github.com/react-component/dialog/blob/d9604fa6ad40e949999456d8c020e47593e48f0d/src/Dialog.tsx#L188
     Date.now = () => {
-      now += 500
-      return now
+      now += 500;
+      return now;
     };
 
     dialog.setState({ visible: true });
@@ -154,7 +153,8 @@ describe('dialog', () => {
     const d = mount(
       <DialogWrap>
         <p className="renderToBody">1</p>
-      </DialogWrap>, { attachTo: container }
+      </DialogWrap>,
+      { attachTo: container },
     );
     expect(d.find('.renderToBody').length).toBe(0);
     expect(d.find('.rc-dialog-wrap').length).toBe(0);
@@ -174,13 +174,15 @@ describe('dialog', () => {
     const d = mount(
       <DialogWrap getContainer={() => returnedContainer}>
         <p className="getContainer">Hello world!</p>
-      </DialogWrap>
+      </DialogWrap>,
     );
     d.setState({ visible: true });
     jest.runAllTimers();
     d.update();
     // fix issue #10656, must change this test
-    expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode.parentNode).toBe(returnedContainer);
+    expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode.parentNode).toBe(
+      returnedContainer,
+    );
     d.unmount();
   });
 
@@ -215,9 +217,12 @@ describe('dialog', () => {
       key: 'TAB',
       keyCode: 9,
       which: 9,
-      shiftKey: true
-    }
-    dialog.find('.rc-dialog-wrap').at(0).simulate('keyDown', shiftTabbingDescriptor);
+      shiftKey: true,
+    };
+    dialog
+      .find('.rc-dialog-wrap')
+      .at(0)
+      .simulate('keyDown', shiftTabbingDescriptor);
     const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
     expect(document.activeElement).toBe(sentinelEnd);
   });
@@ -230,7 +235,12 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
     d.update();
-    expect(d.find('.rc-dialog').at(0).getDOMNode().style['transform-origin']).toBeTruthy();
+    expect(
+      d
+        .find('.rc-dialog')
+        .at(0)
+        .getDOMNode().style['transform-origin'],
+    ).toBeTruthy();
     d.unmount();
   });
 
@@ -300,7 +310,7 @@ describe('dialog', () => {
 
   it('Multiple Dialog body overflow set correctly', () => {
     const container = document.createElement('div');
-    document.body.style.overflow = "scroll"
+    document.body.style.overflow = 'scroll';
 
     class MultipleDialogWrap extends React.Component {
       state = {
@@ -311,31 +321,26 @@ describe('dialog', () => {
       render() {
         return (
           <div>
-            <Dialog
-              {...this.props}
-              visible={this.state.visible}
-            />
-            <Dialog
-              {...this.props}
-              visible={this.state.visible2}
-            />
+            <Dialog {...this.props} visible={this.state.visible} />
+            <Dialog {...this.props} visible={this.state.visible2} />
           </div>
         );
       }
     }
 
-    const d = mount((
+    const d = mount(
       <MultipleDialogWrap>
         <div>forceRender element</div>
-      </MultipleDialogWrap>
-    ), { attachTo: container });
+      </MultipleDialogWrap>,
+      { attachTo: container },
+    );
 
     expect(d.find('.rc-dialog').length).toBe(0);
 
     d.setState({ visible: true });
     jest.runAllTimers();
     d.update();
-    
+
     expect(d.find('div.rc-dialog').length).toBe(1);
     expect(document.body.style.overflow).toBe('hidden');
 
@@ -349,7 +354,7 @@ describe('dialog', () => {
     d.setState({
       visible: false,
       visible2: false,
-    })
+    });
     jest.runAllTimers();
     d.update();
 
@@ -357,7 +362,7 @@ describe('dialog', () => {
 
     d.setState({
       visible: true,
-    })
+    });
     jest.runAllTimers();
     d.update();
     expect(document.body.style.overflow).toBe('hidden');
@@ -365,7 +370,7 @@ describe('dialog', () => {
     d.setState({
       visible: false,
       visible2: true,
-    })
+    });
     jest.runAllTimers();
     d.update();
     expect(document.body.style.overflow).toBe('hidden');
@@ -373,7 +378,7 @@ describe('dialog', () => {
     d.setState({
       visible: false,
       visible2: false,
-    })
+    });
     jest.runAllTimers();
     d.update();
     expect(document.body.style.overflow).toBe('scroll');
@@ -381,19 +386,15 @@ describe('dialog', () => {
   });
 
   it('afterClose', () => {
-    const afterCloseMock = jest.fn();
-    const d = mount(
-      <DialogWrap afterClose={afterCloseMock}>
-        <div>afterClose</div>
-      </DialogWrap>,
-    );
-    d.setState({ visible: true });
+    const afterClose = jest.fn();
+
+    const wrapper = mount(<Dialog afterClose={afterClose} visible />);
     jest.runAllTimers();
-    d.update();
-    d.setState({ visible: false });
+
+    wrapper.setProps({ visible: false });
     jest.runAllTimers();
-    d.update();
-    expect(afterCloseMock).toHaveBeenCalledTimes(1);
+
+    expect(afterClose).toHaveBeenCalledTimes(1);
   });
 
   it('zIndex', () => {
@@ -428,8 +429,11 @@ describe('dialog', () => {
 
   it('modalRender', () => {
     const modalRender = mount(
-      <DialogWrap modalRender={node => cloneElement(node, { ...node.props, style: { background: '#1890ff' }})}>
-      </DialogWrap>
+      <DialogWrap
+        modalRender={node =>
+          cloneElement(node, { ...node.props, style: { background: '#1890ff' } })
+        }
+      />,
     );
     modalRender.setState({ visible: true });
     jest.runAllTimers();
