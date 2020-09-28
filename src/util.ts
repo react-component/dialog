@@ -5,3 +5,9 @@ export function getMotionName(prefixCls: string, transitionName?: string, animat
   }
   return motionName;
 }
+
+let uuid = -1;
+export function getUUID() {
+  uuid += 1;
+  return uuid;
+}

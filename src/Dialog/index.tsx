@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {} from 'react';
+import { useRef } from 'react';
 import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
@@ -8,7 +8,7 @@ import contains from 'rc-util/lib/Dom/contains';
 import LazyRenderBox from '../LazyRenderBox';
 import { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
-import { getMotionName } from '../util/motionUtil';
+import { getMotionName, getUUID } from '../util';
 import Content from './Content';
 
 export interface IDialogChildProps extends IDialogPropTypes {
@@ -27,8 +27,10 @@ export default function Dialog(props: IDialogChildProps) {
     focusTriggerAfterClose = true,
 
     // Wrapper
+    title,
     wrapStyle,
     wrapClassName,
+    wrapProps,
 
     // Dialog
     transitionName,
@@ -42,6 +44,12 @@ export default function Dialog(props: IDialogChildProps) {
     maskStyle,
     maskProps,
   } = props;
+
+  // ==================== Init ====================
+  const titleRef = useRef();
+  if (!titleRef.current) {
+    titleRef.current = `rcDialogTitle${getUUID()}`;
+  }
 
   return (
     <div className={`${prefixCls}-root`}>
@@ -63,9 +71,9 @@ export default function Dialog(props: IDialogChildProps) {
         // onClick={maskClosable ? this.onMaskClick : null}
         // onMouseUp={maskClosable ? this.onMaskMouseUp : null}
         role="dialog"
-        // aria-labelledby={props.title ? this.titleId : null}
+        aria-labelledby={title ? titleRef.current : null}
         style={{ zIndex, ...wrapStyle }}
-        {...props.wrapProps}
+        {...wrapProps}
       >
         <Content
           {...props}
