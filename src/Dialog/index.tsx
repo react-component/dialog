@@ -69,6 +69,7 @@ export default function Dialog(props: IDialogChildProps) {
     onClose?.(e);
   }
 
+  // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
@@ -77,6 +78,21 @@ export default function Dialog(props: IDialogChildProps) {
         onInternalClose(e);
       }
     };
+  }
+
+  function onWrapperKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (keyboard && e.keyCode === KeyCode.ESC) {
+      e.stopPropagation();
+      onInternalClose(e);
+      return;
+    }
+
+    // keep focus inside dialog
+    if (visible) {
+      if (e.keyCode === KeyCode.TAB) {
+        contentRef.current.changeActive(!e.shiftKey);
+      }
+    }
   }
 
   // ========================= Effect =========================
@@ -106,7 +122,7 @@ export default function Dialog(props: IDialogChildProps) {
       />
       <div
         tabIndex={-1}
-        // onKeyDown={this.onKeyDown}
+        onKeyDown={onWrapperKeyDown}
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
         onClick={onWrapperClick}

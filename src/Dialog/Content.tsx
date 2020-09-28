@@ -15,6 +15,7 @@ export interface ContentProps extends IDialogChildProps {
 export interface ContentRef {
   focus: () => void;
   getDOM: () => HTMLDivElement;
+  changeActive: (next: boolean) => void;
 }
 
 const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
@@ -59,6 +60,14 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       sentinelStartRef.current?.focus();
     },
     getDOM: () => dialogRef.current,
+    changeActive: (next) => {
+      const { activeElement } = document;
+      if (next && activeElement === sentinelEndRef.current) {
+        sentinelStartRef.current.focus();
+      } else if (!next && activeElement === sentinelStartRef.current) {
+        sentinelEndRef.current.focus();
+      }
+    },
   }));
 
   // ============================= Render =============================
