@@ -9,7 +9,7 @@ import LazyRenderBox from '../LazyRenderBox';
 import { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName, getUUID } from '../util';
-import Content from './Content';
+import Content, { ContentRef } from './Content';
 
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
@@ -45,12 +45,27 @@ export default function Dialog(props: IDialogChildProps) {
     maskProps,
   } = props;
 
-  // ==================== Init ====================
-  const titleRef = useRef();
-  if (!titleRef.current) {
-    titleRef.current = `rcDialogTitle${getUUID()}`;
+  const lastOutSideElementRef = useRef<Element>();
+  const wrapperRef = useRef<HTMLDivElement>();
+  const contentRef = useRef<ContentRef>();
+
+  // ========================== Init ==========================
+  const ariaIdRef = useRef<string>();
+  if (!ariaIdRef.current) {
+    ariaIdRef.current = `rcDialogTitle${getUUID()}`;
   }
 
+  // ========================= Effect =========================
+  React.useEffect(() => {
+    if (visible) {
+      if (!contains(wrapperRef.current, document.activeElement)) {
+        lastOutSideElementRef.current = document.activeElement;
+        contentRef.current?.focus();
+      }
+    }
+  }, [visible]);
+
+  // ========================= Render =========================
   return (
     <div className={`${prefixCls}-root`}>
       <Mask
@@ -67,16 +82,18 @@ export default function Dialog(props: IDialogChildProps) {
         tabIndex={-1}
         // onKeyDown={this.onKeyDown}
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
-        // ref={this.saveRef('wrap')}
+        ref={wrapperRef}
         // onClick={maskClosable ? this.onMaskClick : null}
         // onMouseUp={maskClosable ? this.onMaskMouseUp : null}
         role="dialog"
-        aria-labelledby={title ? titleRef.current : null}
+        aria-labelledby={title ? ariaIdRef.current : null}
         style={{ zIndex, ...wrapStyle }}
         {...wrapProps}
       >
         <Content
           {...props}
+          ref={contentRef}
+          ariaId={ariaIdRef.current}
           prefixCls={prefixCls}
           visible={visible}
           motionName={getMotionName(prefixCls, transitionName, animation)}
