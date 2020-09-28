@@ -1,8 +1,9 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
+import classNames from 'classnames';
+import CSSMotion from 'rc-motion';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
-import Animate from 'rc-animate';
 import LazyRenderBox from './LazyRenderBox';
 import { IDialogPropTypes } from './IDialogPropTypes';
 
@@ -115,7 +116,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         this.switchScrollingEffect();
         this.tryFocus();
         // eslint-disable-next-line react/no-find-dom-node
-        const dialogNode = ReactDOM.findDOMNode(this.dialog);
+        const dialogNode = findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
           setTransformOrigin(
@@ -291,49 +292,50 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         </div>
         {footerNode}
       </div>
-    )
-
-    const styleBox = { ...style, ...dest };
-    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
-    const transitionName = this.getTransitionName();
-    const dialogElement = (
-      <LazyRenderBox
-        key="dialog-element"
-        role="document"
-        ref={this.saveRef('dialog')}
-        style={styleBox}
-        className={`${prefixCls} ${className || ''}`}
-        visible={visible}
-        forceRender={forceRender}
-        onMouseDown={this.onDialogMouseDown}
-      >
-        <div
-          tabIndex={0}
-          ref={this.saveRef('sentinelStart')}
-          style={sentinelStyle}
-          aria-hidden="true"
-        />
-        {modalRender ? modalRender(content) : content }
-        <div
-          tabIndex={0}
-          ref={this.saveRef('sentinelEnd')}
-          style={sentinelStyle}
-          aria-hidden="true"
-        />
-      </LazyRenderBox>
     );
 
+    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
+    const transitionName = this.getTransitionName();
+
     return (
-      <Animate
+      <CSSMotion
         key="dialog"
-        showProp="visible"
-        onLeave={this.onAnimateLeave}
-        transitionName={transitionName}
-        component=""
-        transitionAppear
+        visible={visible}
+        motionName={transitionName}
+        removeOnLeave={destroyOnClose}
+        onVisibleChanged={changedVisible => {
+          if (!changedVisible) {
+            this.onAnimateLeave();
+          }
+        }}
       >
-        {visible || !destroyOnClose ? dialogElement : null}
-      </Animate>
+        {({ className: motionClassName, style: motionStyle }) => (
+          <LazyRenderBox
+            key="dialog-element"
+            role="document"
+            ref={this.saveRef('dialog')}
+            style={{ ...motionStyle, ...style, ...dest }}
+            className={classNames(prefixCls, className, motionClassName)}
+            visible={visible}
+            forceRender={forceRender}
+            onMouseDown={this.onDialogMouseDown}
+          >
+            <div
+              tabIndex={0}
+              ref={this.saveRef('sentinelStart')}
+              style={sentinelStyle}
+              aria-hidden="true"
+            />
+            {modalRender ? modalRender(content) : content}
+            <div
+              tabIndex={0}
+              ref={this.saveRef('sentinelEnd')}
+              style={sentinelStyle}
+              aria-hidden="true"
+            />
+          </LazyRenderBox>
+        )}
+      </CSSMotion>
     );
   };
 
@@ -356,34 +358,25 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
 
   getMaskElement = () => {
     const { mask, prefixCls, visible, maskProps } = this.props;
-    let maskElement;
-    if (mask) {
-      const maskTransition = this.getMaskTransitionName();
-      maskElement = (
-        <LazyRenderBox
-          style={this.getMaskStyle()}
-          key="mask"
-          className={`${prefixCls}-mask`}
-          hiddenClassName={`${prefixCls}-mask-hidden`}
-          visible={visible}
-          {...maskProps}
-        />
-      );
-      if (maskTransition) {
-        maskElement = (
-          <Animate
-            key="mask"
-            showProp="visible"
-            transitionAppear
-            component=""
-            transitionName={maskTransition}
-          >
-            {maskElement}
-          </Animate>
-        );
-      }
+    if (!mask) {
+      return null;
     }
-    return maskElement;
+
+    const maskTransition = this.getMaskTransitionName();
+    return (
+      <CSSMotion key="mask" visible={visible} motionName={maskTransition}>
+        {() => (
+          <LazyRenderBox
+            style={this.getMaskStyle()}
+            key="mask"
+            className={`${prefixCls}-mask`}
+            hiddenClassName={`${prefixCls}-mask-hidden`}
+            visible={visible}
+            {...maskProps}
+          />
+        )}
+      </CSSMotion>
+    );
   };
 
   getMaskTransitionName = () => {
