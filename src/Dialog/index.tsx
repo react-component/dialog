@@ -9,6 +9,7 @@ import LazyRenderBox from '../LazyRenderBox';
 import { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName } from '../util/motionUtil';
+import Content from './Content';
 
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
@@ -24,6 +25,10 @@ export default function Dialog(props: IDialogChildProps) {
     closable = true,
     destroyOnClose = false,
     focusTriggerAfterClose = true,
+
+    // Dialog
+    transitionName,
+    animation,
 
     // Mask
     mask = true,
@@ -46,6 +51,7 @@ export default function Dialog(props: IDialogChildProps) {
         }}
         maskProps={maskProps}
       />
+      <Content {...props} motionName={getMotionName(prefixCls, transitionName, animation)} />
     </div>
   );
 }
