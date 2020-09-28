@@ -362,9 +362,6 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
 
   getMaskElement = () => {
     const { mask, prefixCls, visible, maskProps } = this.props;
-    if (!mask) {
-      return null;
-    }
 
     const maskTransition = this.getMaskTransitionName();
     return (
@@ -375,7 +372,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
             key="mask"
             className={`${prefixCls}-mask`}
             hiddenClassName={`${prefixCls}-mask-hidden`}
-            visible={visible}
+            visible={mask && visible}
             {...maskProps}
           />
         )}
