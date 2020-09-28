@@ -13,7 +13,15 @@ import { IDialogPropTypes } from './IDialogPropTypes';
  * */
 
 const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
-  const { visible, getContainer, forceRender } = props;
+  const { visible, getContainer, forceRender, destroyOnClose, afterClose } = props;
+  const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
+
+  React.useEffect(() => {
+    if (visible) {
+      setAnimatedVisible(true);
+    }
+  }, [visible]);
+
   // 渲染在当前 dom 里；
   if (getContainer === false) {
     return (
@@ -24,9 +32,23 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     );
   }
 
+  // Destroy on close will remove wrapped div
+  if (!forceRender && destroyOnClose && !animatedVisible) {
+    return null;
+  }
+
   return (
     <Portal visible={visible} forceRender={forceRender} getContainer={getContainer}>
-      {(childProps: IDialogChildProps) => <Dialog {...props} {...childProps} />}
+      {(childProps: IDialogChildProps) => (
+        <Dialog
+          {...props}
+          afterClose={() => {
+            afterClose?.();
+            setAnimatedVisible(false);
+          }}
+          {...childProps}
+        />
+      )}
     </Portal>
   );
 };

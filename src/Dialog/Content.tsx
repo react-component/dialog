@@ -10,7 +10,7 @@ const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none'
 export interface ContentProps extends IDialogChildProps {
   motionName: string;
   ariaId: string;
-  onLeaved: () => void;
+  onVisibleChanged: (visible: boolean) => void;
 }
 
 export interface ContentRef {
@@ -40,7 +40,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     motionName,
     ariaId,
     onClose,
-    onLeaved,
+    onVisibleChanged,
     mousePosition,
   } = props;
 
@@ -127,11 +127,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   return (
     <CSSMotion
       visible={visible}
-      onVisibleChanged={(changedVisible) => {
-        if (!changedVisible) {
-          onLeaved();
-        }
-      }}
+      onVisibleChanged={onVisibleChanged}
       onAppearPrepare={onPrepare}
       onEnterPrepare={onPrepare}
       forceRender={forceRender}

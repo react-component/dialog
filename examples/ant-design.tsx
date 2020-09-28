@@ -195,7 +195,7 @@ const MyControl = () => {
   );
 
   return (
-    <div style={{ width: '90%', margin: '0 auto' , height: '150vh'}}>
+    <div style={{ width: '90%', margin: '0 auto', height: '150vh' }}>
       <style>
         {`
           .center {
@@ -224,6 +224,7 @@ const MyControl = () => {
           force render
           <input type="checkbox" checked={forceRender} onChange={onForceRenderChange} />
         </label>
+        <input placeholder="Useless Input" onClick={onClick} />
       </p>
       {dialog}
       {dialog2}

@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { useRef } from 'react';
-import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
+import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
-import LazyRenderBox from '../LazyRenderBox';
 import { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName, getUUID } from '../util';
 import Content, { ContentRef } from './Content';
 
 export interface IDialogChildProps extends IDialogPropTypes {
+  // zombieJ: This should be handle on top instead of each Dialog.
+  // TODO: refactor to remove this.
   getOpenCount: () => number;
   switchScrollingEffect?: () => void;
 }
@@ -22,7 +21,6 @@ export default function Dialog(props: IDialogChildProps) {
     zIndex,
     visible = false,
     keyboard = true,
-    destroyOnClose = false,
     focusTriggerAfterClose = true,
     switchScrollingEffect = () => {},
 
@@ -32,6 +30,7 @@ export default function Dialog(props: IDialogChildProps) {
     wrapClassName,
     wrapProps,
     onClose,
+    afterClose,
 
     // Dialog
     transitionName,
@@ -47,7 +46,7 @@ export default function Dialog(props: IDialogChildProps) {
     maskProps,
   } = props;
 
-  const lastOutSideElementRef = useRef<Element>();
+  const lastOutSideActiveElementRef = useRef<HTMLElement>();
   const wrapperRef = useRef<HTMLDivElement>();
   const contentRef = useRef<ContentRef>();
 
@@ -60,9 +59,29 @@ export default function Dialog(props: IDialogChildProps) {
   }
 
   // ========================= Events =========================
-  function onDialogLeaved() {
-    setAnimatedVisible(false);
-    switchScrollingEffect();
+  function onDialogVisibleChanged(newVisible: boolean) {
+    if (newVisible) {
+      // Try to focus
+      if (!contains(wrapperRef.current, document.activeElement)) {
+        lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
+        contentRef.current?.focus();
+      }
+    } else {
+      // Clean up scroll bar & focus back
+      setAnimatedVisible(false);
+      switchScrollingEffect();
+
+      if (mask && lastOutSideActiveElementRef.current && focusTriggerAfterClose) {
+        try {
+          lastOutSideActiveElementRef.current.focus({ preventScroll: true });
+        } catch (e) {
+          // Do nothing
+        }
+        lastOutSideActiveElementRef.current = null;
+      }
+
+      afterClose?.();
+    }
   }
 
   function onInternalClose(e: React.SyntheticEvent) {
@@ -96,17 +115,20 @@ export default function Dialog(props: IDialogChildProps) {
   }
 
   // ========================= Effect =========================
-  React.useEffect(() => {
+  useEffect(() => {
     if (visible) {
-      if (!contains(wrapperRef.current, document.activeElement)) {
-        lastOutSideElementRef.current = document.activeElement;
-        contentRef.current?.focus();
-      }
-
       setAnimatedVisible(true);
       switchScrollingEffect();
     }
   }, [visible]);
+
+  // Remove direct should also check the scroll bar update
+  useEffect(
+    () => () => {
+      switchScrollingEffect();
+    },
+    [],
+  );
 
   // ========================= Render =========================
   return (
@@ -140,7 +162,7 @@ export default function Dialog(props: IDialogChildProps) {
           prefixCls={prefixCls}
           visible={visible}
           onClose={onInternalClose}
-          onLeaved={onDialogLeaved}
+          onVisibleChanged={onDialogVisibleChanged}
           motionName={getMotionName(prefixCls, transitionName, animation)}
         />
       </div>
