@@ -248,7 +248,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       dest.height = height;
     }
 
-    let footerNode;
+    let footerNode: React.ReactElement;
     if (footer) {
       footerNode = (
         <div className={`${prefixCls}-footer`} ref={this.saveRef('footer')}>
@@ -257,7 +257,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       );
     }
 
-    let headerNode;
+    let headerNode: React.ReactElement;
     if (title) {
       headerNode = (
         <div className={`${prefixCls}-header`} ref={this.saveRef('header')}>
@@ -268,7 +268,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
       );
     }
 
-    let closer;
+    let closer: React.ReactElement;
     if (closable) {
       closer = (
         <button
