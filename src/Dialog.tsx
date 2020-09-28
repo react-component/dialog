@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {} from 'react';
 import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
@@ -6,438 +7,45 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
 import LazyRenderBox from './LazyRenderBox';
 import { IDialogPropTypes } from './IDialogPropTypes';
-
-interface CompatibleDocument extends Document {
-  parentWindow?: Window;
-}
-
-let uuid = 0;
-
-/* eslint react/no-is-mounted:0 */
-
-function getScroll(win: Window, top?: boolean) {
-  let ret: number = win[`page${top ? 'Y' : 'X'}Offset`];
-  const method = `scroll${top ? 'Top' : 'Left'}`;
-  if (typeof ret !== 'number') {
-    const d = win.document;
-    ret = d.documentElement[method];
-    if (typeof ret !== 'number') {
-      ret = d.body[method];
-    }
-  }
-  return ret;
-}
-
-function setTransformOrigin(node: any, value: string) {
-  const { style } = node;
-  ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix: string) => {
-    style[`${prefix}TransformOrigin`] = value;
-  });
-  style.transformOrigin = value;
-}
-
-function offset(el: HTMLElement) {
-  const rect = el.getBoundingClientRect();
-  const pos = {
-    left: rect.left,
-    top: rect.top,
-  };
-  const doc = el.ownerDocument as CompatibleDocument;
-  const w = doc.defaultView || doc.parentWindow;
-  pos.left += getScroll(w);
-  pos.top += getScroll(w, true);
-  return pos;
-}
+import Mask from './Mask';
+import { getMotionName } from './util/motionUtil';
 
 export interface IDialogChildProps extends IDialogPropTypes {
   getOpenCount: () => number;
   switchScrollingEffect?: () => void;
 }
 
-export default class Dialog extends React.Component<IDialogChildProps, any> {
-  static defaultProps = {
-    className: '',
-    mask: true,
-    visible: false,
-    keyboard: true,
-    closable: true,
-    maskClosable: true,
-    destroyOnClose: false,
-    prefixCls: 'rc-dialog',
-    focusTriggerAfterClose: true,
-  };
+export default function Dialog(props: IDialogChildProps) {
+  const {
+    prefixCls = 'rc-dialog',
+    zIndex,
+    visible = false,
+    keyboard = true,
+    closable = true,
+    destroyOnClose = false,
+    focusTriggerAfterClose = true,
 
-  private inTransition: boolean = false;
+    // Mask
+    mask = true,
+    maskTransitionName,
+    maskAnimation,
+    maskClosable = true,
+    maskStyle,
+    maskProps,
+  } = props;
 
-  private titleId: string;
-
-  private openTime: number;
-
-  private lastOutSideFocusNode: HTMLElement | null;
-
-  private wrap: HTMLElement;
-
-  private dialog: any;
-
-  private sentinelStart: HTMLElement;
-
-  private sentinelEnd: HTMLElement;
-
-  private dialogMouseDown: boolean;
-
-  private timeoutId: any;
-
-  private switchScrollingEffect: () => void;
-
-  constructor(props: IDialogChildProps) {
-    super(props);
-    this.titleId = `rcDialogTitle${uuid}`;
-    uuid += 1;
-    this.switchScrollingEffect = props.switchScrollingEffect || (() => {});
-  }
-
-  componentDidMount() {
-    this.componentDidUpdate({});
-    // if forceRender is true, set element style display to be none;
-    if (this.props.forceRender && this.props.visible) {
-      return;
-    }
-    if (
-      (this.props.forceRender || (this.props.getContainer === false && !this.props.visible)) &&
-      this.wrap
-    ) {
-      this.wrap.style.display = 'none';
-    }
-  }
-
-  componentDidUpdate(prevProps: IDialogPropTypes) {
-    const { visible, mousePosition } = this.props;
-
-    if (visible) {
-      // first show
-      if (!prevProps.visible) {
-        this.openTime = Date.now();
-        this.switchScrollingEffect();
-        this.tryFocus();
-        // eslint-disable-next-line react/no-find-dom-node
-        const dialogNode = findDOMNode<HTMLElement>(this.dialog);
-        if (mousePosition) {
-          const elOffset = offset(dialogNode);
-          setTransformOrigin(
-            dialogNode,
-            `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`,
-          );
-        } else {
-          setTransformOrigin(dialogNode, '');
-        }
-      }
-    } else if (prevProps.visible) {
-      this.inTransition = true;
-    }
-  }
-
-  componentWillUnmount() {
-    const { visible, getOpenCount } = this.props;
-    if ((visible || this.inTransition) && !getOpenCount()) {
-      this.switchScrollingEffect();
-    }
-    clearTimeout(this.timeoutId);
-  }
-
-  tryFocus() {
-    if (!contains(this.wrap, document.activeElement)) {
-      this.lastOutSideFocusNode = document.activeElement as HTMLElement;
-      this.sentinelStart.focus();
-    }
-  }
-
-  onAnimateLeave = () => {
-    const { afterClose, getOpenCount, focusTriggerAfterClose, mask } = this.props;
-    // need demo?
-    // https://github.com/react-component/dialog/pull/28
-    if (this.wrap) {
-      this.wrap.style.display = 'none';
-    }
-    this.inTransition = false;
-    // 如果没有打开的状态，则清除 effect 和 overflow: hidden;
-    // https://github.com/ant-design/ant-design/issues/21539
-    if (!getOpenCount()) {
-      this.switchScrollingEffect();
-    }
-    if (mask && this.lastOutSideFocusNode && focusTriggerAfterClose) {
-      try {
-        this.lastOutSideFocusNode.focus({ preventScroll: true });
-      } catch (e) {
-        this.lastOutSideFocusNode = null;
-      }
-      this.lastOutSideFocusNode = null;
-    }
-    if (afterClose) {
-      afterClose();
-    }
-  };
-
-  onDialogMouseDown = () => {
-    this.dialogMouseDown = true;
-  };
-
-  onMaskMouseUp: React.MouseEventHandler<HTMLDivElement> = () => {
-    if (this.dialogMouseDown) {
-      this.timeoutId = setTimeout(() => {
-        this.dialogMouseDown = false;
-      }, 0);
-    }
-  };
-
-  onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // android trigger click on open (fastclick??)
-    if (Date.now() - this.openTime < 300) {
-      return;
-    }
-    if (e.target === e.currentTarget && !this.dialogMouseDown) {
-      this.close(e);
-    }
-  };
-
-  onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyboard, visible } = this.props;
-    if (keyboard && e.keyCode === KeyCode.ESC) {
-      e.stopPropagation();
-      this.close(e);
-      return;
-    }
-    // keep focus inside dialog
-    if (visible) {
-      if (e.keyCode === KeyCode.TAB) {
-        const { activeElement } = document;
-        if (e.shiftKey) {
-          if (activeElement === this.sentinelStart) {
-            this.sentinelEnd.focus();
-          }
-        } else if (activeElement === this.sentinelEnd) {
-          this.sentinelStart.focus();
-        }
-      }
-    }
-  };
-
-  getDialogElement = () => {
-    const {
-      closable,
-      prefixCls,
-      width,
-      height,
-      footer,
-      title,
-      closeIcon,
-      style,
-      className,
-      visible,
-      forceRender,
-      bodyStyle,
-      bodyProps,
-      children,
-      destroyOnClose,
-      modalRender,
-    } = this.props;
-    const dest: any = {};
-    if (width !== undefined) {
-      dest.width = width;
-    }
-    if (height !== undefined) {
-      dest.height = height;
-    }
-
-    let footerNode: React.ReactElement;
-    if (footer) {
-      footerNode = (
-        <div className={`${prefixCls}-footer`} ref={this.saveRef('footer')}>
-          {footer}
-        </div>
-      );
-    }
-
-    let headerNode: React.ReactElement;
-    if (title) {
-      headerNode = (
-        <div className={`${prefixCls}-header`} ref={this.saveRef('header')}>
-          <div className={`${prefixCls}-title`} id={this.titleId}>
-            {title}
-          </div>
-        </div>
-      );
-    }
-
-    let closer: React.ReactElement;
-    if (closable) {
-      closer = (
-        <button
-          type="button"
-          onClick={this.close}
-          aria-label="Close"
-          className={`${prefixCls}-close`}
-        >
-          {closeIcon || <span className={`${prefixCls}-close-x`} />}
-        </button>
-      );
-    }
-
-    const content = (
-      <div className={`${prefixCls}-content`}>
-        {closer}
-        {headerNode}
-        <div
-          className={`${prefixCls}-body`}
-          style={bodyStyle}
-          ref={this.saveRef('body')}
-          {...bodyProps}
-        >
-          {children}
-        </div>
-        {footerNode}
-      </div>
-    );
-
-    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
-    const transitionName = this.getTransitionName();
-
-    return (
-      <CSSMotion
-        key="dialog"
-        visible={visible}
-        motionName={transitionName}
-        removeOnLeave={destroyOnClose}
-        onVisibleChanged={changedVisible => {
-          if (!changedVisible) {
-            this.onAnimateLeave();
-          }
+  return (
+    <div className={`${prefixCls}-root`}>
+      <Mask
+        prefixCls={prefixCls}
+        visible={mask && visible}
+        motionName={getMotionName(prefixCls, maskTransitionName, maskAnimation)}
+        style={{
+          zIndex,
+          ...maskStyle,
         }}
-      >
-        {({ className: motionClassName, style: motionStyle }) => (
-          <LazyRenderBox
-            key="dialog-element"
-            role="document"
-            ref={this.saveRef('dialog')}
-            style={{ ...motionStyle, ...style, ...dest }}
-            className={classNames(prefixCls, className, motionClassName)}
-            visible={visible}
-            forceRender={forceRender}
-            onMouseDown={this.onDialogMouseDown}
-          >
-            <div
-              tabIndex={0}
-              ref={this.saveRef('sentinelStart')}
-              style={sentinelStyle}
-              aria-hidden="true"
-            />
-            {modalRender ? modalRender(content) : content}
-            <div
-              tabIndex={0}
-              ref={this.saveRef('sentinelEnd')}
-              style={sentinelStyle}
-              aria-hidden="true"
-            />
-          </LazyRenderBox>
-        )}
-      </CSSMotion>
-    );
-  };
-
-  getZIndexStyle = () => {
-    const style: any = {};
-    const { zIndex } = this.props;
-    if (zIndex !== undefined) {
-      style.zIndex = zIndex;
-    }
-    return style;
-  };
-
-  getWrapStyle = (): any => {
-    return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
-  };
-
-  getMaskStyle = () => {
-    return { ...this.getZIndexStyle(), ...this.props.maskStyle };
-  };
-
-  getMaskElement = () => {
-    const { mask, prefixCls, visible, maskProps } = this.props;
-
-    const maskTransition = this.getMaskTransitionName();
-    return (
-      <CSSMotion key="mask" visible={visible} motionName={maskTransition}>
-        {() => (
-          <LazyRenderBox
-            style={this.getMaskStyle()}
-            key="mask"
-            className={`${prefixCls}-mask`}
-            hiddenClassName={`${prefixCls}-mask-hidden`}
-            visible={mask && visible}
-            {...maskProps}
-          />
-        )}
-      </CSSMotion>
-    );
-  };
-
-  getMaskTransitionName = () => {
-    const { maskTransitionName, maskAnimation, prefixCls } = this.props;
-    let transitionName = maskTransitionName;
-    const animation = maskAnimation;
-    if (!transitionName && animation) {
-      transitionName = `${prefixCls}-${animation}`;
-    }
-
-    return transitionName;
-  };
-
-  getTransitionName = () => {
-    const { transitionName, animation, prefixCls } = this.props;
-    let transitionNameResult = transitionName;
-    if (!transitionName && animation) {
-      transitionNameResult = `${prefixCls}-${animation}`;
-    }
-    return transitionNameResult;
-  };
-
-  close = (e: any) => {
-    const { onClose } = this.props;
-    if (onClose) {
-      onClose(e);
-    }
-  };
-
-  saveRef = (name: string) => (node: any) => {
-    (this as any)[name] = node;
-  };
-
-  render() {
-    const { props } = this;
-    const { prefixCls, maskClosable } = props;
-    const style = this.getWrapStyle();
-    // clear hide display
-    // and only set display after async anim, not here for hide
-    if (props.visible) {
-      style.display = null;
-    }
-    return (
-      <div className={`${prefixCls}-root`}>
-        {this.getMaskElement()}
-        <div
-          tabIndex={-1}
-          onKeyDown={this.onKeyDown}
-          className={`${prefixCls}-wrap ${props.wrapClassName || ''}`}
-          ref={this.saveRef('wrap')}
-          onClick={maskClosable ? this.onMaskClick : null}
-          onMouseUp={maskClosable ? this.onMaskMouseUp : null}
-          role="dialog"
-          aria-labelledby={props.title ? this.titleId : null}
-          style={style}
-          {...props.wrapProps}
-        >
-          {this.getDialogElement()}
-        </div>
-      </div>
-    );
-  }
+        maskProps={maskProps}
+      />
+    </div>
+  );
 }
