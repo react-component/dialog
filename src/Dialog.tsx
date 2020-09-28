@@ -7,15 +7,19 @@ import contains from 'rc-util/lib/Dom/contains';
 import LazyRenderBox from './LazyRenderBox';
 import { IDialogPropTypes } from './IDialogPropTypes';
 
+interface CompatibleDocument extends Document {
+  parentWindow?: Window;
+}
+
 let uuid = 0;
 
 /* eslint react/no-is-mounted:0 */
 
-function getScroll(w: any, top?: boolean) {
-  let ret = w[`page${top ? 'Y' : 'X'}Offset`];
+function getScroll(win: Window, top?: boolean) {
+  let ret: number = win[`page${top ? 'Y' : 'X'}Offset`];
   const method = `scroll${top ? 'Top' : 'Left'}`;
   if (typeof ret !== 'number') {
-    const d = w.document;
+    const d = win.document;
     ret = d.documentElement[method];
     if (typeof ret !== 'number') {
       ret = d.body[method];
@@ -32,13 +36,13 @@ function setTransformOrigin(node: any, value: string) {
   style.transformOrigin = value;
 }
 
-function offset(el: any) {
+function offset(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
   const pos = {
     left: rect.left,
     top: rect.top,
   };
-  const doc = el.ownerDocument;
+  const doc = el.ownerDocument as CompatibleDocument;
   const w = doc.defaultView || doc.parentWindow;
   pos.left += getScroll(w);
   pos.top += getScroll(w, true);
@@ -116,7 +120,7 @@ export default class Dialog extends React.Component<IDialogChildProps, any> {
         this.switchScrollingEffect();
         this.tryFocus();
         // eslint-disable-next-line react/no-find-dom-node
-        const dialogNode = findDOMNode(this.dialog);
+        const dialogNode = findDOMNode<HTMLElement>(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
           setTransformOrigin(
