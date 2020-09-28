@@ -22,7 +22,6 @@ export default function Dialog(props: IDialogChildProps) {
     zIndex,
     visible = false,
     keyboard = true,
-    closable = true,
     destroyOnClose = false,
     focusTriggerAfterClose = true,
 
@@ -31,10 +30,13 @@ export default function Dialog(props: IDialogChildProps) {
     wrapStyle,
     wrapClassName,
     wrapProps,
+    forceRender, // TODO: Handle this with correct motion state
+    onClose,
 
     // Dialog
     transitionName,
     animation,
+    closable = true,
 
     // Mask
     mask = true,
@@ -49,10 +51,32 @@ export default function Dialog(props: IDialogChildProps) {
   const wrapperRef = useRef<HTMLDivElement>();
   const contentRef = useRef<ContentRef>();
 
+  const [animatedVisible, setAnimatedVisible] = React.useState(visible);
+
   // ========================== Init ==========================
   const ariaIdRef = useRef<string>();
   if (!ariaIdRef.current) {
     ariaIdRef.current = `rcDialogTitle${getUUID()}`;
+  }
+
+  // ========================= Events =========================
+
+  function onDialogLeaved() {
+    setAnimatedVisible(false);
+  }
+
+  function onInternalClose(e: React.SyntheticEvent) {
+    onClose?.(e);
+  }
+
+  // Close only when element not on dialog
+  let onWrapperClick: (e: React.SyntheticEvent) => void = null;
+  if (maskClosable) {
+    onWrapperClick = (e) => {
+      if (!contains(contentRef.current.getDOM(), e.target as HTMLElement)) {
+        onInternalClose(e);
+      }
+    };
   }
 
   // ========================= Effect =========================
@@ -62,6 +86,8 @@ export default function Dialog(props: IDialogChildProps) {
         lastOutSideElementRef.current = document.activeElement;
         contentRef.current?.focus();
       }
+
+      setAnimatedVisible(true);
     }
   }, [visible]);
 
@@ -83,19 +109,21 @@ export default function Dialog(props: IDialogChildProps) {
         // onKeyDown={this.onKeyDown}
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
-        // onClick={maskClosable ? this.onMaskClick : null}
-        // onMouseUp={maskClosable ? this.onMaskMouseUp : null}
+        onClick={onWrapperClick}
         role="dialog"
         aria-labelledby={title ? ariaIdRef.current : null}
-        style={{ zIndex, ...wrapStyle }}
+        style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >
         <Content
           {...props}
           ref={contentRef}
+          closable={closable}
           ariaId={ariaIdRef.current}
           prefixCls={prefixCls}
           visible={visible}
+          onClose={onInternalClose}
+          onLeaved={onDialogLeaved}
           motionName={getMotionName(prefixCls, transitionName, animation)}
         />
       </div>

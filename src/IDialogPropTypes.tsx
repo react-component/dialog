@@ -8,7 +8,7 @@ export interface IDialogPropTypes {
   mask?: boolean;
   children?: any;
   afterClose?: () => any;
-  onClose?: (e: SyntheticEvent<HTMLDivElement>) => any;
+  onClose?: (e: SyntheticEvent) => any;
   closable?: boolean;
   maskClosable?: boolean;
   visible?: boolean;

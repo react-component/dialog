@@ -9,10 +9,12 @@ const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none'
 export interface ContentProps extends IDialogChildProps {
   motionName: string;
   ariaId: string;
+  onLeaved: () => void;
 }
 
 export interface ContentRef {
   focus: () => void;
+  getDOM: () => HTMLDivElement;
 }
 
 const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
@@ -35,10 +37,13 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     modalRender,
     motionName,
     ariaId,
+    onClose,
+    onLeaved,
   } = props;
 
   const sentinelStartRef = useRef<HTMLDivElement>();
   const sentinelEndRef = useRef<HTMLDivElement>();
+  const dialogRef = useRef<HTMLDivElement>();
 
   const dest: React.CSSProperties = {};
   if (width !== undefined) {
@@ -53,6 +58,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     focus: () => {
       sentinelStartRef.current?.focus();
     },
+    getDOM: () => dialogRef.current,
   }));
 
   // ============================= Render =============================
@@ -75,12 +81,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   let closer: React.ReactNode;
   if (closable) {
     closer = (
-      <button
-        type="button"
-        // onClick={this.close}
-        aria-label="Close"
-        className={`${prefixCls}-close`}
-      >
+      <button type="button" onClick={onClose} aria-label="Close" className={`${prefixCls}-close`}>
         {closeIcon || <span className={`${prefixCls}-close-x`} />}
       </button>
     );
@@ -100,7 +101,11 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   return (
     <CSSMotion
       visible={visible}
-      // onLeave={this.onAnimateLeave}
+      onVisibleChanged={(changedVisible) => {
+        if (!changedVisible) {
+          onLeaved();
+        }
+      }}
       forceRender={forceRender}
       motionName={motionName}
       removeOnLeave={destroyOnClose}
@@ -109,10 +114,9 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         <div
           key="dialog-element"
           role="document"
-          // ref={this.saveRef('dialog')}
+          ref={dialogRef}
           style={{ ...motionStyle, ...style, ...dest }}
           className={classNames(prefixCls, className, motionClassName)}
-          // onMouseDown={this.onDialogMouseDown}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
           {modalRender ? modalRender(content) : content}
