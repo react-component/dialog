@@ -26,6 +26,10 @@ export default function Dialog(props: IDialogChildProps) {
     destroyOnClose = false,
     focusTriggerAfterClose = true,
 
+    // Wrapper
+    wrapStyle,
+    wrapClassName,
+
     // Dialog
     transitionName,
     animation,
@@ -51,7 +55,25 @@ export default function Dialog(props: IDialogChildProps) {
         }}
         maskProps={maskProps}
       />
-      <Content {...props} motionName={getMotionName(prefixCls, transitionName, animation)} />
+      <div
+        tabIndex={-1}
+        // onKeyDown={this.onKeyDown}
+        className={classNames(`${prefixCls}-wrap`, wrapClassName)}
+        // ref={this.saveRef('wrap')}
+        // onClick={maskClosable ? this.onMaskClick : null}
+        // onMouseUp={maskClosable ? this.onMaskMouseUp : null}
+        role="dialog"
+        // aria-labelledby={props.title ? this.titleId : null}
+        style={{ zIndex, ...wrapStyle }}
+        {...props.wrapProps}
+      >
+        <Content
+          {...props}
+          prefixCls={prefixCls}
+          visible={visible}
+          motionName={getMotionName(prefixCls, transitionName, animation)}
+        />
+      </div>
     </div>
   );
 }
