@@ -195,7 +195,7 @@ const MyControl = () => {
   );
 
   return (
-    <div style={{ width: '90%', margin: '0 auto' }}>
+    <div style={{ width: '90%', margin: '0 auto' , height: '150vh'}}>
       <style>
         {`
           .center {

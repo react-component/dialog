@@ -24,13 +24,13 @@ export default function Dialog(props: IDialogChildProps) {
     keyboard = true,
     destroyOnClose = false,
     focusTriggerAfterClose = true,
+    switchScrollingEffect = () => {},
 
     // Wrapper
     title,
     wrapStyle,
     wrapClassName,
     wrapProps,
-    forceRender, // TODO: Handle this with correct motion state
     onClose,
 
     // Dialog
@@ -60,9 +60,9 @@ export default function Dialog(props: IDialogChildProps) {
   }
 
   // ========================= Events =========================
-
   function onDialogLeaved() {
     setAnimatedVisible(false);
+    switchScrollingEffect();
   }
 
   function onInternalClose(e: React.SyntheticEvent) {
@@ -104,6 +104,7 @@ export default function Dialog(props: IDialogChildProps) {
       }
 
       setAnimatedVisible(true);
+      switchScrollingEffect();
     }
   }, [visible]);
 

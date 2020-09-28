@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import { IDialogChildProps } from '.';
+import { offset } from '../util';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
@@ -40,19 +41,12 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     ariaId,
     onClose,
     onLeaved,
+    mousePosition,
   } = props;
 
   const sentinelStartRef = useRef<HTMLDivElement>();
   const sentinelEndRef = useRef<HTMLDivElement>();
   const dialogRef = useRef<HTMLDivElement>();
-
-  const dest: React.CSSProperties = {};
-  if (width !== undefined) {
-    dest.width = width;
-  }
-  if (height !== undefined) {
-    dest.height = height;
-  }
 
   // ============================== Ref ===============================
   React.useImperativeHandle(ref, () => ({
@@ -69,6 +63,29 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       }
     },
   }));
+
+  // ============================= Style ==============================
+  const [transformOrigin, setTransformOrigin] = React.useState<string>();
+  const contentStyle: React.CSSProperties = {};
+  if (width !== undefined) {
+    contentStyle.width = width;
+  }
+  if (height !== undefined) {
+    contentStyle.height = height;
+  }
+  if (transformOrigin) {
+    contentStyle.transformOrigin = transformOrigin;
+  }
+
+  function onPrepare() {
+    const elementOffset = offset(dialogRef.current);
+
+    setTransformOrigin(
+      mousePosition
+        ? `${mousePosition.x - elementOffset.left}px ${mousePosition.y - elementOffset.top}px`
+        : '',
+    );
+  }
 
   // ============================= Render =============================
   let footerNode: React.ReactNode;
@@ -115,16 +132,19 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           onLeaved();
         }
       }}
+      onAppearPrepare={onPrepare}
+      onEnterPrepare={onPrepare}
       forceRender={forceRender}
       motionName={motionName}
       removeOnLeave={destroyOnClose}
+      ref={dialogRef}
     >
-      {({ className: motionClassName, style: motionStyle }) => (
+      {({ className: motionClassName, style: motionStyle }, motionRef) => (
         <div
           key="dialog-element"
           role="document"
-          ref={dialogRef}
-          style={{ ...motionStyle, ...style, ...dest }}
+          ref={motionRef}
+          style={{ ...motionStyle, ...style, ...contentStyle }}
           className={classNames(prefixCls, className, motionClassName)}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
