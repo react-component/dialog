@@ -7,45 +7,11 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import Dialog from '../src';
 
 describe('dialog', () => {
-  // let dialog;
-  // let callback;
-  // class DialogWrap extends React.Component {
-  //   state = {
-  //     visible: false,
-  //     maskClosable: true,
-  //   };
-
-  //   render() {
-  //     return (
-  //       <Dialog
-  //         {...this.props}
-  //         visible={this.state.visible}
-  //         maskClosable={this.state.maskClosable}
-  //       />
-  //     );
-  //   }
-  // }
-
   beforeEach(() => {
-    //   function onClose() {
-    //     callback = 1;
-    //     dialog.setState({
-    //       visible: false,
-    //     });
-    //   }
-
-    //   callback = 0;
-    //   dialog = mount(
-    //     <DialogWrap style={{ width: 600 }} onClose={onClose} closeIcon="test">
-    //       <p>第一个dialog</p>
-    //     </DialogWrap>,
-    //   );
-
     jest.useFakeTimers();
   });
 
   afterEach(() => {
-    //   dialog.unmount();
     jest.useRealTimers();
   });
 
@@ -190,6 +156,11 @@ describe('dialog', () => {
     wrapper.unmount();
   });
 
+  it('render title correctly', () => {
+    const wrapper = mount(<Dialog visible title="bamboo" />);
+    expect(wrapper.find('.rc-dialog-header').text()).toBe('bamboo');
+  });
+
   it('render footer correctly', () => {
     const wrapper = mount(<Dialog visible footer="test" />);
     expect(wrapper.find('.rc-dialog-footer').text()).toBe('test');
@@ -206,16 +177,33 @@ describe('dialog', () => {
     wrapper.unmount();
   });
 
-  it('trap focus after shift-tabbing', () => {
-    const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-    wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
-      keyCode: KeyCode.TAB,
-      shiftKey: true,
-    });
-    const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
-    expect(document.activeElement).toBe(sentinelEnd);
+  describe('Tab should keep focus in dialog', () => {
+    it('basic tabbing', () => {
+      const wrapper = mount(<Dialog visible />, { attachTo: document.body });
+      const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+      sentinelEnd.focus();
 
-    wrapper.unmount();
+      wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
+        keyCode: KeyCode.TAB,
+      });
+
+      const sentinelStart = document.querySelectorAll('.rc-dialog > div')[0];
+      expect(document.activeElement).toBe(sentinelStart);
+
+      wrapper.unmount();
+    });
+
+    it('trap focus after shift-tabbing', () => {
+      const wrapper = mount(<Dialog visible />, { attachTo: document.body });
+      wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
+        keyCode: KeyCode.TAB,
+        shiftKey: true,
+      });
+      const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+      expect(document.activeElement).toBe(sentinelEnd);
+
+      wrapper.unmount();
+    });
   });
 
   it('sets transform-origin when property mousePosition is set', () => {
@@ -328,5 +316,17 @@ describe('dialog', () => {
       />,
     );
     expect(modalRender.find('.rc-dialog-content').props().style.background).toEqual('#1890ff');
+  });
+
+  describe('size should work', () => {
+    it('width', () => {
+      const wrapper = mount(<Dialog visible width={1128} />);
+      expect(wrapper.find('.rc-dialog').props().style.width).toEqual(1128);
+    });
+
+    it('height', () => {
+      const wrapper = mount(<Dialog visible height={903} />);
+      expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
+    });
   });
 });
