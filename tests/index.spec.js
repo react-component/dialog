@@ -1,11 +1,10 @@
-/* eslint-disable react/no-render-return-value, max-classes-per-file, func-names */
+/* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React, { cloneElement } from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-
+import Portal from 'rc-util/lib/Portal';
 import KeyCode from 'rc-util/lib/KeyCode';
-
 import Dialog from '../src';
-import '../assets/bootstrap.less';
 
 describe('dialog', () => {
   // let dialog;
@@ -26,6 +25,20 @@ describe('dialog', () => {
   //     );
   //   }
   // }
+
+  // Ignore react origin error
+  const originError = console.error;
+  const ignoreList = [
+    'Rendering components directly into document.body',
+    'Warning: unmountComponentAtNode():',
+  ];
+  console.error = (...args) => {
+    if (ignoreList.some((str) => args[0].includes(str))) {
+      return;
+    }
+
+    originError(...args);
+  };
 
   beforeEach(() => {
     //   function onClose() {
@@ -134,180 +147,160 @@ describe('dialog', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  // it('mask to close', () => {
-  //   let now = 0;
-  //   const originDateNow = Date.now;
+  it('mask to close', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(<Dialog onClose={onClose} visible />);
 
-  //   // disable https://github.com/react-component/dialog/blob/d9604fa6ad40e949999456d8c020e47593e48f0d/src/Dialog.tsx#L188
-  //   Date.now = () => {
-  //     now += 500;
-  //     return now;
-  //   };
+    // Mask close
+    wrapper.find('.rc-dialog-wrap').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).toHaveBeenCalled();
+    onClose.mockReset();
 
-  //   dialog.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   const mask = dialog.find('.rc-dialog-wrap').first();
-  //   mask.simulate('click');
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   expect(callback).toBe(1);
-  //   expect(dialog.find('.rc-dialog-wrap').props().style).toEqual({});
-  //   dialog.setState({ visible: true, maskClosable: false });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   expect(dialog.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+    // Mask can not close
+    wrapper.setProps({ maskClosable: false });
+    wrapper.find('.rc-dialog-wrap').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).not.toHaveBeenCalled();
+  });
 
-  //   Date.now = originDateNow;
-  // });
+  it('renderToBody', () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const wrapper = mount(
+      <Dialog visible={false}>
+        <p className="renderToBody">1</p>
+      </Dialog>,
+      { attachTo: container },
+    );
 
-  // it('renderToBody', () => {
-  //   const container = document.createElement('div');
-  //   document.body.appendChild(container);
-  //   const d = mount(
-  //     <DialogWrap>
-  //       <p className="renderToBody">1</p>
-  //     </DialogWrap>,
-  //     { attachTo: container },
-  //   );
-  //   expect(d.find('.renderToBody').length).toBe(0);
-  //   expect(d.find('.rc-dialog-wrap').length).toBe(0);
-  //   d.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   expect(d.find('.rc-dialog-wrap').length).toBeTruthy();
-  //   expect(d.find('.renderToBody').length).toBeTruthy();
-  //   expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode).not.toBe(container);
-  //   d.unmount();
-  //   expect(d.find('.renderToBody').length).toBe(0);
-  //   expect(d.find('.rc-dialog-wrap').length).toBe(0);
-  // });
+    expect(wrapper.find('.renderToBody')).toHaveLength(0);
+    expect(wrapper.find('.rc-dialog-wrap')).toHaveLength(0);
 
-  // it('getContainer', () => {
-  //   const returnedContainer = document.createElement('div');
-  //   const d = mount(
-  //     <DialogWrap getContainer={() => returnedContainer}>
-  //       <p className="getContainer">Hello world!</p>
-  //     </DialogWrap>,
-  //   );
-  //   d.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   // fix issue #10656, must change this test
-  //   expect(d.find('.rc-dialog-wrap').getDOMNode().parentNode.parentNode.parentNode).toBe(
-  //     returnedContainer,
-  //   );
-  //   d.unmount();
-  // });
+    // Visible
+    wrapper.setProps({ visible: true });
+    jest.runAllTimers();
+    wrapper.update();
 
-  // it('render footer correctly', () => {
-  //   const d = mount(<DialogWrap footer="test" />);
-  //   d.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   expect(d.find('.rc-dialog-footer').length).toBeTruthy();
-  //   expect(d.find('.rc-dialog-footer').props().children).toBe('test');
-  //   d.unmount();
-  // });
+    expect(wrapper.find('.rc-dialog-wrap')).toHaveLength(1);
+    expect(wrapper.find('.renderToBody')).toHaveLength(1);
+    expect(container.contains(wrapper.find('.rc-dialog-wrap').getDOMNode())).toBeFalsy();
 
-  // it('support input autoFocus', () => {
-  //   const d = mount(
-  //     <DialogWrap>
-  //       <input autoFocus />
-  //     </DialogWrap>,
-  //   );
-  //   d.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   expect(document.activeElement).toBe(document.querySelector('input'));
-  //   d.unmount();
-  // });
+    wrapper.unmount();
+    document.body.removeChild(container);
+  });
 
-  // it('trap focus after shift-tabbing', () => {
-  //   dialog.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   const shiftTabbingDescriptor = {
-  //     key: 'TAB',
-  //     keyCode: 9,
-  //     which: 9,
-  //     shiftKey: true,
-  //   };
-  //   dialog.find('.rc-dialog-wrap').at(0).simulate('keyDown', shiftTabbingDescriptor);
-  //   const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
-  //   expect(document.activeElement).toBe(sentinelEnd);
-  // });
+  it('getContainer', () => {
+    const returnedContainer = document.createElement('div');
+    const wrapper = mount(
+      <Dialog visible getContainer={() => returnedContainer}>
+        <p className="getContainer">Hello world!</p>
+      </Dialog>,
+    );
 
-  // it('sets transform-origin when property mousePosition is set', () => {
-  //   const d = mount(
-  //     <Dialog style={{ width: 600 }} mousePosition={{ x: 100, y: 100 }} visible>
-  //       <p>the dialog</p>
-  //     </Dialog>,
-  //   );
-  //   jest.runAllTimers();
-  //   d.update();
-  //   expect(d.find('.rc-dialog').at(0).getDOMNode().style['transform-origin']).toBeTruthy();
-  //   d.unmount();
-  // });
+    expect(returnedContainer.contains(wrapper.find('.rc-dialog-wrap').getDOMNode())).toBeTruthy();
+    wrapper.unmount();
+  });
 
-  // it('can get dom element before dialog first show when forceRender is set true ', () => {
-  //   const d = mount(
-  //     <Dialog forceRender>
-  //       <div>forceRender element</div>
-  //     </Dialog>,
-  //   );
-  //   expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
-  //   d.unmount();
-  // });
+  it('render footer correctly', () => {
+    const wrapper = mount(<Dialog visible footer="test" />);
+    expect(wrapper.find('.rc-dialog-footer').text()).toBe('test');
+  });
 
-  // it('getContainer is false', () => {
-  //   const d = mount(
-  //     <Dialog getContainer={false}>
-  //       <div>forceRender element</div>
-  //     </Dialog>,
-  //   );
-  //   expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
-  //   expect(d.find('.rc-dialog-wrap').at(0).props().style).toEqual({});
-  //   d.unmount();
-  // });
+  it('support input autoFocus', () => {
+    const wrapper = mount(
+      <Dialog visible>
+        <input autoFocus />
+      </Dialog>,
+      { attachTo: document.body },
+    );
+    expect(document.activeElement).toBe(document.querySelector('input'));
+    wrapper.unmount();
+  });
 
-  // it('getContainer is false and visible is true', () => {
-  //   const d = mount(
-  //     <Dialog getContainer={false} visible>
-  //       <div>forceRender element</div>
-  //     </Dialog>,
-  //   );
-  //   expect(d.find('.rc-dialog-body > div').props().children).toEqual('forceRender element');
-  //   expect(d.find('.rc-dialog-wrap').props().style.display).toEqual(null);
-  //   d.unmount();
-  // });
+  it('trap focus after shift-tabbing', () => {
+    const wrapper = mount(<Dialog visible />, { attachTo: document.body });
+    wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
+      keyCode: KeyCode.TAB,
+      shiftKey: true,
+    });
+    const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+    expect(document.activeElement).toBe(sentinelEnd);
 
-  // it('should not close if mouse down in dialog', () => {
-  //   dialog.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   dialog.update();
-  //   const dialogBody = dialog.find('.rc-dialog-body').at(0);
-  //   dialogBody.simulate('mousedown');
-  //   const wrapper = dialog.find('.rc-dialog-wrap').at(0);
-  //   wrapper.simulate('mouseup');
-  //   expect(dialog.state().visible).toBe(true);
-  // });
+    wrapper.unmount();
+  });
 
-  // it('Single Dialog body overflow set correctly', () => {
-  //   const container = document.createElement('div');
-  //   document.body.appendChild(container);
-  //   const d = mount(<DialogWrap />, { attachTo: container });
-  //   document.body.style.overflow = 'scroll';
-  //   d.setState({ visible: true });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   expect(document.body.style.overflow).toBe('hidden');
-  //   d.setState({ visible: false });
-  //   jest.runAllTimers();
-  //   d.update();
-  //   expect(document.body.style.overflow).toBe('scroll');
-  //   d.unmount();
-  // });
+  it('sets transform-origin when property mousePosition is set', () => {
+    const wrapper = mount(
+      <Dialog style={{ width: 600 }} mousePosition={{ x: 100, y: 100 }} visible>
+        <p>the dialog</p>
+      </Dialog>,
+    );
+
+    // Trigger position align
+    act(() => {
+      wrapper.find('Content CSSMotion').props().onAppearPrepare();
+    });
+
+    expect(wrapper.find('.rc-dialog').at(0).getDOMNode().style['transform-origin']).toBeTruthy();
+  });
+
+  it('can get dom element before dialog first show when forceRender is set true ', () => {
+    const wrapper = mount(
+      <Dialog forceRender>
+        <div>forceRender element</div>
+      </Dialog>,
+    );
+    expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender element');
+  });
+
+  describe('getContainer is false', () => {
+    it('not set', () => {
+      const wrapper = mount(
+        <Dialog visible>
+          <div>forceRender element</div>
+        </Dialog>,
+      );
+      expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender element');
+      expect(wrapper.find(Portal)).toHaveLength(1);
+    });
+
+    it('set to false', () => {
+      const wrapper = mount(
+        <Dialog visible getContainer={false}>
+          <div>forceRender element</div>
+        </Dialog>,
+      );
+      expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender element');
+      expect(wrapper.find(Portal)).toHaveLength(0);
+    });
+  });
+
+  it('should not close if mouse down in dialog', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(<Dialog onClose={onClose} visible />);
+    wrapper.find('.rc-dialog-body').simulate('click');
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('Single Dialog body overflow set correctly', () => {
+    const wrapper = mount(<Dialog />, { attachTo: document.body });
+    document.body.style.overflow = 'scroll';
+
+    wrapper.setProps({ visible: true });
+    jest.runAllTimers();
+    wrapper.update();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    wrapper.setProps({ visible: false });
+    jest.runAllTimers();
+    wrapper.update();
+    expect(document.body.style.overflow).toBe('scroll');
+
+    wrapper.unmount();
+  });
 
   // it('Multiple Dialog body overflow set correctly', () => {
   //   document.body.style.overflow = 'scroll';
