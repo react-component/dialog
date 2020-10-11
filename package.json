@@ -69,6 +69,7 @@
     "np": "^6.4.0",
     "prettier": "^2.1.1",
     "rc-drawer": "4.1.0",
+    "rc-select": "^11.4.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-draggable": "^4.4.3",

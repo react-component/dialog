@@ -11,6 +11,7 @@ export interface ContentProps extends IDialogChildProps {
   motionName: string;
   ariaId: string;
   onVisibleChanged: (visible: boolean) => void;
+  onClick: React.MouseEventHandler;
 }
 
 export interface ContentRef {
@@ -41,6 +42,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     ariaId,
     onClose,
     onVisibleChanged,
+    onClick,
     mousePosition,
   } = props;
 
@@ -142,6 +144,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           ref={motionRef}
           style={{ ...motionStyle, ...style, ...contentStyle }}
           className={classNames(prefixCls, className, motionClassName)}
+          onClick={onClick}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
           {modalRender ? modalRender(content) : content}

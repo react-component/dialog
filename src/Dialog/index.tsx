@@ -88,12 +88,29 @@ export default function Dialog(props: IDialogChildProps) {
     onClose?.(e);
   }
 
+  // >>> Content
+  const contentClickRef = useRef(false);
+  const contentTimeoutRef = useRef<number>();
+
+  // We need record content click incase content popup out of dialog
+  const onContentClick: React.MouseEventHandler = () => {
+    clearTimeout(contentTimeoutRef.current);
+    contentClickRef.current = true;
+
+    contentTimeoutRef.current = setTimeout(() => {
+      contentClickRef.current = false;
+    });
+  };
+
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if (!contains(contentRef.current.getDOM(), e.target as HTMLElement)) {
+      if (
+        !contentClickRef.current &&
+        !contains(contentRef.current.getDOM(), e.target as HTMLElement)
+      ) {
         onInternalClose(e);
       }
     };
@@ -126,6 +143,7 @@ export default function Dialog(props: IDialogChildProps) {
   useEffect(
     () => () => {
       switchScrollingEffect();
+      clearTimeout(contentTimeoutRef.current);
     },
     [],
   );
@@ -156,6 +174,7 @@ export default function Dialog(props: IDialogChildProps) {
       >
         <Content
           {...props}
+          onClick={onContentClick}
           ref={contentRef}
           closable={closable}
           ariaId={ariaIdRef.current}

@@ -1,6 +1,8 @@
 /* eslint no-console:0 */
 import '../assets/index.less';
 import * as React from 'react';
+import Select from 'rc-select';
+import 'rc-select/assets/index.less';
 import Dialog from '../src/DialogWrap';
 
 const clearPath =
@@ -133,7 +135,11 @@ const MyControl = () => {
       <button type="button" onClick={toggleCloseIcon}>
         use custom icon, is using icon: {(useIcon && 'true') || 'false'}.
       </button>
-      <div style={{ height: 200 }} />
+      <div style={{ height: 200 }}>
+        <Select dropdownStyle={{ zIndex: 9999999 }}>
+          <Select.Option value="light">Light</Select.Option>
+        </Select>
+      </div>
     </Dialog>
   );
 
