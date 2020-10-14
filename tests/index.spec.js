@@ -57,34 +57,55 @@ describe('dialog', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('destroy on hide should unmount child components on close', () => {
-    const wrapper = mount(
-      <Dialog destroyOnClose>
-        <input className="test-input" />
-      </Dialog>,
-      { attachTo: document.body },
-    );
+  describe('destroyOnClose', () => {
+    it('default is false', () => {
+      const wrapper = mount(
+        <Dialog visible>
+          <input className="test-destroy" />
+        </Dialog>,
+        { attachTo: document.body },
+      );
 
-    // Show
-    wrapper.setProps({ visible: true });
-    jest.runAllTimers();
-    wrapper.update();
+      act(() => {
+        wrapper.setProps({ visible: false });
+        jest.runAllTimers();
+        wrapper.update();
+      });
 
-    document.getElementsByClassName('.test-input').value = 'test';
-    expect(document.getElementsByClassName('.test-input').value).toBe('test');
+      expect(document.querySelectorAll('.test-destroy')).toHaveLength(1);
 
-    // Hide
-    wrapper.setProps({ visible: false });
-    jest.runAllTimers();
-    wrapper.update();
+      wrapper.unmount();
+    });
 
-    // Show
-    wrapper.setProps({ visible: true });
-    jest.runAllTimers();
-    wrapper.update();
+    it('destroy on hide should unmount child components on close', () => {
+      const wrapper = mount(
+        <Dialog destroyOnClose>
+          <input className="test-input" />
+        </Dialog>,
+        { attachTo: document.body },
+      );
 
-    expect(document.getElementsByClassName('.test-input').value).toBeUndefined();
-    wrapper.unmount();
+      // Show
+      wrapper.setProps({ visible: true });
+      jest.runAllTimers();
+      wrapper.update();
+
+      document.getElementsByClassName('.test-input').value = 'test';
+      expect(document.getElementsByClassName('.test-input').value).toBe('test');
+
+      // Hide
+      wrapper.setProps({ visible: false });
+      jest.runAllTimers();
+      wrapper.update();
+
+      // Show
+      wrapper.setProps({ visible: true });
+      jest.runAllTimers();
+      wrapper.update();
+
+      expect(document.getElementsByClassName('.test-input').value).toBeUndefined();
+      wrapper.unmount();
+    });
   });
 
   it('esc to close', () => {

@@ -13,7 +13,7 @@ import { IDialogPropTypes } from './IDialogPropTypes';
  * */
 
 const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
-  const { visible, getContainer, forceRender, destroyOnClose, afterClose } = props;
+  const { visible, getContainer, forceRender, destroyOnClose = false, afterClose } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
 
   React.useEffect(() => {
@@ -42,6 +42,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
       {(childProps: IDialogChildProps) => (
         <Dialog
           {...props}
+          destroyOnClose={destroyOnClose}
           afterClose={() => {
             afterClose?.();
             setAnimatedVisible(false);
