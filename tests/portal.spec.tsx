@@ -33,7 +33,27 @@ describe('Dialog.Portal', () => {
       jest.runAllTimers();
     });
 
+    wrapper.find('.rc-dialog-content').simulate('mousedown');
     wrapper.find('.rc-select-item-option-content').simulate('click');
+    wrapper.find('.rc-dialog-content').simulate('mouseup');
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('dialog dont close when mouseDown in content and mouseUp in wrap', () => {
+    const onClose = jest.fn();
+
+    const wrapper = mount(
+      <Dialog onClose={onClose} visible>
+        content
+      </Dialog>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    wrapper.find('.rc-dialog-content').simulate('mousedown');
+    wrapper.find('.rc-dialog-wrap').simulate('mouseup');
     expect(onClose).not.toHaveBeenCalled();
   });
 });

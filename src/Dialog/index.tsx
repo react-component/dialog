@@ -93,22 +93,25 @@ export default function Dialog(props: IDialogChildProps) {
   const contentTimeoutRef = useRef<number>();
 
   // We need record content click incase content popup out of dialog
-  const onContentClick: React.MouseEventHandler = () => {
+  const onContentMouseDown: React.MouseEventHandler = () => {
     clearTimeout(contentTimeoutRef.current);
     contentClickRef.current = true;
+  }
 
+  const onContentMouseUp: React.MouseEventHandler = () => {
     contentTimeoutRef.current = setTimeout(() => {
       contentClickRef.current = false;
     });
-  };
+  }
 
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if (
-        !contentClickRef.current &&
+      if(contentClickRef.current) {
+        contentClickRef.current = false;
+      } else if (
         !contains(contentRef.current.getDOM(), e.target as HTMLElement)
       ) {
         onInternalClose(e);
@@ -174,7 +177,8 @@ export default function Dialog(props: IDialogChildProps) {
       >
         <Content
           {...props}
-          onClick={onContentClick}
+          onMouseDown={onContentMouseDown}
+          onMouseUp={onContentMouseUp}
           ref={contentRef}
           closable={closable}
           ariaId={ariaIdRef.current}
