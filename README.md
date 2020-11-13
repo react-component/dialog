@@ -4,7 +4,7 @@
 react dialog component
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![build status][github-actions-image]][github-actions-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![Dependencies][david-image]][david-url]
 [![DevDependencies][david-dev-image]][david-dev-url]
@@ -13,8 +13,8 @@ react dialog component
 
 [npm-image]: http://img.shields.io/npm/v/rc-dialog.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-dialog
-[travis-image]: https://img.shields.io/travis/react-component/dialog/master?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/dialog
+[github-actions-image]: https://github.com/react-component/dialog/workflows/CI/badge.svg
+[github-actions-url]: https://github.com/react-component/dialog/actions
 [circleci-image]: https://img.shields.io/circleci/react-component/dialog/master?style=flat-square
 [circleci-url]: https://circleci.com/gh/react-component/dialog
 [coveralls-image]: https://img.shields.io/coveralls/react-component/dialog.svg?style=flat-square
