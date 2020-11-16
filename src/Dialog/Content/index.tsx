@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useRef } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
-import { IDialogChildProps } from '.';
-import { offset } from '../util';
+import { IDialogChildProps } from '..';
+import { offset } from '../../util';
+import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
@@ -116,14 +117,16 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   }
 
   const content = (
-    <div className={`${prefixCls}-content`}>
-      {closer}
-      {headerNode}
-      <div className={`${prefixCls}-body`} style={bodyStyle} {...bodyProps}>
-        {children}
+    <MemoChildren visible={visible}>
+      <div className={`${prefixCls}-content`}>
+        {closer}
+        {headerNode}
+        <div className={`${prefixCls}-body`} style={bodyStyle} {...bodyProps}>
+          {children}
+        </div>
+        {footerNode}
       </div>
-      {footerNode}
-    </div>
+    </MemoChildren>
   );
 
   return (
