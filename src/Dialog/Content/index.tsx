@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useRef } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
-import { IDialogChildProps } from '.';
-import { offset } from '../util';
+import { IDialogChildProps } from '..';
+import { offset } from '../../util';
+import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
@@ -147,7 +148,9 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           onClick={onClick}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
-          {modalRender ? modalRender(content) : content}
+          <MemoChildren visible={visible}>
+            {modalRender ? modalRender(content) : content}
+          </MemoChildren>
           <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
         </div>
       )}

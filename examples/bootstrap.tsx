@@ -3,6 +3,12 @@ import '../assets/bootstrap.less';
 import * as React from 'react';
 import Dialog from '../src/DialogWrap';
 
+// Check for memo update should work
+const InnerRender = () => {
+  console.log('Updated...', Date.now());
+  return null;
+};
+
 const MyControl = () => {
   const [visible, setVisible] = React.useState(false);
   const [destroyOnClose, setDestroyOnClose] = React.useState(false);
@@ -37,6 +43,7 @@ const MyControl = () => {
         </button>,
       ]}
     >
+      <InnerRender />
       <h4>Text in a modal</h4>
       <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
       <hr />
