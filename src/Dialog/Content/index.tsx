@@ -117,16 +117,14 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   }
 
   const content = (
-    <MemoChildren visible={visible}>
-      <div className={`${prefixCls}-content`}>
-        {closer}
-        {headerNode}
-        <div className={`${prefixCls}-body`} style={bodyStyle} {...bodyProps}>
-          {children}
-        </div>
-        {footerNode}
+    <div className={`${prefixCls}-content`}>
+      {closer}
+      {headerNode}
+      <div className={`${prefixCls}-body`} style={bodyStyle} {...bodyProps}>
+        {children}
       </div>
-    </MemoChildren>
+      {footerNode}
+    </div>
   );
 
   return (
@@ -150,7 +148,9 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           onClick={onClick}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
-          {modalRender ? modalRender(content) : content}
+          <MemoChildren visible={visible}>
+            {modalRender ? modalRender(content) : content}
+          </MemoChildren>
           <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
         </div>
       )}

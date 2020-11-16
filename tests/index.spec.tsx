@@ -250,10 +250,7 @@ describe('dialog', () => {
     });
 
     expect(
-      (wrapper
-        .find('.rc-dialog')
-        .at(0)
-        .getDOMNode() as HTMLDivElement).style['transform-origin'],
+      (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
     ).toBeTruthy();
   });
 
@@ -337,6 +334,7 @@ describe('dialog', () => {
   it('modalRender', () => {
     const modalRender = mount(
       <Dialog
+        visible
         modalRender={(node: React.ReactElement) =>
           cloneElement(node, { ...node.props, style: { background: '#1890ff' } })
         }
@@ -355,5 +353,25 @@ describe('dialog', () => {
       const wrapper = mount(<Dialog visible height={903} />);
       expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
     });
+  });
+
+  it('should not re-render when visible changed', () => {
+    let renderTimes = 0;
+    const RenderChecker = () => {
+      renderTimes += 1;
+      return null;
+    };
+
+    const wrapper = mount(
+      <Dialog visible>
+        <RenderChecker />
+      </Dialog>,
+    );
+
+    expect(renderTimes).toEqual(1);
+
+    // Hidden should not trigger render
+    wrapper.setProps({ visible: false });
+    expect(renderTimes).toEqual(1);
   });
 });
