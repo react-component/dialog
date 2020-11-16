@@ -90,8 +90,11 @@ describe('dialog', () => {
       jest.runAllTimers();
       wrapper.update();
 
-      document.getElementsByClassName('.test-input').value = 'test';
-      expect(document.getElementsByClassName('.test-input').value).toBe('test');
+      ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value =
+        'test';
+      expect(
+        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
+      ).toBe('test');
 
       // Hide
       wrapper.setProps({ visible: false });
@@ -103,7 +106,9 @@ describe('dialog', () => {
       jest.runAllTimers();
       wrapper.update();
 
-      expect(document.getElementsByClassName('.test-input').value).toBeUndefined();
+      expect(
+        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
+      ).toBeUndefined();
       wrapper.unmount();
     });
   });
@@ -201,7 +206,9 @@ describe('dialog', () => {
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+      const sentinelEnd = (document.querySelectorAll(
+        '.rc-dialog-content + div',
+      )[0] as unknown) as HTMLDivElement;
       sentinelEnd.focus();
 
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
@@ -237,16 +244,16 @@ describe('dialog', () => {
     // Trigger position align
     act(() => {
       wrapper
-        .find('Content CSSMotion')
+        .find<any>('Content CSSMotion' as any)
         .props()
         .onAppearPrepare();
     });
 
     expect(
-      wrapper
+      (wrapper
         .find('.rc-dialog')
         .at(0)
-        .getDOMNode().style['transform-origin'],
+        .getDOMNode() as HTMLDivElement).style['transform-origin'],
     ).toBeTruthy();
   });
 
@@ -318,7 +325,7 @@ describe('dialog', () => {
     }
 
     const wrapper = mount(
-      <DialogWrapTest visible forceRender>
+      <DialogWrapTest>
         <div>Show dialog with forceRender and visible is true</div>
       </DialogWrapTest>,
     );
@@ -330,8 +337,7 @@ describe('dialog', () => {
   it('modalRender', () => {
     const modalRender = mount(
       <Dialog
-        visible
-        modalRender={node =>
+        modalRender={(node: React.ReactElement) =>
           cloneElement(node, { ...node.props, style: { background: '#1890ff' } })
         }
       />,
