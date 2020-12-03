@@ -12,7 +12,8 @@ export interface ContentProps extends IDialogChildProps {
   motionName: string;
   ariaId: string;
   onVisibleChanged: (visible: boolean) => void;
-  onClick: React.MouseEventHandler;
+  onMouseDown: React.MouseEventHandler;
+  onMouseUp: React.MouseEventHandler;
 }
 
 export interface ContentRef {
@@ -43,7 +44,8 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     ariaId,
     onClose,
     onVisibleChanged,
-    onClick,
+    onMouseDown,
+    onMouseUp,
     mousePosition,
   } = props;
 
@@ -145,7 +147,8 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           ref={motionRef}
           style={{ ...motionStyle, ...style, ...contentStyle }}
           className={classNames(prefixCls, className, motionClassName)}
-          onClick={onClick}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
           <MemoChildren visible={visible}>
