@@ -3,13 +3,7 @@
 
 react dialog component
 
-[![NPM version][npm-image]][npm-url]
-[![build status][github-actions-image]][github-actions-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-[![Dependencies][david-image]][david-url]
-[![DevDependencies][david-dev-image]][david-dev-url]
-[![npm download][download-image]][download-url]
-[![bundle size][bundlephobia-image]][bundlephobia-url]
+[![NPM version][npm-image]][npm-url] [![build status][github-actions-image]][github-actions-url] [![Test coverage][coveralls-image]][coveralls-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-dialog.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-dialog
@@ -31,6 +25,12 @@ react dialog component
 ## Screenshot
 
 <img src="http://gtms04.alicdn.com/tps/i4/TB1dp5lHXXXXXbmXpXXyVug.FXX-664-480.png" />
+
+## Example
+
+http://localhost:8007/examples/
+
+online example: http://react-component.github.io/dialog/
 
 ## Install
 
@@ -90,11 +90,7 @@ npm install
 npm start
 ```
 
-## Example
 
-http://localhost:8007/examples/
-
-online example: http://react-component.github.io/dialog/
 
 ## Test Case
 

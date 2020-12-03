@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import '../assets/bootstrap.less';
 import * as React from 'react';
 import Draggable from 'react-draggable'; 
-import Dialog from '../src/DialogWrap';
+import Dialog from 'rc-dialog';
+import '../../assets/index.less';
 
 const MyControl = () => {
   const [visible, setVisible] = React.useState(false);

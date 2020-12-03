@@ -1,5 +1,37 @@
-# History
-----
+# Changelog
+
+## 8.4.4
+
+`2020-12-03`
+
+- fix: dialog dont close when mouseDown in content and mouseUp in wrapper. [#210](https://github.com/react-component/dialog/pull/210)
+
+- chore: Should not re-render when dialog is invisible. [#212](https://github.com/react-component/dialog/pull/212)
+
+
+## 8.4.3
+
+`2020-10-21`
+
+- chore: support react 17. [#207](https://github.com/react-component/dialog/pull/207)
+
+## 8.4.2
+
+`2020-10-14`
+
+- fix: Dialog should not auto destroy. [#206](https://github.com/react-component/dialog/pull/206)
+
+## 8.4.1
+
+`2020-10-11`
+
+- fix: Portal event bubble. [#204](https://github.com/react-component/dialog/pull/204)
+
+## 8.4.0
+
+`2020-09-29`
+
+- refactor: Use `rc-motion`. [#203](https://github.com/react-component/dialog/pull/203)
 
 ## 8.3.4 (8.2.2, 8.1.2) / 2020-09-04
 - fix: prevent scroll behavior when focus trigger. [ant-design/ant-design#26582](https://github.com/ant-design/ant-design/issues/26582)

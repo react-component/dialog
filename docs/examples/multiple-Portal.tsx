@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Drawer from 'rc-drawer';
-import Dialog from '../src/DialogWrap';
 import 'rc-drawer/assets/index.css';
-import '../assets/index.less';
+import Dialog from 'rc-dialog';
+import '../../assets/index.less';
 
 const { useState } = React;
 

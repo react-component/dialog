@@ -1,9 +1,9 @@
 /* eslint no-console:0 */
-import '../assets/index.less';
 import * as React from 'react';
 import Select from 'rc-select';
 import 'rc-select/assets/index.less';
-import Dialog from '../src/DialogWrap';
+import Dialog from 'rc-dialog';
+import '../../assets/index.less';
 
 const clearPath =
   'M793 242H366v-74c0-6.7-7.7-10.4-12.9' +
