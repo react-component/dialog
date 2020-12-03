@@ -1,5 +1,4 @@
 # rc-dialog
----
 
 react dialog component
 
@@ -30,7 +29,7 @@ react dialog component
 
 http://localhost:8007/examples/
 
-online example: http://react-component.github.io/dialog/
+online example: https://dialog.react-component.vercel.app/
 
 ## Install
 
