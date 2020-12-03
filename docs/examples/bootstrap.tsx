@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import '../assets/bootstrap.less';
 import * as React from 'react';
-import Dialog from '../src/DialogWrap';
+import Dialog from 'rc-dialog';
+import '../../assets/index.less';
 
 // Check for memo update should work
 const InnerRender = () => {

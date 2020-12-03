@@ -34,3 +34,9 @@ coverage
 yarn.lock
 .storybook
 .doc
+
+# umi
+.umi
+.umi-production
+.umi-test
+.env.local
