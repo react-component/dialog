@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.4.5
+
+`2020-12-07`
+
+- fix: Dialog should keep refresh when forceRender provided. [#217](https://github.com/react-component/dialog/pull/217)
+
 ## 8.4.4
 
 `2020-12-03`
