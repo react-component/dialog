@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 export interface MemoChildrenProps {
-  visible: boolean;
+  shouldUpdate: boolean;
   children: React.ReactNode;
 }
 
 export default React.memo(
   ({ children }: MemoChildrenProps) => children as React.ReactElement,
-  (_, { visible }) => !visible,
+  (_, { shouldUpdate }) => !shouldUpdate,
 );

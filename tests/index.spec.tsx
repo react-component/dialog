@@ -1,10 +1,10 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React, { cloneElement } from 'react';
 import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import Portal from 'rc-util/lib/Portal';
 import KeyCode from 'rc-util/lib/KeyCode';
-import Dialog from '../src';
+import Dialog, { DialogProps } from '../src';
 
 describe('dialog', () => {
   beforeEach(() => {
@@ -250,7 +250,10 @@ describe('dialog', () => {
     });
 
     expect(
-      (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
+      (wrapper
+        .find('.rc-dialog')
+        .at(0)
+        .getDOMNode() as HTMLDivElement).style['transform-origin'],
     ).toBeTruthy();
   });
 
@@ -355,23 +358,43 @@ describe('dialog', () => {
     });
   });
 
-  it('should not re-render when visible changed', () => {
-    let renderTimes = 0;
-    const RenderChecker = () => {
-      renderTimes += 1;
-      return null;
-    };
+  describe('re-render', () => {
+    function createWrapper(props?: Partial<DialogProps>): [ReactWrapper, () => number] {
+      let renderTimes = 0;
+      const RenderChecker = () => {
+        renderTimes += 1;
+        return null;
+      };
 
-    const wrapper = mount(
-      <Dialog visible>
-        <RenderChecker />
-      </Dialog>,
-    );
+      const Demo = (demoProps?: any) => {
+        return (
+          <Dialog visible {...props} {...demoProps}>
+            <RenderChecker />
+          </Dialog>
+        );
+      };
 
-    expect(renderTimes).toEqual(1);
+      const wrapper = mount(<Demo />);
 
-    // Hidden should not trigger render
-    wrapper.setProps({ visible: false });
-    expect(renderTimes).toEqual(1);
+      return [wrapper, () => renderTimes];
+    }
+
+    it('should not re-render when visible changed', () => {
+      const [wrapper, getRenderTimes] = createWrapper();
+      expect(getRenderTimes()).toEqual(1);
+
+      // Hidden should not trigger render
+      wrapper.setProps({ visible: false });
+      expect(getRenderTimes()).toEqual(1);
+    });
+
+    it('should re-render when forceRender', () => {
+      const [wrapper, getRenderTimes] = createWrapper({ forceRender: true });
+      expect(getRenderTimes()).toEqual(1);
+
+      // Hidden should not trigger render
+      wrapper.setProps({ visible: false });
+      expect(getRenderTimes()).toEqual(2);
+    });
   });
 });

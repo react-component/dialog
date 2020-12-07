@@ -151,7 +151,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           onMouseUp={onMouseUp}
         >
           <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
-          <MemoChildren visible={visible}>
+          <MemoChildren shouldUpdate={visible || forceRender}>
             {modalRender ? modalRender(content) : content}
           </MemoChildren>
           <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
