@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { mount, ReactWrapper } from 'enzyme';
 import Portal from 'rc-util/lib/Portal';
 import KeyCode from 'rc-util/lib/KeyCode';
-import Dialog from '../src';
+import Dialog, { DialogProps } from '../src';
 
 describe('dialog', () => {
   beforeEach(() => {
@@ -359,18 +359,22 @@ describe('dialog', () => {
   });
 
   describe('re-render', () => {
-    function createWrapper(): [ReactWrapper, () => number] {
+    function createWrapper(props?: Partial<DialogProps>): [ReactWrapper, () => number] {
       let renderTimes = 0;
       const RenderChecker = () => {
         renderTimes += 1;
         return null;
       };
 
-      const wrapper = mount(
-        <Dialog visible>
-          <RenderChecker />
-        </Dialog>,
-      );
+      const Demo = (demoProps?: any) => {
+        return (
+          <Dialog visible {...props} {...demoProps}>
+            <RenderChecker />
+          </Dialog>
+        );
+      };
+
+      const wrapper = mount(<Demo />);
 
       return [wrapper, () => renderTimes];
     }
@@ -382,6 +386,15 @@ describe('dialog', () => {
       // Hidden should not trigger render
       wrapper.setProps({ visible: false });
       expect(getRenderTimes()).toEqual(1);
+    });
+
+    it('should re-render when forceRender', () => {
+      const [wrapper, getRenderTimes] = createWrapper({ forceRender: true });
+      expect(getRenderTimes()).toEqual(1);
+
+      // Hidden should not trigger render
+      wrapper.setProps({ visible: false });
+      expect(getRenderTimes()).toEqual(2);
     });
   });
 });
