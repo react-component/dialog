@@ -1,7 +1,7 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React, { cloneElement } from 'react';
 import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import Portal from 'rc-util/lib/Portal';
 import KeyCode from 'rc-util/lib/KeyCode';
 import Dialog from '../src';
@@ -250,7 +250,10 @@ describe('dialog', () => {
     });
 
     expect(
-      (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
+      (wrapper
+        .find('.rc-dialog')
+        .at(0)
+        .getDOMNode() as HTMLDivElement).style['transform-origin'],
     ).toBeTruthy();
   });
 
@@ -356,7 +359,7 @@ describe('dialog', () => {
   });
 
   describe('re-render', () => {
-    it('should not re-render when visible changed', () => {
+    function createWrapper(): [ReactWrapper, () => number] {
       let renderTimes = 0;
       const RenderChecker = () => {
         renderTimes += 1;
@@ -369,11 +372,16 @@ describe('dialog', () => {
         </Dialog>,
       );
 
-      expect(renderTimes).toEqual(1);
+      return [wrapper, () => renderTimes];
+    }
+
+    it('should not re-render when visible changed', () => {
+      const [wrapper, getRenderTimes] = createWrapper();
+      expect(getRenderTimes()).toEqual(1);
 
       // Hidden should not trigger render
       wrapper.setProps({ visible: false });
-      expect(renderTimes).toEqual(1);
+      expect(getRenderTimes()).toEqual(1);
     });
   });
 });
