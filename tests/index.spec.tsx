@@ -355,23 +355,25 @@ describe('dialog', () => {
     });
   });
 
-  it('should not re-render when visible changed', () => {
-    let renderTimes = 0;
-    const RenderChecker = () => {
-      renderTimes += 1;
-      return null;
-    };
+  describe('re-render', () => {
+    it('should not re-render when visible changed', () => {
+      let renderTimes = 0;
+      const RenderChecker = () => {
+        renderTimes += 1;
+        return null;
+      };
 
-    const wrapper = mount(
-      <Dialog visible>
-        <RenderChecker />
-      </Dialog>,
-    );
+      const wrapper = mount(
+        <Dialog visible>
+          <RenderChecker />
+        </Dialog>,
+      );
 
-    expect(renderTimes).toEqual(1);
+      expect(renderTimes).toEqual(1);
 
-    // Hidden should not trigger render
-    wrapper.setProps({ visible: false });
-    expect(renderTimes).toEqual(1);
+      // Hidden should not trigger render
+      wrapper.setProps({ visible: false });
+      expect(renderTimes).toEqual(1);
+    });
   });
 });
