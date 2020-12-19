@@ -112,7 +112,7 @@ export default function Dialog(props: IDialogChildProps) {
       if(contentClickRef.current) {
         contentClickRef.current = false;
       } else if (
-        !contains(contentRef.current.getDOM(), e.target as HTMLElement)
+        wrapperRef.current === e.target
       ) {
         onInternalClose(e);
       }
