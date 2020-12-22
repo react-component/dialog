@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.4.6
+
+`2020-12-19`
+
+- fix: trigger close only when click wrap itself. [#218](https://github.com/react-component/dialog/pull/218)
+
 ## 8.4.5
 
 `2020-12-07`
