@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
+import ScollLocker from 'rc-util/lib/Dom/scrollLocker';
 import { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName, getUUID } from '../util';
@@ -12,7 +13,7 @@ export interface IDialogChildProps extends IDialogPropTypes {
   // zombieJ: This should be handle on top instead of each Dialog.
   // TODO: refactor to remove this.
   getOpenCount: () => number;
-  switchScrollingEffect?: () => void;
+  scrollLocker?: ScollLocker;
 }
 
 export default function Dialog(props: IDialogChildProps) {
@@ -22,7 +23,7 @@ export default function Dialog(props: IDialogChildProps) {
     visible = false,
     keyboard = true,
     focusTriggerAfterClose = true,
-    switchScrollingEffect = () => {},
+    scrollLocker,
 
     // Wrapper
     title,
@@ -69,7 +70,6 @@ export default function Dialog(props: IDialogChildProps) {
     } else {
       // Clean up scroll bar & focus back
       setAnimatedVisible(false);
-      switchScrollingEffect();
 
       if (mask && lastOutSideActiveElementRef.current && focusTriggerAfterClose) {
         try {
@@ -96,24 +96,22 @@ export default function Dialog(props: IDialogChildProps) {
   const onContentMouseDown: React.MouseEventHandler = () => {
     clearTimeout(contentTimeoutRef.current);
     contentClickRef.current = true;
-  }
+  };
 
   const onContentMouseUp: React.MouseEventHandler = () => {
     contentTimeoutRef.current = setTimeout(() => {
       contentClickRef.current = false;
     });
-  }
+  };
 
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if(contentClickRef.current) {
+      if (contentClickRef.current) {
         contentClickRef.current = false;
-      } else if (
-        wrapperRef.current === e.target
-      ) {
+      } else if (wrapperRef.current === e.target) {
         onInternalClose(e);
       }
     };
@@ -138,14 +136,15 @@ export default function Dialog(props: IDialogChildProps) {
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
-      switchScrollingEffect();
+      scrollLocker?.lock();
+
+      return scrollLocker?.unLock;
     }
   }, [visible]);
 
   // Remove direct should also check the scroll bar update
   useEffect(
     () => () => {
-      switchScrollingEffect();
       clearTimeout(contentTimeoutRef.current);
     },
     [],
