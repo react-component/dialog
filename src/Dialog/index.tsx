@@ -133,6 +133,7 @@ export default function Dialog(props: IDialogChildProps) {
   }
 
   // ========================= Effect =========================
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
