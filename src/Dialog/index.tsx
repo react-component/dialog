@@ -133,7 +133,6 @@ export default function Dialog(props: IDialogChildProps) {
   }
 
   // ========================= Effect =========================
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
@@ -141,6 +140,7 @@ export default function Dialog(props: IDialogChildProps) {
 
       return scrollLocker?.unLock;
     }
+    return null
   }, [visible]);
 
   // Remove direct should also check the scroll bar update
