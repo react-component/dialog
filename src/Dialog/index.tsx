@@ -140,7 +140,7 @@ export default function Dialog(props: IDialogChildProps) {
 
       return scrollLocker?.unLock;
     }
-    return null
+    return null;
   }, [visible]);
 
   // Remove direct should also check the scroll bar update
