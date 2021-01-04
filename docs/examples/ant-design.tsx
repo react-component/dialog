@@ -201,41 +201,43 @@ const MyControl = () => {
   );
 
   return (
-    <div style={{ width: '90%', margin: '0 auto', height: '150vh' }}>
-      <style>
-        {`
+    <React.StrictMode>
+      <div style={{ width: '90%', margin: '0 auto', height: '150vh' }}>
+        <style>
+          {`
           .center {
             display: flex;
             align-items: center;
             justify-content: center;
           }
           `}
-      </style>
-      <p>
-        <button type="button" className="btn btn-primary" onClick={onClick}>
-          show dialog
-        </button>
-        &nbsp;
-        <label>
-          destroy on close:
-          <input type="checkbox" checked={destroyOnClose} onChange={onDestroyOnCloseChange} />
-        </label>
-        &nbsp;
-        <label>
-          center
-          <input type="checkbox" checked={center} onChange={centerEvent} />
-        </label>
-        &nbsp;
-        <label>
-          force render
-          <input type="checkbox" checked={forceRender} onChange={onForceRenderChange} />
-        </label>
-        <input placeholder="Useless Input" onClick={onClick} />
-      </p>
-      {dialog}
-      {dialog2}
-      {dialog3}
-    </div>
+        </style>
+        <p>
+          <button type="button" className="btn btn-primary" onClick={onClick}>
+            show dialog
+          </button>
+          &nbsp;
+          <label>
+            destroy on close:
+            <input type="checkbox" checked={destroyOnClose} onChange={onDestroyOnCloseChange} />
+          </label>
+          &nbsp;
+          <label>
+            center
+            <input type="checkbox" checked={center} onChange={centerEvent} />
+          </label>
+          &nbsp;
+          <label>
+            force render
+            <input type="checkbox" checked={forceRender} onChange={onForceRenderChange} />
+          </label>
+          <input placeholder="Useless Input" onClick={onClick} />
+        </p>
+        {dialog}
+        {dialog2}
+        {dialog3}
+      </div>
+    </React.StrictMode>
   );
 };
 
