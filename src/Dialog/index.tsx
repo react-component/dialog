@@ -136,9 +136,6 @@ export default function Dialog(props: IDialogChildProps) {
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
-      scrollLocker?.lock();
-
-      return scrollLocker?.unLock;
     }
     return () => {};
   }, [visible]);
@@ -150,6 +147,14 @@ export default function Dialog(props: IDialogChildProps) {
     },
     [],
   );
+
+  useEffect(() => {
+    if (animatedVisible) {
+      scrollLocker?.lock();
+      return scrollLocker?.unLock;
+    }
+    return () => {};
+  }, [animatedVisible]);
 
   // ========================= Render =========================
   return (
