@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 
-export interface MaskProps {
+export type MaskProps = {
   prefixCls: string;
   visible: boolean;
   motionName?: string;

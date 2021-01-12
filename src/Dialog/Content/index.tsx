@@ -2,21 +2,21 @@ import * as React from 'react';
 import { useRef } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
-import { IDialogChildProps } from '..';
+import type { IDialogChildProps } from '..';
 import { offset } from '../../util';
 import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
-export interface ContentProps extends IDialogChildProps {
+export type ContentProps = {
   motionName: string;
   ariaId: string;
   onVisibleChanged: (visible: boolean) => void;
   onMouseDown: React.MouseEventHandler;
   onMouseUp: React.MouseEventHandler;
-}
+} & IDialogChildProps
 
-export interface ContentRef {
+export type ContentRef = {
   focus: () => void;
   changeActive: (next: boolean) => void;
 }

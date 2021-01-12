@@ -1,7 +1,7 @@
-import { ReactNode, CSSProperties, SyntheticEvent } from 'react';
-import { GetContainer } from 'rc-util/lib/PortalWrapper';
+import type { ReactNode, CSSProperties, SyntheticEvent } from 'react';
+import type { GetContainer } from 'rc-util/lib/PortalWrapper';
 
-export interface IDialogPropTypes {
+export type IDialogPropTypes = {
   className?: string;
   keyboard?: boolean;
   style?: CSSProperties;
@@ -23,9 +23,9 @@ export interface IDialogPropTypes {
   maskTransitionName?: string;
   animation?: any;
   maskAnimation?: any;
-  wrapStyle?: {};
-  bodyStyle?: {};
-  maskStyle?: {};
+  wrapStyle?: Record<string, any>;
+  bodyStyle?: Record<string, any>;
+  maskStyle?: Record<string, any>;
   prefixCls?: string;
   wrapClassName?: string;
   width?: number;
