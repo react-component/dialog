@@ -3,18 +3,19 @@ import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
-import ScollLocker from 'rc-util/lib/Dom/scrollLocker';
-import { IDialogPropTypes } from '../IDialogPropTypes';
+import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
+import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName, getUUID } from '../util';
-import Content, { ContentRef } from './Content';
+import type { ContentRef } from './Content';
+import Content from './Content';
 
-export interface IDialogChildProps extends IDialogPropTypes {
+export type IDialogChildProps = {
   // zombieJ: This should be handle on top instead of each Dialog.
   // TODO: refactor to remove this.
   getOpenCount: () => number;
   scrollLocker?: ScollLocker;
-}
+} & IDialogPropTypes
 
 export default function Dialog(props: IDialogChildProps) {
   const {
@@ -154,7 +155,7 @@ export default function Dialog(props: IDialogChildProps) {
       return scrollLocker?.unLock;
     }
     return () => {};
-  }, [animatedVisible]);
+  }, [animatedVisible, scrollLocker]);
 
   // ========================= Render =========================
   return (

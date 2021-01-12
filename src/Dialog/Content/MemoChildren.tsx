@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface MemoChildrenProps {
+export type MemoChildrenProps = {
   shouldUpdate: boolean;
   children: React.ReactNode;
 }

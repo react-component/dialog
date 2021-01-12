@@ -28,9 +28,9 @@ function getScroll(w: Window, top?: boolean): number {
   return ret;
 }
 
-interface CompatibleDocument extends Document {
+type CompatibleDocument = {
   parentWindow?: Window;
-}
+} & Document
 
 export function offset(el: Element) {
   const rect = el.getBoundingClientRect();
