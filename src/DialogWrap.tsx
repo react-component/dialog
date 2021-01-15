@@ -14,13 +14,21 @@ import { IDialogPropTypes } from './IDialogPropTypes';
 
 const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
   const { visible, getContainer, forceRender, destroyOnClose = false, afterClose } = props;
+  const [forceRenderTime, setForceRenderTime] = React.useState<boolean>(forceRender);
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
 
   React.useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
+      if (destroyOnClose) {
+        setForceRenderTime(false);
+      }
     }
   }, [visible]);
+
+  React.useEffect(() => {
+    setForceRenderTime(forceRender);
+  }, [forceRender]);
 
   // 渲染在当前 dom 里；
   if (getContainer === false) {
@@ -33,15 +41,16 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
   }
 
   // Destroy on close will remove wrapped div
-  if (!forceRender && destroyOnClose && !animatedVisible) {
+  if (!forceRenderTime && destroyOnClose && !animatedVisible) {
     return null;
   }
 
   return (
-    <Portal visible={visible} forceRender={forceRender} getContainer={getContainer}>
+    <Portal visible={visible} forceRender={forceRenderTime} getContainer={getContainer}>
       {(childProps: IDialogChildProps) => (
         <Dialog
           {...props}
+          forceRender={forceRenderTime}
           destroyOnClose={destroyOnClose}
           afterClose={() => {
             afterClose?.();
