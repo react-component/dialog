@@ -15,7 +15,7 @@ export type IDialogChildProps = {
   // TODO: refactor to remove this.
   getOpenCount: () => number;
   scrollLocker?: ScollLocker;
-} & IDialogPropTypes
+} & IDialogPropTypes;
 
 export default function Dialog(props: IDialogChildProps) {
   const {
@@ -81,7 +81,10 @@ export default function Dialog(props: IDialogChildProps) {
         lastOutSideActiveElementRef.current = null;
       }
 
-      afterClose?.();
+      // Trigger afterClose only when change visible from true to false
+      if (animatedVisible) {
+        afterClose?.();
+      }
     }
   }
 
@@ -91,7 +94,7 @@ export default function Dialog(props: IDialogChildProps) {
 
   // >>> Content
   const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<number>();
+  const contentTimeoutRef = useRef<NodeJS.Timeout>();
 
   // We need record content click incase content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {
