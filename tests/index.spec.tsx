@@ -1,10 +1,12 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React, { cloneElement } from 'react';
 import { act } from 'react-dom/test-utils';
-import { mount, ReactWrapper } from 'enzyme';
+import type { ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import Portal from 'rc-util/lib/Portal';
 import KeyCode from 'rc-util/lib/KeyCode';
-import Dialog, { DialogProps } from '../src';
+import type { DialogProps } from '../src';
+import Dialog from '../src';
 
 describe('dialog', () => {
   beforeEach(() => {
@@ -250,10 +252,7 @@ describe('dialog', () => {
     });
 
     expect(
-      (wrapper
-        .find('.rc-dialog')
-        .at(0)
-        .getDOMNode() as HTMLDivElement).style['transform-origin'],
+      (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
     ).toBeTruthy();
   });
 
@@ -293,18 +292,6 @@ describe('dialog', () => {
     const wrapper = mount(<Dialog onClose={onClose} visible />);
     wrapper.find('.rc-dialog-body').simulate('click');
     expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('afterClose', () => {
-    const afterClose = jest.fn();
-
-    const wrapper = mount(<Dialog afterClose={afterClose} visible />);
-    jest.runAllTimers();
-
-    wrapper.setProps({ visible: false });
-    jest.runAllTimers();
-
-    expect(afterClose).toHaveBeenCalledTimes(1);
   });
 
   it('zIndex', () => {
@@ -395,6 +382,44 @@ describe('dialog', () => {
       // Hidden should not trigger render
       wrapper.setProps({ visible: false });
       expect(getRenderTimes()).toEqual(2);
+    });
+  });
+
+  describe('afterClose', () => {
+    it('should trigger afterClose when set visible to false', () => {
+      const afterClose = jest.fn();
+
+      const wrapper = mount(<Dialog afterClose={afterClose} visible />);
+      jest.runAllTimers();
+
+      wrapper.setProps({ visible: false });
+      jest.runAllTimers();
+
+      expect(afterClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not trigger afterClose when mount dialog of getContainer={false}', () => {
+      const afterClose = jest.fn();
+
+      const wrapper = mount(<Dialog afterClose={afterClose} getContainer={false} />);
+      jest.runAllTimers();
+
+      wrapper.setProps({ visible: false });
+      jest.runAllTimers();
+
+      expect(afterClose).toHaveBeenCalledTimes(0);
+    });
+
+    it('should not trigger afterClose when mount dialog of forceRender={true}', () => {
+      const afterClose = jest.fn();
+
+      const wrapper = mount(<Dialog afterClose={afterClose} forceRender />);
+      jest.runAllTimers();
+
+      wrapper.setProps({ visible: false });
+      jest.runAllTimers();
+
+      expect(afterClose).toHaveBeenCalledTimes(0);
     });
   });
 });
