@@ -32,6 +32,7 @@ export default function Dialog(props: IDialogChildProps) {
     wrapClassName,
     wrapProps,
     onClose,
+    afterOpen,
     afterClose,
 
     // Dialog
@@ -68,6 +69,7 @@ export default function Dialog(props: IDialogChildProps) {
         lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
         contentRef.current?.focus();
       }
+      afterOpen?.();
     } else {
       // Clean up scroll bar & focus back
       setAnimatedVisible(false);

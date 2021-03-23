@@ -8,6 +8,7 @@ export type IDialogPropTypes = {
   mask?: boolean;
   children?: any;
   afterClose?: () => any;
+  afterOpen?: () => any;
   onClose?: (e: SyntheticEvent) => any;
   closable?: boolean;
   maskClosable?: boolean;
@@ -41,4 +42,4 @@ export type IDialogPropTypes = {
   // https://github.com/ant-design/ant-design/issues/19771
   // https://github.com/react-component/dialog/issues/95
   focusTriggerAfterClose?: boolean;
-}
+};
