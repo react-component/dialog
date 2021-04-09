@@ -31,7 +31,6 @@
     "start": "dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d .doc",
-    "build": "father doc build --storybook",
     "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/bootstrap.less assets/bootstrap.css",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prepublishOnly": "npm run compile && np --yolo --no-publish",
