@@ -54,7 +54,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.7",
     "@types/jest": "^26.0.14",
-    "@types/react": "^16.9.2",
+    "@types/react": "^17.0.4",
     "@types/react-dom": "^16.9.0",
     "@umijs/fabric": "^2.0.0",
     "bluebird": "~3.7.2",
