@@ -58,7 +58,7 @@
     "@types/react-dom": "^16.9.0",
     "@umijs/fabric": "^2.0.0",
     "bluebird": "~3.7.2",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.0",
     "cross-env": "^7.0.0",
     "dumi": "^1.1.0",
     "enzyme": "^3.1.1",
