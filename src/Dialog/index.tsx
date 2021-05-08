@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import KeyCode from 'rc-util/lib/KeyCode';
 import contains from 'rc-util/lib/Dom/contains';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
@@ -162,7 +163,7 @@ export default function Dialog(props: IDialogChildProps) {
 
   // ========================= Render =========================
   return (
-    <div className={`${prefixCls}-root`}>
+    <div className={`${prefixCls}-root`} {...pickAttrs(props, { data: true })}>
       <Mask
         prefixCls={prefixCls}
         visible={mask && visible}
