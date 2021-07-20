@@ -385,6 +385,20 @@ describe('dialog', () => {
     });
   });
 
+  describe('afterOpen', () => {
+    it('should trigger afterOpen when set visible to true', () => {
+      const afterOpen = jest.fn();
+
+      const wrapper = mount(<Dialog afterOpen={afterOpen} visible={false} />);
+      jest.runAllTimers();
+
+      wrapper.setProps({ visible: true });
+      jest.runAllTimers();
+
+      expect(afterOpen).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('afterClose', () => {
     it('should trigger afterClose when set visible to false', () => {
       const afterClose = jest.fn();
