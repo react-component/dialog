@@ -1,0 +1,35 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "21:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: rc-select
+    versions:
+    - 12.1.2
+    - 12.1.3
+    - 12.1.5
+    - 12.1.6
+    - 12.1.7
+    - 12.1.9
+  - dependency-name: "@types/react"
+    versions:
+    - 17.0.0
+    - 17.0.1
+    - 17.0.2
+    - 17.0.3
+  - dependency-name: "@types/react-dom"
+    versions:
+    - 17.0.0
+    - 17.0.1
+    - 17.0.2
+  - dependency-name: rc-drawer
+    versions:
+    - 4.2.2
+    - 4.3.0
+  - dependency-name: less
+    versions:
+    - 4.1.0
