@@ -16,7 +16,7 @@ export type IDialogPropTypes = {
   mousePosition?: {
     x: number;
     y: number;
-  };
+  } | null;
   title?: ReactNode;
   footer?: ReactNode;
   transitionName?: string;
@@ -28,8 +28,8 @@ export type IDialogPropTypes = {
   maskStyle?: Record<string, any>;
   prefixCls?: string;
   wrapClassName?: string;
-  width?: number;
-  height?: number;
+  width?: string | number;
+  height?: string | number;
   zIndex?: number;
   bodyProps?: any;
   maskProps?: any;
@@ -41,4 +41,4 @@ export type IDialogPropTypes = {
   // https://github.com/ant-design/ant-design/issues/19771
   // https://github.com/react-component/dialog/issues/95
   focusTriggerAfterClose?: boolean;
-}
+};
