@@ -20,8 +20,9 @@ export default function Mask(props: MaskProps) {
       motionName={motionName}
       leavedClassName={`${prefixCls}-mask-hidden`}
     >
-      {({ className: motionClassName, style: motionStyle }) => (
+      {({ className: motionClassName, style: motionStyle }, ref) => (
         <div
+          ref={ref}
           style={{ ...motionStyle, ...style }}
           className={classNames(`${prefixCls}-mask`, motionClassName)}
           {...maskProps}
