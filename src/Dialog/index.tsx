@@ -141,6 +141,9 @@ export default function Dialog(props: IDialogChildProps) {
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
+      if (!contains(wrapperRef.current, document.activeElement)) {
+        lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
+      }
     }
     return () => {};
   }, [visible]);
