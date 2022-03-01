@@ -185,7 +185,7 @@ export default function Dialog(props: IDialogChildProps) {
         maskProps={maskProps}
       />
       <div
-        tabIndex={0}
+        tabIndex={-1}
         onKeyDown={onWrapperKeyDown}
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
