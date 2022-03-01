@@ -89,9 +89,12 @@ export default function Dialog(props: IDialogChildProps) {
     }
   }
 
-  function onInternalClose(e: React.SyntheticEvent) {
-    onClose?.(e);
-  }
+  const onInternalClose = React.useCallback(
+    (e: React.SyntheticEvent) => {
+      onClose?.(e);
+    },
+    [onClose],
+  );
 
   // >>> Content
   const contentClickRef = useRef(false);
@@ -122,28 +125,35 @@ export default function Dialog(props: IDialogChildProps) {
     };
   }
 
-  function onWrapperKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    if (keyboard && e.keyCode === KeyCode.ESC) {
-      e.stopPropagation();
-      onInternalClose(e);
-      return;
-    }
-
-    // keep focus inside dialog
-    if (visible) {
-      if (e.keyCode === KeyCode.TAB) {
-        contentRef.current.changeActive(!e.shiftKey);
+  const onWrapperKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (keyboard && e.keyCode === KeyCode.ESC) {
+        e.stopPropagation();
+        onInternalClose(e);
+        return;
       }
-    }
-  }
-
+      // keep focus inside dialog
+      if (visible) {
+        if (e.keyCode === KeyCode.TAB) {
+          contentRef.current.changeActive(!e.shiftKey);
+        }
+      }
+    },
+    [keyboard, visible, onInternalClose],
+  );
   // ========================= Effect =========================
   useEffect(() => {
+    const body: any = document.querySelector('body');
+    const onkeydown = body?.onkeydown;
     if (visible) {
       setAnimatedVisible(true);
+      // conditional render causes body element focused
+      body.onkeydown = onWrapperKeyDown;
     }
-    return () => {};
-  }, [visible]);
+    return () => {
+      body.onkeydown = onkeydown;
+    };
+  }, [visible, onWrapperKeyDown]);
 
   // Remove direct should also check the scroll bar update
   useEffect(
@@ -175,7 +185,7 @@ export default function Dialog(props: IDialogChildProps) {
         maskProps={maskProps}
       />
       <div
-        tabIndex={-1}
+        tabIndex={0}
         onKeyDown={onWrapperKeyDown}
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
