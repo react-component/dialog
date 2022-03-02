@@ -92,10 +92,10 @@ describe('dialog', () => {
       jest.runAllTimers();
       wrapper.update();
 
-      (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value =
+      ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value =
         'test';
       expect(
-        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
+        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
       ).toBe('test');
 
       // Hide
@@ -109,7 +109,7 @@ describe('dialog', () => {
       wrapper.update();
 
       expect(
-        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
+        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
       ).toBeUndefined();
       wrapper.unmount();
     });
@@ -208,9 +208,9 @@ describe('dialog', () => {
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = document.querySelectorAll(
+      const sentinelEnd = (document.querySelectorAll(
         '.rc-dialog-content + div',
-      )[0] as unknown as HTMLDivElement;
+      )[0] as unknown) as HTMLDivElement;
       sentinelEnd.focus();
 
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
