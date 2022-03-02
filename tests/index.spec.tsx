@@ -92,10 +92,10 @@ describe('dialog', () => {
       jest.runAllTimers();
       wrapper.update();
 
-      ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value =
+      (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value =
         'test';
       expect(
-        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
+        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
       ).toBe('test');
 
       // Hide
@@ -109,7 +109,7 @@ describe('dialog', () => {
       wrapper.update();
 
       expect(
-        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
+        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
       ).toBeUndefined();
       wrapper.unmount();
     });
@@ -208,9 +208,9 @@ describe('dialog', () => {
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = (document.querySelectorAll(
+      const sentinelEnd = document.querySelectorAll(
         '.rc-dialog-content + div',
-      )[0] as unknown) as HTMLDivElement;
+      )[0] as unknown as HTMLDivElement;
       sentinelEnd.focus();
 
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
@@ -421,5 +421,22 @@ describe('dialog', () => {
 
       expect(afterClose).toHaveBeenCalledTimes(0);
     });
+  });
+  it('esc to close when missing focus', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(
+      <Dialog visible onClose={onClose}>
+        <button id="btn" />
+      </Dialog>,
+      { attachTo: document.body },
+    );
+    const btn: HTMLElement = document.querySelector('#btn');
+    btn.click(); // this event makes button get focus
+    btn.remove(); // now  body element get focus by default because focus element (button) has been removed
+    const event = new KeyboardEvent('keydown', { keyCode: KeyCode.ESC });
+    document.body.dispatchEvent(event);
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).toHaveBeenCalled();
   });
 });
