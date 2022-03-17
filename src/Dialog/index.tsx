@@ -47,6 +47,7 @@ export default function Dialog(props: IDialogChildProps) {
     maskClosable = true,
     maskStyle,
     maskProps,
+    rootClassName,
   } = props;
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>();
@@ -172,6 +173,7 @@ export default function Dialog(props: IDialogChildProps) {
           zIndex,
           ...maskStyle,
         }}
+        rootClassName={rootClassName}
         maskProps={maskProps}
       />
       <div
