@@ -17,6 +17,34 @@ describe('dialog', () => {
     jest.useRealTimers();
   });
 
+  it('should render correct', () => {
+    const wrapper = mount(<Dialog visible />);
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+  });
+
+  it('add rootClassName should render correct', () => {
+    const wrapper = mount(
+      <Dialog
+        visible
+        rootClassName="customize-root-class"
+        style={{ width: 600 }}
+        height={903}
+        wrapStyle={{ fontSize: 10 }}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('.customize-root-class').length).toBeTruthy();
+    expect(wrapper.find('.rc-dialog-wrap').props().style.fontSize).toBe(10);
+    expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
+    expect(wrapper.find('.rc-dialog').props().style.width).toEqual(600);
+  });
+
   it('show', () => {
     const wrapper = mount(<Dialog visible />);
     jest.runAllTimers();
@@ -92,10 +120,10 @@ describe('dialog', () => {
       jest.runAllTimers();
       wrapper.update();
 
-      ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value =
+      (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value =
         'test';
       expect(
-        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
+        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
       ).toBe('test');
 
       // Hide
@@ -109,7 +137,7 @@ describe('dialog', () => {
       wrapper.update();
 
       expect(
-        ((document.getElementsByClassName('.test-input') as unknown) as HTMLInputElement).value,
+        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
       ).toBeUndefined();
       wrapper.unmount();
     });
@@ -208,9 +236,9 @@ describe('dialog', () => {
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = (document.querySelectorAll(
+      const sentinelEnd = document.querySelectorAll(
         '.rc-dialog-content + div',
-      )[0] as unknown) as HTMLDivElement;
+      )[0] as unknown as HTMLDivElement;
       sentinelEnd.focus();
 
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {

@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dialog add rootClassName should render correct 1`] = `
+<div
+  class="rc-dialog-root customize-root-class"
+>
+  <div
+    class="rc-dialog-mask"
+  />
+  <div
+    class="rc-dialog-wrap"
+    role="dialog"
+    style="font-size: 10px;"
+    tabindex="-1"
+  >
+    <div
+      class="rc-dialog"
+      role="document"
+      style="width: 600px; height: 903px;"
+    >
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+      <div
+        class="rc-dialog-content"
+      >
+        <button
+          aria-label="Close"
+          class="rc-dialog-close"
+          type="button"
+        >
+          <span
+            class="rc-dialog-close-x"
+          />
+        </button>
+        <div
+          class="rc-dialog-body"
+        />
+      </div>
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`dialog should render correct 1`] = `
+<div
+  class="rc-dialog-root"
+>
+  <div
+    class="rc-dialog-mask"
+  />
+  <div
+    class="rc-dialog-wrap"
+    role="dialog"
+    tabindex="-1"
+  >
+    <div
+      class="rc-dialog"
+      role="document"
+    >
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+      <div
+        class="rc-dialog-content"
+      >
+        <button
+          aria-label="Close"
+          class="rc-dialog-close"
+          type="button"
+        >
+          <span
+            class="rc-dialog-close-x"
+          />
+        </button>
+        <div
+          class="rc-dialog-body"
+        />
+      </div>
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+    </div>
+  </div>
+</div>
+`;
