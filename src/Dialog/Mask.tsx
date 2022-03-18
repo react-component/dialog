@@ -8,7 +8,7 @@ export type MaskProps = {
   motionName?: string;
   style?: React.CSSProperties;
   maskProps?: React.HTMLAttributes<HTMLDivElement>;
-}
+};
 
 export default function Mask(props: MaskProps) {
   const { prefixCls, style, visible, maskProps, motionName } = props;

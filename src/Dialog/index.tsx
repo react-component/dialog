@@ -47,6 +47,7 @@ export default function Dialog(props: IDialogChildProps) {
     maskClosable = true,
     maskStyle,
     maskProps,
+    rootClassName,
   } = props;
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>();
@@ -163,7 +164,10 @@ export default function Dialog(props: IDialogChildProps) {
 
   // ========================= Render =========================
   return (
-    <div className={`${prefixCls}-root`} {...pickAttrs(props, { data: true })}>
+    <div
+      className={classNames(`${prefixCls}-root`, rootClassName)}
+      {...pickAttrs(props, { data: true })}
+    >
       <Mask
         prefixCls={prefixCls}
         visible={mask && visible}

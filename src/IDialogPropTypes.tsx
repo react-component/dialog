@@ -33,6 +33,7 @@ export type IDialogPropTypes = {
   zIndex?: number;
   bodyProps?: any;
   maskProps?: any;
+  rootClassName?: string;
   wrapProps?: any;
   getContainer?: GetContainer | false;
   closeIcon?: ReactNode;
