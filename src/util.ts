@@ -9,7 +9,9 @@ export function getMotionName(prefixCls: string, transitionName?: string, animat
 
 // ================================ UUID ================================
 let uuid = -1;
+const isTest = process.env.NODE_ENV === 'test';
 export function getUUID() {
+  if (isTest) return 0;
   uuid += 1;
   return uuid;
 }
