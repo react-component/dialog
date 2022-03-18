@@ -164,7 +164,10 @@ export default function Dialog(props: IDialogChildProps) {
 
   // ========================= Render =========================
   return (
-    <div className={`${prefixCls}-root`} {...pickAttrs(props, { data: true })}>
+    <div
+      className={classNames(`${prefixCls}-root`, rootClassName)}
+      {...pickAttrs(props, { data: true })}
+    >
       <Mask
         prefixCls={prefixCls}
         visible={mask && visible}
@@ -173,7 +176,6 @@ export default function Dialog(props: IDialogChildProps) {
           zIndex,
           ...maskStyle,
         }}
-        rootClassName={rootClassName}
         maskProps={maskProps}
       />
       <div
