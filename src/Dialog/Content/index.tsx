@@ -142,6 +142,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         <div
           key="dialog-element"
           role="dialog"
+          aria-modal="true"
           ref={motionRef}
           style={{ ...motionStyle, ...style, ...contentStyle }}
           className={classNames(prefixCls, className, motionClassName)}
