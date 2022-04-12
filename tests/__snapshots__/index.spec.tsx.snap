@@ -15,6 +15,7 @@ exports[`dialog add rootClassName should render correct 1`] = `
     <div
       class="rc-dialog"
       role="dialog"
+      aria-modal="true"
       style="width: 600px; height: 903px;"
     >
       <div
@@ -62,6 +63,7 @@ exports[`dialog should render correct 1`] = `
     <div
       class="rc-dialog"
       role="dialog"
+      aria-modal="true"
     >
       <div
         aria-hidden="true"
