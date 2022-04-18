@@ -18,7 +18,7 @@ describe('dialog', () => {
   });
 
   it('should render correct', () => {
-    const wrapper = mount(<Dialog visible />);
+    const wrapper = mount(<Dialog title="Default" visible />);
     jest.runAllTimers();
     wrapper.update();
 

@@ -57,6 +57,7 @@ exports[`dialog should render correct 1`] = `
     class="rc-dialog-mask"
   />
   <div
+    aria-labelledby="test-id"
     class="rc-dialog-wrap"
     role="dialog"
     tabindex="-1"
@@ -82,6 +83,16 @@ exports[`dialog should render correct 1`] = `
             class="rc-dialog-close-x"
           />
         </button>
+        <div
+          class="rc-dialog-header"
+        >
+          <div
+            class="rc-dialog-title"
+            id="test-id"
+          >
+            Default
+          </div>
+        </div>
         <div
           class="rc-dialog-body"
         />
