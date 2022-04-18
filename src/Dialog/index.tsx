@@ -2,12 +2,13 @@ import * as React from 'react';
 import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import KeyCode from 'rc-util/lib/KeyCode';
+import useId from 'rc-util/lib/hooks/useId';
 import contains from 'rc-util/lib/Dom/contains';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
-import { getMotionName, getUUID } from '../util';
+import { getMotionName } from '../util';
 import type { ContentRef } from './Content';
 import Content from './Content';
 
@@ -57,10 +58,7 @@ export default function Dialog(props: IDialogChildProps) {
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
 
   // ========================== Init ==========================
-  const ariaIdRef = useRef<string>();
-  if (!ariaIdRef.current) {
-    ariaIdRef.current = `rcDialogTitle${getUUID()}`;
-  }
+  const ariaId = useId();
 
   // ========================= Events =========================
   function onDialogVisibleChanged(newVisible: boolean) {
@@ -184,7 +182,7 @@ export default function Dialog(props: IDialogChildProps) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        aria-labelledby={title ? ariaIdRef.current : null}
+        aria-labelledby={title ? ariaId : null}
         style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >
@@ -194,7 +192,7 @@ export default function Dialog(props: IDialogChildProps) {
           onMouseUp={onContentMouseUp}
           ref={contentRef}
           closable={closable}
-          ariaId={ariaIdRef.current}
+          ariaId={ariaId}
           prefixCls={prefixCls}
           visible={visible}
           onClose={onInternalClose}
