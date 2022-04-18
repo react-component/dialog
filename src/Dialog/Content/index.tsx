@@ -14,12 +14,12 @@ export type ContentProps = {
   onVisibleChanged: (visible: boolean) => void;
   onMouseDown: React.MouseEventHandler;
   onMouseUp: React.MouseEventHandler;
-} & IDialogChildProps
+} & IDialogChildProps;
 
 export type ContentRef = {
   focus: () => void;
   changeActive: (next: boolean) => void;
-}
+};
 
 const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   const {
@@ -141,7 +141,8 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       {({ className: motionClassName, style: motionStyle }, motionRef) => (
         <div
           key="dialog-element"
-          role="document"
+          role="dialog"
+          aria-modal="true"
           ref={motionRef}
           style={{ ...motionStyle, ...style, ...contentStyle }}
           className={classNames(prefixCls, className, motionClassName)}
