@@ -182,7 +182,6 @@ export default function Dialog(props: IDialogChildProps) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        aria-labelledby={title ? ariaId : null}
         style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >

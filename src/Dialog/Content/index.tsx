@@ -142,6 +142,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         <div
           key="dialog-element"
           role="dialog"
+          aria-labelledby={title ? ariaId : null}
           aria-modal="true"
           ref={motionRef}
           style={{ ...motionStyle, ...style, ...contentStyle }}
