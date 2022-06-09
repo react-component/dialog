@@ -15,8 +15,6 @@ export type ContentProps = {
 const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   const {
     prefixCls,
-    width,
-    height,
     title,
     style,
     className,
@@ -27,8 +25,6 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     ariaId,
     onVisibleChanged,
     mousePosition,
-
-    ...restProps
   } = props;
 
   const dialogRef = useRef<HTMLDivElement>();
@@ -65,7 +61,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     >
       {({ className: motionClassName, style: motionStyle }, motionRef) => (
         <Panel
-          {...restProps}
+          {...props}
           ref={ref}
           title={title}
           ariaId={ariaId}
