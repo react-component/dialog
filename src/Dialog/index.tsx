@@ -9,8 +9,8 @@ import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName } from '../util';
-import type { ContentRef } from './Content';
 import Content from './Content';
+import type { ContentRef } from './Content/Panel';
 
 export type IDialogChildProps = {
   // zombieJ: This should be handle on top instead of each Dialog.
