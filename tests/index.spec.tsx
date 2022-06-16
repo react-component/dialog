@@ -143,6 +143,29 @@ describe('dialog', () => {
     });
   });
 
+  it('destroy component when forceRender is true', () => {
+    const wrapper = mount(
+      <Dialog destroyOnClose forceRender>
+        <div>forceRender destroyOnClose</div>
+      </Dialog>,
+    );
+
+    expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender destroyOnClose');
+
+    // Hide
+    wrapper.setProps({ visible: true });
+    jest.runAllTimers();
+    wrapper.update();
+
+    // Show
+    wrapper.setProps({ visible: false });
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.find('.rc-dialog-body > div')).toHaveLength(0);
+    wrapper.unmount();
+  });
+
   it('esc to close', () => {
     const onClose = jest.fn();
     const wrapper = mount(<Dialog onClose={onClose} visible />);
