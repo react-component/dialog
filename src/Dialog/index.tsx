@@ -5,6 +5,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import useId from 'rc-util/lib/hooks/useId';
 import contains from 'rc-util/lib/Dom/contains';
 import pickAttrs from 'rc-util/lib/pickAttrs';
+import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
@@ -136,7 +137,7 @@ export default function Dialog(props: IDialogChildProps) {
   }
 
   // ========================= Effect =========================
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
     }
