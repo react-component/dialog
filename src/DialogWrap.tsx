@@ -1,6 +1,5 @@
 import * as React from 'react';
-import Portal from 'rc-util/lib/PortalWrapper';
-import type { IDialogChildProps } from './Dialog';
+import Portal from '@rc-component/portal';
 import Dialog from './Dialog';
 import type { IDialogPropTypes } from './IDialogPropTypes';
 
@@ -23,15 +22,15 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     }
   }, [visible]);
 
-  // 渲染在当前 dom 里；
-  if (getContainer === false) {
-    return (
-      <Dialog
-        {...props}
-        getOpenCount={() => 2} // 不对 body 做任何操作。。
-      />
-    );
-  }
+  // // 渲染在当前 dom 里；
+  // if (getContainer === false) {
+  //   return (
+  //     <Dialog
+  //       {...props}
+  //       getOpenCount={() => 2} // 不对 body 做任何操作。。
+  //     />
+  //   );
+  // }
 
   // Destroy on close will remove wrapped div
   if (!forceRender && destroyOnClose && !animatedVisible) {
@@ -39,18 +38,20 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
   }
 
   return (
-    <Portal visible={visible} forceRender={forceRender} getContainer={getContainer}>
-      {(childProps: IDialogChildProps) => (
-        <Dialog
-          {...props}
-          destroyOnClose={destroyOnClose}
-          afterClose={() => {
-            afterClose?.();
-            setAnimatedVisible(false);
-          }}
-          {...childProps}
-        />
-      )}
+    <Portal
+      open={visible || forceRender || animatedVisible}
+      autoDestroy={false}
+      getContainer={getContainer}
+      autoLock={visible || animatedVisible}
+    >
+      <Dialog
+        {...props}
+        destroyOnClose={destroyOnClose}
+        afterClose={() => {
+          afterClose?.();
+          setAnimatedVisible(false);
+        }}
+      />
     </Portal>
   );
 };

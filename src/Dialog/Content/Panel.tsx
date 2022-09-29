@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import classNames from 'classnames';
-import type { IDialogChildProps } from '..';
 import MemoChildren from './MemoChildren';
+import type { IDialogPropTypes } from '../../IDialogPropTypes';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
-export interface PanelProps extends Omit<IDialogChildProps, 'getOpenCount'> {
+export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   prefixCls: string;
   ariaId?: string;
   onMouseDown?: React.MouseEventHandler;
