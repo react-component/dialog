@@ -1,7 +1,5 @@
 import * as React from 'react';
-// import Portal from 'rc-util/lib/PortalWrapper';
 import Portal from '@rc-component/portal';
-// import type { IDialogChildProps } from './Dialog';
 import Dialog from './Dialog';
 import type { IDialogPropTypes } from './IDialogPropTypes';
 
@@ -45,11 +43,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
       autoDestroy={false}
       getContainer={getContainer}
       autoLock={visible || animatedVisible}
-      // visible={visible}
-      // forceRender={forceRender}
-      // getContainer={getContainer}
     >
-      {/* {(childProps: IDialogChildProps) => ( */}
       <Dialog
         {...props}
         destroyOnClose={destroyOnClose}
@@ -57,9 +51,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
           afterClose?.();
           setAnimatedVisible(false);
         }}
-        // {...childProps}
       />
-      {/* )} */}
     </Portal>
   );
 };
