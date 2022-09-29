@@ -1,9 +1,9 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React, { cloneElement } from 'react';
 import { act } from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
-import Portal from 'rc-util/lib/Portal';
 import KeyCode from 'rc-util/lib/KeyCode';
 import type { DialogProps } from '../src';
 import Dialog from '../src';
@@ -295,23 +295,24 @@ describe('dialog', () => {
 
   describe('getContainer is false', () => {
     it('not set', () => {
-      const wrapper = mount(
+      const { container } = render(
         <Dialog visible>
-          <div>forceRender element</div>
+          <div className="bamboo" />
         </Dialog>,
       );
-      expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender element');
-      expect(wrapper.find(Portal)).toHaveLength(1);
+
+      expect(container.querySelector('.bamboo')).toBeFalsy();
+      expect(document.body.querySelector('.bamboo')).toBeTruthy();
     });
 
     it('set to false', () => {
-      const wrapper = mount(
+      const { container } = render(
         <Dialog visible getContainer={false}>
-          <div>forceRender element</div>
+          <div className="bamboo" />
         </Dialog>,
       );
-      expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender element');
-      expect(wrapper.find(Portal)).toHaveLength(0);
+
+      expect(container.querySelector('.bamboo')).toBeTruthy();
     });
   });
 

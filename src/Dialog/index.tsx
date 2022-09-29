@@ -5,28 +5,28 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import useId from 'rc-util/lib/hooks/useId';
 import contains from 'rc-util/lib/Dom/contains';
 import pickAttrs from 'rc-util/lib/pickAttrs';
-import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
+// import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
 import { getMotionName } from '../util';
 import Content from './Content';
 import type { ContentRef } from './Content/Panel';
 
-export type IDialogChildProps = {
-  // zombieJ: This should be handle on top instead of each Dialog.
-  // TODO: refactor to remove this.
-  getOpenCount: () => number;
-  scrollLocker?: ScollLocker;
-} & IDialogPropTypes;
+// export type IDialogChildProps = {
+//   // zombieJ: This should be handle on top instead of each Dialog.
+//   // TODO: refactor to remove this.
+//   // getOpenCount: () => number;
+//   // scrollLocker?: ScollLocker;
+// } & IDialogPropTypes;
 
-export default function Dialog(props: IDialogChildProps) {
+export default function Dialog(props: IDialogPropTypes) {
   const {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
     keyboard = true,
     focusTriggerAfterClose = true,
-    scrollLocker,
+    // scrollLocker,
 
     // Wrapper
     wrapStyle,
@@ -151,13 +151,13 @@ export default function Dialog(props: IDialogChildProps) {
     [],
   );
 
-  useEffect(() => {
-    if (animatedVisible) {
-      scrollLocker?.lock();
-      return scrollLocker?.unLock;
-    }
-    return () => {};
-  }, [animatedVisible, scrollLocker]);
+  // useEffect(() => {
+  //   if (animatedVisible) {
+  //     scrollLocker?.lock();
+  //     return scrollLocker?.unLock;
+  //   }
+  //   return () => {};
+  // }, [animatedVisible, scrollLocker]);
 
   // ========================= Render =========================
   return (
