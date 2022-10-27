@@ -85,7 +85,7 @@ export default function Dialog(props: IDialogPropTypes) {
 
   // >>> Content
   const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<NodeJS.Timeout>();
+  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // We need record content click incase content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {
