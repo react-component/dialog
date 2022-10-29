@@ -7,13 +7,6 @@ export function getMotionName(prefixCls: string, transitionName?: string, animat
   return motionName;
 }
 
-// ================================ UUID ================================
-let uuid = -1;
-export function getUUID() {
-  uuid += 1;
-  return uuid;
-}
-
 // =============================== Offset ===============================
 function getScroll(w: Window, top?: boolean): number {
   let ret = w[`page${top ? 'Y' : 'X'}Offset`];
@@ -30,7 +23,7 @@ function getScroll(w: Window, top?: boolean): number {
 
 type CompatibleDocument = {
   parentWindow?: Window;
-} & Document
+} & Document;
 
 export function offset(el: Element) {
   const rect = el.getBoundingClientRect();

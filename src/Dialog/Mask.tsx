@@ -8,7 +8,7 @@ export type MaskProps = {
   motionName?: string;
   style?: React.CSSProperties;
   maskProps?: React.HTMLAttributes<HTMLDivElement>;
-}
+};
 
 export default function Mask(props: MaskProps) {
   const { prefixCls, style, visible, maskProps, motionName } = props;
@@ -20,8 +20,9 @@ export default function Mask(props: MaskProps) {
       motionName={motionName}
       leavedClassName={`${prefixCls}-mask-hidden`}
     >
-      {({ className: motionClassName, style: motionStyle }) => (
+      {({ className: motionClassName, style: motionStyle }, ref) => (
         <div
+          ref={ref}
           style={{ ...motionStyle, ...style }}
           className={classNames(`${prefixCls}-mask`, motionClassName)}
           {...maskProps}
