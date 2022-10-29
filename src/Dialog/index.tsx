@@ -13,21 +13,14 @@ import { getMotionName } from '../util';
 import Content from './Content';
 import type { ContentRef } from './Content/Panel';
 
-export type IDialogChildProps = {
-  // zombieJ: This should be handle on top instead of each Dialog.
-  // TODO: refactor to remove this.
-  getOpenCount: () => number;
-  scrollLocker?: ScollLocker;
-} & IDialogPropTypes;
-
-export default function Dialog(props: IDialogChildProps) {
+export default function Dialog(props: IDialogPropTypes) {
   const {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
     keyboard = true,
     focusTriggerAfterClose = true,
-    scrollLocker,
+    // scrollLocker,
 
     // Wrapper
     wrapStyle,
@@ -94,7 +87,7 @@ export default function Dialog(props: IDialogChildProps) {
 
   // >>> Content
   const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<NodeJS.Timeout>();
+  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // We need record content click incase content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {
@@ -152,13 +145,13 @@ export default function Dialog(props: IDialogChildProps) {
     [],
   );
 
-  useEffect(() => {
-    if (animatedVisible) {
-      scrollLocker?.lock();
-      return scrollLocker?.unLock;
-    }
-    return () => {};
-  }, [animatedVisible, scrollLocker]);
+  // useEffect(() => {
+  //   if (animatedVisible) {
+  //     scrollLocker?.lock();
+  //     return scrollLocker?.unLock;
+  //   }
+  //   return () => {};
+  // }, [animatedVisible, scrollLocker]);
 
   // ========================= Render =========================
   return (
