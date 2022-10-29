@@ -1,6 +1,8 @@
 import DialogWrap from './DialogWrap';
-import { IDialogPropTypes as DialogProps } from './IDialogPropTypes';
+import Panel from './Dialog/Content/Panel';
+import type { IDialogPropTypes as DialogProps } from './IDialogPropTypes';
 
-export { DialogProps };
+export type { DialogProps };
+export { Panel };
 
 export default DialogWrap;

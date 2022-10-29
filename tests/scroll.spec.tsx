@@ -1,6 +1,6 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import Dialog from '../src';
 
 /**
@@ -17,25 +17,22 @@ describe('Dialog.Scroll', () => {
   });
 
   it('Single Dialog body overflow set correctly', () => {
-    const wrapper = mount(<Dialog />, { attachTo: document.body });
-    document.body.style.overflow = 'scroll';
+    const { unmount, rerender } = render(<Dialog visible />);
 
-    wrapper.setProps({ visible: true });
-    jest.runAllTimers();
-    wrapper.update();
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body).toHaveStyle({
+      overflowY: 'hidden',
+    });
 
-    wrapper.setProps({ visible: false });
-    jest.runAllTimers();
-    wrapper.update();
-    expect(document.body.style.overflow).toBe('scroll');
+    rerender(<Dialog />);
+    expect(document.body).not.toHaveStyle({
+      overflowY: 'hidden',
+    });
 
-    wrapper.unmount();
+    // wrapper.unmount();
+    unmount();
   });
 
   it('Multiple Dialog body overflow set correctly', () => {
-    document.body.style.overflow = 'scroll';
-
     const Demo = ({ visible = false, visible2 = false, ...restProps }) => (
       <div>
         <Dialog {...restProps} visible={visible} />
@@ -43,49 +40,42 @@ describe('Dialog.Scroll', () => {
       </div>
     );
 
-    const wrapper = mount(<Demo />, { attachTo: document.body });
+    const { rerender, unmount } = render(<Demo />);
 
-    expect(wrapper.find('.rc-dialog').length).toBe(0);
+    expect(document.querySelector('.rc-dialog')).toBeFalsy();
 
-    wrapper.setProps({ visible: true });
-    jest.runAllTimers();
-
-    expect(wrapper.find('div.rc-dialog').length).toBe(1);
-    expect(document.body.style.overflow).toBe('hidden');
-
-    wrapper.setProps({ visible2: true });
-    jest.runAllTimers();
-
-    expect(wrapper.find('div.rc-dialog').length).toBe(2);
-    expect(document.body.style.overflow).toBe('hidden');
-
-    wrapper.setProps({
-      visible: false,
-      visible2: false,
+    rerender(<Demo visible />);
+    expect(document.querySelectorAll('.rc-dialog')).toHaveLength(1);
+    expect(document.body).toHaveStyle({
+      overflowY: 'hidden',
     });
-    jest.runAllTimers();
 
-    expect(document.body.style.overflow).toBe('scroll');
-
-    wrapper.setProps({
-      visible: true,
+    rerender(<Demo visible visible2 />);
+    expect(document.querySelectorAll('.rc-dialog')).toHaveLength(2);
+    expect(document.body).toHaveStyle({
+      overflowY: 'hidden',
     });
-    jest.runAllTimers();
-    expect(document.body.style.overflow).toBe('hidden');
 
-    wrapper.setProps({
-      visible: false,
-      visible2: true,
+    rerender(<Demo />);
+    expect(document.body).not.toHaveStyle({
+      overflowY: 'hidden',
     });
-    jest.runAllTimers();
-    expect(document.body.style.overflow).toBe('hidden');
 
-    wrapper.setProps({
-      visible: false,
-      visible2: false,
+    rerender(<Demo visible />);
+    expect(document.body).toHaveStyle({
+      overflowY: 'hidden',
     });
-    jest.runAllTimers();
-    expect(document.body.style.overflow).toBe('scroll');
-    wrapper.unmount();
+
+    rerender(<Demo visible2 />);
+    expect(document.body).toHaveStyle({
+      overflowY: 'hidden',
+    });
+
+    rerender(<Demo />);
+    expect(document.body).not.toHaveStyle({
+      overflowY: 'hidden',
+    });
+
+    unmount();
   });
 });

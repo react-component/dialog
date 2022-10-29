@@ -2,32 +2,25 @@ import * as React from 'react';
 import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import KeyCode from 'rc-util/lib/KeyCode';
+import useId from 'rc-util/lib/hooks/useId';
 import contains from 'rc-util/lib/Dom/contains';
-import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import Mask from './Mask';
-import { getMotionName, getUUID } from '../util';
-import type { ContentRef } from './Content';
+import { getMotionName } from '../util';
 import Content from './Content';
+import type { ContentRef } from './Content/Panel';
 
-export type IDialogChildProps = {
-  // zombieJ: This should be handle on top instead of each Dialog.
-  // TODO: refactor to remove this.
-  getOpenCount: () => number;
-  scrollLocker?: ScollLocker;
-} & IDialogPropTypes;
-
-export default function Dialog(props: IDialogChildProps) {
+export default function Dialog(props: IDialogPropTypes) {
   const {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
     keyboard = true,
     focusTriggerAfterClose = true,
-    scrollLocker,
+    // scrollLocker,
 
     // Wrapper
-    title,
     wrapStyle,
     wrapClassName,
     wrapProps,
@@ -46,6 +39,7 @@ export default function Dialog(props: IDialogChildProps) {
     maskClosable = true,
     maskStyle,
     maskProps,
+    rootClassName,
   } = props;
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>();
@@ -55,10 +49,7 @@ export default function Dialog(props: IDialogChildProps) {
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
 
   // ========================== Init ==========================
-  const ariaIdRef = useRef<string>();
-  if (!ariaIdRef.current) {
-    ariaIdRef.current = `rcDialogTitle${getUUID()}`;
-  }
+  const ariaId = useId();
 
   // ========================= Events =========================
   function onDialogVisibleChanged(newVisible: boolean) {
@@ -94,7 +85,7 @@ export default function Dialog(props: IDialogChildProps) {
 
   // >>> Content
   const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<NodeJS.Timeout>();
+  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // We need record content click incase content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {
@@ -152,17 +143,20 @@ export default function Dialog(props: IDialogChildProps) {
     [],
   );
 
-  useEffect(() => {
-    if (animatedVisible) {
-      scrollLocker?.lock();
-      return scrollLocker?.unLock;
-    }
-    return () => {};
-  }, [animatedVisible, scrollLocker]);
+  // useEffect(() => {
+  //   if (animatedVisible) {
+  //     scrollLocker?.lock();
+  //     return scrollLocker?.unLock;
+  //   }
+  //   return () => {};
+  // }, [animatedVisible, scrollLocker]);
 
   // ========================= Render =========================
   return (
-    <div className={`${prefixCls}-root`}>
+    <div
+      className={classNames(`${prefixCls}-root`, rootClassName)}
+      {...pickAttrs(props, { data: true })}
+    >
       <Mask
         prefixCls={prefixCls}
         visible={mask && visible}
@@ -179,8 +173,6 @@ export default function Dialog(props: IDialogChildProps) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        role="dialog"
-        aria-labelledby={title ? ariaIdRef.current : null}
         style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >
@@ -190,7 +182,7 @@ export default function Dialog(props: IDialogChildProps) {
           onMouseUp={onContentMouseUp}
           ref={contentRef}
           closable={closable}
-          ariaId={ariaIdRef.current}
+          ariaId={ariaId}
           prefixCls={prefixCls}
           visible={visible}
           onClose={onInternalClose}
