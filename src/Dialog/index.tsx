@@ -143,14 +143,6 @@ export default function Dialog(props: IDialogPropTypes) {
     [],
   );
 
-  // useEffect(() => {
-  //   if (animatedVisible) {
-  //     scrollLocker?.lock();
-  //     return scrollLocker?.unLock;
-  //   }
-  //   return () => {};
-  // }, [animatedVisible, scrollLocker]);
-
   // ========================= Render =========================
   return (
     <div
@@ -184,7 +176,7 @@ export default function Dialog(props: IDialogPropTypes) {
           closable={closable}
           ariaId={ariaId}
           prefixCls={prefixCls}
-          visible={visible}
+          visible={visible && animatedVisible}
           onClose={onInternalClose}
           onVisibleChanged={onDialogVisibleChanged}
           motionName={getMotionName(prefixCls, transitionName, animation)}
