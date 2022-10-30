@@ -60,7 +60,7 @@
     "@types/keyv": "3.1.4",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
-    "@umijs/fabric": "^2.0.0",
+    "@umijs/fabric": "^3.0.0",
     "bluebird": "~3.7.2",
     "bootstrap": "^4.3.1",
     "cross-env": "^7.0.0",
