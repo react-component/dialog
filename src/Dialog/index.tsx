@@ -132,7 +132,6 @@ export default function Dialog(props: IDialogPropTypes) {
     if (visible) {
       setAnimatedVisible(true);
     }
-    return () => {};
   }, [visible]);
 
   // Remove direct should also check the scroll bar update
