@@ -37,7 +37,10 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     contentStyle.transformOrigin = transformOrigin;
   }
 
-  function onPrepare() {
+  function onPrepare(dialog) {
+    if (dialog) {
+      dialog.style.display = null;
+    }
     const elementOffset = offset(dialogRef.current);
 
     setTransformOrigin(
@@ -45,6 +48,10 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         ? `${mousePosition.x - elementOffset.left}px ${mousePosition.y - elementOffset.top}px`
         : '',
     );
+  }
+
+  function onLeave(dialog) {
+    dialog.style.display = 'none';
   }
 
   // ============================= Render =============================
@@ -57,6 +64,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       forceRender={forceRender}
       motionName={motionName}
       removeOnLeave={destroyOnClose}
+      onLeaveEnd={onLeave}
       ref={dialogRef}
     >
       {({ className: motionClassName, style: motionStyle }, motionRef) => (
