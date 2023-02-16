@@ -51,14 +51,23 @@ export default function Dialog(props: IDialogPropTypes) {
   // ========================== Init ==========================
   const ariaId = useId();
 
+  function saveLastOutSideActiveElementRef() {
+    if (!contains(wrapperRef.current, document.activeElement)) {
+      lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
+    }
+  }
+
+  function focusDialogContent() {
+    if (!contains(wrapperRef.current, document.activeElement)) {
+      contentRef.current?.focus();
+    }
+  }
+
   // ========================= Events =========================
   function onDialogVisibleChanged(newVisible: boolean) {
+    // Try to focus
     if (newVisible) {
-      // Try to focus
-      if (!contains(wrapperRef.current, document.activeElement)) {
-        lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
-        contentRef.current?.focus();
-      }
+      focusDialogContent();
     } else {
       // Clean up scroll bar & focus back
       setAnimatedVisible(false);
@@ -131,6 +140,7 @@ export default function Dialog(props: IDialogPropTypes) {
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
+      saveLastOutSideActiveElementRef();
     }
   }, [visible]);
 

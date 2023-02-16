@@ -1,5 +1,5 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import React, { cloneElement } from 'react';
+import React, { cloneElement, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { render } from '@testing-library/react';
 import type { ReactWrapper } from 'enzyme';
@@ -360,6 +360,60 @@ describe('dialog', () => {
       />,
     );
     expect(modalRender.find('.rc-dialog-content').props().style.background).toEqual('#1890ff');
+  });
+
+  describe('focusTriggerAfterClose', () => {
+    it('should focus trigger after close dialog', () => {
+      const Demo = () => {
+        const [visible, setVisible] = React.useState(false);
+        return (
+          <>
+            <button onClick={() => setVisible(true)}>trigger</button>
+            <Dialog visible={visible} onClose={() => setVisible(false)}>
+              content
+            </Dialog>
+          </>
+        );
+      };
+      const wrapper = mount(<Demo />, { attachTo: document.body });
+      const trigger = wrapper.find('button').at(0);
+      (trigger.getDOMNode() as any).focus();
+      trigger.simulate('click');
+      jest.runAllTimers();
+      const closeButton = wrapper.find('.rc-dialog-close');
+      closeButton.simulate('click');
+      jest.runAllTimers();
+      expect(document.activeElement).toBe(trigger.getDOMNode());
+      wrapper.unmount();
+    });
+
+    it('should focus trigger after close dialog when contains focusable element', () => {
+      const Demo = () => {
+        const [visible, setVisible] = React.useState(false);
+        const inputRef = React.useRef(null);
+        useEffect(() => {
+          inputRef.current?.focus();
+        }, []);
+        return (
+          <>
+            <button onClick={() => setVisible(true)}>trigger</button>
+            <Dialog visible={visible} onClose={() => setVisible(false)}>
+              <input ref={inputRef} />
+            </Dialog>
+          </>
+        );
+      };
+      const wrapper = mount(<Demo />, { attachTo: document.body });
+      const trigger = wrapper.find('button').at(0);
+      (trigger.getDOMNode() as any).focus();
+      trigger.simulate('click');
+      jest.runAllTimers();
+      const closeButton = wrapper.find('.rc-dialog-close');
+      closeButton.simulate('click');
+      jest.runAllTimers();
+      expect(document.activeElement).toBe(trigger.getDOMNode());
+      wrapper.unmount();
+    });
   });
 
   describe('size should work', () => {
