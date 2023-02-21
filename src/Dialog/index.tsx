@@ -87,7 +87,7 @@ export default function Dialog(props: IDialogPropTypes) {
         afterClose?.();
       }
     }
-    onOpenChanged?.(newVisible)
+    onOpenChanged?.(newVisible);
   }
 
   function onInternalClose(e: React.SyntheticEvent) {
