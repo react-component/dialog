@@ -25,7 +25,7 @@ export default function Dialog(props: IDialogPropTypes) {
     wrapClassName,
     wrapProps,
     onClose,
-    onOpenChanged,
+    onOpenChange,
     afterClose,
 
     // Dialog
@@ -87,7 +87,7 @@ export default function Dialog(props: IDialogPropTypes) {
         afterClose?.();
       }
     }
-    onOpenChanged?.(newVisible);
+    onOpenChange?.(newVisible);
   }
 
   function onInternalClose(e: React.SyntheticEvent) {

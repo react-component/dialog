@@ -8,7 +8,7 @@ export type IDialogPropTypes = {
   mask?: boolean;
   children?: any;
   afterClose?: () => any;
-  onOpenChanged?: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
   closable?: boolean;
   maskClosable?: boolean;

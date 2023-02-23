@@ -506,17 +506,17 @@ describe('dialog', () => {
     });
   });
 
-  describe('onOpenChanged', () => {
-    it('should trigger onOpenChanged when visible changed', () => {
-      const onOpenChanged = jest.fn();
+  describe('onOpenChange', () => {
+    it('should trigger onOpenChange when visible changed', () => {
+      const onOpenChange = jest.fn();
 
-      const wrapper = mount(<Dialog onOpenChanged={onOpenChanged} visible />);
+      const wrapper = mount(<Dialog onOpenChange={onOpenChange} visible />);
       jest.runAllTimers();
 
       wrapper.setProps({ visible: false });
       jest.runAllTimers();
 
-      expect(onOpenChanged).toHaveBeenCalledTimes(2);
+      expect(onOpenChange).toHaveBeenCalledTimes(2);
     });
   });
 });
