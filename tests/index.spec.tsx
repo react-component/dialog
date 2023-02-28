@@ -1,10 +1,10 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import React, { cloneElement, useEffect } from 'react';
-import { act } from 'react-dom/test-utils';
 import { render } from '@testing-library/react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
 import KeyCode from 'rc-util/lib/KeyCode';
+import React, { cloneElement, useEffect } from 'react';
+import { act } from 'react-dom/test-utils';
 import type { DialogProps } from '../src';
 import Dialog from '../src';
 
@@ -506,17 +506,17 @@ describe('dialog', () => {
     });
   });
 
-  describe('onOpenChange', () => {
-    it('should trigger onOpenChange when visible changed', () => {
-      const onOpenChange = jest.fn();
+  describe('afterOpenChange', () => {
+    it('should trigger afterOpenChange when visible changed', () => {
+      const afterOpenChange = jest.fn();
 
-      const wrapper = mount(<Dialog onOpenChange={onOpenChange} visible />);
+      const wrapper = mount(<Dialog afterOpenChange={afterOpenChange} visible />);
       jest.runAllTimers();
 
       wrapper.setProps({ visible: false });
       jest.runAllTimers();
 
-      expect(onOpenChange).toHaveBeenCalledTimes(2);
+      expect(afterOpenChange).toHaveBeenCalledTimes(2);
     });
   });
 });
