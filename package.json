@@ -85,7 +85,7 @@
     "rc-drawer": "^4.4.0",
     "rc-select": "^12.1.13",
     "rc-test": "^7.0.14",
-    "react": "^16.9.0",
+    "react": "^18.2.0",
     "react-dom": "^16.9.0",
     "react-draggable": "^4.4.3",
     "typescript": "^4.0.2"
