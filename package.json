@@ -10,40 +10,43 @@
     "ui"
   ],
   "homepage": "http://github.com/react-component/dialog",
-  "author": "yiminghe@gmail.com",
+  "bugs": {
+    "url": "http://github.com/react-component/dialog/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:react-component/dialog.git"
   },
-  "bugs": {
-    "url": "http://github.com/react-component/dialog/issues"
-  },
   "license": "MIT",
+  "author": "yiminghe@gmail.com",
+  "main": "./lib/index",
+  "module": "./es/index",
   "files": [
     "lib",
     "es",
     "assets/*.css",
     "dist"
   ],
-  "main": "./lib/index",
-  "module": "./es/index",
   "scripts": {
-    "start": "dumi dev",
+    "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/bootstrap.less assets/bootstrap.css",
+    "coverage": "rc-test --coverage",
+    "deploy": "npm run docs:build && npm run docs:deploy",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d .doc",
-    "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/bootstrap.less assets/bootstrap.css",
-    "deploy": "npm run docs:build && npm run docs:deploy",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
+    "now-build": "npm run docs:build",
+    "prepare": "husky install",
+    "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "test": "rc-test",
-    "coverage": "rc-test --coverage",
-    "now-build": "npm run docs:build"
+    "start": "dumi dev",
+    "test": "rc-test"
   },
-  "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+  "lint-staged": {
+    "**/*.{js,jsx,tsx,ts,md,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
@@ -75,8 +78,10 @@
     "father": "^4.1.5",
     "gh-pages": "^4.0.0",
     "glob": "^7.1.6",
+    "husky": "^8.0.3",
     "jquery": "^3.3.1",
     "less": "^3.12.2",
+    "lint-staged": "^13.1.2",
     "np": "^7.0.0",
     "prettier": "^2.1.1",
     "rc-drawer": "^4.4.0",
@@ -86,5 +91,9 @@
     "react-dom": "^16.9.0",
     "react-draggable": "^4.4.3",
     "typescript": "^4.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   }
 }
