@@ -28,6 +28,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     footer,
     closable,
     closeIcon,
+    fullscreenIcon,
     onClose,
     children,
     bodyStyle,
@@ -40,6 +41,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     forceRender,
     width,
     height,
+    fullscreenable
   } = props;
 
   // ================================= Refs =================================
@@ -61,14 +63,20 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   }));
 
   // ================================ Style =================================
-  const contentStyle: React.CSSProperties = {};
+  const [contentStyle, setContentStyle] = React.useState<React.CSSProperties>({
+    ...(width !== undefined ? { width } : {}),
+    ...(height !== undefined ? { height } : {})
+  });
 
-  if (width !== undefined) {
-    contentStyle.width = width;
-  }
-  if (height !== undefined) {
-    contentStyle.height = height;
-  }
+  const toggleFullscreen = () => {
+    if (width) {
+      if (width === contentStyle.width) {
+        setContentStyle({ width: '100%' });
+      } else {
+        setContentStyle({ width });
+      }
+    }
+  };
   // ================================ Render ================================
   let footerNode: React.ReactNode;
   if (footer) {
@@ -86,6 +94,16 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     );
   }
 
+  let fullscreen: React.ReactNode;
+  if (fullscreenable) {
+    const isFullscreen = '100%' === contentStyle.width;
+    fullscreen = (
+      <button type="button" onClick={toggleFullscreen} aria-label="Fullscreen" className={`${prefixCls}-fullscreen`}>
+        {fullscreenIcon(isFullscreen) || <span className={`${prefixCls}-fullscreen-${isFullscreen ? 'out' : 'in'}`} />}
+      </button>
+    );
+  }
+
   let closer: React.ReactNode;
   if (closable) {
     closer = (
@@ -97,6 +115,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   const content = (
     <div className={`${prefixCls}-content`}>
+      {fullscreen}
       {closer}
       {headerNode}
       <div className={`${prefixCls}-body`} style={bodyStyle} {...bodyProps}>
