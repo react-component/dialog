@@ -76,7 +76,7 @@
     "eslint-plugin-react": "^7.20.6",
     "father": "^4.1.5",
     "gh-pages": "^4.0.0",
-    "glob": "^7.1.6",
+    "glob": "^9.1.2",
     "husky": "^8.0.3",
     "less": "^3.12.2",
     "lint-staged": "^13.1.2",
