@@ -1,5 +1,5 @@
-import type { ReactNode, CSSProperties, SyntheticEvent } from 'react';
 import type { GetContainer } from 'rc-util/lib/PortalWrapper';
+import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
 export type IDialogPropTypes = {
   className?: string;
@@ -8,6 +8,7 @@ export type IDialogPropTypes = {
   mask?: boolean;
   children?: any;
   afterClose?: () => any;
+  afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
   closable?: boolean;
   maskClosable?: boolean;

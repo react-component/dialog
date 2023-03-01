@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
-import KeyCode from 'rc-util/lib/KeyCode';
-import useId from 'rc-util/lib/hooks/useId';
 import contains from 'rc-util/lib/Dom/contains';
+import useId from 'rc-util/lib/hooks/useId';
+import KeyCode from 'rc-util/lib/KeyCode';
 import pickAttrs from 'rc-util/lib/pickAttrs';
+import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
-import Mask from './Mask';
 import { getMotionName } from '../util';
 import Content from './Content';
 import type { ContentRef } from './Content/Panel';
+import Mask from './Mask';
 
 export default function Dialog(props: IDialogPropTypes) {
   const {
@@ -25,6 +25,7 @@ export default function Dialog(props: IDialogPropTypes) {
     wrapClassName,
     wrapProps,
     onClose,
+    afterOpenChange,
     afterClose,
 
     // Dialog
@@ -86,6 +87,7 @@ export default function Dialog(props: IDialogPropTypes) {
         afterClose?.();
       }
     }
+    afterOpenChange?.(newVisible);
   }
 
   function onInternalClose(e: React.SyntheticEvent) {

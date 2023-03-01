@@ -504,4 +504,18 @@ describe('dialog', () => {
       expect(afterClose).toHaveBeenCalledTimes(0);
     });
   });
+
+  describe('afterOpenChange', () => {
+    it('should trigger afterOpenChange when visible changed', () => {
+      const afterOpenChange = jest.fn();
+
+      const wrapper = mount(<Dialog afterOpenChange={afterOpenChange} visible />);
+      jest.runAllTimers();
+
+      wrapper.setProps({ visible: false });
+      jest.runAllTimers();
+
+      expect(afterOpenChange).toHaveBeenCalledTimes(2);
+    });
+  });
 });
