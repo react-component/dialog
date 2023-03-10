@@ -24,20 +24,25 @@ exports[`dialog add rootClassName should render correct 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content"
+        style="outline: none;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Close"
-          class="rc-dialog-close"
-          type="button"
-        >
-          <span
-            class="rc-dialog-close-x"
-          />
-        </button>
         <div
-          class="rc-dialog-body"
-        />
+          class="rc-dialog-content"
+        >
+          <button
+            aria-label="Close"
+            class="rc-dialog-close"
+            type="button"
+          >
+            <span
+              class="rc-dialog-close-x"
+            />
+          </button>
+          <div
+            class="rc-dialog-body"
+          />
+        </div>
       </div>
       <div
         aria-hidden="true"
@@ -72,30 +77,35 @@ exports[`dialog should render correct 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content"
+        style="outline: none;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Close"
-          class="rc-dialog-close"
-          type="button"
-        >
-          <span
-            class="rc-dialog-close-x"
-          />
-        </button>
         <div
-          class="rc-dialog-header"
+          class="rc-dialog-content"
         >
-          <div
-            class="rc-dialog-title"
-            id="test-id"
+          <button
+            aria-label="Close"
+            class="rc-dialog-close"
+            type="button"
           >
-            Default
+            <span
+              class="rc-dialog-close-x"
+            />
+          </button>
+          <div
+            class="rc-dialog-header"
+          >
+            <div
+              class="rc-dialog-title"
+              id="test-id"
+            >
+              Default
+            </div>
           </div>
+          <div
+            class="rc-dialog-body"
+          />
         </div>
-        <div
-          class="rc-dialog-body"
-        />
       </div>
       <div
         aria-hidden="true"

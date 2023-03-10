@@ -232,19 +232,28 @@ describe('dialog', () => {
     expect(document.querySelector('input')).toHaveFocus();
   });
 
+  it('focus content', () => {
+    const wrapper = mount(<Dialog visible />, { attachTo: document.body });
+    const content = document.querySelector(
+      '.rc-dialog > div:first-child + div',
+    ) as unknown as HTMLDivElement;
+    expect(document.activeElement).toBe(content);
+    wrapper.unmount();
+  });
+
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = document.querySelectorAll(
-        '.rc-dialog-content + div',
-      )[0] as unknown as HTMLDivElement;
+      const sentinelEnd = document.querySelector(
+        '.rc-dialog > div:last-child',
+      ) as unknown as HTMLDivElement;
       sentinelEnd.focus();
 
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
         keyCode: KeyCode.TAB,
       });
 
-      const sentinelStart = document.querySelectorAll('.rc-dialog > div')[0];
+      const sentinelStart = document.querySelector('.rc-dialog > div:first-child');
       expect(document.activeElement).toBe(sentinelStart);
 
       wrapper.unmount();
@@ -252,11 +261,16 @@ describe('dialog', () => {
 
     it('trap focus after shift-tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
+      const sentinelStart = document.querySelector(
+        '.rc-dialog > div:first-child',
+      ) as unknown as HTMLDivElement;
+      sentinelStart.focus();
+
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
         keyCode: KeyCode.TAB,
         shiftKey: true,
       });
-      const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
       expect(document.activeElement).toBe(sentinelEnd);
 
       wrapper.unmount();
