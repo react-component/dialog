@@ -1,5 +1,5 @@
-import * as React from 'react';
 import Portal from '@rc-component/portal';
+import * as React from 'react';
 import Dialog from './Dialog';
 import type { IDialogPropTypes } from './IDialogPropTypes';
 
@@ -41,7 +41,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     <Portal
       open={visible || forceRender || animatedVisible}
       autoDestroy={false}
-      getContainer={getContainer || 'body'}
+      getContainer={getContainer === false ? false : getContainer || 'body'}
       autoLock={visible || animatedVisible}
     >
       <Dialog
