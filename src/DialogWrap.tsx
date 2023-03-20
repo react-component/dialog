@@ -41,7 +41,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     <Portal
       open={visible || forceRender || animatedVisible}
       autoDestroy={false}
-      getContainer={getContainer === false ? false : getContainer || 'body'}
+      getContainer={getContainer === undefined ? 'body' : getContainer}
       autoLock={visible || animatedVisible}
     >
       <Dialog
