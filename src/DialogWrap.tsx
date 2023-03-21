@@ -1,7 +1,8 @@
-import * as React from 'react';
 import Portal from '@rc-component/portal';
+import * as React from 'react';
 import Dialog from './Dialog';
 import type { IDialogPropTypes } from './IDialogPropTypes';
+import { isNil } from './util';
 
 // fix issue #10656
 /*
@@ -41,7 +42,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     <Portal
       open={visible || forceRender || animatedVisible}
       autoDestroy={false}
-      getContainer={getContainer}
+      getContainer={isNil(getContainer) ? 'body' : getContainer}
       autoLock={visible || animatedVisible}
     >
       <Dialog

@@ -222,8 +222,7 @@ describe('dialog', () => {
     expect(wrapper.find('.rc-dialog-footer').text()).toBe('test');
   });
 
-  // 失效了，需要修复
-  it.skip('support input autoFocus', () => {
+  it('support input autoFocus', () => {
     render(
       <Dialog visible>
         <input autoFocus />
