@@ -37,3 +37,7 @@ export function offset(el: Element) {
   pos.top += getScroll(w, true);
   return pos;
 }
+
+export function isNil(val: any) {
+  return val === undefined || val === null;
+}
