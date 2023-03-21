@@ -60,8 +60,9 @@ export default function Dialog(props: IDialogPropTypes) {
   }
 
   function focusDialogContent() {
-    if (originFocusEl) return originFocusEl.focus();
-    if (contains(wrapperRef.current, document.activeElement)) {
+    if (originFocusEl) {
+      originFocusEl.focus();
+    } else if (contains(wrapperRef.current, document.activeElement)) {
       setOriginFocusEl(document.activeElement as HTMLElement);
     } else {
       contentRef.current?.focus();
