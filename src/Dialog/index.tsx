@@ -48,6 +48,7 @@ export default function Dialog(props: IDialogPropTypes) {
   const contentRef = useRef<ContentRef>();
 
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
+  const [originFocusEl, setOriginFocusEl] = React.useState<HTMLElement>();
 
   // ========================== Init ==========================
   const ariaId = useId();
@@ -59,7 +60,10 @@ export default function Dialog(props: IDialogPropTypes) {
   }
 
   function focusDialogContent() {
-    if (!contains(wrapperRef.current, document.activeElement)) {
+    if (originFocusEl) return originFocusEl.focus();
+    if (contains(wrapperRef.current, document.activeElement)) {
+      setOriginFocusEl(document.activeElement as HTMLElement);
+    } else {
       contentRef.current?.focus();
     }
   }
