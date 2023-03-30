@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
 import classNames from 'classnames';
-import MemoChildren from './MemoChildren';
+import React, { useRef } from 'react';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
+import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
@@ -121,11 +121,21 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-      <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
+      <div
+        tabIndex={visible ? 0 : -1}
+        ref={sentinelStartRef}
+        style={sentinelStyle}
+        aria-hidden={!visible}
+      />
       <MemoChildren shouldUpdate={visible || forceRender}>
         {modalRender ? modalRender(content) : content}
       </MemoChildren>
-      <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
+      <div
+        tabIndex={visible ? 0 : -1}
+        ref={sentinelEndRef}
+        style={sentinelStyle}
+        aria-hidden={!visible}
+      />
     </div>
   );
 });
