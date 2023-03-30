@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
 import * as React from 'react';
 import { useRef } from 'react';
+import classNames from 'classnames';
+import CSSMotion from 'rc-motion';
 import { offset } from '../../util';
-import type { ContentRef, PanelProps } from './Panel';
+import type { PanelProps, ContentRef } from './Panel';
 import Panel from './Panel';
 
 export type ContentProps = {

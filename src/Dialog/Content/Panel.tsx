@@ -1,7 +1,7 @@
-import classNames from 'classnames';
 import React, { useRef } from 'react';
-import type { IDialogPropTypes } from '../../IDialogPropTypes';
+import classNames from 'classnames';
 import MemoChildren from './MemoChildren';
+import type { IDialogPropTypes } from '../../IDialogPropTypes';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
