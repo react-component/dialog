@@ -1,39 +1,31 @@
-import * as React from 'react';
-import { useRef, useEffect } from 'react';
 import classNames from 'classnames';
-import KeyCode from 'rc-util/lib/KeyCode';
-import useId from 'rc-util/lib/hooks/useId';
 import contains from 'rc-util/lib/Dom/contains';
+import useId from 'rc-util/lib/hooks/useId';
+import KeyCode from 'rc-util/lib/KeyCode';
 import pickAttrs from 'rc-util/lib/pickAttrs';
-import type ScollLocker from 'rc-util/lib/Dom/scrollLocker';
+import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
-import Mask from './Mask';
 import { getMotionName } from '../util';
-import type { ContentRef } from './Content';
 import Content from './Content';
+import type { ContentRef } from './Content/Panel';
+import Mask from './Mask';
 
-export type IDialogChildProps = {
-  // zombieJ: This should be handle on top instead of each Dialog.
-  // TODO: refactor to remove this.
-  getOpenCount: () => number;
-  scrollLocker?: ScollLocker;
-} & IDialogPropTypes;
-
-export default function Dialog(props: IDialogChildProps) {
+export default function Dialog(props: IDialogPropTypes) {
   const {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
     keyboard = true,
     focusTriggerAfterClose = true,
-    scrollLocker,
+    // scrollLocker,
 
     // Wrapper
-    title,
     wrapStyle,
     wrapClassName,
     wrapProps,
     onClose,
+    afterOpenChange,
     afterClose,
 
     // Dialog
@@ -60,14 +52,23 @@ export default function Dialog(props: IDialogChildProps) {
   // ========================== Init ==========================
   const ariaId = useId();
 
+  function saveLastOutSideActiveElementRef() {
+    if (!contains(wrapperRef.current, document.activeElement)) {
+      lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
+    }
+  }
+
+  function focusDialogContent() {
+    if (!contains(wrapperRef.current, document.activeElement)) {
+      contentRef.current?.focus();
+    }
+  }
+
   // ========================= Events =========================
   function onDialogVisibleChanged(newVisible: boolean) {
+    // Try to focus
     if (newVisible) {
-      // Try to focus
-      if (!contains(wrapperRef.current, document.activeElement)) {
-        lastOutSideActiveElementRef.current = document.activeElement as HTMLElement;
-        contentRef.current?.focus();
-      }
+      focusDialogContent();
     } else {
       // Clean up scroll bar & focus back
       setAnimatedVisible(false);
@@ -86,6 +87,7 @@ export default function Dialog(props: IDialogChildProps) {
         afterClose?.();
       }
     }
+    afterOpenChange?.(newVisible);
   }
 
   function onInternalClose(e: React.SyntheticEvent) {
@@ -94,7 +96,7 @@ export default function Dialog(props: IDialogChildProps) {
 
   // >>> Content
   const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<NodeJS.Timeout>();
+  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // We need record content click incase content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {
@@ -140,8 +142,8 @@ export default function Dialog(props: IDialogChildProps) {
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
+      saveLastOutSideActiveElementRef();
     }
-    return () => {};
   }, [visible]);
 
   // Remove direct should also check the scroll bar update
@@ -151,14 +153,6 @@ export default function Dialog(props: IDialogChildProps) {
     },
     [],
   );
-
-  useEffect(() => {
-    if (animatedVisible) {
-      scrollLocker?.lock();
-      return scrollLocker?.unLock;
-    }
-    return () => {};
-  }, [animatedVisible, scrollLocker]);
 
   // ========================= Render =========================
   return (
@@ -182,7 +176,6 @@ export default function Dialog(props: IDialogChildProps) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        aria-labelledby={title ? ariaId : null}
         style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >
@@ -194,7 +187,7 @@ export default function Dialog(props: IDialogChildProps) {
           closable={closable}
           ariaId={ariaId}
           prefixCls={prefixCls}
-          visible={visible}
+          visible={visible && animatedVisible}
           onClose={onInternalClose}
           onVisibleChanged={onDialogVisibleChanged}
           motionName={getMotionName(prefixCls, transitionName, animation)}

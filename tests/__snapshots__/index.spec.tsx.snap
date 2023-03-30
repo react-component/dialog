@@ -57,11 +57,11 @@ exports[`dialog should render correct 1`] = `
     class="rc-dialog-mask"
   />
   <div
-    aria-labelledby="test-id"
     class="rc-dialog-wrap"
     tabindex="-1"
   >
     <div
+      aria-labelledby="test-id"
       aria-modal="true"
       class="rc-dialog"
       role="dialog"
