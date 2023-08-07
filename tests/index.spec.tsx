@@ -1,7 +1,8 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
+import { Provider } from 'rc-motion';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
@@ -9,11 +10,21 @@ import type { DialogProps } from '../src';
 import Dialog from '../src';
 
 describe('dialog', () => {
+  async function runFakeTimer() {
+    for (let i = 0; i < 100; i += 1) {
+      await act(async () => {
+        jest.advanceTimersByTime(100);
+        await Promise.resolve();
+      });
+    }
+  }
+
   beforeEach(() => {
     jest.useFakeTimers();
   });
 
   afterEach(() => {
+    jest.clearAllTimers();
     jest.useRealTimers();
   });
 
@@ -251,15 +262,17 @@ describe('dialog', () => {
     });
 
     it('trap focus after shift-tabbing', () => {
-      const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
+      render(<Dialog visible />);
+
+      document.querySelector<HTMLDivElement>('.rc-dialog > div').focus();
+
+      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
         keyCode: KeyCode.TAB,
+        key: 'Tab',
         shiftKey: true,
       });
-      const sentinelEnd = document.querySelectorAll('.rc-dialog-content + div')[0];
+      const sentinelEnd = document.querySelector('.rc-dialog-content + div');
       expect(document.activeElement).toBe(sentinelEnd);
-
-      wrapper.unmount();
     });
   });
 
@@ -506,15 +519,32 @@ describe('dialog', () => {
   });
 
   describe('afterOpenChange', () => {
-    it('should trigger afterOpenChange when visible changed', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.clearAllTimers();
+      jest.useRealTimers();
+    });
+
+    it('should trigger afterOpenChange when visible changed', async () => {
       const afterOpenChange = jest.fn();
 
-      const wrapper = mount(<Dialog afterOpenChange={afterOpenChange} visible />);
-      jest.runAllTimers();
+      const Demo = (props: any) => (
+        <Provider motion={false}>
+          <Dialog afterOpenChange={afterOpenChange} {...props} />
+        </Provider>
+      );
 
-      wrapper.setProps({ visible: false });
-      jest.runAllTimers();
+      const { rerender } = render(<Demo visible />);
+      await runFakeTimer();
+      expect(afterOpenChange).toHaveBeenCalledWith(true);
+      expect(afterOpenChange).toHaveBeenCalledTimes(1);
 
+      rerender(<Demo />);
+      await runFakeTimer();
+      expect(afterOpenChange).toHaveBeenCalledWith(false);
       expect(afterOpenChange).toHaveBeenCalledTimes(2);
     });
   });
