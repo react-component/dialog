@@ -1,5 +1,6 @@
-import * as React from 'react';
 import Portal from '@rc-component/portal';
+import * as React from 'react';
+import { RefContext } from './context';
 import Dialog from './Dialog';
 import type { IDialogPropTypes } from './IDialogPropTypes';
 
@@ -13,8 +14,17 @@ import type { IDialogPropTypes } from './IDialogPropTypes';
  * */
 
 const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
-  const { visible, getContainer, forceRender, destroyOnClose = false, afterClose } = props;
+  const {
+    visible,
+    getContainer,
+    forceRender,
+    destroyOnClose = false,
+    afterClose,
+    panelRef,
+  } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
+
+  const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
 
   React.useEffect(() => {
     if (visible) {
@@ -22,37 +32,29 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     }
   }, [visible]);
 
-  // // 渲染在当前 dom 里；
-  // if (getContainer === false) {
-  //   return (
-  //     <Dialog
-  //       {...props}
-  //       getOpenCount={() => 2} // 不对 body 做任何操作。。
-  //     />
-  //   );
-  // }
-
   // Destroy on close will remove wrapped div
   if (!forceRender && destroyOnClose && !animatedVisible) {
     return null;
   }
 
   return (
-    <Portal
-      open={visible || forceRender || animatedVisible}
-      autoDestroy={false}
-      getContainer={getContainer}
-      autoLock={visible || animatedVisible}
-    >
-      <Dialog
-        {...props}
-        destroyOnClose={destroyOnClose}
-        afterClose={() => {
-          afterClose?.();
-          setAnimatedVisible(false);
-        }}
-      />
-    </Portal>
+    <RefContext.Provider value={refContext}>
+      <Portal
+        open={visible || forceRender || animatedVisible}
+        autoDestroy={false}
+        getContainer={getContainer}
+        autoLock={visible || animatedVisible}
+      >
+        <Dialog
+          {...props}
+          destroyOnClose={destroyOnClose}
+          afterClose={() => {
+            afterClose?.();
+            setAnimatedVisible(false);
+          }}
+        />
+      </Portal>
+    </RefContext.Provider>
   );
 };
 
