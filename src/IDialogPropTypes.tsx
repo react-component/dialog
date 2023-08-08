@@ -43,4 +43,7 @@ export type IDialogPropTypes = {
   // https://github.com/ant-design/ant-design/issues/19771
   // https://github.com/react-component/dialog/issues/95
   focusTriggerAfterClose?: boolean;
+
+  // Refs
+  panelRef?: React.Ref<HTMLDivElement>;
 };

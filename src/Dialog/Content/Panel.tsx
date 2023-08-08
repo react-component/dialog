@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
 import classNames from 'classnames';
-import MemoChildren from './MemoChildren';
+import { useComposeRef } from 'rc-util/lib/ref';
+import React, { useRef } from 'react';
+import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
+import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 
@@ -43,6 +45,10 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   } = props;
 
   // ================================= Refs =================================
+  const { panel: panelRef } = React.useContext(RefContext);
+
+  const mergedRef = useComposeRef(holderRef, panelRef);
+
   const sentinelStartRef = useRef<HTMLDivElement>();
   const sentinelEndRef = useRef<HTMLDivElement>();
 
@@ -112,7 +118,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       role="dialog"
       aria-labelledby={title ? ariaId : null}
       aria-modal="true"
-      ref={holderRef}
+      ref={mergedRef}
       style={{
         ...style,
         ...contentStyle,
