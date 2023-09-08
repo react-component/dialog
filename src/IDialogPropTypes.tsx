@@ -33,6 +33,7 @@ export type IDialogPropTypes = {
   height?: string | number;
   zIndex?: number;
   bodyProps?: any;
+  contentProps?: any;
   maskProps?: any;
   rootClassName?: string;
   wrapProps?: any;
