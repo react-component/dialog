@@ -1,6 +1,15 @@
 import type { GetContainer } from 'rc-util/lib/PortalWrapper';
 import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
+
+export interface ModalClassNames {
+  header: string;
+  body: string;
+  footer: string;
+  mask: string;
+  wrapper: string;
+}
+
 export type IDialogPropTypes = {
   className?: string;
   keyboard?: boolean;
@@ -35,6 +44,7 @@ export type IDialogPropTypes = {
   bodyProps?: any;
   maskProps?: any;
   rootClassName?: string;
+  classNames?: ModalClassNames;
   wrapProps?: any;
   getContainer?: GetContainer | false;
   closeIcon?: ReactNode;
