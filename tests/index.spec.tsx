@@ -548,4 +548,34 @@ describe('dialog', () => {
       expect(afterOpenChange).toHaveBeenCalledTimes(2);
     });
   });
+
+  it('should support classNames', () => {
+    const wrapper = mount(
+      <Dialog
+        visible
+        title='Default'
+        footer='Footer'
+        classNames={{
+          header: 'custom-header',
+          body: 'custom-body',
+          footer: 'custom-footer',
+          mask: 'custom-mask',
+          wrapper: 'custom-wrapper',
+        }}
+        style={{ width: 600 }}
+        height={903}
+        wrapStyle={{ fontSize: 10 }}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+    console.log(wrapper.find('.rc-dialog-wrap').html())
+    expect(wrapper.find('.rc-dialog-wrap').props().className).toContain('custom-wrapper');
+    expect(wrapper.find('.rc-dialog-body').props().className).toContain('custom-body');
+    expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
+    expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
+    expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
+  });
 });

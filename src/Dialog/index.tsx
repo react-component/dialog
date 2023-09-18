@@ -41,6 +41,7 @@ export default function Dialog(props: IDialogPropTypes) {
     maskStyle,
     maskProps,
     rootClassName,
+    classNames: modalClassNames,
   } = props;
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>();
@@ -169,11 +170,12 @@ export default function Dialog(props: IDialogPropTypes) {
           ...maskStyle,
         }}
         maskProps={maskProps}
+        className={modalClassNames?.mask}
       />
       <div
         tabIndex={-1}
         onKeyDown={onWrapperKeyDown}
-        className={classNames(`${prefixCls}-wrap`, wrapClassName)}
+        className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
         style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
