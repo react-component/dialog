@@ -43,6 +43,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     width,
     height,
     classNames: modalClassNames,
+    styles: modalStyles,
   } = props;
 
   // ================================= Refs =================================
@@ -79,13 +80,13 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   // ================================ Render ================================
   let footerNode: React.ReactNode;
   if (footer) {
-    footerNode = <div className={classNames(`${prefixCls}-footer`, modalClassNames?.footer)}>{footer}</div>;
+    footerNode = <div className={classNames(`${prefixCls}-footer`, modalClassNames?.footer)} style={{...modalStyles?.footer}}>{footer}</div>;
   }
 
   let headerNode: React.ReactNode;
   if (title) {
     headerNode = (
-      <div className={classNames(`${prefixCls}-header`, modalClassNames?.header)}>
+      <div className={classNames(`${prefixCls}-header`, modalClassNames?.header)} style={{...modalStyles?.header}}>
         <div className={`${prefixCls}-title`} id={ariaId}>
           {title}
         </div>
@@ -106,7 +107,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     <div className={`${prefixCls}-content`}>
       {closer}
       {headerNode}
-      <div className={classNames(`${prefixCls}-body`, modalClassNames?.body)} style={bodyStyle} {...bodyProps}>
+      <div className={classNames(`${prefixCls}-body`, modalClassNames?.body)} style={{...bodyStyle, ...modalStyles?.body}} {...bodyProps}>
         {children}
       </div>
       {footerNode}

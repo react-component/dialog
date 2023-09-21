@@ -571,11 +571,39 @@ describe('dialog', () => {
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
-    console.log(wrapper.find('.rc-dialog-wrap').html())
     expect(wrapper.find('.rc-dialog-wrap').props().className).toContain('custom-wrapper');
     expect(wrapper.find('.rc-dialog-body').props().className).toContain('custom-body');
     expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
     expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
     expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
+  });
+
+  it('should support styles', () => {
+    const wrapper = mount(
+      <Dialog
+        visible
+        title='Default'
+        footer='Footer'
+        styles={{
+          header: { background: 'red' },
+          body: { background: 'green' },
+          footer: { background: 'blue' },
+          mask: { background: 'yellow' },
+          wrapper: { background: 'pink' },
+        }}
+        style={{ width: 600 }}
+        height={903}
+        wrapStyle={{ fontSize: 10 }}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('.rc-dialog-wrap').props().style.background).toBe('pink');
+    expect(wrapper.find('.rc-dialog-body').props().style.background).toBe('green');
+    expect(wrapper.find('.rc-dialog-header').props().style.background).toBe('red');
+    expect(wrapper.find('.rc-dialog-footer').props().style.background).toBe('blue');
+    expect(wrapper.find('.rc-dialog-mask').props().style.background).toBe('yellow');
   });
 });

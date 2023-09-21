@@ -42,6 +42,7 @@ export default function Dialog(props: IDialogPropTypes) {
     maskProps,
     rootClassName,
     classNames: modalClassNames,
+    styles: modalStyles,
   } = props;
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>();
@@ -168,6 +169,7 @@ export default function Dialog(props: IDialogPropTypes) {
         style={{
           zIndex,
           ...maskStyle,
+          ...modalStyles?.mask,
         }}
         maskProps={maskProps}
         className={modalClassNames?.mask}
@@ -178,7 +180,7 @@ export default function Dialog(props: IDialogPropTypes) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
+        style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null, ...modalStyles?.wrapper }}
         {...wrapProps}
       >
         <Content
