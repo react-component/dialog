@@ -116,7 +116,6 @@ exports[`dialog should support classNames 1`] = `
   />
   <div
     class="rc-dialog-wrap custom-wrapper"
-    style="font-size: 10px;"
     tabindex="-1"
   >
     <div
@@ -182,7 +181,7 @@ exports[`dialog should support styles 1`] = `
   />
   <div
     class="rc-dialog-wrap"
-    style="font-size: 10px; background: pink;"
+    style="background: pink;"
     tabindex="-1"
   >
     <div

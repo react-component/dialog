@@ -57,8 +57,6 @@ ReactDOM.render(
 | styles                 | { mask?: CSSProperties; wrapper?: CSSProperties; header?: CSSProperties; body?: CSSProperties; footer?: CSSProperties} |    | pass styles to target area |         |
 | style                  | Object                         | {}        | Root style for dialog element.Such as width, height                             |         |
 | zIndex                 | Number                         |           |                                                                                 |         |
-| bodyStyle              | Object                         | {}        | body style for dialog body element.Such as height                               |         |
-| maskStyle              | Object                         | {}        | style for mask element                                                          |         |
 | visible                | Boolean                        | false     | current dialog's visible status                                                 |         |
 | animation              | String                         |           | part of dialog animation css class name                                         |         |
 | maskAnimation          | String                         |           | part of dialog's mask animation css class name                                  |         |
