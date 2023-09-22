@@ -131,7 +131,7 @@ exports[`dialog should support classNames 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content"
+        class="rc-dialog-content custom-content"
       >
         <button
           aria-label="Close"
@@ -198,6 +198,7 @@ exports[`dialog should support styles 1`] = `
       />
       <div
         class="rc-dialog-content"
+        style="background: orange;"
       >
         <button
           aria-label="Close"
