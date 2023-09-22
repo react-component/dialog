@@ -6,6 +6,7 @@ export interface ModalClassNames {
   body?: string;
   footer?: string;
   mask?: string;
+  content?: string;
   wrapper?: string;
 }
 
@@ -15,6 +16,7 @@ export interface ModalStyles {
   footer?: CSSProperties;
   mask?: CSSProperties;
   wrapper?: CSSProperties;
+  content?: CSSProperties;
 }
 
 export type IDialogPropTypes = {
