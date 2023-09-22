@@ -191,7 +191,7 @@ export default function Dialog(props: IDialogPropTypes) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null, ...modalStyles?.wrapper }}
+        style={{ zIndex, ...wrapStyle, ...modalStyles?.wrapper, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >
         <Content
