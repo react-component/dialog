@@ -9,6 +9,14 @@ export interface ModalClassNames {
   wrapper?: string;
 }
 
+export interface ModalStyles {
+  header?: CSSProperties;
+  body?: CSSProperties;
+  footer?: CSSProperties;
+  mask?: CSSProperties;
+  wrapper?: CSSProperties;
+}
+
 export type IDialogPropTypes = {
   className?: string;
   keyboard?: boolean;
@@ -44,6 +52,7 @@ export type IDialogPropTypes = {
   maskProps?: any;
   rootClassName?: string;
   classNames?: ModalClassNames;
+  styles?: ModalStyles;
   wrapProps?: any;
   getContainer?: GetContainer | false;
   closeIcon?: ReactNode;

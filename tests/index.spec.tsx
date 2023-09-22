@@ -37,6 +37,7 @@ describe('dialog', () => {
   });
 
   it('add rootClassName should render correct', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const wrapper = mount(
       <Dialog
         visible
@@ -50,6 +51,7 @@ describe('dialog', () => {
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
+    expect(spy).toHaveBeenCalledWith(`Warning: wrapStyle is deprecated, please use styles instead.`);
     expect(wrapper.find('.customize-root-class').length).toBeTruthy();
     expect(wrapper.find('.rc-dialog-wrap').props().style.fontSize).toBe(10);
     expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
@@ -564,18 +566,68 @@ describe('dialog', () => {
         }}
         style={{ width: 600 }}
         height={903}
-        wrapStyle={{ fontSize: 10 }}
       />,
     );
     jest.runAllTimers();
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
-    console.log(wrapper.find('.rc-dialog-wrap').html())
     expect(wrapper.find('.rc-dialog-wrap').props().className).toContain('custom-wrapper');
     expect(wrapper.find('.rc-dialog-body').props().className).toContain('custom-body');
     expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
     expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
     expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
+  });
+
+  it('should support styles', () => {
+    const wrapper = mount(
+      <Dialog
+        visible
+        title='Default'
+        footer='Footer'
+        styles={{
+          header: { background: 'red' },
+          body: { background: 'green' },
+          footer: { background: 'blue' },
+          mask: { background: 'yellow' },
+          wrapper: { background: 'pink' },
+        }}
+        style={{ width: 600 }}
+        height={903}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('.rc-dialog-wrap').props().style.background).toBe('pink');
+    expect(wrapper.find('.rc-dialog-body').props().style.background).toBe('green');
+    expect(wrapper.find('.rc-dialog-header').props().style.background).toBe('red');
+    expect(wrapper.find('.rc-dialog-footer').props().style.background).toBe('blue');
+    expect(wrapper.find('.rc-dialog-mask').props().style.background).toBe('yellow');
+  });
+  it('should warning', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const wrapper = mount(
+      <Dialog
+        visible
+        title='Default'
+        footer='Footer'
+        bodyStyle={{ background: 'green' }}
+        maskStyle={{ background: 'yellow' }}
+        wrapClassName='custom-wrapper'
+        style={{ width: 600 }}
+        height={903}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(spy).toHaveBeenCalledWith(`Warning: bodyStyle is deprecated, please use styles instead.`);
+    expect(spy).toHaveBeenCalledWith(`Warning: maskStyle is deprecated, please use styles instead.`);
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: wrapClassName is deprecated, please use classNames instead.`,
+    );
+    spy.mockRestore();
   });
 });
