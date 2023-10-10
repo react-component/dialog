@@ -10,6 +10,7 @@ import { getMotionName } from '../util';
 import Content from './Content';
 import type { ContentRef } from './Content/Panel';
 import Mask from './Mask';
+import { warning } from 'rc-util';
 
 export default function Dialog(props: IDialogPropTypes) {
   const {
@@ -41,7 +42,19 @@ export default function Dialog(props: IDialogPropTypes) {
     maskStyle,
     maskProps,
     rootClassName,
+    classNames: modalClassNames,
+    styles: modalStyles,
   } = props;
+
+  if (process.env.NODE_ENV !== 'production') {
+    ["wrapStyle", "bodyStyle", "maskStyle"].forEach((prop) => {
+      // (prop in props) && console.error(`Warning: ${prop} is deprecated, please use styles instead.`)
+      warning(!(prop in props), `${prop} is deprecated, please use styles instead.`)
+    });
+    if ("wrapClassName" in props) {
+      warning(false, `wrapClassName is deprecated, please use classNames instead.`)
+    }
+  }
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>();
   const wrapperRef = useRef<HTMLDivElement>();
@@ -167,16 +180,18 @@ export default function Dialog(props: IDialogPropTypes) {
         style={{
           zIndex,
           ...maskStyle,
+          ...modalStyles?.mask,
         }}
         maskProps={maskProps}
+        className={modalClassNames?.mask}
       />
       <div
         tabIndex={-1}
         onKeyDown={onWrapperKeyDown}
-        className={classNames(`${prefixCls}-wrap`, wrapClassName)}
+        className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}
+        style={{ zIndex, ...wrapStyle, ...modalStyles?.wrapper, display: !animatedVisible ? 'none' : null }}
         {...wrapProps}
       >
         <Content

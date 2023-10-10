@@ -106,3 +106,137 @@ exports[`dialog should render correct 1`] = `
   </div>
 </div>
 `;
+
+exports[`dialog should support classNames 1`] = `
+<div
+  class="rc-dialog-root"
+>
+  <div
+    class="rc-dialog-mask custom-mask"
+  />
+  <div
+    class="rc-dialog-wrap custom-wrapper"
+    tabindex="-1"
+  >
+    <div
+      aria-labelledby="test-id"
+      aria-modal="true"
+      class="rc-dialog"
+      role="dialog"
+      style="width: 600px; height: 903px;"
+    >
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+      <div
+        class="rc-dialog-content custom-content"
+      >
+        <button
+          aria-label="Close"
+          class="rc-dialog-close"
+          type="button"
+        >
+          <span
+            class="rc-dialog-close-x"
+          />
+        </button>
+        <div
+          class="rc-dialog-header custom-header"
+        >
+          <div
+            class="rc-dialog-title"
+            id="test-id"
+          >
+            Default
+          </div>
+        </div>
+        <div
+          class="rc-dialog-body custom-body"
+        />
+        <div
+          class="rc-dialog-footer custom-footer"
+        >
+          Footer
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`dialog should support styles 1`] = `
+<div
+  class="rc-dialog-root"
+>
+  <div
+    class="rc-dialog-mask"
+    style="background: yellow;"
+  />
+  <div
+    class="rc-dialog-wrap"
+    style="background: pink;"
+    tabindex="-1"
+  >
+    <div
+      aria-labelledby="test-id"
+      aria-modal="true"
+      class="rc-dialog"
+      role="dialog"
+      style="width: 600px; height: 903px;"
+    >
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+      <div
+        class="rc-dialog-content"
+        style="background: orange;"
+      >
+        <button
+          aria-label="Close"
+          class="rc-dialog-close"
+          type="button"
+        >
+          <span
+            class="rc-dialog-close-x"
+          />
+        </button>
+        <div
+          class="rc-dialog-header"
+          style="background: red;"
+        >
+          <div
+            class="rc-dialog-title"
+            id="test-id"
+          >
+            Default
+          </div>
+        </div>
+        <div
+          class="rc-dialog-body"
+          style="background: green;"
+        />
+        <div
+          class="rc-dialog-footer"
+          style="background: blue;"
+        >
+          Footer
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
+        tabindex="0"
+      />
+    </div>
+  </div>
+</div>
+`;
