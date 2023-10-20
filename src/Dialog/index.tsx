@@ -10,7 +10,7 @@ import { getMotionName } from '../util';
 import Content from './Content';
 import type { ContentRef } from './Content/Panel';
 import Mask from './Mask';
-import { warning } from 'rc-util';
+import { warning } from 'rc-util/lib/warning';
 
 export default function Dialog(props: IDialogPropTypes) {
   const {
