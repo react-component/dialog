@@ -573,7 +573,6 @@ describe('dialog', () => {
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper.find('.rc-dialog-wrap').props().className).toContain('custom-wrapper');
     expect(wrapper.find('.rc-dialog-body').props().className).toContain('custom-body');
     expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
     expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');

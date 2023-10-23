@@ -7,7 +7,6 @@ export interface ModalClassNames {
   footer?: string;
   mask?: string;
   content?: string;
-  wrapper?: string;
 }
 
 export interface ModalStyles {

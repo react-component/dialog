@@ -188,7 +188,7 @@ export default function Dialog(props: IDialogPropTypes) {
       <div
         tabIndex={-1}
         onKeyDown={onWrapperKeyDown}
-        className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
+        className={classNames(`${prefixCls}-wrap`, wrapClassName)}
         ref={wrapperRef}
         onClick={onWrapperClick}
         style={{ zIndex, ...wrapStyle, display: !animatedVisible ? 'none' : null }}

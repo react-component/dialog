@@ -115,7 +115,7 @@ exports[`dialog should support classNames 1`] = `
     class="rc-dialog-mask custom-mask"
   />
   <div
-    class="rc-dialog-wrap custom-wrapper"
+    class="rc-dialog-wrap"
     tabindex="-1"
   >
     <div
