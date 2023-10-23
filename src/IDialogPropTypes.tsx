@@ -15,7 +15,6 @@ export interface ModalStyles {
   body?: CSSProperties;
   footer?: CSSProperties;
   mask?: CSSProperties;
-  wrapper?: CSSProperties;
   content?: CSSProperties;
 }
 

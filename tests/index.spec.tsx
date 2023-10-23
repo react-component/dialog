@@ -593,7 +593,6 @@ describe('dialog', () => {
           body: { background: 'green' },
           footer: { background: 'blue' },
           mask: { background: 'yellow' },
-          wrapper: { background: 'pink' },
           content: { background: 'orange' },
         }}
         style={{ width: 600 }}
@@ -604,7 +603,6 @@ describe('dialog', () => {
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper.find('.rc-dialog-wrap').props().style.background).toBe('pink');
     expect(wrapper.find('.rc-dialog-body').props().style.background).toBe('green');
     expect(wrapper.find('.rc-dialog-header').props().style.background).toBe('red');
     expect(wrapper.find('.rc-dialog-footer').props().style.background).toBe('blue');
