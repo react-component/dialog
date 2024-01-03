@@ -1,6 +1,7 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 
+// test PR
 export default defineConfig({
   alias: {
     'rc-dialog$': path.resolve('src'),
