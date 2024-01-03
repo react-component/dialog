@@ -58,6 +58,7 @@ export type IDialogPropTypes = {
   wrapProps?: any;
   getContainer?: GetContainer | false;
   closeIcon?: ReactNode;
+  closeLabel?: string;
   modalRender?: (node: ReactNode) => ReactNode;
   forceRender?: boolean;
   // https://github.com/ant-design/ant-design/issues/19771
