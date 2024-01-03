@@ -29,7 +29,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     ariaId,
     footer,
     closable,
-	closeLabel,
+    closeLabel,
     closeIcon,
     onClose,
     children,
