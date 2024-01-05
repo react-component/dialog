@@ -28,7 +28,7 @@ export type IDialogPropTypes = {
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
-  closable?: boolean;
+  closable?: boolean | { icon?: ReactNode, title?: string, ariaLabel?: string };
   maskClosable?: boolean;
   visible?: boolean;
   destroyOnClose?: boolean;
@@ -58,7 +58,6 @@ export type IDialogPropTypes = {
   wrapProps?: any;
   getContainer?: GetContainer | false;
   closeIcon?: ReactNode;
-  closeLabel?: string;
   modalRender?: (node: ReactNode) => ReactNode;
   forceRender?: boolean;
   // https://github.com/ant-design/ant-design/issues/19771
