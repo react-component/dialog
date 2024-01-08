@@ -82,7 +82,7 @@
     "lint-staged": "^13.1.2",
     "np": "^9.2.0",
     "prettier": "^2.1.1",
-    "rc-drawer": "^4.4.0",
+    "rc-drawer": "^7.0.0",
     "rc-select": "^14.11.0",
     "rc-test": "^7.0.14",
     "react": "^16.9.0",
