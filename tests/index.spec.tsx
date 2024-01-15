@@ -37,7 +37,7 @@ describe('dialog', () => {
   });
 
   it('add rootClassName should render correct', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
     const wrapper = mount(
       <Dialog
         visible
@@ -83,6 +83,23 @@ describe('dialog', () => {
 
     expect(wrapper.find('.rc-dialog-root').length).toBeTruthy();
     expect(wrapper.find('.rc-dialog-mask').length).toBeTruthy();
+  });
+
+  it('closable props', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(<Dialog closable={{ icon: "test", ariaLabel: "ariaLabelTest", title: "closableTitle" }} onClose={onClose} visible />);
+    jest.runAllTimers();
+    wrapper.update();
+
+    const btn = wrapper.find('.rc-dialog-close');
+    expect(btn.prop("aria-label") === "ariaLabelTest");
+    expect(btn.prop("title") === "closableTitle");
+    expect(btn.text()).toBe('test');
+    btn.simulate('click');
+
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it('click close', () => {
@@ -579,7 +596,7 @@ describe('dialog', () => {
     expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
     expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
     expect(wrapper.find('.rc-dialog-content').props().className).toContain('custom-content');
-    
+
   });
 
   it('should support styles', () => {
@@ -612,7 +629,7 @@ describe('dialog', () => {
     expect(wrapper.find('.rc-dialog-content').props().style.background).toBe('orange');
   });
   it('should warning', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
     const wrapper = mount(
       <Dialog
         visible

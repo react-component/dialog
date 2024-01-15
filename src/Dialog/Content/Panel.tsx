@@ -96,9 +96,18 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   let closer: React.ReactNode;
   if (closable) {
+    let icon: React.ReactNode, ariaLabel: string, title: string;
+    if (typeof closable === 'object') {
+      icon = closable.icon;
+      ariaLabel = closable.ariaLabel;
+      title = closable.title;
+    } else {
+      icon = closeIcon;
+    }
+
     closer = (
-      <button type="button" onClick={onClose} aria-label="Close" className={`${prefixCls}-close`}>
-        {closeIcon || <span className={`${prefixCls}-close-x`} />}
+      <button type="button" onClick={onClose} title={title} aria-label={ariaLabel ?? "Close"} className={`${prefixCls}-close`}>
+        {icon || <span className={`${prefixCls}-close-x`} />}
       </button>
     );
   }

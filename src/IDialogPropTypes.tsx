@@ -28,7 +28,7 @@ export type IDialogPropTypes = {
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
-  closable?: boolean;
+  closable?: boolean | { icon?: ReactNode, title?: string, ariaLabel?: string };
   maskClosable?: boolean;
   visible?: boolean;
   destroyOnClose?: boolean;
