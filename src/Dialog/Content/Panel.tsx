@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
 import classNames from 'classnames';
-import MemoChildren from './MemoChildren';
+import { useComposeRef } from 'rc-util/lib/ref';
+import React, { useRef } from 'react';
+import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
+import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 const entityStyle = { outline: 'none' };
@@ -41,9 +43,15 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     forceRender,
     width,
     height,
+    classNames: modalClassNames,
+    styles: modalStyles,
   } = props;
 
   // ================================= Refs =================================
+  const { panel: panelRef } = React.useContext(RefContext);
+
+  const mergedRef = useComposeRef(holderRef, panelRef);
+
   const sentinelStartRef = useRef<HTMLDivElement>();
   const sentinelEndRef = useRef<HTMLDivElement>();
   const entityRef = useRef<HTMLDivElement>();
@@ -74,13 +82,13 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   // ================================ Render ================================
   let footerNode: React.ReactNode;
   if (footer) {
-    footerNode = <div className={`${prefixCls}-footer`}>{footer}</div>;
+    footerNode = <div className={classNames(`${prefixCls}-footer`, modalClassNames?.footer)} style={{...modalStyles?.footer}}>{footer}</div>;
   }
 
   let headerNode: React.ReactNode;
   if (title) {
     headerNode = (
-      <div className={`${prefixCls}-header`}>
+      <div className={classNames(`${prefixCls}-header`, modalClassNames?.header)} style={{...modalStyles?.header}}>
         <div className={`${prefixCls}-title`} id={ariaId}>
           {title}
         </div>
@@ -98,10 +106,10 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   }
 
   const content = (
-    <div className={`${prefixCls}-content`}>
+    <div className={classNames(`${prefixCls}-content`, modalClassNames?.content)} style={modalStyles?.content}>
       {closer}
       {headerNode}
-      <div className={`${prefixCls}-body`} style={bodyStyle} {...bodyProps}>
+      <div className={classNames(`${prefixCls}-body`, modalClassNames?.body)} style={{...bodyStyle, ...modalStyles?.body}} {...bodyProps}>
         {children}
       </div>
       {footerNode}
@@ -114,7 +122,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       role="dialog"
       aria-labelledby={title ? ariaId : null}
       aria-modal="true"
-      ref={holderRef}
+      ref={mergedRef}
       style={{
         ...style,
         ...contentStyle,

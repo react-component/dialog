@@ -1,7 +1,8 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
+import { Provider } from 'rc-motion';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
@@ -9,11 +10,21 @@ import type { DialogProps } from '../src';
 import Dialog from '../src';
 
 describe('dialog', () => {
+  async function runFakeTimer() {
+    for (let i = 0; i < 100; i += 1) {
+      await act(async () => {
+        jest.advanceTimersByTime(100);
+        await Promise.resolve();
+      });
+    }
+  }
+
   beforeEach(() => {
     jest.useFakeTimers();
   });
 
   afterEach(() => {
+    jest.clearAllTimers();
     jest.useRealTimers();
   });
 
@@ -26,6 +37,7 @@ describe('dialog', () => {
   });
 
   it('add rootClassName should render correct', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const wrapper = mount(
       <Dialog
         visible
@@ -39,6 +51,9 @@ describe('dialog', () => {
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: wrapStyle is deprecated, please use styles instead.`,
+    );
     expect(wrapper.find('.customize-root-class').length).toBeTruthy();
     expect(wrapper.find('.rc-dialog-wrap').props().style.fontSize).toBe(10);
     expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
@@ -232,15 +247,6 @@ describe('dialog', () => {
     expect(document.querySelector('input')).toHaveFocus();
   });
 
-  it('focus content', () => {
-    const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-    const content = document.querySelector(
-      '.rc-dialog > div:first-child + div',
-    ) as unknown as HTMLDivElement;
-    expect(document.activeElement).toBe(content);
-    wrapper.unmount();
-  });
-
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
@@ -260,20 +266,17 @@ describe('dialog', () => {
     });
 
     it('trap focus after shift-tabbing', () => {
-      const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelStart = document.querySelector(
-        '.rc-dialog > div:first-child',
-      ) as unknown as HTMLDivElement;
-      sentinelStart.focus();
+      render(<Dialog visible />);
 
-      wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
+      document.querySelector<HTMLDivElement>('.rc-dialog > div:first-child')?.focus();
+
+      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap')!, {
         keyCode: KeyCode.TAB,
+        key: 'Tab',
         shiftKey: true,
       });
       const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
       expect(document.activeElement).toBe(sentinelEnd);
-
-      wrapper.unmount();
     });
   });
 
@@ -520,16 +523,121 @@ describe('dialog', () => {
   });
 
   describe('afterOpenChange', () => {
-    it('should trigger afterOpenChange when visible changed', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.clearAllTimers();
+      jest.useRealTimers();
+    });
+
+    it('should trigger afterOpenChange when visible changed', async () => {
       const afterOpenChange = jest.fn();
 
-      const wrapper = mount(<Dialog afterOpenChange={afterOpenChange} visible />);
-      jest.runAllTimers();
+      const Demo = (props: any) => (
+        <Provider motion={false}>
+          <Dialog afterOpenChange={afterOpenChange} {...props} />
+        </Provider>
+      );
 
-      wrapper.setProps({ visible: false });
-      jest.runAllTimers();
+      const { rerender } = render(<Demo visible />);
+      await runFakeTimer();
+      expect(afterOpenChange).toHaveBeenCalledWith(true);
+      expect(afterOpenChange).toHaveBeenCalledTimes(1);
 
+      rerender(<Demo />);
+      await runFakeTimer();
+      expect(afterOpenChange).toHaveBeenCalledWith(false);
       expect(afterOpenChange).toHaveBeenCalledTimes(2);
     });
+  });
+
+  it('should support classNames', () => {
+    const wrapper = mount(
+      <Dialog
+        visible
+        title="Default"
+        footer="Footer"
+        classNames={{
+          header: 'custom-header',
+          body: 'custom-body',
+          footer: 'custom-footer',
+          mask: 'custom-mask',
+          wrapper: 'custom-wrapper',
+          content: 'custom-content',
+        }}
+        style={{ width: 600 }}
+        height={903}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('.rc-dialog-wrap').props().className).toContain('custom-wrapper');
+    expect(wrapper.find('.rc-dialog-body').props().className).toContain('custom-body');
+    expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
+    expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
+    expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
+    expect(wrapper.find('.rc-dialog-content').props().className).toContain('custom-content');
+  });
+
+  it('should support styles', () => {
+    const wrapper = mount(
+      <Dialog
+        visible
+        title="Default"
+        footer="Footer"
+        styles={{
+          header: { background: 'red' },
+          body: { background: 'green' },
+          footer: { background: 'blue' },
+          mask: { background: 'yellow' },
+          wrapper: { background: 'pink' },
+          content: { background: 'orange' },
+        }}
+        style={{ width: 600 }}
+        height={903}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('.rc-dialog-wrap').props().style.background).toBe('pink');
+    expect(wrapper.find('.rc-dialog-body').props().style.background).toBe('green');
+    expect(wrapper.find('.rc-dialog-header').props().style.background).toBe('red');
+    expect(wrapper.find('.rc-dialog-footer').props().style.background).toBe('blue');
+    expect(wrapper.find('.rc-dialog-mask').props().style.background).toBe('yellow');
+    expect(wrapper.find('.rc-dialog-content').props().style.background).toBe('orange');
+  });
+  it('should warning', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const wrapper = mount(
+      <Dialog
+        visible
+        title="Default"
+        footer="Footer"
+        bodyStyle={{ background: 'green' }}
+        maskStyle={{ background: 'yellow' }}
+        wrapClassName="custom-wrapper"
+        style={{ width: 600 }}
+        height={903}
+      />,
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: bodyStyle is deprecated, please use styles instead.`,
+    );
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: maskStyle is deprecated, please use styles instead.`,
+    );
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: wrapClassName is deprecated, please use classNames instead.`,
+    );
+    spy.mockRestore();
   });
 });

@@ -22,6 +22,7 @@ node_modules
 .cache
 *.css
 build
+dist
 lib
 es
 coverage
