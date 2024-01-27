@@ -51,7 +51,9 @@ describe('dialog', () => {
     wrapper.update();
 
     expect(wrapper.render()).toMatchSnapshot();
-    expect(spy).toHaveBeenCalledWith(`Warning: wrapStyle is deprecated, please use styles instead.`);
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: wrapStyle is deprecated, please use styles instead.`,
+    );
     expect(wrapper.find('.customize-root-class').length).toBeTruthy();
     expect(wrapper.find('.rc-dialog-wrap').props().style.fontSize).toBe(10);
     expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
@@ -248,16 +250,16 @@ describe('dialog', () => {
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = document.querySelectorAll(
-        '.rc-dialog-content + div',
-      )[0] as unknown as HTMLDivElement;
+      const sentinelEnd = document.querySelector(
+        '.rc-dialog > div:last-child',
+      ) as unknown as HTMLDivElement;
       sentinelEnd.focus();
 
       wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
         keyCode: KeyCode.TAB,
       });
 
-      const sentinelStart = document.querySelectorAll('.rc-dialog > div')[0];
+      const sentinelStart = document.querySelector('.rc-dialog > div:first-child');
       expect(document.activeElement).toBe(sentinelStart);
 
       wrapper.unmount();
@@ -266,14 +268,14 @@ describe('dialog', () => {
     it('trap focus after shift-tabbing', () => {
       render(<Dialog visible />);
 
-      document.querySelector<HTMLDivElement>('.rc-dialog > div').focus();
+      document.querySelector<HTMLDivElement>('.rc-dialog > div:first-child')?.focus();
 
-      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
+      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap')!, {
         keyCode: KeyCode.TAB,
         key: 'Tab',
         shiftKey: true,
       });
-      const sentinelEnd = document.querySelector('.rc-dialog-content + div');
+      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
       expect(document.activeElement).toBe(sentinelEnd);
     });
   });
@@ -555,8 +557,8 @@ describe('dialog', () => {
     const wrapper = mount(
       <Dialog
         visible
-        title='Default'
-        footer='Footer'
+        title="Default"
+        footer="Footer"
         classNames={{
           header: 'custom-header',
           body: 'custom-body',
@@ -579,15 +581,14 @@ describe('dialog', () => {
     expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
     expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
     expect(wrapper.find('.rc-dialog-content').props().className).toContain('custom-content');
-    
   });
 
   it('should support styles', () => {
     const wrapper = mount(
       <Dialog
         visible
-        title='Default'
-        footer='Footer'
+        title="Default"
+        footer="Footer"
         styles={{
           header: { background: 'red' },
           body: { background: 'green' },
@@ -616,11 +617,11 @@ describe('dialog', () => {
     const wrapper = mount(
       <Dialog
         visible
-        title='Default'
-        footer='Footer'
+        title="Default"
+        footer="Footer"
         bodyStyle={{ background: 'green' }}
         maskStyle={{ background: 'yellow' }}
-        wrapClassName='custom-wrapper'
+        wrapClassName="custom-wrapper"
         style={{ width: 600 }}
         height={903}
       />,
@@ -628,8 +629,12 @@ describe('dialog', () => {
     jest.runAllTimers();
     wrapper.update();
 
-    expect(spy).toHaveBeenCalledWith(`Warning: bodyStyle is deprecated, please use styles instead.`);
-    expect(spy).toHaveBeenCalledWith(`Warning: maskStyle is deprecated, please use styles instead.`);
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: bodyStyle is deprecated, please use styles instead.`,
+    );
+    expect(spy).toHaveBeenCalledWith(
+      `Warning: maskStyle is deprecated, please use styles instead.`,
+    );
     expect(spy).toHaveBeenCalledWith(
       `Warning: wrapClassName is deprecated, please use classNames instead.`,
     );

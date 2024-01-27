@@ -24,20 +24,25 @@ exports[`dialog add rootClassName should render correct 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content"
+        style="outline: none;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Close"
-          class="rc-dialog-close"
-          type="button"
-        >
-          <span
-            class="rc-dialog-close-x"
-          />
-        </button>
         <div
-          class="rc-dialog-body"
-        />
+          class="rc-dialog-content"
+        >
+          <button
+            aria-label="Close"
+            class="rc-dialog-close"
+            type="button"
+          >
+            <span
+              class="rc-dialog-close-x"
+            />
+          </button>
+          <div
+            class="rc-dialog-body"
+          />
+        </div>
       </div>
       <div
         aria-hidden="true"
@@ -72,30 +77,35 @@ exports[`dialog should render correct 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content"
+        style="outline: none;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Close"
-          class="rc-dialog-close"
-          type="button"
-        >
-          <span
-            class="rc-dialog-close-x"
-          />
-        </button>
         <div
-          class="rc-dialog-header"
+          class="rc-dialog-content"
         >
-          <div
-            class="rc-dialog-title"
-            id="test-id"
+          <button
+            aria-label="Close"
+            class="rc-dialog-close"
+            type="button"
           >
-            Default
+            <span
+              class="rc-dialog-close-x"
+            />
+          </button>
+          <div
+            class="rc-dialog-header"
+          >
+            <div
+              class="rc-dialog-title"
+              id="test-id"
+            >
+              Default
+            </div>
           </div>
+          <div
+            class="rc-dialog-body"
+          />
         </div>
-        <div
-          class="rc-dialog-body"
-        />
       </div>
       <div
         aria-hidden="true"
@@ -131,34 +141,39 @@ exports[`dialog should support classNames 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content custom-content"
+        style="outline: none;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Close"
-          class="rc-dialog-close"
-          type="button"
-        >
-          <span
-            class="rc-dialog-close-x"
-          />
-        </button>
         <div
-          class="rc-dialog-header custom-header"
+          class="rc-dialog-content custom-content"
         >
-          <div
-            class="rc-dialog-title"
-            id="test-id"
+          <button
+            aria-label="Close"
+            class="rc-dialog-close"
+            type="button"
           >
-            Default
+            <span
+              class="rc-dialog-close-x"
+            />
+          </button>
+          <div
+            class="rc-dialog-header custom-header"
+          >
+            <div
+              class="rc-dialog-title"
+              id="test-id"
+            >
+              Default
+            </div>
           </div>
-        </div>
-        <div
-          class="rc-dialog-body custom-body"
-        />
-        <div
-          class="rc-dialog-footer custom-footer"
-        >
-          Footer
+          <div
+            class="rc-dialog-body custom-body"
+          />
+          <div
+            class="rc-dialog-footer custom-footer"
+          >
+            Footer
+          </div>
         </div>
       </div>
       <div
@@ -197,38 +212,43 @@ exports[`dialog should support styles 1`] = `
         tabindex="0"
       />
       <div
-        class="rc-dialog-content"
-        style="background: orange;"
+        style="outline: none;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Close"
-          class="rc-dialog-close"
-          type="button"
-        >
-          <span
-            class="rc-dialog-close-x"
-          />
-        </button>
         <div
-          class="rc-dialog-header"
-          style="background: red;"
+          class="rc-dialog-content"
+          style="background: orange;"
         >
-          <div
-            class="rc-dialog-title"
-            id="test-id"
+          <button
+            aria-label="Close"
+            class="rc-dialog-close"
+            type="button"
           >
-            Default
+            <span
+              class="rc-dialog-close-x"
+            />
+          </button>
+          <div
+            class="rc-dialog-header"
+            style="background: red;"
+          >
+            <div
+              class="rc-dialog-title"
+              id="test-id"
+            >
+              Default
+            </div>
           </div>
-        </div>
-        <div
-          class="rc-dialog-body"
-          style="background: green;"
-        />
-        <div
-          class="rc-dialog-footer"
-          style="background: blue;"
-        >
-          Footer
+          <div
+            class="rc-dialog-body"
+            style="background: green;"
+          />
+          <div
+            class="rc-dialog-footer"
+            style="background: blue;"
+          >
+            Footer
+          </div>
         </div>
       </div>
       <div

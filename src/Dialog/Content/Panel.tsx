@@ -6,6 +6,7 @@ import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
+const entityStyle = { outline: 'none' };
 
 export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   prefixCls: string;
@@ -53,10 +54,11 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   const sentinelStartRef = useRef<HTMLDivElement>();
   const sentinelEndRef = useRef<HTMLDivElement>();
+  const entityRef = useRef<HTMLDivElement>();
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {
-      sentinelStartRef.current?.focus();
+      entityRef.current?.focus();
     },
     changeActive: (next) => {
       const { activeElement } = document;
@@ -130,9 +132,11 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       onMouseUp={onMouseUp}
     >
       <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
-      <MemoChildren shouldUpdate={visible || forceRender}>
-        {modalRender ? modalRender(content) : content}
-      </MemoChildren>
+      <div ref={entityRef} tabIndex={-1} style={entityStyle}>
+        <MemoChildren shouldUpdate={visible || forceRender}>
+          {modalRender ? modalRender(content) : content}
+        </MemoChildren>
+      </div>
       <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
     </div>
   );
