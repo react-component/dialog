@@ -25,8 +25,8 @@ const Demo = () => {
       maskAnimation="fade"
       onClose={onToggleDialog}
       forceRender
+      title="basic modal"
     >
-      <p>basic modal</p>
       <p><button type="button" onClick={onToggleDrawer}>show drawer</button></p>
       <div style={{ height: 200 }} />
     </Dialog>
