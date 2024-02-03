@@ -31,6 +31,7 @@ export type IDialogPropTypes = {
   closable?: boolean;
   maskClosable?: boolean;
   visible?: boolean;
+  defaultVisible?: boolean;
   destroyOnClose?: boolean;
   mousePosition?: {
     x: number;

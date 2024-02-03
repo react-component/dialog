@@ -21,8 +21,9 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
     destroyOnClose = false,
     afterClose,
     panelRef,
+    defaultVisible = false,
   } = props;
-  const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
+  const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible || defaultVisible);
 
   const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
 
@@ -52,6 +53,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
             afterClose?.();
             setAnimatedVisible(false);
           }}
+          defaultVisible={defaultVisible}
         />
       </Portal>
     </RefContext.Provider>
