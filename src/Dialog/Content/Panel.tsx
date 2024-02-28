@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import { useComposeRef } from 'rc-util/lib/ref';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 const entityStyle = { outline: 'none' };
@@ -95,12 +96,22 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       </div>
     );
   }
-
+  const ariaProps = typeof closable === "object" ? pickAttrs(closable, true) : {};
+  const mergedClosableIcon = useMemo(() => {
+    if (typeof closable === "object" && closable.closeIcon) {
+      return closable.closeIcon;
+    }
+    if (closable) {
+      return closeIcon ?? <span className={`${prefixCls}-close-x`} />;
+    }
+    return null;
+  }, [closable, closeIcon]);
+  
   let closer: React.ReactNode;
   if (closable) {
     closer = (
-      <button type="button" onClick={onClose} aria-label="Close" className={`${prefixCls}-close`}>
-        {closeIcon || <span className={`${prefixCls}-close-x`} />}
+      <button type="button" onClick={onClose} aria-label="Close" {...ariaProps} className={`${prefixCls}-close`}>
+        {mergedClosableIcon}
       </button>
     );
   }
