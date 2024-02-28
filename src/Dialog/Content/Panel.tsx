@@ -104,7 +104,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     if (closable) {
       return closeIcon ?? <span className={`${prefixCls}-close-x`} />;
     }
-    return null;
+    return <span className={`${prefixCls}-close-x`} />;
   }, [closable, closeIcon]);
   
   let closer: React.ReactNode;

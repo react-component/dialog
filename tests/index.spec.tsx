@@ -640,4 +640,44 @@ describe('dialog', () => {
     );
     spy.mockRestore();
   });
+
+  it('support aria-* in closable', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(
+      <Dialog 
+        closable={{
+          closeIcon:"test",
+          'aria-label': 'test aria-label',
+        }} 
+        visible 
+        onClose={onClose} 
+      />
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    const btn = wrapper.find('.rc-dialog-close');
+    expect(btn.text()).toBe('test');
+    expect(btn.getDOMNode().getAttribute('aria-label')).toBe('test aria-label');
+    btn.simulate('click');
+
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+  it('should not display closeIcon when closable is false', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(
+      <Dialog 
+        closable={false} 
+        visible 
+        onClose={onClose} 
+      />
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    const btn = wrapper.find('.rc-dialog-close');
+    expect(btn.find('.rc-dialog-close-x')).not.toBeNull();
+  });
 });
