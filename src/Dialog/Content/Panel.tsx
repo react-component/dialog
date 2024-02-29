@@ -96,22 +96,22 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       </div>
     );
   }
-  const ariaProps = typeof closable === "object" ? pickAttrs(closable, true) : {};
-  const mergedClosableIcon = useMemo(() => {
-    if (typeof closable === "object" && closable.closeIcon) {
-      return closable.closeIcon;
-    }
-    if (closable) {
-      return closeIcon ?? <span className={`${prefixCls}-close-x`} />;
-    }
-    return <span className={`${prefixCls}-close-x`} />;
-  }, [closable, closeIcon]);
+
+  
+  const closableObj =
+    typeof closable === 'object'
+      ? closable
+      : closable
+        ? { closeIcon: closeIcon ?? <span className={`${prefixCls}-close-x`} /> }
+        : {};
+
+  const ariaProps = pickAttrs(closableObj, true);
   
   let closer: React.ReactNode;
   if (closable) {
     closer = (
       <button type="button" onClick={onClose} aria-label="Close" {...ariaProps} className={`${prefixCls}-close`}>
-        {mergedClosableIcon}
+        {closableObj.closeIcon}
       </button>
     );
   }
