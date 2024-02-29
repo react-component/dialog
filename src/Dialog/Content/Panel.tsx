@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useComposeRef } from 'rc-util/lib/ref';
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
