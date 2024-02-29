@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useComposeRef } from 'rc-util/lib/ref';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
@@ -98,12 +98,15 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   }
 
   
-  const closableObj =
-    typeof closable === 'object'
-      ? closable
-      : closable
-        ? { closeIcon: closeIcon ?? <span className={`${prefixCls}-close-x`} /> }
-        : {};
+  const closableObj = useMemo(() => {
+    if (typeof closable === 'object') {
+      return closable;
+    }
+    if (closable) {
+      return { closeIcon: closeIcon ?? <span className={`${prefixCls}-close-x`} /> };
+    }
+    return {};
+  }, [closable, closeIcon]);
 
   const ariaProps = pickAttrs(closableObj, true);
   
