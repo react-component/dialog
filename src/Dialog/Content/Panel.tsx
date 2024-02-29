@@ -99,7 +99,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   
   const closableObj = useMemo(() => {
-    if (typeof closable === 'object') {
+    if (typeof closable === 'object' && closable !== null) {
       return closable;
     }
     if (closable) {
