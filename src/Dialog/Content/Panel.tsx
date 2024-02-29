@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import { useComposeRef } from 'rc-util/lib/ref';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 const entityStyle = { outline: 'none' };
@@ -96,11 +97,24 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     );
   }
 
+  
+  const closableObj = useMemo(() => {
+    if (typeof closable === 'object' && closable !== null) {
+      return closable;
+    }
+    if (closable) {
+      return { closeIcon: closeIcon ?? <span className={`${prefixCls}-close-x`} /> };
+    }
+    return {};
+  }, [closable, closeIcon]);
+
+  const ariaProps = pickAttrs(closableObj, true);
+  
   let closer: React.ReactNode;
   if (closable) {
     closer = (
-      <button type="button" onClick={onClose} aria-label="Close" className={`${prefixCls}-close`}>
-        {closeIcon || <span className={`${prefixCls}-close-x`} />}
+      <button type="button" onClick={onClose} aria-label="Close" {...ariaProps} className={`${prefixCls}-close`}>
+        {closableObj.closeIcon}
       </button>
     );
   }
