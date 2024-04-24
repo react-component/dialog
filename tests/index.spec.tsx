@@ -102,6 +102,26 @@ describe('dialog', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it('closeBtnIsDisabled', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(<Dialog onClose={onClose} visible closeBtnIsDisabled />);
+    jest.runAllTimers();
+    wrapper.update();
+
+    const btn = wrapper.find('.rc-dialog-close');
+    expect(btn.prop('disabled')).toBe(true);
+    btn.simulate('click');
+
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).not.toHaveBeenCalled();
+
+    btn.simulate('keydown', { key: 'Enter' });
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   describe('destroyOnClose', () => {
     it('default is false', () => {
       const wrapper = mount(

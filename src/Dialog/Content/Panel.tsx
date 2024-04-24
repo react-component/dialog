@@ -32,6 +32,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     footer,
     closable,
     closeIcon,
+    closeBtnIsDisabled,
     onClose,
     children,
     bodyStyle,
@@ -113,7 +114,14 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   let closer: React.ReactNode;
   if (closable) {
     closer = (
-      <button type="button" onClick={onClose} aria-label="Close" {...ariaProps} className={`${prefixCls}-close`}>
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        {...ariaProps}
+        className={`${prefixCls}-close`}
+        disabled={closeBtnIsDisabled}
+      >
         {closableObj.closeIcon}
       </button>
     );

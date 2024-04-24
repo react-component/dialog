@@ -65,6 +65,7 @@ ReactDOM.render(
 | title                  | String\|React.Element          |           | Title of the dialog                                                             |         |
 | footer                 | React.Element                  |           | footer of the dialog                                                            |         |
 | closable               | Boolean                        | true      | whether show close button                                                       |         |
+| closeBtnIsDisabled     | Boolean                        | false     | whether close button is disabled                                                |         |
 | mask                   | Boolean                        | true      | whether show mask                                                               |         |
 | maskClosable           | Boolean                        | true      | whether click mask to close                                                     |         |
 | keyboard               | Boolean                        | true      | whether support press esc to close                                              |         |
