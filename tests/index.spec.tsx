@@ -102,9 +102,9 @@ describe('dialog', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('closeBtnIsDisabled', () => {
+  it('disableCloseBtn', () => {
     const onClose = jest.fn();
-    const wrapper = mount(<Dialog onClose={onClose} visible closeBtnIsDisabled />);
+    const wrapper = mount(<Dialog onClose={onClose} visible disableCloseBtn />);
     jest.runAllTimers();
     wrapper.update();
 

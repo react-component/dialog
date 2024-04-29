@@ -32,7 +32,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     footer,
     closable,
     closeIcon,
-    closeBtnIsDisabled,
+    disableCloseBtn,
     onClose,
     children,
     bodyStyle,
@@ -120,7 +120,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
         aria-label="Close"
         {...ariaProps}
         className={`${prefixCls}-close`}
-        disabled={closeBtnIsDisabled}
+        disabled={disableCloseBtn}
       >
         {closableObj.closeIcon}
       </button>
