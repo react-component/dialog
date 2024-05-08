@@ -26,25 +26,19 @@ const getSvg = (path: string, props = {}, align = false) => (
   </i>
 );
 
-const MyControl = () => {
+const MyControl: React.FC = () => {
   const [visible1, setVisible1] = React.useState(true);
   const [visible2, setVisible2] = React.useState(false);
   const [visible3, setVisible3] = React.useState(false);
   const [width, setWidth] = React.useState(600);
   const [destroyOnClose, setDestroyOnClose] = React.useState(false);
   const [center, setCenter] = React.useState(false);
-  const [mousePosition, setMousePosition] = React.useState({
-    x: null,
-    y: null,
-  });
+  const [mousePosition, setMousePosition] = React.useState({ x: null, y: null });
   const [useIcon, setUseIcon] = React.useState(false);
   const [forceRender, setForceRender] = React.useState(false);
 
   const onClick = (e: React.MouseEvent) => {
-    setMousePosition({
-      x: e.pageX,
-      y: e.pageY,
-    });
+    setMousePosition({ x: e.pageX, y: e.pageY });
     setVisible1(true);
   };
 
