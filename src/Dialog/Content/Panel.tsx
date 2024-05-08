@@ -46,6 +46,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     height,
     classNames: modalClassNames,
     styles: modalStyles,
+    loading,
   } = props;
 
   // ================================= Refs =================================
@@ -130,16 +131,22 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       className={classNames(`${prefixCls}-content`, modalClassNames?.content)}
       style={modalStyles?.content}
     >
-      {closerNode}
-      {headerNode}
-      <div
-        className={classNames(`${prefixCls}-body`, modalClassNames?.body)}
-        style={{ ...bodyStyle, ...modalStyles?.body }}
-        {...bodyProps}
-      >
-        {children}
-      </div>
-      {footerNode}
+      {loading ? (
+        loading
+      ) : (
+        <>
+          {closerNode}
+          {headerNode}
+          <div
+            className={classNames(`${prefixCls}-body`, modalClassNames?.body)}
+            style={{ ...bodyStyle, ...modalStyles?.body }}
+            {...bodyProps}
+          >
+            {children}
+          </div>
+          {footerNode}
+        </>
+      )}
     </div>
   );
 

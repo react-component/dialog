@@ -66,4 +66,6 @@ export type IDialogPropTypes = {
 
   // Refs
   panelRef?: React.Ref<HTMLDivElement>;
+
+  loading?: React.ReactNode;
 };
