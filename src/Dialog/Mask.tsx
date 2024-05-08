@@ -11,9 +11,8 @@ export type MaskProps = {
   className?: string;
 };
 
-export default function Mask(props: MaskProps) {
+const Mask: React.FC<MaskProps> = (props) => {
   const { prefixCls, style, visible, maskProps, motionName, className } = props;
-
   return (
     <CSSMotion
       key="mask"
@@ -31,4 +30,6 @@ export default function Mask(props: MaskProps) {
       )}
     </CSSMotion>
   );
-}
+};
+
+export default Mask;
