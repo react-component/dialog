@@ -24,7 +24,7 @@ export type IDialogPropTypes = {
   keyboard?: boolean;
   style?: CSSProperties;
   mask?: boolean;
-  children?: any;
+  children?: React.ReactNode;
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;

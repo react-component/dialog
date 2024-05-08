@@ -81,23 +81,26 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     contentStyle.height = height;
   }
   // ================================ Render ================================
-  let footerNode: React.ReactNode;
-  if (footer) {
-    footerNode = <div className={classNames(`${prefixCls}-footer`, modalClassNames?.footer)} style={{...modalStyles?.footer}}>{footer}</div>;
-  }
+  const footerNode = footer ? (
+    <div
+      className={classNames(`${prefixCls}-footer`, modalClassNames?.footer)}
+      style={{ ...modalStyles?.footer }}
+    >
+      {footer}
+    </div>
+  ) : null;
 
-  let headerNode: React.ReactNode;
-  if (title) {
-    headerNode = (
-      <div className={classNames(`${prefixCls}-header`, modalClassNames?.header)} style={{...modalStyles?.header}}>
-        <div className={`${prefixCls}-title`} id={ariaId}>
-          {title}
-        </div>
+  const headerNode = title ? (
+    <div
+      className={classNames(`${prefixCls}-header`, modalClassNames?.header)}
+      style={{ ...modalStyles?.header }}
+    >
+      <div className={`${prefixCls}-title`} id={ariaId}>
+        {title}
       </div>
-    );
-  }
+    </div>
+  ) : null;
 
-  
   const closableObj = useMemo(() => {
     if (typeof closable === 'object' && closable !== null) {
       return closable;
@@ -106,24 +109,34 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       return { closeIcon: closeIcon ?? <span className={`${prefixCls}-close-x`} /> };
     }
     return {};
-  }, [closable, closeIcon]);
+  }, [closable, closeIcon, prefixCls]);
 
   const ariaProps = pickAttrs(closableObj, true);
-  
-  let closer: React.ReactNode;
-  if (closable) {
-    closer = (
-      <button type="button" onClick={onClose} aria-label="Close" {...ariaProps} className={`${prefixCls}-close`}>
-        {closableObj.closeIcon}
-      </button>
-    );
-  }
+
+  const closerNode = closable ? (
+    <button
+      type="button"
+      onClick={onClose}
+      aria-label="Close"
+      {...ariaProps}
+      className={`${prefixCls}-close`}
+    >
+      {closableObj.closeIcon}
+    </button>
+  ) : null;
 
   const content = (
-    <div className={classNames(`${prefixCls}-content`, modalClassNames?.content)} style={modalStyles?.content}>
-      {closer}
+    <div
+      className={classNames(`${prefixCls}-content`, modalClassNames?.content)}
+      style={modalStyles?.content}
+    >
+      {closerNode}
       {headerNode}
-      <div className={classNames(`${prefixCls}-body`, modalClassNames?.body)} style={{...bodyStyle, ...modalStyles?.body}} {...bodyProps}>
+      <div
+        className={classNames(`${prefixCls}-body`, modalClassNames?.body)}
+        style={{ ...bodyStyle, ...modalStyles?.body }}
+        {...bodyProps}
+      >
         {children}
       </div>
       {footerNode}
@@ -137,10 +150,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       aria-labelledby={title ? ariaId : null}
       aria-modal="true"
       ref={mergedRef}
-      style={{
-        ...style,
-        ...contentStyle,
-      }}
+      style={{ ...style, ...contentStyle }}
       className={classNames(prefixCls, className)}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
