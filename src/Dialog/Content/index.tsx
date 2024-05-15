@@ -41,7 +41,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     const elementOffset = offset(dialogRef.current);
 
     setTransformOrigin(
-      mousePosition
+      (mousePosition?.x && mousePosition?.y)
         ? `${mousePosition.x - elementOffset.left}px ${mousePosition.y - elementOffset.top}px`
         : '',
     );
