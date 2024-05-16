@@ -1,15 +1,15 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import * as React from 'react';
+import React from 'react';
 import Dialog from 'rc-dialog';
+import 'bootstrap/dist/css/bootstrap.css';
 import '../../assets/bootstrap.less';
 
 // Check for memo update should work
-const InnerRender = () => {
+const InnerRender: React.FC = () => {
   console.log('Updated...', Date.now());
   return null;
 };
 
-const MyControl = () => {
+const MyControl: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [destroyOnClose, setDestroyOnClose] = React.useState(false);
 

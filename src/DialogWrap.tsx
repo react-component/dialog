@@ -13,7 +13,7 @@ import type { IDialogPropTypes } from './IDialogPropTypes';
  * So here should add a child (div element) to custom container.
  * */
 
-const DialogWrap: React.FC<IDialogPropTypes> = (props: IDialogPropTypes) => {
+const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   const {
     visible,
     getContainer,

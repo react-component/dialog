@@ -1,11 +1,12 @@
-/* eslint no-console:0 */
-import * as React from 'react';
-import 'rc-select/assets/index.less';
+import React from 'react';
 import { Panel } from 'rc-dialog';
+import 'rc-select/assets/index.less';
 import '../../assets/index.less';
 
-export default () => (
+const Demo: React.FC = () => (
   <Panel prefixCls="rc-dialog" title="Title" closable>
     Hello World!
   </Panel>
 );
+
+export default Demo;

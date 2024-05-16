@@ -12,41 +12,33 @@ const clearPath =
   ' 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h618c35.3 0 64-' +
   '28.7 64-64V306c0-35.3-28.7-64-64-64z';
 
-const getSvg = (path: string, props = {}, align = false) => {
-  return (
-    <i {...props}>
-      <svg
-        viewBox="0 0 1024 1024"
-        width="1em"
-        height="1em"
-        fill="currentColor"
-        style={align ? { verticalAlign: '-.125em ' } : {}}
-      >
-        <path d={path} p-id="5827" />
-      </svg>
-    </i>
-  );
-};
+const getSvg = (path: string, props = {}, align = false) => (
+  <i {...props}>
+    <svg
+      viewBox="0 0 1024 1024"
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      style={align ? { verticalAlign: '-0.125em ' } : {}}
+    >
+      <path d={path} />
+    </svg>
+  </i>
+);
 
-const MyControl = () => {
+const MyControl: React.FC = () => {
   const [visible1, setVisible1] = React.useState(true);
   const [visible2, setVisible2] = React.useState(false);
   const [visible3, setVisible3] = React.useState(false);
   const [width, setWidth] = React.useState(600);
   const [destroyOnClose, setDestroyOnClose] = React.useState(false);
   const [center, setCenter] = React.useState(false);
-  const [mousePosition, setMousePosition] = React.useState({
-    x: null,
-    y: null,
-  });
+  const [mousePosition, setMousePosition] = React.useState({ x: null, y: null });
   const [useIcon, setUseIcon] = React.useState(false);
   const [forceRender, setForceRender] = React.useState(false);
 
   const onClick = (e: React.MouseEvent) => {
-    setMousePosition({
-      x: e.pageX,
-      y: e.pageY,
-    });
+    setMousePosition({ x: e.pageX, y: e.pageY });
     setVisible1(true);
   };
 

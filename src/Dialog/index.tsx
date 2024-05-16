@@ -12,7 +12,7 @@ import type { ContentRef } from './Content/Panel';
 import Mask from './Mask';
 import { warning } from 'rc-util/lib/warning';
 
-export default function Dialog(props: IDialogPropTypes) {
+const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const {
     prefixCls = 'rc-dialog',
     zIndex,
@@ -20,7 +20,6 @@ export default function Dialog(props: IDialogPropTypes) {
     keyboard = true,
     focusTriggerAfterClose = true,
     // scrollLocker,
-
     // Wrapper
     wrapStyle,
     wrapClassName,
@@ -47,12 +46,12 @@ export default function Dialog(props: IDialogPropTypes) {
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
-    ["wrapStyle", "bodyStyle", "maskStyle"].forEach((prop) => {
+    ['wrapStyle', 'bodyStyle', 'maskStyle'].forEach((prop) => {
       // (prop in props) && console.error(`Warning: ${prop} is deprecated, please use styles instead.`)
-      warning(!(prop in props), `${prop} is deprecated, please use styles instead.`)
+      warning(!(prop in props), `${prop} is deprecated, please use styles instead.`);
     });
-    if ("wrapClassName" in props) {
-      warning(false, `wrapClassName is deprecated, please use classNames instead.`)
+    if ('wrapClassName' in props) {
+      warning(false, `wrapClassName is deprecated, please use classNames instead.`);
     }
   }
 
@@ -167,6 +166,13 @@ export default function Dialog(props: IDialogPropTypes) {
     [],
   );
 
+  const mergedStyle: React.CSSProperties = {
+    zIndex,
+    ...wrapStyle,
+    ...modalStyles?.wrapper,
+    display: !animatedVisible ? 'none' : null,
+  };
+
   // ========================= Render =========================
   return (
     <div
@@ -177,11 +183,7 @@ export default function Dialog(props: IDialogPropTypes) {
         prefixCls={prefixCls}
         visible={mask && visible}
         motionName={getMotionName(prefixCls, maskTransitionName, maskAnimation)}
-        style={{
-          zIndex,
-          ...maskStyle,
-          ...modalStyles?.mask,
-        }}
+        style={{ zIndex, ...maskStyle, ...modalStyles?.mask }}
         maskProps={maskProps}
         className={modalClassNames?.mask}
       />
@@ -191,7 +193,7 @@ export default function Dialog(props: IDialogPropTypes) {
         className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        style={{ zIndex, ...wrapStyle, ...modalStyles?.wrapper, display: !animatedVisible ? 'none' : null }}
+        style={mergedStyle}
         {...wrapProps}
       >
         <Content
@@ -210,4 +212,6 @@ export default function Dialog(props: IDialogPropTypes) {
       </div>
     </div>
   );
-}
+};
+
+export default Dialog;
