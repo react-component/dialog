@@ -127,7 +127,6 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
     </button>
   ) : null;
 
-
   const content = (
     <div
       className={classNames(`${prefixCls}-content`, modalClassNames?.content)}
