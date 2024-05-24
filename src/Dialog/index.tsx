@@ -72,7 +72,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   function focusDialogContent() {
     if (!contains(wrapperRef.current, document.activeElement)) {
-      contentRef.current?.focus({ preventScroll: true });
+      contentRef.current?.focus();
     }
   }
 
