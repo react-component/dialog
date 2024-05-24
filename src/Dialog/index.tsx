@@ -72,7 +72,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   function focusDialogContent() {
     if (!contains(wrapperRef.current, document.activeElement)) {
-      contentRef.current?.focus();
+      contentRef.current?.focus({ preventScroll: true });
     }
   }
 
@@ -143,10 +143,8 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     }
 
     // keep focus inside dialog
-    if (visible) {
-      if (e.keyCode === KeyCode.TAB) {
-        contentRef.current.changeActive(!e.shiftKey);
-      }
+    if (visible && e.keyCode === KeyCode.TAB) {
+      contentRef.current.changeActive(!e.shiftKey);
     }
   }
 
