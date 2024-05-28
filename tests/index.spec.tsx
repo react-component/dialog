@@ -665,6 +665,36 @@ describe('dialog', () => {
     wrapper.update();
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it('support disable button in closable', () => {
+    const onClose = jest.fn();
+    const wrapper = mount(
+      <Dialog 
+        closable={{
+          closeIcon:"test",
+          disabled: true,
+        }} 
+        visible 
+        onClose={onClose} 
+      />
+    );
+    jest.runAllTimers();
+    wrapper.update();
+
+    const btn = wrapper.find('.rc-dialog-close');
+    expect(btn.prop('disabled')).toBe(true);
+    btn.simulate('click');
+
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).not.toHaveBeenCalled();
+
+    btn.simulate('keydown', { key: 'Enter' });
+    jest.runAllTimers();
+    wrapper.update();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it('should not display closeIcon when closable is false', () => {
     const onClose = jest.fn();
     const wrapper = mount(
