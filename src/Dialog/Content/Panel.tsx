@@ -49,7 +49,10 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   } = props;
 
   // ================================= Refs =================================
-  const { panel: panelRef } = React.useContext(RefContext);
+  const {
+    panel: panelRef,
+    internalPanelTabIndex: panelTabIndex,
+  } = React.useContext(RefContext);
 
   const mergedRef = useComposeRef(holderRef, panelRef);
 
@@ -112,7 +115,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   }, [closable, closeIcon, prefixCls]);
 
   const ariaProps = pickAttrs(closableObj, true);
-  const closeBtnIsDisabled = typeof(closable) === 'object' && closable.disabled;
+  const closeBtnIsDisabled = typeof (closable) === 'object' && closable.disabled;
 
   const closerNode = closable ? (
     <button
@@ -158,7 +161,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       onMouseUp={onMouseUp}
     >
       <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
-      <div ref={entityRef} tabIndex={-1} style={entityStyle}>
+      <div ref={entityRef} tabIndex={panelTabIndex ?? -1} style={entityStyle}>
         <MemoChildren shouldUpdate={visible || forceRender}>
           {modalRender ? modalRender(content) : content}
         </MemoChildren>

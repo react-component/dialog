@@ -66,4 +66,11 @@ export type IDialogPropTypes = {
 
   // Refs
   panelRef?: React.Ref<HTMLDivElement>;
+
+  /**
+   * 解决默认挂载内容时因为设置了 tabIndex=-1 导致自动聚焦到内容上的问题
+   * @see: https://github.com/ant-design/ant-design/issues/48699
+   * @internal 内部使用，请不要在外部使用
+   */
+  internalPanelTabIndex?: number;
 };

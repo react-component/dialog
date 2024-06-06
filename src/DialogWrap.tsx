@@ -21,10 +21,14 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     destroyOnClose = false,
     afterClose,
     panelRef,
+    internalPanelTabIndex,
   } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
 
-  const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
+  const refContext = React.useMemo(
+    () => ({ panel: panelRef, internalPanelTabIndex }),
+    [panelRef, internalPanelTabIndex]
+  );
 
   React.useEffect(() => {
     if (visible) {
