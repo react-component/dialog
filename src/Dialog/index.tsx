@@ -17,6 +17,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
+    defaultVisible = false,
     keyboard = true,
     focusTriggerAfterClose = true,
     // scrollLocker,
@@ -59,7 +60,8 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const wrapperRef = useRef<HTMLDivElement>();
   const contentRef = useRef<ContentRef>();
 
-  const [animatedVisible, setAnimatedVisible] = React.useState(visible);
+  const [isVisible, setIsVisible] = React.useState(visible || defaultVisible);
+  const [animatedVisible, setAnimatedVisible] = React.useState(visible || defaultVisible);
 
   // ========================== Init ==========================
   const ariaId = useId();
@@ -84,6 +86,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     } else {
       // Clean up scroll bar & focus back
       setAnimatedVisible(false);
+      setIsVisible(false);
 
       if (mask && lastOutSideActiveElementRef.current && focusTriggerAfterClose) {
         try {
@@ -104,6 +107,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   function onInternalClose(e: React.SyntheticEvent) {
     onClose?.(e);
+    setIsVisible(false);
   }
 
   // >>> Content
@@ -152,6 +156,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
+      setIsVisible(true);
       saveLastOutSideActiveElementRef();
     }
   }, [visible]);
@@ -179,7 +184,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     >
       <Mask
         prefixCls={prefixCls}
-        visible={mask && visible}
+        visible={mask && isVisible}
         motionName={getMotionName(prefixCls, maskTransitionName, maskAnimation)}
         style={{ zIndex, ...maskStyle, ...modalStyles?.mask }}
         maskProps={maskProps}
@@ -202,7 +207,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
           closable={closable}
           ariaId={ariaId}
           prefixCls={prefixCls}
-          visible={visible && animatedVisible}
+          visible={isVisible && animatedVisible}
           onClose={onInternalClose}
           onVisibleChanged={onDialogVisibleChanged}
           motionName={getMotionName(prefixCls, transitionName, animation)}
