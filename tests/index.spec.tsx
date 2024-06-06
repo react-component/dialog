@@ -280,24 +280,48 @@ describe('dialog', () => {
     });
   });
 
-  it('sets transform-origin when property mousePosition is set', () => {
-    const wrapper = mount(
-      <Dialog style={{ width: 600 }} mousePosition={{ x: 100, y: 100 }} visible>
-        <p>the dialog</p>
-      </Dialog>,
-    );
+  describe('mousePosition', () => {
+    function prepareModal(mousePosition: { x: number; y: number }) {
+      const wrapper = mount(
+        <Dialog style={{ width: 600 }} mousePosition={mousePosition} visible>
+          <p>the dialog</p>
+        </Dialog>,
+      );
 
-    // Trigger position align
-    act(() => {
-      wrapper
-        .find<any>('Content CSSMotion' as any)
-        .props()
-        .onAppearPrepare();
+      // Trigger position align
+      act(() => {
+        wrapper
+          .find<any>('Content CSSMotion' as any)
+          .props()
+          .onAppearPrepare();
+      });
+
+      return wrapper;
+    }
+
+    it('sets transform-origin when property mousePosition is set', () => {
+      const wrapper = prepareModal({ x: 100, y: 100 });
+
+      expect(
+        (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
+      ).toBeTruthy();
     });
 
-    expect(
-      (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
-    ).toBeTruthy();
+    it('both undefined', () => {
+      const wrapper = prepareModal({ x: undefined, y: undefined });
+
+      expect(
+        (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
+      ).toBeFalsy();
+    });
+
+    it('one valid', () => {
+      const wrapper = prepareModal({ x: 10, y: 0 });
+
+      expect(
+        (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
+      ).toBeTruthy();
+    });
   });
 
   it('can get dom element before dialog first show when forceRender is set true ', () => {
@@ -644,14 +668,14 @@ describe('dialog', () => {
   it('support aria-* in closable', () => {
     const onClose = jest.fn();
     const wrapper = mount(
-      <Dialog 
+      <Dialog
         closable={{
-          closeIcon:"test",
+          closeIcon: 'test',
           'aria-label': 'test aria-label',
-        }} 
-        visible 
-        onClose={onClose} 
-      />
+        }}
+        visible
+        onClose={onClose}
+      />,
     );
     jest.runAllTimers();
     wrapper.update();
@@ -669,14 +693,14 @@ describe('dialog', () => {
   it('support disable button in closable', () => {
     const onClose = jest.fn();
     const wrapper = mount(
-      <Dialog 
+      <Dialog
         closable={{
-          closeIcon:"test",
+          closeIcon: 'test',
           disabled: true,
-        }} 
-        visible 
-        onClose={onClose} 
-      />
+        }}
+        visible
+        onClose={onClose}
+      />,
     );
     jest.runAllTimers();
     wrapper.update();
@@ -697,13 +721,7 @@ describe('dialog', () => {
 
   it('should not display closeIcon when closable is false', () => {
     const onClose = jest.fn();
-    const wrapper = mount(
-      <Dialog 
-        closable={false} 
-        visible 
-        onClose={onClose} 
-      />
-    );
+    const wrapper = mount(<Dialog closable={false} visible onClose={onClose} />);
     jest.runAllTimers();
     wrapper.update();
 
