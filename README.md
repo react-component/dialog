@@ -53,8 +53,8 @@ ReactDOM.render(
 | ---------------------- | ------------------------------ | --------- | ------------------------------------------------------------------------------- | ------- |
 | prefixCls              | String                         | rc-dialog | The dialog dom node's prefixCls                                                 |         |
 | className              | String                         |           | additional className for dialog                                                 |         |
-| classNames             | { mask?: string; wrapper?: string; header?: string; body?: string; footer?: string} |           | pass className to target area |         |
-| styles                 | { mask?: CSSProperties; wrapper?: CSSProperties; header?: CSSProperties; body?: CSSProperties; footer?: CSSProperties} |    | pass styles to target area |         |
+| classNames             | { header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string;  } |           | pass className to target area |         |
+| styles                 | { header?: CSSProperties; body?: CSSProperties; footer?: CSSProperties; mask?: CSSProperties; content?: CSSProperties; wrapper?: CSSProperties;  } |    | pass styles to target area |         |
 | style                  | Object                         | {}        | Root style for dialog element.Such as width, height                             |         |
 | zIndex                 | Number                         |           |                                                                                 |         |
 | visible                | Boolean                        | false     | current dialog's visible status                                                 |         |
