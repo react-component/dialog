@@ -33,7 +33,7 @@
     "docs:deploy": "gh-pages -d .doc",
     "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/bootstrap.less assets/bootstrap.css",
     "deploy": "npm run docs:build && npm run docs:deploy",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "prepublishOnly": "npm run compile && np --yolo --no-publish --branch=9.0.x",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
