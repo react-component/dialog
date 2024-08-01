@@ -121,11 +121,11 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-      <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
+      <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} />
       <MemoChildren shouldUpdate={visible || forceRender}>
         {modalRender ? modalRender(content) : content}
       </MemoChildren>
-      <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
+      <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} />
     </div>
   );
 });
