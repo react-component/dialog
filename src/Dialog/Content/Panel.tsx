@@ -48,14 +48,14 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {
-      sentinelStartRef.current?.focus();
+      sentinelStartRef.current?.focus({ preventScroll: true });
     },
     changeActive: (next) => {
       const { activeElement } = document;
       if (next && activeElement === sentinelEndRef.current) {
-        sentinelStartRef.current.focus();
+        sentinelStartRef.current.focus({ preventScroll: true });
       } else if (!next && activeElement === sentinelStartRef.current) {
-        sentinelEndRef.current.focus();
+        sentinelEndRef.current.focus({ preventScroll: true });
       }
     },
   }));
