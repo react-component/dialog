@@ -19,13 +19,8 @@ exports[`dialog add rootClassName should render correct 1`] = `
       style="width: 600px; height: 903px;"
     >
       <div
-        aria-hidden="true"
-        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
-        tabindex="0"
-      />
-      <div
         style="outline: none;"
-        tabindex="-1"
+        tabindex="0"
       >
         <div
           class="rc-dialog-content"
@@ -45,7 +40,6 @@ exports[`dialog add rootClassName should render correct 1`] = `
         </div>
       </div>
       <div
-        aria-hidden="true"
         style="width: 0px; height: 0px; overflow: hidden; outline: none;"
         tabindex="0"
       />
@@ -72,13 +66,8 @@ exports[`dialog should render correct 1`] = `
       role="dialog"
     >
       <div
-        aria-hidden="true"
-        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
-        tabindex="0"
-      />
-      <div
         style="outline: none;"
-        tabindex="-1"
+        tabindex="0"
       >
         <div
           class="rc-dialog-content"
@@ -108,7 +97,6 @@ exports[`dialog should render correct 1`] = `
         </div>
       </div>
       <div
-        aria-hidden="true"
         style="width: 0px; height: 0px; overflow: hidden; outline: none;"
         tabindex="0"
       />
@@ -136,13 +124,8 @@ exports[`dialog should support classNames 1`] = `
       style="width: 600px; height: 903px;"
     >
       <div
-        aria-hidden="true"
-        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
-        tabindex="0"
-      />
-      <div
         style="outline: none;"
-        tabindex="-1"
+        tabindex="0"
       >
         <div
           class="rc-dialog-content custom-content"
@@ -177,7 +160,6 @@ exports[`dialog should support classNames 1`] = `
         </div>
       </div>
       <div
-        aria-hidden="true"
         style="width: 0px; height: 0px; overflow: hidden; outline: none;"
         tabindex="0"
       />
@@ -207,13 +189,8 @@ exports[`dialog should support styles 1`] = `
       style="width: 600px; height: 903px;"
     >
       <div
-        aria-hidden="true"
-        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
-        tabindex="0"
-      />
-      <div
         style="outline: none;"
-        tabindex="-1"
+        tabindex="0"
       >
         <div
           class="rc-dialog-content"
@@ -252,7 +229,6 @@ exports[`dialog should support styles 1`] = `
         </div>
       </div>
       <div
-        aria-hidden="true"
         style="width: 0px; height: 0px; overflow: hidden; outline: none;"
         tabindex="0"
       />

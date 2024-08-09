@@ -55,11 +55,10 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   const sentinelStartRef = useRef<HTMLDivElement>();
   const sentinelEndRef = useRef<HTMLDivElement>();
-  const entityRef = useRef<HTMLDivElement>();
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {
-      entityRef.current?.focus({ preventScroll: true });
+      sentinelStartRef.current?.focus({ preventScroll: true });
     },
     changeActive: (next) => {
       const { activeElement } = document;
@@ -157,13 +156,12 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-      <div tabIndex={0} ref={sentinelStartRef} style={sentinelStyle} aria-hidden="true" />
-      <div ref={entityRef} tabIndex={-1} style={entityStyle}>
+      <div ref={sentinelStartRef} tabIndex={0} style={entityStyle}>
         <MemoChildren shouldUpdate={visible || forceRender}>
           {modalRender ? modalRender(content) : content}
         </MemoChildren>
       </div>
-      <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} aria-hidden="true" />
+      <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} />
     </div>
   );
 });
