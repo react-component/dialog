@@ -1,3 +1,4 @@
+import os from 'node:os';
 import { defineConfig } from 'dumi';
 import path from 'path';
 
@@ -11,4 +12,5 @@ export default defineConfig({
     name: 'Dialog',
     logo: 'https://avatars0.githubusercontent.com/u/9441414?s=200&v=4',
   },
+  mako: ['Darwin', 'Linux'].includes(os.type()) ? {} : false,
 });;
