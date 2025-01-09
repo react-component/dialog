@@ -34,11 +34,11 @@
   margin: 10px;
 
   // Actual rc-dialog
-  &-content {
+  &-section {
     position: relative;
-    background-color: @modal-content-bg;
-    border: 1px solid @modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
-    border: 1px solid @modal-content-border-color;
+    background-color: @modal-section-bg;
+    border: 1px solid @modal-section-fallback-border-color; //old browsers fallback (ie8 etc)
+    border: 1px solid @modal-section-border-color;
     border-radius: @border-radius-large;
     box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
     background-clip: padding-box;
@@ -124,7 +124,7 @@
     width: @modal-md;
     margin: 30px auto;
 
-    &-content {
+    &-section {
       box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
     }
   }

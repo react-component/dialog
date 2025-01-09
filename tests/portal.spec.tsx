@@ -33,9 +33,9 @@ describe('Dialog.Portal', () => {
       jest.runAllTimers();
     });
 
-    wrapper.find('.rc-dialog-content').simulate('mousedown');
+    wrapper.find('.rc-dialog-section').simulate('mousedown');
     wrapper.find('.rc-select-item-option-content').simulate('click');
-    wrapper.find('.rc-dialog-content').simulate('mouseup');
+    wrapper.find('.rc-dialog-section').simulate('mouseup');
     expect(onClose).not.toHaveBeenCalled();
   });
 
@@ -52,7 +52,7 @@ describe('Dialog.Portal', () => {
       jest.runAllTimers();
     });
 
-    wrapper.find('.rc-dialog-content').simulate('mousedown');
+    wrapper.find('.rc-dialog-section').simulate('mousedown');
     wrapper.find('.rc-dialog-wrap').simulate('mouseup');
     expect(onClose).not.toHaveBeenCalled();
   });

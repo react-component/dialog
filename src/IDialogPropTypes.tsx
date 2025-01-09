@@ -1,23 +1,11 @@
 import type { GetContainer } from 'rc-util/lib/PortalWrapper';
 import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
-export interface ModalClassNames {
-  header?: string;
-  body?: string;
-  footer?: string;
-  mask?: string;
-  content?: string;
-  wrapper?: string;
-}
+export type SemanticName = 'header' | 'body' | 'footer' | 'section' | 'title' | 'wrapper' | 'mask';
 
-export interface ModalStyles {
-  header?: CSSProperties;
-  body?: CSSProperties;
-  footer?: CSSProperties;
-  mask?: CSSProperties;
-  wrapper?: CSSProperties;
-  content?: CSSProperties;
-}
+export type ModalClassNames = Partial<Record<SemanticName, string>>;
+
+export type ModalStyles = Partial<Record<SemanticName, CSSProperties>>;
 
 export type IDialogPropTypes = {
   className?: string;
@@ -28,7 +16,7 @@ export type IDialogPropTypes = {
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
-  closable?: boolean | ({ closeIcon?: React.ReactNode; disabled?: boolean  } & React.AriaAttributes);
+  closable?: boolean | ({ closeIcon?: React.ReactNode; disabled?: boolean } & React.AriaAttributes);
   maskClosable?: boolean;
   visible?: boolean;
   destroyOnClose?: boolean;
