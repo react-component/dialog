@@ -94,7 +94,11 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
       className={classNames(`${prefixCls}-header`, modalClassNames?.header)}
       style={{ ...modalStyles?.header }}
     >
-      <div className={`${prefixCls}-title`} id={ariaId}>
+      <div
+        className={classNames(`${prefixCls}-title`, modalClassNames?.title)}
+        id={ariaId}
+        style={{ ...modalStyles?.title }}
+      >
         {title}
       </div>
     </div>
@@ -111,7 +115,7 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
   }, [closable, closeIcon, prefixCls]);
 
   const ariaProps = pickAttrs(closableObj, true);
-  const closeBtnIsDisabled = typeof(closable) === 'object' && closable.disabled;
+  const closeBtnIsDisabled = typeof closable === 'object' && closable.disabled;
 
   const closerNode = closable ? (
     <button
@@ -128,8 +132,8 @@ const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
 
   const content = (
     <div
-      className={classNames(`${prefixCls}-content`, modalClassNames?.content)}
-      style={modalStyles?.content}
+      className={classNames(`${prefixCls}-section`, modalClassNames?.section)}
+      style={modalStyles?.section}
     >
       {closerNode}
       {headerNode}

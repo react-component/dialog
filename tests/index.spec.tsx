@@ -399,7 +399,7 @@ describe('dialog', () => {
         }
       />,
     );
-    expect(modalRender.find('.rc-dialog-content').props().style.background).toEqual('#1890ff');
+    expect(modalRender.find('.rc-dialog-section').props().style.background).toEqual('#1890ff');
   });
 
   describe('focusTriggerAfterClose', () => {
@@ -589,7 +589,7 @@ describe('dialog', () => {
           footer: 'custom-footer',
           mask: 'custom-mask',
           wrapper: 'custom-wrapper',
-          content: 'custom-content',
+          section: 'custom-section',
         }}
         style={{ width: 600 }}
         height={903}
@@ -604,7 +604,7 @@ describe('dialog', () => {
     expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
     expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
     expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
-    expect(wrapper.find('.rc-dialog-content').props().className).toContain('custom-content');
+    expect(wrapper.find('.rc-dialog-section').props().className).toContain('custom-section');
   });
 
   it('should support styles', () => {
@@ -619,7 +619,8 @@ describe('dialog', () => {
           footer: { background: 'blue' },
           mask: { background: 'yellow' },
           wrapper: { background: 'pink' },
-          content: { background: 'orange' },
+          section: { background: 'orange' },
+          title: { background: 'orange' },
         }}
         style={{ width: 600 }}
         height={903}
@@ -634,7 +635,8 @@ describe('dialog', () => {
     expect(wrapper.find('.rc-dialog-header').props().style.background).toBe('red');
     expect(wrapper.find('.rc-dialog-footer').props().style.background).toBe('blue');
     expect(wrapper.find('.rc-dialog-mask').props().style.background).toBe('yellow');
-    expect(wrapper.find('.rc-dialog-content').props().style.background).toBe('orange');
+    expect(wrapper.find('.rc-dialog-section').props().style.background).toBe('orange');
+    expect(wrapper.find('.rc-dialog-title').props().style.background).toBe('orange');
   });
   it('should warning', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
