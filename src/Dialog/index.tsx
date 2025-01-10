@@ -41,6 +41,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     maskStyle,
     maskProps,
     rootClassName,
+    rootStyle,
     classNames: modalClassNames,
     styles: modalStyles,
   } = props;
@@ -175,6 +176,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   return (
     <div
       className={classNames(`${prefixCls}-root`, rootClassName)}
+      style={rootStyle}
       {...pickAttrs(props, { data: true })}
     >
       <Mask
