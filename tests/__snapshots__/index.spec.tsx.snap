@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dialog add rootClassName should render correct 1`] = `
+exports[`dialog add rootClassName and rootStyle should render correct 1`] = `
 <div
   class="rc-dialog-root customize-root-class"
+  style="font-size: 20px;"
 >
   <div
     class="rc-dialog-mask"
