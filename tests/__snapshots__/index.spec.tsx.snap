@@ -49,54 +49,6 @@ exports[`dialog add rootClassName and rootStyle should render correct 1`] = `
 </div>
 `;
 
-exports[`dialog add rootClassName should render correct 1`] = `
-<div
-  class="rc-dialog-root customize-root-class"
->
-  <div
-    class="rc-dialog-mask"
-  />
-  <div
-    class="rc-dialog-wrap"
-    style="font-size: 10px;"
-    tabindex="-1"
-  >
-    <div
-      aria-modal="true"
-      class="rc-dialog"
-      role="dialog"
-      style="width: 600px; height: 903px;"
-    >
-      <div
-        style="outline: none;"
-        tabindex="0"
-      >
-        <div
-          class="rc-dialog-section"
-        >
-          <button
-            aria-label="Close"
-            class="rc-dialog-close"
-            type="button"
-          >
-            <span
-              class="rc-dialog-close-x"
-            />
-          </button>
-          <div
-            class="rc-dialog-body"
-          />
-        </div>
-      </div>
-      <div
-        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
-        tabindex="0"
-      />
-    </div>
-  </div>
-</div>
-`;
-
 exports[`dialog should render correct 1`] = `
 <div
   class="rc-dialog-root"
