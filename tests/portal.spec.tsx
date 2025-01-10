@@ -20,7 +20,7 @@ describe('Dialog.Portal', () => {
   it('event should bubble', () => {
     const onClose = jest.fn();
 
-    const { container } = render(
+    render(
       <Dialog onClose={onClose} visible>
         <Select virtual={false} open>
           <Select.Option value="bamboo">Bamboo</Select.Option>
@@ -30,16 +30,16 @@ describe('Dialog.Portal', () => {
 
     jest.runAllTimers();
 
-    fireEvent.mouseDown(container.querySelector('.rc-dialog-section'));
-    fireEvent.click(container.querySelector('.rc-select-item-option-content'));
-    fireEvent.mouseUp(container.querySelector('.rc-dialog-section'));
+    fireEvent.mouseDown(document.querySelector('.rc-dialog-section'));
+    fireEvent.click(document.querySelector('.rc-select-item-option-content'));
+    fireEvent.mouseUp(document.querySelector('.rc-dialog-section'));
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('dialog dont close when mouseDown in content and mouseUp in wrap', () => {
     const onClose = jest.fn();
 
-    const { container } = render(
+    render(
       <Dialog onClose={onClose} visible>
         content
       </Dialog>,
@@ -47,8 +47,8 @@ describe('Dialog.Portal', () => {
 
     jest.runAllTimers();
 
-    fireEvent.mouseDown(container.querySelector('.rc-dialog-section'));
-    fireEvent.mouseUp(container.querySelector('.rc-dialog-wrap'));
+    fireEvent.mouseDown(document.querySelector('.rc-dialog-section'));
+    fireEvent.mouseUp(document.querySelector('.rc-dialog-wrap'));
     expect(onClose).not.toHaveBeenCalled();
   });
 });
