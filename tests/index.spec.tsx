@@ -1,7 +1,5 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import { fireEvent, render } from '@testing-library/react';
-import type { ReactWrapper } from 'enzyme';
-import { mount } from 'enzyme';
 import { Provider } from 'rc-motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
@@ -29,16 +27,15 @@ describe('dialog', () => {
   });
 
   it('should render correct', () => {
-    const wrapper = mount(<Dialog title="Default" visible />);
+    const { container } = render(<Dialog title="Default" visible />);
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.render()).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('add rootClassName and rootStyle should render correct', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const wrapper = mount(
+    const { container } = render(
       <Dialog
         visible
         rootClassName="customize-root-class"
@@ -49,194 +46,170 @@ describe('dialog', () => {
       />,
     );
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.render()).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
     expect(spy).toHaveBeenCalledWith(
       `Warning: wrapStyle is deprecated, please use styles instead.`,
     );
-    expect(wrapper.find('.customize-root-class').length).toBeTruthy();
-    expect(wrapper.find('.rc-dialog-wrap').props().style.fontSize).toBe(10);
-    expect(wrapper.find('.rc-dialog-root').props().style.fontSize).toBe(20);
-    expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
-    expect(wrapper.find('.rc-dialog').props().style.width).toEqual(600);
+    expect(container.querySelector('.customize-root-class')).toBeTruthy();
+    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('fontSize: 10px');
+    expect(container.querySelector('.rc-dialog-root')).toHaveStyle('fontSize: 20px');
+    expect(container.querySelector('.rc-dialog')).toHaveStyle('height: 903px');
+    expect(container.querySelector('.rc-dialog')).toHaveStyle('width: 600px');
   });
 
   it('show', () => {
-    const wrapper = mount(<Dialog visible />);
+    const { container } = render(<Dialog visible />);
     jest.runAllTimers();
-    wrapper.update();
-    expect(wrapper.find('.rc-dialog-wrap').props().style.display).toBeFalsy();
+
+    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('display: block');
   });
 
   it('close', () => {
-    const wrapper = mount(<Dialog visible />);
+    const { container, rerender } = render(<Dialog visible />);
     jest.runAllTimers();
 
-    wrapper.setProps({ visible: false });
+    rerender(<Dialog visible={false} />);
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.find('.rc-dialog-wrap').props().style.display).toEqual('none');
+    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('display: none');
   });
 
   it('create & root & mask', () => {
-    const wrapper = mount(<Dialog visible />);
+    const { container } = render(<Dialog visible />);
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.find('.rc-dialog-root').length).toBeTruthy();
-    expect(wrapper.find('.rc-dialog-mask').length).toBeTruthy();
+    expect(container.querySelector('.rc-dialog-root')).toBeTruthy();
+    expect(container.querySelector('.rc-dialog-mask')).toBeTruthy();
   });
 
   it('click close', () => {
     const onClose = jest.fn();
-    const wrapper = mount(<Dialog closeIcon="test" onClose={onClose} visible />);
+    const { container } = render(<Dialog closeIcon="test" onClose={onClose} visible />);
     jest.runAllTimers();
-    wrapper.update();
 
-    const btn = wrapper.find('.rc-dialog-close');
-    expect(btn.text()).toBe('test');
-    btn.simulate('click');
+    const btn = container.querySelector('.rc-dialog-close');
+    expect(btn.textContent).toBe('test');
+    fireEvent.click(btn);
 
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   describe('destroyOnClose', () => {
     it('default is false', () => {
-      const wrapper = mount(
+      const { container, rerender } = render(
         <Dialog visible>
           <input className="test-destroy" />
         </Dialog>,
-        { attachTo: document.body },
       );
 
-      act(() => {
-        wrapper.setProps({ visible: false });
-        jest.runAllTimers();
-        wrapper.update();
-      });
+      rerender(<Dialog visible={false} />);
+      jest.runAllTimers();
 
-      expect(document.querySelectorAll('.test-destroy')).toHaveLength(1);
-
-      wrapper.unmount();
+      expect(container.querySelectorAll('.test-destroy')).toHaveLength(1);
     });
 
     it('destroy on hide should unmount child components on close', () => {
-      const wrapper = mount(
+      const { container, rerender } = render(
         <Dialog destroyOnClose>
           <input className="test-input" />
         </Dialog>,
-        { attachTo: document.body },
       );
 
       // Show
-      wrapper.setProps({ visible: true });
+      rerender(<Dialog visible />);
       jest.runAllTimers();
-      wrapper.update();
 
-      (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value =
-        'test';
-      expect(
-        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
-      ).toBe('test');
+      container.querySelector('.test-input').value = 'test';
+      expect(container.querySelector('.test-input').value).toBe('test');
 
       // Hide
-      wrapper.setProps({ visible: false });
+      rerender(<Dialog visible={false} />);
       jest.runAllTimers();
-      wrapper.update();
 
       // Show
-      wrapper.setProps({ visible: true });
+      rerender(<Dialog visible />);
       jest.runAllTimers();
-      wrapper.update();
 
-      expect(
-        (document.getElementsByClassName('.test-input') as unknown as HTMLInputElement).value,
-      ).toBeUndefined();
-      wrapper.unmount();
+      expect(container.querySelector('.test-input')).toBeNull();
     });
   });
 
   it('esc to close', () => {
     const onClose = jest.fn();
-    const wrapper = mount(<Dialog onClose={onClose} visible />);
+    const { container } = render(<Dialog onClose={onClose} visible />);
     jest.runAllTimers();
-    wrapper.update();
 
-    wrapper.find('.rc-dialog').simulate('keyDown', { keyCode: KeyCode.ESC });
+    fireEvent.keyDown(container.querySelector('.rc-dialog'), { keyCode: KeyCode.ESC });
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).toHaveBeenCalled();
   });
 
   it('mask to close', () => {
     const onClose = jest.fn();
-    const wrapper = mount(<Dialog onClose={onClose} visible />);
+    const { container, rerender } = render(<Dialog onClose={onClose} visible />);
 
     // Mask close
-    wrapper.find('.rc-dialog-wrap').simulate('click');
+    fireEvent.click(container.querySelector('.rc-dialog-wrap'));
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).toHaveBeenCalled();
     onClose.mockReset();
 
     // Mask can not close
-    wrapper.setProps({ maskClosable: false });
-    wrapper.find('.rc-dialog-wrap').simulate('click');
+    rerender(<Dialog onClose={onClose} visible maskClosable={false} />);
+    fireEvent.click(container.querySelector('.rc-dialog-wrap'));
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('renderToBody', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
-    const wrapper = mount(
+    const { container: renderContainer, rerender } = render(
       <Dialog visible={false}>
         <p className="renderToBody">1</p>
       </Dialog>,
-      { attachTo: container },
+      { container },
     );
 
-    expect(wrapper.find('.renderToBody')).toHaveLength(0);
-    expect(wrapper.find('.rc-dialog-wrap')).toHaveLength(0);
+    expect(renderContainer.querySelector('.renderToBody')).toBeNull();
+    expect(renderContainer.querySelector('.rc-dialog-wrap')).toBeNull();
 
     // Visible
-    wrapper.setProps({ visible: true });
+    rerender(
+      <Dialog visible>
+        <p className="renderToBody">1</p>
+      </Dialog>,
+    );
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.find('.rc-dialog-wrap')).toHaveLength(1);
-    expect(wrapper.find('.renderToBody')).toHaveLength(1);
-    expect(container.contains(wrapper.find('.rc-dialog-wrap').getDOMNode())).toBeFalsy();
+    expect(renderContainer.querySelector('.rc-dialog-wrap')).toBeTruthy();
+    expect(renderContainer.querySelector('.renderToBody')).toBeTruthy();
+    expect(container.contains(renderContainer.querySelector('.rc-dialog-wrap'))).toBeFalsy();
 
-    wrapper.unmount();
     document.body.removeChild(container);
   });
 
   it('getContainer', () => {
     const returnedContainer = document.createElement('div');
-    const wrapper = mount(
+    const { container } = render(
       <Dialog visible getContainer={() => returnedContainer}>
         <p className="getContainer">Hello world!</p>
       </Dialog>,
     );
 
-    expect(returnedContainer.contains(wrapper.find('.rc-dialog-wrap').getDOMNode())).toBeTruthy();
-    wrapper.unmount();
+    expect(returnedContainer.contains(container.querySelector('.rc-dialog-wrap'))).toBeTruthy();
   });
 
   it('render title correctly', () => {
-    const wrapper = mount(<Dialog visible title="bamboo" />);
-    expect(wrapper.find('.rc-dialog-header').text()).toBe('bamboo');
+    const { container } = render(<Dialog visible title="bamboo" />);
+    expect(container.querySelector('.rc-dialog-header').textContent).toBe('bamboo');
   });
 
   it('render footer correctly', () => {
-    const wrapper = mount(<Dialog visible footer="test" />);
-    expect(wrapper.find('.rc-dialog-footer').text()).toBe('test');
+    const { container } = render(<Dialog visible footer="test" />);
+    expect(container.querySelector('.rc-dialog-footer').textContent).toBe('test');
   });
 
   // 失效了，需要修复
@@ -251,40 +224,36 @@ describe('dialog', () => {
 
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
-      const wrapper = mount(<Dialog visible />, { attachTo: document.body });
-      const sentinelEnd = document.querySelector(
-        '.rc-dialog > div:last-child',
-      ) as unknown as HTMLDivElement;
+      const { container } = render(<Dialog visible />);
+      const sentinelEnd = container.querySelector('.rc-dialog > div:last-child');
       sentinelEnd.focus();
 
-      wrapper.find('.rc-dialog-wrap').simulate('keyDown', {
+      fireEvent.keyDown(container.querySelector('.rc-dialog-wrap'), {
         keyCode: KeyCode.TAB,
       });
 
-      const sentinelStart = document.querySelector('.rc-dialog > div:first-child');
+      const sentinelStart = container.querySelector('.rc-dialog > div:first-child');
       expect(document.activeElement).toBe(sentinelStart);
-
-      wrapper.unmount();
     });
 
     it('trap focus after shift-tabbing', () => {
-      render(<Dialog visible />);
+      const { container } = render(<Dialog visible />);
 
-      document.querySelector<HTMLDivElement>('.rc-dialog > div:first-child')?.focus();
+      container.querySelector('.rc-dialog > div:first-child').focus();
 
-      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap')!, {
+      fireEvent.keyDown(container.querySelector('.rc-dialog-wrap'), {
         keyCode: KeyCode.TAB,
         key: 'Tab',
         shiftKey: true,
       });
-      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
+      const sentinelEnd = container.querySelector('.rc-dialog > div:last-child');
       expect(document.activeElement).toBe(sentinelEnd);
     });
   });
 
   describe('mousePosition', () => {
     function prepareModal(mousePosition: { x: number; y: number }) {
-      const wrapper = mount(
+      const { container } = render(
         <Dialog style={{ width: 600 }} mousePosition={mousePosition} visible>
           <p>the dialog</p>
         </Dialog>,
@@ -292,47 +261,38 @@ describe('dialog', () => {
 
       // Trigger position align
       act(() => {
-        wrapper
-          .find<any>('Content CSSMotion' as any)
-          .props()
-          .onAppearPrepare();
+        container.querySelector('Content CSSMotion').onAppearPrepare();
       });
 
-      return wrapper;
+      return container;
     }
 
     it('sets transform-origin when property mousePosition is set', () => {
-      const wrapper = prepareModal({ x: 100, y: 100 });
+      const container = prepareModal({ x: 100, y: 100 });
 
-      expect(
-        (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
-      ).toBeTruthy();
+      expect(container.querySelector('.rc-dialog').style['transform-origin']).toBeTruthy();
     });
 
     it('both undefined', () => {
-      const wrapper = prepareModal({ x: undefined, y: undefined });
+      const container = prepareModal({ x: undefined, y: undefined });
 
-      expect(
-        (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
-      ).toBeFalsy();
+      expect(container.querySelector('.rc-dialog').style['transform-origin']).toBeFalsy();
     });
 
     it('one valid', () => {
-      const wrapper = prepareModal({ x: 10, y: 0 });
+      const container = prepareModal({ x: 10, y: 0 });
 
-      expect(
-        (wrapper.find('.rc-dialog').at(0).getDOMNode() as HTMLDivElement).style['transform-origin'],
-      ).toBeTruthy();
+      expect(container.querySelector('.rc-dialog').style['transform-origin']).toBeTruthy();
     });
   });
 
   it('can get dom element before dialog first show when forceRender is set true ', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Dialog forceRender>
         <div>forceRender element</div>
       </Dialog>,
     );
-    expect(wrapper.find('.rc-dialog-body > div').text()).toEqual('forceRender element');
+    expect(container.querySelector('.rc-dialog-body > div').textContent).toEqual('forceRender element');
   });
 
   describe('getContainer is false', () => {
@@ -360,14 +320,14 @@ describe('dialog', () => {
 
   it('should not close if mouse down in dialog', () => {
     const onClose = jest.fn();
-    const wrapper = mount(<Dialog onClose={onClose} visible />);
-    wrapper.find('.rc-dialog-body').simulate('click');
+    const { container } = render(<Dialog onClose={onClose} visible />);
+    fireEvent.click(container.querySelector('.rc-dialog-body'));
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('zIndex', () => {
-    const wrapper = mount(<Dialog visible zIndex={903} />);
-    expect(wrapper.find('.rc-dialog-wrap').props().style.zIndex).toBe(903);
+    const { container } = render(<Dialog visible zIndex={903} />);
+    expect(container.querySelector('.rc-dialog-wrap').style.zIndex).toBe('903');
   });
 
   it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
@@ -382,18 +342,17 @@ describe('dialog', () => {
       }
     }
 
-    const wrapper = mount(
+    const { container } = render(
       <DialogWrapTest>
         <div>Show dialog with forceRender and visible is true</div>
       </DialogWrapTest>,
     );
     jest.runAllTimers();
-    wrapper.update();
-    expect(wrapper.find('.rc-dialog-wrap').props().style.display).toEqual(null);
+    expect(container.querySelector('.rc-dialog-wrap').style.display).toEqual(null);
   });
 
   it('modalRender', () => {
-    const modalRender = mount(
+    const { container } = render(
       <Dialog
         visible
         modalRender={(node: React.ReactElement) =>
@@ -401,7 +360,7 @@ describe('dialog', () => {
         }
       />,
     );
-    expect(modalRender.find('.rc-dialog-section').props().style.background).toEqual('#1890ff');
+    expect(container.querySelector('.rc-dialog-section').style.background).toEqual('#1890ff');
   });
 
   describe('focusTriggerAfterClose', () => {
@@ -417,16 +376,15 @@ describe('dialog', () => {
           </>
         );
       };
-      const wrapper = mount(<Demo />, { attachTo: document.body });
-      const trigger = wrapper.find('button').at(0);
-      (trigger.getDOMNode() as any).focus();
-      trigger.simulate('click');
+      const { container } = render(<Demo />);
+      const trigger = container.querySelector('button');
+      trigger.focus();
+      fireEvent.click(trigger);
       jest.runAllTimers();
-      const closeButton = wrapper.find('.rc-dialog-close');
-      closeButton.simulate('click');
+      const closeButton = container.querySelector('.rc-dialog-close');
+      fireEvent.click(closeButton);
       jest.runAllTimers();
-      expect(document.activeElement).toBe(trigger.getDOMNode());
-      wrapper.unmount();
+      expect(document.activeElement).toBe(trigger);
     });
 
     it('should focus trigger after close dialog when contains focusable element', () => {
@@ -445,33 +403,32 @@ describe('dialog', () => {
           </>
         );
       };
-      const wrapper = mount(<Demo />, { attachTo: document.body });
-      const trigger = wrapper.find('button').at(0);
-      (trigger.getDOMNode() as any).focus();
-      trigger.simulate('click');
+      const { container } = render(<Demo />);
+      const trigger = container.querySelector('button');
+      trigger.focus();
+      fireEvent.click(trigger);
       jest.runAllTimers();
-      const closeButton = wrapper.find('.rc-dialog-close');
-      closeButton.simulate('click');
+      const closeButton = container.querySelector('.rc-dialog-close');
+      fireEvent.click(closeButton);
       jest.runAllTimers();
-      expect(document.activeElement).toBe(trigger.getDOMNode());
-      wrapper.unmount();
+      expect(document.activeElement).toBe(trigger);
     });
   });
 
   describe('size should work', () => {
     it('width', () => {
-      const wrapper = mount(<Dialog visible width={1128} />);
-      expect(wrapper.find('.rc-dialog').props().style.width).toEqual(1128);
+      const { container } = render(<Dialog visible width={1128} />);
+      expect(container.querySelector('.rc-dialog')).toHaveStyle('width: 1128px');
     });
 
     it('height', () => {
-      const wrapper = mount(<Dialog visible height={903} />);
-      expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
+      const { container } = render(<Dialog visible height={903} />);
+      expect(container.querySelector('.rc-dialog')).toHaveStyle('height: 903px');
     });
   });
 
   describe('re-render', () => {
-    function createWrapper(props?: Partial<DialogProps>): [ReactWrapper, () => number] {
+    function createWrapper(props?: Partial<DialogProps>): [HTMLElement, () => number] {
       let renderTimes = 0;
       const RenderChecker = () => {
         renderTimes += 1;
@@ -486,26 +443,26 @@ describe('dialog', () => {
         );
       };
 
-      const wrapper = mount(<Demo />);
+      const { container } = render(<Demo />);
 
-      return [wrapper, () => renderTimes];
+      return [container, () => renderTimes];
     }
 
     it('should not re-render when visible changed', () => {
-      const [wrapper, getRenderTimes] = createWrapper();
+      const [container, getRenderTimes] = createWrapper();
       expect(getRenderTimes()).toEqual(1);
 
       // Hidden should not trigger render
-      wrapper.setProps({ visible: false });
+      render(<Dialog visible={false} />, { container });
       expect(getRenderTimes()).toEqual(1);
     });
 
     it('should re-render when forceRender', () => {
-      const [wrapper, getRenderTimes] = createWrapper({ forceRender: true });
+      const [container, getRenderTimes] = createWrapper({ forceRender: true });
       expect(getRenderTimes()).toEqual(1);
 
       // Hidden should not trigger render
-      wrapper.setProps({ visible: false });
+      render(<Dialog visible={false} />, { container });
       expect(getRenderTimes()).toEqual(2);
     });
   });
@@ -514,10 +471,10 @@ describe('dialog', () => {
     it('should trigger afterClose when set visible to false', () => {
       const afterClose = jest.fn();
 
-      const wrapper = mount(<Dialog afterClose={afterClose} visible />);
+      const { container, rerender } = render(<Dialog afterClose={afterClose} visible />);
       jest.runAllTimers();
 
-      wrapper.setProps({ visible: false });
+      rerender(<Dialog afterClose={afterClose} visible={false} />);
       jest.runAllTimers();
 
       expect(afterClose).toHaveBeenCalledTimes(1);
@@ -526,10 +483,10 @@ describe('dialog', () => {
     it('should not trigger afterClose when mount dialog of getContainer={false}', () => {
       const afterClose = jest.fn();
 
-      const wrapper = mount(<Dialog afterClose={afterClose} getContainer={false} />);
+      const { container } = render(<Dialog afterClose={afterClose} getContainer={false} />);
       jest.runAllTimers();
 
-      wrapper.setProps({ visible: false });
+      render(<Dialog afterClose={afterClose} getContainer={false} visible={false} />, { container });
       jest.runAllTimers();
 
       expect(afterClose).toHaveBeenCalledTimes(0);
@@ -538,10 +495,10 @@ describe('dialog', () => {
     it('should not trigger afterClose when mount dialog of forceRender={true}', () => {
       const afterClose = jest.fn();
 
-      const wrapper = mount(<Dialog afterClose={afterClose} forceRender />);
+      const { container } = render(<Dialog afterClose={afterClose} forceRender />);
       jest.runAllTimers();
 
-      wrapper.setProps({ visible: false });
+      render(<Dialog afterClose={afterClose} forceRender visible={false} />, { container });
       jest.runAllTimers();
 
       expect(afterClose).toHaveBeenCalledTimes(0);
@@ -572,7 +529,7 @@ describe('dialog', () => {
       expect(afterOpenChange).toHaveBeenCalledWith(true);
       expect(afterOpenChange).toHaveBeenCalledTimes(1);
 
-      rerender(<Demo />);
+      rerender(<Demo visible={false} />);
       await runFakeTimer();
       expect(afterOpenChange).toHaveBeenCalledWith(false);
       expect(afterOpenChange).toHaveBeenCalledTimes(2);
@@ -580,7 +537,7 @@ describe('dialog', () => {
   });
 
   it('should support classNames', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Dialog
         visible
         title="Default"
@@ -598,19 +555,18 @@ describe('dialog', () => {
       />,
     );
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper.find('.rc-dialog-wrap').props().className).toContain('custom-wrapper');
-    expect(wrapper.find('.rc-dialog-body').props().className).toContain('custom-body');
-    expect(wrapper.find('.rc-dialog-header').props().className).toContain('custom-header');
-    expect(wrapper.find('.rc-dialog-footer').props().className).toContain('custom-footer');
-    expect(wrapper.find('.rc-dialog-mask').props().className).toContain('custom-mask');
-    expect(wrapper.find('.rc-dialog-section').props().className).toContain('custom-section');
+    expect(container).toMatchSnapshot();
+    expect(container.querySelector('.rc-dialog-wrap').className).toContain('custom-wrapper');
+    expect(container.querySelector('.rc-dialog-body').className).toContain('custom-body');
+    expect(container.querySelector('.rc-dialog-header').className).toContain('custom-header');
+    expect(container.querySelector('.rc-dialog-footer').className).toContain('custom-footer');
+    expect(container.querySelector('.rc-dialog-mask').className).toContain('custom-mask');
+    expect(container.querySelector('.rc-dialog-section').className).toContain('custom-section');
   });
 
   it('should support styles', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Dialog
         visible
         title="Default"
@@ -629,20 +585,20 @@ describe('dialog', () => {
       />,
     );
     jest.runAllTimers();
-    wrapper.update();
 
-    expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper.find('.rc-dialog-wrap').props().style.background).toBe('pink');
-    expect(wrapper.find('.rc-dialog-body').props().style.background).toBe('green');
-    expect(wrapper.find('.rc-dialog-header').props().style.background).toBe('red');
-    expect(wrapper.find('.rc-dialog-footer').props().style.background).toBe('blue');
-    expect(wrapper.find('.rc-dialog-mask').props().style.background).toBe('yellow');
-    expect(wrapper.find('.rc-dialog-section').props().style.background).toBe('orange');
-    expect(wrapper.find('.rc-dialog-title').props().style.background).toBe('orange');
+    expect(container).toMatchSnapshot();
+    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('background: pink');
+    expect(container.querySelector('.rc-dialog-body')).toHaveStyle('background: green');
+    expect(container.querySelector('.rc-dialog-header')).toHaveStyle('background: red');
+    expect(container.querySelector('.rc-dialog-footer')).toHaveStyle('background: blue');
+    expect(container.querySelector('.rc-dialog-mask')).toHaveStyle('background: yellow');
+    expect(container.querySelector('.rc-dialog-section')).toHaveStyle('background: orange');
+    expect(container.querySelector('.rc-dialog-title')).toHaveStyle('background: orange');
   });
+
   it('should warning', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const wrapper = mount(
+    const { container } = render(
       <Dialog
         visible
         title="Default"
@@ -655,7 +611,6 @@ describe('dialog', () => {
       />,
     );
     jest.runAllTimers();
-    wrapper.update();
 
     expect(spy).toHaveBeenCalledWith(
       `Warning: bodyStyle is deprecated, please use styles instead.`,
@@ -671,7 +626,7 @@ describe('dialog', () => {
 
   it('support aria-* in closable', () => {
     const onClose = jest.fn();
-    const wrapper = mount(
+    const { container } = render(
       <Dialog
         closable={{
           closeIcon: 'test',
@@ -682,21 +637,19 @@ describe('dialog', () => {
       />,
     );
     jest.runAllTimers();
-    wrapper.update();
 
-    const btn = wrapper.find('.rc-dialog-close');
-    expect(btn.text()).toBe('test');
-    expect(btn.getDOMNode().getAttribute('aria-label')).toBe('test aria-label');
-    btn.simulate('click');
+    const btn = container.querySelector('.rc-dialog-close');
+    expect(btn.textContent).toBe('test');
+    expect(btn.getAttribute('aria-label')).toBe('test aria-label');
+    fireEvent.click(btn);
 
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it('support disable button in closable', () => {
     const onClose = jest.fn();
-    const wrapper = mount(
+    const { container } = render(
       <Dialog
         closable={{
           closeIcon: 'test',
@@ -707,29 +660,25 @@ describe('dialog', () => {
       />,
     );
     jest.runAllTimers();
-    wrapper.update();
 
-    const btn = wrapper.find('.rc-dialog-close');
-    expect(btn.prop('disabled')).toBe(true);
-    btn.simulate('click');
+    const btn = container.querySelector('.rc-dialog-close');
+    expect(btn.disabled).toBe(true);
+    fireEvent.click(btn);
 
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).not.toHaveBeenCalled();
 
-    btn.simulate('keydown', { key: 'Enter' });
+    fireEvent.keyDown(btn, { key: 'Enter' });
     jest.runAllTimers();
-    wrapper.update();
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('should not display closeIcon when closable is false', () => {
     const onClose = jest.fn();
-    const wrapper = mount(<Dialog closable={false} visible onClose={onClose} />);
+    const { container } = render(<Dialog closable={false} visible onClose={onClose} />);
     jest.runAllTimers();
-    wrapper.update();
 
-    const btn = wrapper.find('.rc-dialog-close');
-    expect(btn.find('.rc-dialog-close-x')).not.toBeNull();
+    const btn = container.querySelector('.rc-dialog-close');
+    expect(btn.querySelector('.rc-dialog-close-x')).not.toBeNull();
   });
 });
