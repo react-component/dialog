@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import contains from 'rc-util/lib/Dom/contains';
-import useId from 'rc-util/lib/hooks/useId';
-import KeyCode from 'rc-util/lib/KeyCode';
-import pickAttrs from 'rc-util/lib/pickAttrs';
+import contains from '@rc-component/util/lib/Dom/contains';
+import useId from '@rc-component/util/lib/hooks/useId';
+import KeyCode from '@rc-component/util/lib/KeyCode';
+import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
@@ -10,7 +10,7 @@ import { getMotionName } from '../util';
 import Content from './Content';
 import type { ContentRef } from './Content/Panel';
 import Mask from './Mask';
-import { warning } from 'rc-util/lib/warning';
+import { warning } from '@rc-component/util/lib/warning';
 
 const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const {
