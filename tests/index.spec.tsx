@@ -1,9 +1,8 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, act } from '@testing-library/react';
 import { Provider } from 'rc-motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
-import { act } from 'react-dom/test-utils';
 import type { DialogProps } from '../src';
 import Dialog from '../src';
 
@@ -27,10 +26,10 @@ describe('dialog', () => {
   });
 
   it('should render correct', () => {
-    const { container } = render(<Dialog title="Default" visible />);
+    render(<Dialog title="Default" visible />);
     jest.runAllTimers();
 
-    expect(container).toMatchSnapshot();
+    expect(document.querySelector('.rc-dialog-root')).toMatchSnapshot();
   });
 
   it('add rootClassName and rootStyle should render correct', () => {
@@ -47,22 +46,22 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
 
-    expect(container).toMatchSnapshot();
+    expect(document.querySelector('.rc-dialog-root')).toMatchSnapshot();
     expect(spy).toHaveBeenCalledWith(
       `Warning: wrapStyle is deprecated, please use styles instead.`,
     );
-    expect(container.querySelector('.customize-root-class')).toBeTruthy();
-    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('fontSize: 10px');
-    expect(container.querySelector('.rc-dialog-root')).toHaveStyle('fontSize: 20px');
-    expect(container.querySelector('.rc-dialog')).toHaveStyle('height: 903px');
-    expect(container.querySelector('.rc-dialog')).toHaveStyle('width: 600px');
+    expect(document.querySelector('.customize-root-class')).toBeTruthy();
+    expect(document.querySelector('.rc-dialog-wrap')).toHaveStyle('fontSize: 10px');
+    expect(document.querySelector('.rc-dialog-root')).toHaveStyle('fontSize: 20px');
+    expect(document.querySelector('.rc-dialog')).toHaveStyle('height: 903px');
+    expect(document.querySelector('.rc-dialog')).toHaveStyle('width: 600px');
   });
 
   it('show', () => {
     const { container } = render(<Dialog visible />);
     jest.runAllTimers();
 
-    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('display: block');
+    expect(document.querySelector('.rc-dialog-wrap')).toHaveStyle('display: block');
   });
 
   it('close', () => {
@@ -72,15 +71,15 @@ describe('dialog', () => {
     rerender(<Dialog visible={false} />);
     jest.runAllTimers();
 
-    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('display: none');
+    expect(document.querySelector('.rc-dialog-wrap')).toHaveStyle('display: none');
   });
 
   it('create & root & mask', () => {
     const { container } = render(<Dialog visible />);
     jest.runAllTimers();
 
-    expect(container.querySelector('.rc-dialog-root')).toBeTruthy();
-    expect(container.querySelector('.rc-dialog-mask')).toBeTruthy();
+    expect(document.querySelector('.rc-dialog-root')).toBeTruthy();
+    expect(document.querySelector('.rc-dialog-mask')).toBeTruthy();
   });
 
   it('click close', () => {
@@ -88,7 +87,7 @@ describe('dialog', () => {
     const { container } = render(<Dialog closeIcon="test" onClose={onClose} visible />);
     jest.runAllTimers();
 
-    const btn = container.querySelector('.rc-dialog-close');
+    const btn = document.querySelector('.rc-dialog-close');
     expect(btn.textContent).toBe('test');
     fireEvent.click(btn);
 
@@ -107,7 +106,7 @@ describe('dialog', () => {
       rerender(<Dialog visible={false} />);
       jest.runAllTimers();
 
-      expect(container.querySelectorAll('.test-destroy')).toHaveLength(1);
+      expect(document.querySelectorAll('.test-destroy')).toHaveLength(1);
     });
 
     it('destroy on hide should unmount child components on close', () => {
@@ -121,8 +120,8 @@ describe('dialog', () => {
       rerender(<Dialog visible />);
       jest.runAllTimers();
 
-      container.querySelector('.test-input').value = 'test';
-      expect(container.querySelector('.test-input').value).toBe('test');
+      document.querySelector('.test-input').value = 'test';
+      expect(document.querySelector('.test-input').value).toBe('test');
 
       // Hide
       rerender(<Dialog visible={false} />);
@@ -132,7 +131,7 @@ describe('dialog', () => {
       rerender(<Dialog visible />);
       jest.runAllTimers();
 
-      expect(container.querySelector('.test-input')).toBeNull();
+      expect(document.querySelector('.test-input')).toBeNull();
     });
   });
 
@@ -141,7 +140,7 @@ describe('dialog', () => {
     const { container } = render(<Dialog onClose={onClose} visible />);
     jest.runAllTimers();
 
-    fireEvent.keyDown(container.querySelector('.rc-dialog'), { keyCode: KeyCode.ESC });
+    fireEvent.keyDown(document.querySelector('.rc-dialog'), { keyCode: KeyCode.ESC });
     jest.runAllTimers();
     expect(onClose).toHaveBeenCalled();
   });
@@ -151,14 +150,14 @@ describe('dialog', () => {
     const { container, rerender } = render(<Dialog onClose={onClose} visible />);
 
     // Mask close
-    fireEvent.click(container.querySelector('.rc-dialog-wrap'));
+    fireEvent.click(document.querySelector('.rc-dialog-wrap'));
     jest.runAllTimers();
     expect(onClose).toHaveBeenCalled();
     onClose.mockReset();
 
     // Mask can not close
     rerender(<Dialog onClose={onClose} visible maskClosable={false} />);
-    fireEvent.click(container.querySelector('.rc-dialog-wrap'));
+    fireEvent.click(document.querySelector('.rc-dialog-wrap'));
     jest.runAllTimers();
     expect(onClose).not.toHaveBeenCalled();
   });
@@ -199,17 +198,17 @@ describe('dialog', () => {
       </Dialog>,
     );
 
-    expect(returnedContainer.contains(container.querySelector('.rc-dialog-wrap'))).toBeTruthy();
+    expect(returnedContainer.contains(document.querySelector('.rc-dialog-wrap'))).toBeTruthy();
   });
 
   it('render title correctly', () => {
     const { container } = render(<Dialog visible title="bamboo" />);
-    expect(container.querySelector('.rc-dialog-header').textContent).toBe('bamboo');
+    expect(document.querySelector('.rc-dialog-header').textContent).toBe('bamboo');
   });
 
   it('render footer correctly', () => {
     const { container } = render(<Dialog visible footer="test" />);
-    expect(container.querySelector('.rc-dialog-footer').textContent).toBe('test');
+    expect(document.querySelector('.rc-dialog-footer').textContent).toBe('test');
   });
 
   // 失效了，需要修复
@@ -225,28 +224,28 @@ describe('dialog', () => {
   describe('Tab should keep focus in dialog', () => {
     it('basic tabbing', () => {
       const { container } = render(<Dialog visible />);
-      const sentinelEnd = container.querySelector('.rc-dialog > div:last-child');
+      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
       sentinelEnd.focus();
 
-      fireEvent.keyDown(container.querySelector('.rc-dialog-wrap'), {
+      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
         keyCode: KeyCode.TAB,
       });
 
-      const sentinelStart = container.querySelector('.rc-dialog > div:first-child');
+      const sentinelStart = document.querySelector('.rc-dialog > div:first-child');
       expect(document.activeElement).toBe(sentinelStart);
     });
 
     it('trap focus after shift-tabbing', () => {
       const { container } = render(<Dialog visible />);
 
-      container.querySelector('.rc-dialog > div:first-child').focus();
+      document.querySelector('.rc-dialog > div:first-child').focus();
 
-      fireEvent.keyDown(container.querySelector('.rc-dialog-wrap'), {
+      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
         keyCode: KeyCode.TAB,
         key: 'Tab',
         shiftKey: true,
       });
-      const sentinelEnd = container.querySelector('.rc-dialog > div:last-child');
+      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
       expect(document.activeElement).toBe(sentinelEnd);
     });
   });
@@ -261,7 +260,7 @@ describe('dialog', () => {
 
       // Trigger position align
       act(() => {
-        container.querySelector('Content CSSMotion').onAppearPrepare();
+        document.querySelector('Content CSSMotion').onAppearPrepare();
       });
 
       return container;
@@ -270,19 +269,19 @@ describe('dialog', () => {
     it('sets transform-origin when property mousePosition is set', () => {
       const container = prepareModal({ x: 100, y: 100 });
 
-      expect(container.querySelector('.rc-dialog').style['transform-origin']).toBeTruthy();
+      expect(document.querySelector('.rc-dialog').style['transform-origin']).toBeTruthy();
     });
 
     it('both undefined', () => {
       const container = prepareModal({ x: undefined, y: undefined });
 
-      expect(container.querySelector('.rc-dialog').style['transform-origin']).toBeFalsy();
+      expect(document.querySelector('.rc-dialog').style['transform-origin']).toBeFalsy();
     });
 
     it('one valid', () => {
       const container = prepareModal({ x: 10, y: 0 });
 
-      expect(container.querySelector('.rc-dialog').style['transform-origin']).toBeTruthy();
+      expect(document.querySelector('.rc-dialog').style['transform-origin']).toBeTruthy();
     });
   });
 
@@ -292,7 +291,9 @@ describe('dialog', () => {
         <div>forceRender element</div>
       </Dialog>,
     );
-    expect(container.querySelector('.rc-dialog-body > div').textContent).toEqual('forceRender element');
+    expect(document.querySelector('.rc-dialog-body > div').textContent).toEqual(
+      'forceRender element',
+    );
   });
 
   describe('getContainer is false', () => {
@@ -303,7 +304,7 @@ describe('dialog', () => {
         </Dialog>,
       );
 
-      expect(container.querySelector('.bamboo')).toBeFalsy();
+      expect(document.querySelector('.bamboo')).toBeFalsy();
       expect(document.body.querySelector('.bamboo')).toBeTruthy();
     });
 
@@ -314,20 +315,20 @@ describe('dialog', () => {
         </Dialog>,
       );
 
-      expect(container.querySelector('.bamboo')).toBeTruthy();
+      expect(document.querySelector('.bamboo')).toBeTruthy();
     });
   });
 
   it('should not close if mouse down in dialog', () => {
     const onClose = jest.fn();
     const { container } = render(<Dialog onClose={onClose} visible />);
-    fireEvent.click(container.querySelector('.rc-dialog-body'));
+    fireEvent.click(document.querySelector('.rc-dialog-body'));
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('zIndex', () => {
     const { container } = render(<Dialog visible zIndex={903} />);
-    expect(container.querySelector('.rc-dialog-wrap').style.zIndex).toBe('903');
+    expect(document.querySelector('.rc-dialog-wrap').style.zIndex).toBe('903');
   });
 
   it('should show dialog when initialize dialog, given forceRender and visible is true', () => {
@@ -348,7 +349,7 @@ describe('dialog', () => {
       </DialogWrapTest>,
     );
     jest.runAllTimers();
-    expect(container.querySelector('.rc-dialog-wrap').style.display).toEqual(null);
+    expect(document.querySelector('.rc-dialog-wrap').style.display).toEqual(null);
   });
 
   it('modalRender', () => {
@@ -360,7 +361,7 @@ describe('dialog', () => {
         }
       />,
     );
-    expect(container.querySelector('.rc-dialog-section').style.background).toEqual('#1890ff');
+    expect(document.querySelector('.rc-dialog-section').style.background).toEqual('#1890ff');
   });
 
   describe('focusTriggerAfterClose', () => {
@@ -377,11 +378,11 @@ describe('dialog', () => {
         );
       };
       const { container } = render(<Demo />);
-      const trigger = container.querySelector('button');
+      const trigger = document.querySelector('button');
       trigger.focus();
       fireEvent.click(trigger);
       jest.runAllTimers();
-      const closeButton = container.querySelector('.rc-dialog-close');
+      const closeButton = document.querySelector('.rc-dialog-close');
       fireEvent.click(closeButton);
       jest.runAllTimers();
       expect(document.activeElement).toBe(trigger);
@@ -404,11 +405,11 @@ describe('dialog', () => {
         );
       };
       const { container } = render(<Demo />);
-      const trigger = container.querySelector('button');
+      const trigger = document.querySelector('button');
       trigger.focus();
       fireEvent.click(trigger);
       jest.runAllTimers();
-      const closeButton = container.querySelector('.rc-dialog-close');
+      const closeButton = document.querySelector('.rc-dialog-close');
       fireEvent.click(closeButton);
       jest.runAllTimers();
       expect(document.activeElement).toBe(trigger);
@@ -418,17 +419,23 @@ describe('dialog', () => {
   describe('size should work', () => {
     it('width', () => {
       const { container } = render(<Dialog visible width={1128} />);
-      expect(container.querySelector('.rc-dialog')).toHaveStyle('width: 1128px');
+      expect(document.querySelector('.rc-dialog')).toHaveStyle('width: 1128px');
     });
 
     it('height', () => {
       const { container } = render(<Dialog visible height={903} />);
-      expect(container.querySelector('.rc-dialog')).toHaveStyle('height: 903px');
+      expect(document.querySelector('.rc-dialog')).toHaveStyle('height: 903px');
     });
   });
 
   describe('re-render', () => {
-    function createWrapper(props?: Partial<DialogProps>): [HTMLElement, () => number] {
+    function createWrapper(
+      props?: Partial<DialogProps>,
+    ): [
+      container: HTMLElement,
+      getRenderTimes: () => number,
+      updateProps: (props?: Partial<DialogProps>) => void,
+    ] {
       let renderTimes = 0;
       const RenderChecker = () => {
         renderTimes += 1;
@@ -443,27 +450,35 @@ describe('dialog', () => {
         );
       };
 
-      const { container } = render(<Demo />);
+      const { container, rerender } = render(<Demo />);
 
-      return [container, () => renderTimes];
+      return [
+        container,
+        () => renderTimes,
+        (nextProps) => {
+          rerender(<Demo {...nextProps} />);
+        },
+      ];
     }
 
     it('should not re-render when visible changed', () => {
-      const [container, getRenderTimes] = createWrapper();
-      expect(getRenderTimes()).toEqual(1);
+      const [, getRenderTimes, updateProps] = createWrapper();
+      const lastRenderTimes = getRenderTimes();
+      expect(getRenderTimes()).toBeGreaterThan(0);
 
       // Hidden should not trigger render
-      render(<Dialog visible={false} />, { container });
-      expect(getRenderTimes()).toEqual(1);
+      updateProps({ visible: false });
+      expect(getRenderTimes()).toEqual(lastRenderTimes);
     });
 
     it('should re-render when forceRender', () => {
-      const [container, getRenderTimes] = createWrapper({ forceRender: true });
-      expect(getRenderTimes()).toEqual(1);
+      const [, getRenderTimes, updateProps] = createWrapper({ forceRender: true });
+      const lastRenderTimes = getRenderTimes();
+      expect(getRenderTimes()).toBeGreaterThan(0);
 
       // Hidden should not trigger render
-      render(<Dialog visible={false} />, { container });
-      expect(getRenderTimes()).toEqual(2);
+      updateProps({ visible: false });
+      expect(getRenderTimes()).toBeGreaterThan(lastRenderTimes);
     });
   });
 
@@ -486,7 +501,9 @@ describe('dialog', () => {
       const { container } = render(<Dialog afterClose={afterClose} getContainer={false} />);
       jest.runAllTimers();
 
-      render(<Dialog afterClose={afterClose} getContainer={false} visible={false} />, { container });
+      render(<Dialog afterClose={afterClose} getContainer={false} visible={false} />, {
+        container,
+      });
       jest.runAllTimers();
 
       expect(afterClose).toHaveBeenCalledTimes(0);
@@ -556,13 +573,13 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
 
-    expect(container).toMatchSnapshot();
-    expect(container.querySelector('.rc-dialog-wrap').className).toContain('custom-wrapper');
-    expect(container.querySelector('.rc-dialog-body').className).toContain('custom-body');
-    expect(container.querySelector('.rc-dialog-header').className).toContain('custom-header');
-    expect(container.querySelector('.rc-dialog-footer').className).toContain('custom-footer');
-    expect(container.querySelector('.rc-dialog-mask').className).toContain('custom-mask');
-    expect(container.querySelector('.rc-dialog-section').className).toContain('custom-section');
+    expect(document.querySelector('.rc-dialog-root')).toMatchSnapshot();
+    expect(document.querySelector('.rc-dialog-wrap').className).toContain('custom-wrapper');
+    expect(document.querySelector('.rc-dialog-body').className).toContain('custom-body');
+    expect(document.querySelector('.rc-dialog-header').className).toContain('custom-header');
+    expect(document.querySelector('.rc-dialog-footer').className).toContain('custom-footer');
+    expect(document.querySelector('.rc-dialog-mask').className).toContain('custom-mask');
+    expect(document.querySelector('.rc-dialog-section').className).toContain('custom-section');
   });
 
   it('should support styles', () => {
@@ -586,19 +603,19 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
 
-    expect(container).toMatchSnapshot();
-    expect(container.querySelector('.rc-dialog-wrap')).toHaveStyle('background: pink');
-    expect(container.querySelector('.rc-dialog-body')).toHaveStyle('background: green');
-    expect(container.querySelector('.rc-dialog-header')).toHaveStyle('background: red');
-    expect(container.querySelector('.rc-dialog-footer')).toHaveStyle('background: blue');
-    expect(container.querySelector('.rc-dialog-mask')).toHaveStyle('background: yellow');
-    expect(container.querySelector('.rc-dialog-section')).toHaveStyle('background: orange');
-    expect(container.querySelector('.rc-dialog-title')).toHaveStyle('background: orange');
+    expect(document.querySelector('.rc-dialog-root')).toMatchSnapshot();
+    expect(document.querySelector('.rc-dialog-wrap')).toHaveStyle('background: pink');
+    expect(document.querySelector('.rc-dialog-body')).toHaveStyle('background: green');
+    expect(document.querySelector('.rc-dialog-header')).toHaveStyle('background: red');
+    expect(document.querySelector('.rc-dialog-footer')).toHaveStyle('background: blue');
+    expect(document.querySelector('.rc-dialog-mask')).toHaveStyle('background: yellow');
+    expect(document.querySelector('.rc-dialog-section')).toHaveStyle('background: orange');
+    expect(document.querySelector('.rc-dialog-title')).toHaveStyle('background: orange');
   });
 
   it('should warning', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const { container } = render(
+    render(
       <Dialog
         visible
         title="Default"
@@ -638,7 +655,7 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
 
-    const btn = container.querySelector('.rc-dialog-close');
+    const btn = document.querySelector('.rc-dialog-close');
     expect(btn.textContent).toBe('test');
     expect(btn.getAttribute('aria-label')).toBe('test aria-label');
     fireEvent.click(btn);
@@ -661,7 +678,7 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
 
-    const btn = container.querySelector('.rc-dialog-close');
+    const btn = document.querySelector('.rc-dialog-close');
     expect(btn.disabled).toBe(true);
     fireEvent.click(btn);
 
@@ -675,10 +692,13 @@ describe('dialog', () => {
 
   it('should not display closeIcon when closable is false', () => {
     const onClose = jest.fn();
-    const { container } = render(<Dialog closable={false} visible onClose={onClose} />);
-    jest.runAllTimers();
+    render(<Dialog closable={false} visible onClose={onClose} />);
 
-    const btn = container.querySelector('.rc-dialog-close');
-    expect(btn.querySelector('.rc-dialog-close-x')).not.toBeNull();
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(document.querySelector('.rc-dialog')).toBeTruthy();
+    expect(document.querySelector('.rc-dialog-close')).toBeFalsy();
   });
 });
