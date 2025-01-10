@@ -18,7 +18,7 @@ const ignoreList = [
   'Warning: unmountComponentAtNode():',
 ];
 console.error = (...args) => {
-  if (ignoreList.some((str) => args[0].includes(str))) {
+  if (ignoreList.some((str) => String(args[0]).includes(str))) {
     return;
   }
 
