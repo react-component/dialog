@@ -36,12 +36,13 @@ describe('dialog', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  it('add rootClassName should render correct', () => {
+  it('add rootClassName and rootStyle should render correct', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const wrapper = mount(
       <Dialog
         visible
         rootClassName="customize-root-class"
+        rootStyle={{ fontSize: 20 }}
         style={{ width: 600 }}
         height={903}
         wrapStyle={{ fontSize: 10 }}
@@ -56,6 +57,7 @@ describe('dialog', () => {
     );
     expect(wrapper.find('.customize-root-class').length).toBeTruthy();
     expect(wrapper.find('.rc-dialog-wrap').props().style.fontSize).toBe(10);
+    expect(wrapper.find('.rc-dialog-root').props().style.fontSize).toBe(20);
     expect(wrapper.find('.rc-dialog').props().style.height).toEqual(903);
     expect(wrapper.find('.rc-dialog').props().style.width).toEqual(600);
   });
