@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { useComposeRef } from 'rc-util/lib/ref';
+import { useComposeRef } from '@rc-component/util/lib/ref';
 import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
-import pickAttrs from 'rc-util/lib/pickAttrs';
+import pickAttrs from '@rc-component/util/lib/pickAttrs';
 
 const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
 const entityStyle = { outline: 'none' };

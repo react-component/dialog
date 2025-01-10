@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
 import { Provider } from 'rc-motion';
-import KeyCode from 'rc-util/lib/KeyCode';
+import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import type { DialogProps } from '../src';

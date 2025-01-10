@@ -1,4 +1,4 @@
-import type { GetContainer } from 'rc-util/lib/PortalWrapper';
+import type { GetContainer } from '@rc-component/util/lib/PortalWrapper';
 import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
 export type SemanticName = 'header' | 'body' | 'footer' | 'section' | 'title' | 'wrapper' | 'mask';
