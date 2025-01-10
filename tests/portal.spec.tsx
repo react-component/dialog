@@ -1,8 +1,7 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React from 'react';
 import Select from 'rc-select';
-import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import Dialog from '../src';
 
 /**
@@ -21,7 +20,7 @@ describe('Dialog.Portal', () => {
   it('event should bubble', () => {
     const onClose = jest.fn();
 
-    const wrapper = mount(
+    render(
       <Dialog onClose={onClose} visible>
         <Select virtual={false} open>
           <Select.Option value="bamboo">Bamboo</Select.Option>
@@ -29,31 +28,27 @@ describe('Dialog.Portal', () => {
       </Dialog>,
     );
 
-    act(() => {
-      jest.runAllTimers();
-    });
+    jest.runAllTimers();
 
-    wrapper.find('.rc-dialog-section').simulate('mousedown');
-    wrapper.find('.rc-select-item-option-content').simulate('click');
-    wrapper.find('.rc-dialog-section').simulate('mouseup');
+    fireEvent.mouseDown(document.querySelector('.rc-dialog-section'));
+    fireEvent.click(document.querySelector('.rc-select-item-option-content'));
+    fireEvent.mouseUp(document.querySelector('.rc-dialog-section'));
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('dialog dont close when mouseDown in content and mouseUp in wrap', () => {
     const onClose = jest.fn();
 
-    const wrapper = mount(
+    render(
       <Dialog onClose={onClose} visible>
         content
       </Dialog>,
     );
 
-    act(() => {
-      jest.runAllTimers();
-    });
+    jest.runAllTimers();
 
-    wrapper.find('.rc-dialog-section').simulate('mousedown');
-    wrapper.find('.rc-dialog-wrap').simulate('mouseup');
+    fireEvent.mouseDown(document.querySelector('.rc-dialog-section'));
+    fireEvent.mouseUp(document.querySelector('.rc-dialog-wrap'));
     expect(onClose).not.toHaveBeenCalled();
   });
 });
