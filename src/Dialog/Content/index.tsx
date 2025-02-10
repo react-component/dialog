@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
+import CSSMotion from '@rc-component/motion';
 import { offset } from '../../util';
 import type { PanelProps, ContentRef } from './Panel';
 import Panel from './Panel';
+
+console.log(CSSMotion);
 
 export type ContentProps = {
   motionName: string;
@@ -27,7 +29,10 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     mousePosition,
   } = props;
 
-  const dialogRef = useRef<HTMLDivElement>();
+  const dialogRef = useRef<{
+    nativeElement: HTMLDivElement;
+    inMotion: () => boolean;
+  }>();
 
   // ============================= Style ==============================
   const [transformOrigin, setTransformOrigin] = React.useState<string>();
@@ -38,7 +43,8 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   }
 
   function onPrepare() {
-    const elementOffset = offset(dialogRef.current);
+    console.log('onPrepare', dialogRef.current);
+    const elementOffset = offset(dialogRef.current?.nativeElement);
 
     setTransformOrigin(
       mousePosition && (mousePosition.x || mousePosition.y)
@@ -46,6 +52,12 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         : '',
     );
   }
+
+  const bbb = React.useCallback((aaa) => {
+    console.log('???', aaa);
+    dialogRef.current = aaa;
+  }, []);
+  console.log('render....');
 
   // ============================= Render =============================
   return (
@@ -57,7 +69,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       forceRender={forceRender}
       motionName={motionName}
       removeOnLeave={destroyOnClose}
-      ref={dialogRef}
+      ref={bbb}
     >
       {({ className: motionClassName, style: motionStyle }, motionRef) => (
         <Panel

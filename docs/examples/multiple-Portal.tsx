@@ -24,6 +24,7 @@ const Demo: React.FC = () => {
       onClose={onToggleDialog}
       forceRender
       title="basic modal"
+      mask={false}
     >
       <p>
         <button type="button" onClick={onToggleDrawer}>
@@ -46,7 +47,7 @@ const Demo: React.FC = () => {
         open dialog
       </button>
       {dialog}
-      {drawer}
+      {/* {drawer} */}
     </div>
   );
 };

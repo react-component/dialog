@@ -1,14 +1,14 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import { fireEvent, render, act } from '@testing-library/react';
-import { Provider } from 'rc-motion';
+import { Provider } from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
 import type { DialogProps } from '../src';
 import Dialog from '../src';
 
-jest.mock('rc-motion', () => {
+jest.mock('@rc-component/motion', () => {
   const OriReact = jest.requireActual('react');
-  const origin = jest.requireActual('rc-motion');
+  const origin = jest.requireActual('@rc-component/motion');
   const OriCSSMotion = origin.default;
 
   const ProxyCSSMotion = OriReact.forwardRef((props: any, ref: any) => {

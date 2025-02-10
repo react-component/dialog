@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
+import CSSMotion from '@rc-component/motion';
 
 export type MaskProps = {
   prefixCls: string;
