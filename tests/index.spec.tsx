@@ -519,13 +519,10 @@ describe('dialog', () => {
         jest.runAllTimers();
       });
 
-      console.log('~~~~~~false~~~~~~');
       rerender(<Dialog afterClose={afterClose} visible={false} />);
-      console.log('~~~~~~111~~~~~~');
       act(() => {
         jest.runAllTimers();
       });
-      console.log('~~~~~~222~~~~~~');
 
       expect(afterClose).toHaveBeenCalledTimes(1);
     });
