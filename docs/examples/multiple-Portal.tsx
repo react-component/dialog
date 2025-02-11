@@ -24,7 +24,6 @@ const Demo: React.FC = () => {
       onClose={onToggleDialog}
       forceRender
       title="basic modal"
-      mask={false}
     >
       <p>
         <button type="button" onClick={onToggleDrawer}>
