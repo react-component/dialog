@@ -1,6 +1,6 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import { render } from '@testing-library/react';
-import { Provider } from 'rc-motion';
+import { Provider } from '@rc-component/motion';
 import React from 'react';
 import Dialog from '../src';
 

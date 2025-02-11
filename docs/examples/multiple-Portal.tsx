@@ -45,6 +45,17 @@ const Demo: React.FC = () => {
       <button type="button" onClick={onToggleDialog}>
         open dialog
       </button>
+      <button
+        type="button"
+        onClick={() => {
+          setShowDialog(true);
+          setTimeout(() => {
+            setShowDialog(false);
+          }, 0);
+        }}
+      >
+        quick
+      </button>
       {dialog}
       {drawer}
     </div>
