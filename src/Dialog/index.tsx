@@ -104,7 +104,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     if (newVisible) {
       focusDialogContent();
     } else {
-      console.log('hide???');
       doClose();
     }
     afterOpenChange?.(newVisible);
