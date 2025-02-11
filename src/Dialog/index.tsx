@@ -7,8 +7,7 @@ import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import { getMotionName } from '../util';
-import Content from './Content';
-import type { ContentRef } from './Content/Panel';
+import Content, { type ContentRef } from './Content';
 import Mask from './Mask';
 import { warning } from '@rc-component/util/lib/warning';
 
@@ -78,27 +77,35 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   }
 
   // ========================= Events =========================
+  // Close action will trigger by:
+  //   1. When hide motion end
+  //   2. Controlled `open` to `false` immediately after set to `true` which will not trigger motion
+  function doClose() {
+    // Clean up scroll bar & focus back
+    setAnimatedVisible(false);
+
+    if (mask && lastOutSideActiveElementRef.current && focusTriggerAfterClose) {
+      try {
+        lastOutSideActiveElementRef.current.focus({ preventScroll: true });
+      } catch (e) {
+        // Do nothing
+      }
+      lastOutSideActiveElementRef.current = null;
+    }
+
+    // Trigger afterClose only when change visible from true to false
+    if (animatedVisible) {
+      afterClose?.();
+    }
+  }
+
   function onDialogVisibleChanged(newVisible: boolean) {
     // Try to focus
     if (newVisible) {
       focusDialogContent();
     } else {
-      // Clean up scroll bar & focus back
-      setAnimatedVisible(false);
-
-      if (mask && lastOutSideActiveElementRef.current && focusTriggerAfterClose) {
-        try {
-          lastOutSideActiveElementRef.current.focus({ preventScroll: true });
-        } catch (e) {
-          // Do nothing
-        }
-        lastOutSideActiveElementRef.current = null;
-      }
-
-      // Trigger afterClose only when change visible from true to false
-      if (animatedVisible) {
-        afterClose?.();
-      }
+      console.log('hide???');
+      doClose();
     }
     afterOpenChange?.(newVisible);
   }
@@ -154,6 +161,12 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     if (visible) {
       setAnimatedVisible(true);
       saveLastOutSideActiveElementRef();
+    } else if (
+      animatedVisible &&
+      contentRef.current.enableMotion() &&
+      !contentRef.current.inMotion()
+    ) {
+      doClose();
     }
   }, [visible]);
 

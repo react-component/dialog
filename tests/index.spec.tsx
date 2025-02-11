@@ -515,10 +515,17 @@ describe('dialog', () => {
       const afterClose = jest.fn();
 
       const { rerender } = render(<Dialog afterClose={afterClose} visible />);
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
 
+      console.log('~~~~~~false~~~~~~');
       rerender(<Dialog afterClose={afterClose} visible={false} />);
-      jest.runAllTimers();
+      console.log('~~~~~~111~~~~~~');
+      act(() => {
+        jest.runAllTimers();
+      });
+      console.log('~~~~~~222~~~~~~');
 
       expect(afterClose).toHaveBeenCalledTimes(1);
     });

@@ -3,10 +3,13 @@ import { useRef } from 'react';
 import classNames from 'classnames';
 import CSSMotion from '@rc-component/motion';
 import { offset } from '../../util';
-import type { PanelProps, ContentRef } from './Panel';
+import type { PanelProps, PanelRef } from './Panel';
 import Panel from './Panel';
 
-console.log(CSSMotion);
+export type ContentRef = PanelRef & {
+  inMotion: () => boolean;
+  enableMotion: () => boolean;
+};
 
 export type ContentProps = {
   motionName: string;
@@ -34,6 +37,15 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     inMotion: () => boolean;
   }>();
 
+  const panelRef = useRef<PanelRef>();
+
+  // ============================== Refs ==============================
+  React.useImperativeHandle(ref, () => ({
+    ...panelRef.current,
+    inMotion: dialogRef.current.inMotion,
+    enableMotion: dialogRef.current.enableMotion,
+  }));
+
   // ============================= Style ==============================
   const [transformOrigin, setTransformOrigin] = React.useState<string>();
   const contentStyle: React.CSSProperties = {};
@@ -43,8 +55,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   }
 
   function onPrepare() {
-    console.log('onPrepare', dialogRef.current);
-    const elementOffset = offset(dialogRef.current?.nativeElement);
+    const elementOffset = offset(dialogRef.current.nativeElement);
 
     setTransformOrigin(
       mousePosition && (mousePosition.x || mousePosition.y)
@@ -52,12 +63,6 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         : '',
     );
   }
-
-  const bbb = React.useCallback((aaa) => {
-    console.log('???', aaa);
-    dialogRef.current = aaa;
-  }, []);
-  console.log('render....');
 
   // ============================= Render =============================
   return (
@@ -69,12 +74,12 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       forceRender={forceRender}
       motionName={motionName}
       removeOnLeave={destroyOnClose}
-      ref={bbb}
+      ref={dialogRef}
     >
       {({ className: motionClassName, style: motionStyle }, motionRef) => (
         <Panel
           {...props}
-          ref={ref}
+          ref={panelRef}
           title={title}
           ariaId={ariaId}
           prefixCls={prefixCls}

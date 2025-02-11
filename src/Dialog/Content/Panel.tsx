@@ -17,12 +17,12 @@ export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   holderRef?: React.Ref<HTMLDivElement>;
 }
 
-export type ContentRef = {
+export type PanelRef = {
   focus: () => void;
   changeActive: (next: boolean) => void;
 };
 
-const Panel = React.forwardRef<ContentRef, PanelProps>((props, ref) => {
+const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
   const {
     prefixCls,
     className,
