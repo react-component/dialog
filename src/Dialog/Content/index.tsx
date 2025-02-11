@@ -5,11 +5,11 @@ import CSSMotion from '@rc-component/motion';
 import { offset } from '../../util';
 import type { PanelProps, PanelRef } from './Panel';
 import Panel from './Panel';
+import type { CSSMotionRef } from '@rc-component/motion/es/CSSMotion';
 
-export type ContentRef = PanelRef & {
-  inMotion: () => boolean;
-  enableMotion: () => boolean;
-};
+export type CSSMotionStateRef = Pick<CSSMotionRef, 'inMotion' | 'enableMotion'>;
+
+export type ContentRef = PanelRef & CSSMotionStateRef;
 
 export type ContentProps = {
   motionName: string;
@@ -32,10 +32,11 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     mousePosition,
   } = props;
 
-  const dialogRef = useRef<{
-    nativeElement: HTMLDivElement;
-    inMotion: () => boolean;
-  }>();
+  const dialogRef = useRef<
+    {
+      nativeElement: HTMLElement;
+    } & CSSMotionStateRef
+  >();
 
   const panelRef = useRef<PanelRef>();
 
