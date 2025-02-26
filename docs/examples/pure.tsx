@@ -1,6 +1,6 @@
 import React from 'react';
-import { Panel } from 'rc-dialog';
-import 'rc-select/assets/index.less';
+import { Panel } from '@rc-component/dialog';
+import '@rc-component/select/assets/index.less';
 import '../../assets/index.less';
 
 const Demo: React.FC = () => (

@@ -1,8 +1,8 @@
 /* eslint no-console:0 */
 import * as React from 'react';
-import Select from 'rc-select';
-import 'rc-select/assets/index.less';
-import Dialog from 'rc-dialog';
+import Select from '@rc-component/select';
+import '@rc-component/select/assets/index.less';
+import Dialog from '@rc-component/dialog';
 import '../../assets/index.less';
 
 const clearPath =
@@ -128,7 +128,7 @@ const MyControl: React.FC = () => {
         use custom icon, is using icon: {(useIcon && 'true') || 'false'}.
       </button>
       <div style={{ height: 200 }}>
-        <Select dropdownStyle={{ zIndex: 9999999 }}>
+        <Select popupStyle={{ zIndex: 9999999 }}>
           <Select.Option value="light">Light</Select.Option>
         </Select>
       </div>

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Drawer from 'rc-drawer';
+import Drawer from '@rc-component/drawer';
 import 'rc-drawer/assets/index.css';
-import Dialog from 'rc-dialog';
+import Dialog from '@rc-component/dialog';
 import '../../assets/index.less';
 
 const Demo: React.FC = () => {
