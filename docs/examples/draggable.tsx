@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import * as React from 'react';
 import Draggable from 'react-draggable';
-import Dialog from 'rc-dialog';
+import Dialog from '@rc-component/dialog';
 import '../../assets/index.less';
 
 const MyControl: React.FC = () => {
@@ -39,9 +39,9 @@ const MyControl: React.FC = () => {
             }}
             // fix eslintjsx-a11y/mouse-events-have-key-events
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md
-            onFocus={() => {}}
-            onBlur={() => {}}
-            // end
+            onFocus={() => { }}
+            onBlur={() => { }}
+          // end
           >
             modal
           </div>

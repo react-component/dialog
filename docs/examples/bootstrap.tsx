@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from 'rc-dialog';
+import Dialog from '@rc-component/dialog';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../assets/bootstrap.less';
 
