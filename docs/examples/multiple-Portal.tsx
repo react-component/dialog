@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Drawer from '@rc-component/drawer';
-import 'rc-drawer/assets/index.css';
+import '@rc-component/drawer/assets/index.css';
 import Dialog from '@rc-component/dialog';
 import '../../assets/index.less';
 
