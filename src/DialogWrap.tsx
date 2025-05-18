@@ -58,6 +58,8 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   );
 };
 
-DialogWrap.displayName = 'Dialog';
+if (process.env.NODE_ENV !== 'production') {
+  DialogWrap.displayName = 'Dialog';
+}
 
 export default DialogWrap;
