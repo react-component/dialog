@@ -31,7 +31,7 @@ const MyControl: React.FC = () => {
   const [visible2, setVisible2] = React.useState(false);
   const [visible3, setVisible3] = React.useState(false);
   const [width, setWidth] = React.useState(600);
-  const [destroyOnClose, setDestroyOnClose] = React.useState(false);
+  const [destroyOnHidden, setDestroyOnHidden] = React.useState(false);
   const [center, setCenter] = React.useState(false);
   const [mousePosition, setMousePosition] = React.useState({ x: null, y: null });
   const [useIcon, setUseIcon] = React.useState(false);
@@ -60,8 +60,8 @@ const MyControl: React.FC = () => {
     setVisible3(false);
   };
 
-  const onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDestroyOnClose(e.target.checked);
+  const onDestroyOnHiddenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDestroyOnHidden(e.target.checked);
   };
 
   const onForceRenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +97,7 @@ const MyControl: React.FC = () => {
       style={style}
       title="dialog1"
       mousePosition={mousePosition}
-      destroyOnClose={destroyOnClose}
+      destroyOnHidden={destroyOnHidden}
       closeIcon={useIcon ? getSvg(clearPath, {}, true) : undefined}
       forceRender={forceRender}
       focusTriggerAfterClose={false}
@@ -211,7 +211,7 @@ const MyControl: React.FC = () => {
           &nbsp;
           <label>
             destroy on close:
-            <input type="checkbox" checked={destroyOnClose} onChange={onDestroyOnCloseChange} />
+            <input type="checkbox" checked={destroyOnHidden} onChange={onDestroyOnHiddenChange} />
           </label>
           &nbsp;
           <label>

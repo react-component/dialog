@@ -25,20 +25,16 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     className,
     visible,
     forceRender,
-    destroyOnClose,
+    destroyOnHidden,
     motionName,
     ariaId,
     onVisibleChanged,
     mousePosition,
   } = props;
 
-  const dialogRef = useRef<
-    {
-      nativeElement: HTMLElement;
-    } & CSSMotionStateRef
-  >();
+  const dialogRef = useRef<{ nativeElement: HTMLElement } & CSSMotionStateRef>(null);
 
-  const panelRef = useRef<PanelRef>();
+  const panelRef = useRef<PanelRef>(null);
 
   // ============================== Refs ==============================
   React.useImperativeHandle(ref, () => ({
@@ -74,7 +70,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
       onEnterPrepare={onPrepare}
       forceRender={forceRender}
       motionName={motionName}
-      removeOnLeave={destroyOnClose}
+      removeOnLeave={destroyOnHidden}
       ref={dialogRef}
     >
       {({ className: motionClassName, style: motionStyle }, motionRef) => (
@@ -93,6 +89,8 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   );
 });
 
-Content.displayName = 'Content';
+if (process.env.NODE_ENV !== 'production') {
+  Content.displayName = 'Content';
+}
 
 export default Content;

@@ -6,8 +6,16 @@ import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 
-const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
-const entityStyle = { outline: 'none' };
+const sentinelStyle: React.CSSProperties = {
+  width: 0,
+  height: 0,
+  overflow: 'hidden',
+  outline: 'none',
+};
+
+const entityStyle: React.CSSProperties = {
+  outline: 'none',
+};
 
 export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   prefixCls: string;
@@ -53,8 +61,8 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
 
   const mergedRef = useComposeRef(holderRef, panelRef);
 
-  const sentinelStartRef = useRef<HTMLDivElement>();
-  const sentinelEndRef = useRef<HTMLDivElement>();
+  const sentinelStartRef = useRef<HTMLDivElement>(null);
+  const sentinelEndRef = useRef<HTMLDivElement>(null);
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {

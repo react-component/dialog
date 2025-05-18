@@ -113,7 +113,7 @@ describe('dialog', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  describe('destroyOnClose', () => {
+  describe('destroyOnHidden', () => {
     it('default is false', () => {
       const { rerender } = render(
         <Dialog visible>
@@ -128,8 +128,8 @@ describe('dialog', () => {
     });
 
     it('destroy on hide should unmount child components on close', () => {
-      const Demo = (props?: Partial<DialogProps>) => (
-        <Dialog destroyOnClose {...props}>
+      const Demo: React.FC<Partial<DialogProps>> = (props) => (
+        <Dialog destroyOnHidden {...props}>
           <input className="test-input" />
         </Dialog>
       );
@@ -417,9 +417,9 @@ describe('dialog', () => {
     });
 
     it('should focus trigger after close dialog when contains focusable element', () => {
-      const Demo = () => {
+      const Demo: React.FC = () => {
         const [visible, setVisible] = React.useState(false);
-        const inputRef = React.useRef(null);
+        const inputRef = React.useRef<HTMLInputElement>(null);
         useEffect(() => {
           inputRef.current?.focus();
         }, []);

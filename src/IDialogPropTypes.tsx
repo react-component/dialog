@@ -20,7 +20,7 @@ export type IDialogPropTypes = {
   closable?: boolean | ({ closeIcon?: React.ReactNode; disabled?: boolean } & React.AriaAttributes);
   maskClosable?: boolean;
   visible?: boolean;
-  destroyOnClose?: boolean;
+  destroyOnHidden?: boolean;
   mousePosition?: {
     x: number;
     y: number;
