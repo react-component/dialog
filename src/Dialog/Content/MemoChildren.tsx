@@ -6,6 +6,6 @@ export type MemoChildrenProps = {
 };
 
 export default React.memo(
-  ({ children }: MemoChildrenProps) => children as React.ReactElement,
+  ({ children }: MemoChildrenProps) => children as React.ReactElement<any>,
   (_, { shouldUpdate }) => !shouldUpdate,
 );

@@ -384,7 +384,7 @@ describe('dialog', () => {
     render(
       <Dialog
         visible
-        modalRender={(node: React.ReactElement) =>
+        modalRender={(node: React.ReactElement<any>) =>
           cloneElement(node, { ...node.props, style: { background: '#1890ff' } })
         }
       />,
@@ -394,7 +394,7 @@ describe('dialog', () => {
 
   describe('focusTriggerAfterClose', () => {
     it('should focus trigger after close dialog', () => {
-      const Demo = () => {
+      const Demo: React.FC = () => {
         const [visible, setVisible] = React.useState(false);
         return (
           <>
