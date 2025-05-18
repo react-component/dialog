@@ -120,7 +120,7 @@ const MyControl: React.FC = () => {
         </button>
         &nbsp;
         <label>
-          destroy on close:
+          destroy on hidden:
           <input type="checkbox" checked={destroyOnHidden} onChange={onDestroyOnHiddenChange} />
         </label>
       </p>
