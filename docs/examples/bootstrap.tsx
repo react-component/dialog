@@ -11,7 +11,7 @@ const InnerRender: React.FC = () => {
 
 const MyControl: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
-  const [destroyOnClose, setDestroyOnClose] = React.useState(false);
+  const [destroyOnHidden, setDestroyOnHidden] = React.useState(false);
 
   const onClick = () => {
     setVisible(true);
@@ -21,14 +21,14 @@ const MyControl: React.FC = () => {
     setVisible(false);
   };
 
-  const onDestroyOnCloseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDestroyOnClose(e.target.checked);
+  const onDestroyOnHiddenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDestroyOnHidden(e.target.checked);
   };
 
   const dialog = (
     <Dialog
       visible={visible}
-      destroyOnClose={destroyOnClose}
+      destroyOnHidden={destroyOnHidden}
       animation="slide-fade"
       maskAnimation="fade"
       onClose={onClose}
@@ -120,8 +120,8 @@ const MyControl: React.FC = () => {
         </button>
         &nbsp;
         <label>
-          destroy on close:
-          <input type="checkbox" checked={destroyOnClose} onChange={onDestroyOnCloseChange} />
+          destroy on hidden:
+          <input type="checkbox" checked={destroyOnHidden} onChange={onDestroyOnHiddenChange} />
         </label>
       </p>
       {dialog}

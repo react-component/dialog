@@ -18,7 +18,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     visible,
     getContainer,
     forceRender,
-    destroyOnClose = false,
+    destroyOnHidden = false,
     afterClose,
     panelRef,
   } = props;
@@ -33,7 +33,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   }, [visible]);
 
   // Destroy on close will remove wrapped div
-  if (!forceRender && destroyOnClose && !animatedVisible) {
+  if (!forceRender && destroyOnHidden && !animatedVisible) {
     return null;
   }
 
@@ -47,7 +47,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
       >
         <Dialog
           {...props}
-          destroyOnClose={destroyOnClose}
+          destroyOnHidden={destroyOnHidden}
           afterClose={() => {
             afterClose?.();
             setAnimatedVisible(false);
@@ -58,6 +58,8 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   );
 };
 
-DialogWrap.displayName = 'Dialog';
+if (process.env.NODE_ENV !== 'production') {
+  DialogWrap.displayName = 'Dialog';
+}
 
 export default DialogWrap;

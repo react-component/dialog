@@ -55,9 +55,9 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     }
   }
 
-  const lastOutSideActiveElementRef = useRef<HTMLElement>();
-  const wrapperRef = useRef<HTMLDivElement>();
-  const contentRef = useRef<ContentRef>();
+  const lastOutSideActiveElementRef = useRef<HTMLElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<ContentRef>(null);
 
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
 
@@ -115,7 +115,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   // >>> Content
   const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   // We need record content click incase content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {

@@ -49,34 +49,34 @@ ReactDOM.render(
 
 ### rc-dialog
 
-| Name                   | Type                           | Default   | Description                                                                     | Version |
-| ---------------------- | ------------------------------ | --------- | ------------------------------------------------------------------------------- | ------- |
-| prefixCls              | String                         | rc-dialog | The dialog dom node's prefixCls                                                 |         |
-| className              | String                         |           | additional className for dialog                                                 |         |
-| classNames             | { header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string;  } |           | pass className to target area |         |
-| styles                 | { header?: CSSProperties; body?: CSSProperties; footer?: CSSProperties; mask?: CSSProperties; content?: CSSProperties; wrapper?: CSSProperties;  } |    | pass styles to target area |         |
-| style                  | Object                         | {}        | Root style for dialog element.Such as width, height                             |         |
-| zIndex                 | Number                         |           |                                                                                 |         |
-| visible                | Boolean                        | false     | current dialog's visible status                                                 |         |
-| animation              | String                         |           | part of dialog animation css class name                                         |         |
-| maskAnimation          | String                         |           | part of dialog's mask animation css class name                                  |         |
-| transitionName         | String                         |           | dialog animation css class name                                                 |         |
-| maskTransitionName     | String                         |           | mask animation css class name                                                   |         |
-| title                  | String\|React.Element          |           | Title of the dialog                                                             |         |
-| footer                 | React.Element                  |           | footer of the dialog                                                            |         |
-| closable               | Boolean \| ({ closeIcon?: React.ReactNode; disabled?: boolean  } & React.AriaAttributes | true   | whether show close button |         |
-| mask                   | Boolean                        | true      | whether show mask                                                               |         |
-| maskClosable           | Boolean                        | true      | whether click mask to close                                                     |         |
-| keyboard               | Boolean                        | true      | whether support press esc to close                                              |         |
-| mousePosition          | {x:number,y:number}            |           | set pageX and pageY of current mouse(it will cause transform origin to be set). |         |
-| onClose                | function()                     |           | called when click close button or mask                                          |         |
-| afterClose             | function()                     |           | called when close animation end                                                 |         |
-| getContainer           | function(): HTMLElement        |           | to determine where Dialog will be mounted                                       |         |
-| destroyOnClose         | Boolean                        | false     | to unmount child compenents on onClose                                          |         |
-| closeIcon              | ReactNode                      |           | specific the close icon.                                                        |         |
-| forceRender            | Boolean                        | false     | Create dialog dom node before dialog first show                                 |         |
-| focusTriggerAfterClose | Boolean                        | true      | focus trigger element when dialog closed                                        |         |
-| modalRender            | (node: ReactNode) => ReactNode |           | Custom modal content render                                                     | 8.3.0   |
+| Name | Type | Default | Description | Version |
+| --- | --- | --- | --- | --- |
+| prefixCls | String | rc-dialog | The dialog dom node's prefixCls |  |
+| className | String |  | additional className for dialog |  |
+| classNames | { header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string; } |  | pass className to target area |  |
+| styles | { header?: CSSProperties; body?: CSSProperties; footer?: CSSProperties; mask?: CSSProperties; content?: CSSProperties; wrapper?: CSSProperties; } |  | pass styles to target area |  |
+| style | Object | {} | Root style for dialog element.Such as width, height |  |
+| zIndex | Number |  |  |  |
+| visible | Boolean | false | current dialog's visible status |  |
+| animation | String |  | part of dialog animation css class name |  |
+| maskAnimation | String |  | part of dialog's mask animation css class name |  |
+| transitionName | String |  | dialog animation css class name |  |
+| maskTransitionName | String |  | mask animation css class name |  |
+| title | String\|React.Element |  | Title of the dialog |  |
+| footer | React.Element |  | footer of the dialog |  |
+| closable | Boolean \| ({ closeIcon?: React.ReactNode; disabled?: boolean } & React.AriaAttributes | true | whether show close button |  |
+| mask | Boolean | true | whether show mask |  |
+| maskClosable | Boolean | true | whether click mask to close |  |
+| keyboard | Boolean | true | whether support press esc to close |  |
+| mousePosition | {x:number,y:number} |  | set pageX and pageY of current mouse(it will cause transform origin to be set). |  |
+| onClose | function() |  | called when click close button or mask |  |
+| afterClose | function() |  | called when close animation end |  |
+| getContainer | function(): HTMLElement |  | to determine where Dialog will be mounted |  |
+| destroyOnHidden | Boolean | false | to unmount child compenents on onClose |  |
+| closeIcon | ReactNode |  | specific the close icon. |  |
+| forceRender | Boolean | false | Create dialog dom node before dialog first show |  |
+| focusTriggerAfterClose | Boolean | true | focus trigger element when dialog closed |  |
+| modalRender | (node: ReactNode) => ReactNode |  | Custom modal content render | 8.3.0 |
 
 ## Development
 
@@ -84,8 +84,6 @@ ReactDOM.render(
 npm install
 npm start
 ```
-
-
 
 ## Test Case
 
@@ -101,7 +99,6 @@ npm run coverage
 ```
 
 open coverage/ dir
-
 
 ## License
 
