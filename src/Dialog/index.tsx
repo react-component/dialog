@@ -43,6 +43,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     rootStyle,
     classNames: modalClassNames,
     styles: modalStyles,
+    extra,
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -54,6 +55,12 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       warning(false, `wrapClassName is deprecated, please use classNames instead.`);
     }
   }
+
+  const hasExtra =
+  extra !== null &&
+  extra !== undefined &&
+  typeof extra !== 'boolean' &&
+  !(typeof extra === 'string' && extra.trim() === '');
 
   const lastOutSideActiveElementRef = useRef<HTMLElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
