@@ -56,12 +56,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     }
   }
 
-  const hasExtra =
-  extra !== null &&
-  extra !== undefined &&
-  typeof extra !== 'boolean' &&
-  !(typeof extra === 'string' && extra.trim() === '');
-
   const lastOutSideActiveElementRef = useRef<HTMLElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<ContentRef>(null);

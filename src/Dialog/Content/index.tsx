@@ -38,10 +38,10 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   const panelRef = useRef<PanelRef>(null);
 
   const hasExtra =
-  extra !== null &&
-  extra !== undefined &&
-  typeof extra !== 'boolean' &&
-  !(typeof extra === 'string' && extra.trim() === '');
+    extra !== null &&
+    extra !== undefined &&
+    typeof extra !== 'boolean' &&
+    !(typeof extra === 'string' && extra.trim() === '');
 
   // ============================== Refs ==============================
   React.useImperativeHandle(ref, () => ({
