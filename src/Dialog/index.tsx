@@ -43,7 +43,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     rootStyle,
     classNames: modalClassNames,
     styles: modalStyles,
-    extra,
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
