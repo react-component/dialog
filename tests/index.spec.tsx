@@ -1,5 +1,5 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import { fireEvent, render, act } from '@testing-library/react';
+import { fireEvent, render, act, screen } from '@testing-library/react';
 import { Provider } from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
@@ -732,5 +732,41 @@ describe('dialog', () => {
 
     expect(document.querySelector('.rc-dialog')).toBeTruthy();
     expect(document.querySelector('.rc-dialog-close')).toBeFalsy();
+  });
+
+  it('should render extra when extra is a React node', () => {
+    render(<Dialog visible extra={<span data-testid="extra-node">Node</span>} />);
+
+    expect(screen.getByTestId('extra-node')).toBeInTheDocument();
+  });
+
+  it('does not render extra when extra is empty string', () => {
+    render(<Dialog visible extra="" />);
+    expect(screen.queryByTestId('.rc-dialog-extra')).toBeNull();
+  });
+
+  it('does not render extra when extra is string with only spaces', () => {
+    render(<Dialog visible extra="   " />);
+    expect(screen.queryByText('   ')).toBeNull();
+  });
+
+  it('renders extra when extra is non-empty string', () => {
+    render(<Dialog visible extra="hello" />);
+    expect(screen.getByText('hello')).toBeInTheDocument();
+    const extraDiv = document.querySelector('.rc-dialog-extra');
+    expect(extraDiv).toHaveTextContent('hello');
+  });
+
+  it('does not render extra when extra is null or undefined', () => {
+    const { container } = render(<Dialog visible extra={null} />);
+    expect(container.querySelector('.rc-dialog-extra')).toBeNull();
+
+    const { container: container2 } = render(<Dialog visible />);
+    expect(container2.querySelector('.rc-dialog-extra')).toBeNull();
+  });
+
+  it('renders extra when extra is a non-empty string', () => {
+    render(<Dialog visible extra="Extra Text" />);
+    expect(screen.getByText('Extra Text')).toBeInTheDocument();
   });
 });
