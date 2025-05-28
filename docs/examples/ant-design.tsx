@@ -96,6 +96,7 @@ const MyControl: React.FC = () => {
       onClose={onClose}
       style={style}
       title="dialog1"
+      extra={<a onClick={onClick}>click me</a>}
       mousePosition={mousePosition}
       destroyOnHidden={destroyOnHidden}
       closeIcon={useIcon ? getSvg(clearPath, {}, true) : undefined}

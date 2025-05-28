@@ -54,6 +54,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     height,
     classNames: modalClassNames,
     styles: modalStyles,
+    extra,
   } = props;
 
   // ================================= Refs =================================
@@ -97,6 +98,15 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     </div>
   ) : null;
 
+  const extraNode = extra ? (
+    <div
+      style={{ ...modalStyles?.extra }}
+      className={classNames(`${prefixCls}-extra`, modalClassNames?.extra)}
+    >
+      {extra}
+    </div>
+  ) : null;
+
   const headerNode = title ? (
     <div
       className={classNames(`${prefixCls}-header`, modalClassNames?.header)}
@@ -109,8 +119,16 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
       >
         {title}
       </div>
+      {extraNode}
     </div>
-  ) : null;
+  ) : (
+    <div
+      className={classNames(`${prefixCls}-header`, modalClassNames?.header)}
+      style={{ ...modalStyles?.header }}
+    >
+      {extraNode}
+    </div>
+  );
 
   const closableObj = useMemo(() => {
     if (typeof closable === 'object' && closable !== null) {

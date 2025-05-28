@@ -30,11 +30,16 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     ariaId,
     onVisibleChanged,
     mousePosition,
+    extra,
   } = props;
 
   const dialogRef = useRef<{ nativeElement: HTMLElement } & CSSMotionStateRef>(null);
 
   const panelRef = useRef<PanelRef>(null);
+
+  const hasExtra = !!extra && !(typeof extra === 'string' && extra.trim() === '');
+
+  const curExtra = hasExtra ? extra : null;
 
   // ============================== Refs ==============================
   React.useImperativeHandle(ref, () => ({
@@ -77,6 +82,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
         <Panel
           {...props}
           ref={panelRef}
+          extra={curExtra}
           title={title}
           ariaId={ariaId}
           prefixCls={prefixCls}
