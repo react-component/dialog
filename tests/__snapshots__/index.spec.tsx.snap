@@ -36,6 +36,9 @@ exports[`dialog add rootClassName and rootStyle should render correct 1`] = `
             />
           </button>
           <div
+            class="rc-dialog-header"
+          />
+          <div
             class="rc-dialog-body"
           />
         </div>
