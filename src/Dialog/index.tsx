@@ -5,7 +5,7 @@ import KeyCode from '@rc-component/util/lib/KeyCode';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import type { ClosableType, IDialogPropTypes } from '../IDialogPropTypes';
+import type { IDialogPropTypes } from '../IDialogPropTypes';
 import { getMotionName } from '../util';
 import Content, { type ContentRef } from './Content';
 import Mask from './Mask';

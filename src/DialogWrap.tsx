@@ -2,7 +2,7 @@ import Portal from '@rc-component/portal';
 import * as React from 'react';
 import { RefContext } from './context';
 import Dialog from './Dialog';
-import type { ClosableType, IDialogPropTypes } from './IDialogPropTypes';
+import type { IDialogPropTypes } from './IDialogPropTypes';
 
 // fix issue #10656
 /*
