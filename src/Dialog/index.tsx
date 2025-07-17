@@ -95,7 +95,8 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
     // Trigger afterClose only when change visible from true to false
     if (animatedVisible) {
-      const { afterClose: closableAfterClose } = typeof closable === 'object' ? closable : {};
+      const { afterClose: closableAfterClose = undefined } =
+        typeof closable === 'object' ? closable : {};
       (closableAfterClose ?? afterClose)?.();
     }
   }

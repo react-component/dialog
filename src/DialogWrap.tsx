@@ -50,7 +50,8 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
           {...props}
           destroyOnHidden={destroyOnHidden}
           afterClose={() => {
-            const { afterClose: closableAfterClose } = typeof closable === 'object' ? closable : {};
+            const { afterClose: closableAfterClose = undefined } =
+              typeof closable === 'object' ? closable : {};
             (closableAfterClose ?? afterClose)?.();
             setAnimatedVisible(false);
           }}
