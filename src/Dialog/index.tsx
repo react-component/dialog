@@ -5,7 +5,7 @@ import KeyCode from '@rc-component/util/lib/KeyCode';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import type { IDialogPropTypes } from '../IDialogPropTypes';
+import type { ClosableType, IDialogPropTypes } from '../IDialogPropTypes';
 import { getMotionName } from '../util';
 import Content, { type ContentRef } from './Content';
 import Mask from './Mask';
@@ -95,7 +95,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
     // Trigger afterClose only when change visible from true to false
     if (animatedVisible) {
-      afterClose?.();
+      ((closable as ClosableType)?.afterClose ?? afterClose)?.();
     }
   }
 

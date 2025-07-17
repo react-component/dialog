@@ -2,7 +2,7 @@ import Portal from '@rc-component/portal';
 import * as React from 'react';
 import { RefContext } from './context';
 import Dialog from './Dialog';
-import type { IDialogPropTypes } from './IDialogPropTypes';
+import type { ClosableType, IDialogPropTypes } from './IDialogPropTypes';
 
 // fix issue #10656
 /*
@@ -20,6 +20,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     forceRender,
     destroyOnHidden = false,
     afterClose,
+    closable,
     panelRef,
   } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
@@ -49,7 +50,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
           {...props}
           destroyOnHidden={destroyOnHidden}
           afterClose={() => {
-            afterClose?.();
+            ((closable as ClosableType)?.afterClose ?? afterClose)?.();
             setAnimatedVisible(false);
           }}
         />

@@ -552,6 +552,40 @@ describe('dialog', () => {
 
       expect(afterClose).toHaveBeenCalledTimes(0);
     });
+
+    it('should trigger closable.afterClose when using new API', () => {
+      const afterClose = jest.fn();
+
+      const { rerender } = render(<Dialog closable={{ afterClose }} visible />);
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      rerender(<Dialog closable={{ afterClose }} visible={false} />);
+      act(() => {
+        jest.runAllTimers();
+      });
+      expect(afterClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should prioritize closable.afterClose when both exist', () => {
+      const afterClose = jest.fn();
+      const legacyAfterClose = jest.fn();
+
+      const { rerender } = render(
+        <Dialog closable={{ afterClose }} afterClose={legacyAfterClose} visible />,
+      );
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      rerender(<Dialog closable={{ afterClose }} afterClose={legacyAfterClose} visible={false} />);
+      act(() => {
+        jest.runAllTimers();
+      });
+      expect(afterClose).toHaveBeenCalledTimes(1);
+      expect(legacyAfterClose).toHaveBeenCalledTimes(0);
+    });
   });
 
   describe('afterOpenChange', () => {
