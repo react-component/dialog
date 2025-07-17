@@ -7,6 +7,12 @@ export type ModalClassNames = Partial<Record<SemanticName, string>>;
 
 export type ModalStyles = Partial<Record<SemanticName, CSSProperties>>;
 
+export type ClosableType = {
+  closeIcon?: React.ReactNode;
+  disabled?: boolean;
+  afterClose?: () => any;
+};
+
 export type IDialogPropTypes = {
   className?: string;
   keyboard?: boolean;
@@ -14,10 +20,11 @@ export type IDialogPropTypes = {
   rootStyle?: CSSProperties;
   mask?: boolean;
   children?: React.ReactNode;
+  /** @description please use `closable.afterClose` instead */
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
-  closable?: boolean | ({ closeIcon?: React.ReactNode; disabled?: boolean } & React.AriaAttributes);
+  closable?: boolean | (ClosableType & React.AriaAttributes);
   maskClosable?: boolean;
   visible?: boolean;
   destroyOnHidden?: boolean;
