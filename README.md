@@ -70,6 +70,7 @@ ReactDOM.render(
 | keyboard | Boolean | true | whether support press esc to close |  |
 | mousePosition | {x:number,y:number} |  | set pageX and pageY of current mouse(it will cause transform origin to be set). |  |
 | onClose | function() |  | called when click close button or mask |  |
+| ~~afterClose~~ | function() |  | called when close animation end |  |
 | getContainer | function(): HTMLElement |  | to determine where Dialog will be mounted |  |
 | destroyOnHidden | Boolean | false | to unmount child compenents on onClose |  |
 | closeIcon | ReactNode |  | specific the close icon. |  |
