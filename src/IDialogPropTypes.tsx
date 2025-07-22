@@ -20,7 +20,6 @@ export type IDialogPropTypes = {
   rootStyle?: CSSProperties;
   mask?: boolean;
   children?: React.ReactNode;
-  /** @description please use `closable.afterClose` instead */
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
   onClose?: (e: SyntheticEvent) => any;
