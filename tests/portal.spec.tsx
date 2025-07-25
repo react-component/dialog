@@ -30,9 +30,9 @@ describe('Dialog.Portal', () => {
 
     jest.runAllTimers();
 
-    fireEvent.mouseDown(document.querySelector('.rc-dialog-section'));
+    fireEvent.mouseDown(document.querySelector('.rc-dialog-container'));
     fireEvent.click(document.querySelector('.rc-select-item-option-content'));
-    fireEvent.mouseUp(document.querySelector('.rc-dialog-section'));
+    fireEvent.mouseUp(document.querySelector('.rc-dialog-container'));
     expect(onClose).not.toHaveBeenCalled();
   });
 
@@ -47,7 +47,7 @@ describe('Dialog.Portal', () => {
 
     jest.runAllTimers();
 
-    fireEvent.mouseDown(document.querySelector('.rc-dialog-section'));
+    fireEvent.mouseDown(document.querySelector('.rc-dialog-container'));
     fireEvent.mouseUp(document.querySelector('.rc-dialog-wrap'));
     expect(onClose).not.toHaveBeenCalled();
   });

@@ -34,11 +34,11 @@
   margin: 10px;
 
   // Actual rc-dialog
-  &-section {
+  &-container {
     position: relative;
-    background-color: @modal-section-bg;
-    border: 1px solid @modal-section-fallback-border-color; //old browsers fallback (ie8 etc)
-    border: 1px solid @modal-section-border-color;
+    background-color: @modal-container-bg;
+    border: 1px solid @modal-container-fallback-border-color; //old browsers fallback (ie8 etc)
+    border: 1px solid @modal-container-border-color;
     border-radius: @border-radius-large;
     box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
     background-clip: padding-box;
@@ -47,7 +47,7 @@
   }
 
   // Modal header
-  // Top section of the rc-dialog w/ title and dismiss
+  // Top container of the rc-dialog w/ title and dismiss
   &-header {
     padding: @modal-title-padding;
     border-bottom: 1px solid @modal-header-border-color;
@@ -124,7 +124,7 @@
     width: @modal-md;
     margin: 30px auto;
 
-    &-section {
+    &-container {
       box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
     }
   }

@@ -1,7 +1,7 @@
 import type { GetContainer } from '@rc-component/util/lib/PortalWrapper';
 import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
-export type SemanticName = 'header' | 'body' | 'footer' | 'section' | 'title' | 'wrapper' | 'mask';
+export type SemanticName = 'header' | 'body' | 'footer' | 'container' | 'title' | 'wrapper' | 'mask';
 
 export type ModalClassNames = Partial<Record<SemanticName, string>>;
 

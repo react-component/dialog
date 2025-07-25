@@ -140,8 +140,8 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
 
   const content = (
     <div
-      className={classNames(`${prefixCls}-section`, modalClassNames?.section)}
-      style={modalStyles?.section}
+      className={classNames(`${prefixCls}-container`, modalClassNames?.container)}
+      style={modalStyles?.container}
     >
       {closerNode}
       {headerNode}
