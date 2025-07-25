@@ -389,7 +389,7 @@ describe('dialog', () => {
         }
       />,
     );
-    expect(document.querySelector('.rc-dialog-section')).toHaveStyle('background: #1890ff');
+    expect(document.querySelector('.rc-dialog-container')).toHaveStyle('background: #1890ff');
   });
 
   describe('focusTriggerAfterClose', () => {
@@ -597,7 +597,7 @@ describe('dialog', () => {
           footer: 'custom-footer',
           mask: 'custom-mask',
           wrapper: 'custom-wrapper',
-          section: 'custom-section',
+          container: 'custom-container',
         }}
         style={{ width: 600 }}
         height={903}
@@ -611,7 +611,7 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog-header').className).toContain('custom-header');
     expect(document.querySelector('.rc-dialog-footer').className).toContain('custom-footer');
     expect(document.querySelector('.rc-dialog-mask').className).toContain('custom-mask');
-    expect(document.querySelector('.rc-dialog-section').className).toContain('custom-section');
+    expect(document.querySelector('.rc-dialog-container').className).toContain('custom-container');
   });
 
   it('should support styles', () => {
@@ -626,7 +626,7 @@ describe('dialog', () => {
           footer: { background: 'blue' },
           mask: { background: 'yellow' },
           wrapper: { background: 'pink' },
-          section: { background: 'orange' },
+          container: { background: 'orange' },
           title: { background: 'orange' },
         }}
         style={{ width: 600 }}
@@ -641,7 +641,7 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog-header')).toHaveStyle('background: red');
     expect(document.querySelector('.rc-dialog-footer')).toHaveStyle('background: blue');
     expect(document.querySelector('.rc-dialog-mask')).toHaveStyle('background: yellow');
-    expect(document.querySelector('.rc-dialog-section')).toHaveStyle('background: orange');
+    expect(document.querySelector('.rc-dialog-container')).toHaveStyle('background: orange');
     expect(document.querySelector('.rc-dialog-title')).toHaveStyle('background: orange');
   });
 

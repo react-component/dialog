@@ -24,7 +24,7 @@ exports[`dialog add rootClassName and rootStyle should render correct 1`] = `
         tabindex="0"
       >
         <div
-          class="rc-dialog-section"
+          class="rc-dialog-container"
         >
           <button
             aria-label="Close"
@@ -71,7 +71,7 @@ exports[`dialog should render correct 1`] = `
         tabindex="0"
       >
         <div
-          class="rc-dialog-section"
+          class="rc-dialog-container"
         >
           <button
             aria-label="Close"
@@ -129,7 +129,7 @@ exports[`dialog should support classNames 1`] = `
         tabindex="0"
       >
         <div
-          class="rc-dialog-section custom-section"
+          class="rc-dialog-container custom-container"
         >
           <button
             aria-label="Close"
@@ -194,7 +194,7 @@ exports[`dialog should support styles 1`] = `
         tabindex="0"
       >
         <div
-          class="rc-dialog-section"
+          class="rc-dialog-container"
           style="background: orange;"
         >
           <button
