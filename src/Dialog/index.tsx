@@ -167,7 +167,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     ) {
       doClose();
     }
-  }, [visible]);
+  }, [visible, animatedVisible, doClose]);
 
   // Remove direct should also check the scroll bar update
   useEffect(

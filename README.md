@@ -64,7 +64,7 @@ ReactDOM.render(
 | maskTransitionName | String |  | mask animation css class name |  |
 | title | String\|React.Element |  | Title of the dialog |  |
 | footer | React.Element |  | footer of the dialog |  |
-| closable | Boolean \| ({ closeIcon?: React.ReactNode; disabled?: boolean } & React.AriaAttributes | true | whether show close button |  |
+| closable | Boolean \| ({ closeIcon?: React.ReactNode; disabled?: boolean, afterClose:function } & React.AriaAttributes) | true | whether show close button |  |
 | mask | Boolean | true | whether show mask |  |
 | maskClosable | Boolean | true | whether click mask to close |  |
 | keyboard | Boolean | true | whether support press esc to close |  |
