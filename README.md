@@ -65,7 +65,7 @@ ReactDOM.render(
 | title | String\|React.Element |  | Title of the dialog |  |
 | footer | React.Element |  | footer of the dialog |  |
 | closable | Boolean \| ({ closeIcon?: React.ReactNode; disabled?: boolean, afterClose:function } & React.AriaAttributes) | true | whether show close button |  |
-| mask | Boolean \| `blur` | true | whether show mask |  |
+| mask | Boolean \| `blur` | true | whether to show the mask. Can be set to `blur` for a blur effect. |  |
 | maskClosable | Boolean | true | whether click mask to close |  |
 | keyboard | Boolean | true | whether support press esc to close |  |
 | mousePosition | {x:number,y:number} |  | set pageX and pageY of current mouse(it will cause transform origin to be set). |  |
