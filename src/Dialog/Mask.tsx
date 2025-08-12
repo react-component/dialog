@@ -9,10 +9,11 @@ export type MaskProps = {
   style?: React.CSSProperties;
   maskProps?: React.HTMLAttributes<HTMLDivElement>;
   className?: string;
+  mask?: boolean | 'blur';
 };
 
 const Mask: React.FC<MaskProps> = (props) => {
-  const { prefixCls, style, visible, maskProps, motionName, className } = props;
+  const { prefixCls, style, visible, maskProps, motionName, className, mask } = props;
   return (
     <CSSMotion
       key="mask"
@@ -24,7 +25,12 @@ const Mask: React.FC<MaskProps> = (props) => {
         <div
           ref={ref}
           style={{ ...motionStyle, ...style }}
-          className={classNames(`${prefixCls}-mask`, motionClassName, className)}
+          className={classNames(
+            `${prefixCls}-mask`,
+            motionClassName,
+            className,
+            mask === 'blur' && `${prefixCls}-mask-blur`,
+          )}
           {...maskProps}
         />
       )}

@@ -65,7 +65,7 @@ ReactDOM.render(
 | title | String\|React.Element |  | Title of the dialog |  |
 | footer | React.Element |  | footer of the dialog |  |
 | closable | Boolean \| ({ closeIcon?: React.ReactNode; disabled?: boolean, afterClose:function } & React.AriaAttributes) | true | whether show close button |  |
-| mask | Boolean | true | whether show mask |  |
+| mask | Boolean \| `blur` | true | whether show mask |  |
 | maskClosable | Boolean | true | whether click mask to close |  |
 | keyboard | Boolean | true | whether support press esc to close |  |
 | mousePosition | {x:number,y:number} |  | set pageX and pageY of current mouse(it will cause transform origin to be set). |  |
@@ -104,8 +104,7 @@ open coverage/ dir
 
 rc-dialog is released under the MIT license.
 
-
-## 🤝 Contributing 
+## 🤝 Contributing
 
 <a href="https://openomy.app/github/react-component/dialog" target="_blank" style="display: block; width: 100%;" align="center">
   <img src="https://www.openomy.app/svg?repo=react-component/dialog&chart=bubble&latestMonth=24" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />

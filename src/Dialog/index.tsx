@@ -198,6 +198,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         style={{ zIndex, ...maskStyle, ...modalStyles?.mask }}
         maskProps={maskProps}
         className={modalClassNames?.mask}
+        mask={mask}
       />
       <div
         tabIndex={-1}

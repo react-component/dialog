@@ -1,7 +1,14 @@
 import type { GetContainer } from '@rc-component/util/lib/PortalWrapper';
 import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
-export type SemanticName = 'header' | 'body' | 'footer' | 'container' | 'title' | 'wrapper' | 'mask';
+export type SemanticName =
+  | 'header'
+  | 'body'
+  | 'footer'
+  | 'container'
+  | 'title'
+  | 'wrapper'
+  | 'mask';
 
 export type ModalClassNames = Partial<Record<SemanticName, string>>;
 
@@ -18,7 +25,7 @@ export type IDialogPropTypes = {
   keyboard?: boolean;
   style?: CSSProperties;
   rootStyle?: CSSProperties;
-  mask?: boolean;
+  mask?: boolean | 'blur';
   children?: React.ReactNode;
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;

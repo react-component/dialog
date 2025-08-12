@@ -752,4 +752,11 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog')).toBeTruthy();
     expect(document.querySelector('.rc-dialog-close')).toBeFalsy();
   });
+
+  it('Dialog mask blur', () => {
+    render(<Dialog mask="blur" visible/>);
+    jest.runAllTimers();
+    expect(document.querySelector('.rc-dialog-root')).toBeTruthy();
+    expect(document.querySelector('.rc-dialog-mask-blur')).toBeTruthy();
+  });
 });
