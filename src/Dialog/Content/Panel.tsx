@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { useComposeRef } from '@rc-component/util/lib/ref';
 import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
@@ -90,7 +90,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
   // ================================ Render ================================
   const footerNode = footer ? (
     <div
-      className={classNames(`${prefixCls}-footer`, modalClassNames?.footer)}
+      className={clsx(`${prefixCls}-footer`, modalClassNames?.footer)}
       style={{ ...modalStyles?.footer }}
     >
       {footer}
@@ -99,11 +99,11 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
 
   const headerNode = title ? (
     <div
-      className={classNames(`${prefixCls}-header`, modalClassNames?.header)}
+      className={clsx(`${prefixCls}-header`, modalClassNames?.header)}
       style={{ ...modalStyles?.header }}
     >
       <div
-        className={classNames(`${prefixCls}-title`, modalClassNames?.title)}
+        className={clsx(`${prefixCls}-title`, modalClassNames?.title)}
         id={ariaId}
         style={{ ...modalStyles?.title }}
       >
@@ -140,13 +140,13 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
 
   const content = (
     <div
-      className={classNames(`${prefixCls}-container`, modalClassNames?.container)}
+      className={clsx(`${prefixCls}-container`, modalClassNames?.container)}
       style={modalStyles?.container}
     >
       {closerNode}
       {headerNode}
       <div
-        className={classNames(`${prefixCls}-body`, modalClassNames?.body)}
+        className={clsx(`${prefixCls}-body`, modalClassNames?.body)}
         style={{ ...bodyStyle, ...modalStyles?.body }}
         {...bodyProps}
       >
@@ -164,7 +164,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
       aria-modal="true"
       ref={mergedRef}
       style={{ ...style, ...contentStyle }}
-      className={classNames(prefixCls, className)}
+      className={clsx(prefixCls, className)}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >

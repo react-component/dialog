@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import contains from '@rc-component/util/lib/Dom/contains';
 import useId from '@rc-component/util/lib/hooks/useId';
 import KeyCode from '@rc-component/util/lib/KeyCode';
@@ -187,7 +187,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   // ========================= Render =========================
   return (
     <div
-      className={classNames(`${prefixCls}-root`, rootClassName)}
+      className={clsx(`${prefixCls}-root`, rootClassName)}
       style={rootStyle}
       {...pickAttrs(props, { data: true })}
     >
@@ -202,7 +202,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       <div
         tabIndex={-1}
         onKeyDown={onWrapperKeyDown}
-        className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
+        className={clsx(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
         style={mergedStyle}
