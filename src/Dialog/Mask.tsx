@@ -1,5 +1,5 @@
 import * as React from 'react';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
 
 export type MaskProps = {
@@ -24,7 +24,7 @@ const Mask: React.FC<MaskProps> = (props) => {
         <div
           ref={ref}
           style={{ ...motionStyle, ...style }}
-          className={classNames(`${prefixCls}-mask`, motionClassName, className)}
+          className={clsx(`${prefixCls}-mask`, motionClassName, className)}
           {...maskProps}
         />
       )}
