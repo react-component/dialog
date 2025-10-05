@@ -62,7 +62,7 @@
     "@rc-component/select": "^1.0.0",
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^16.3.0",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^30.0.0",
     "@types/keyv": "3.1.4",
     "@types/node": "^24.0.8",
     "@types/react": "^19.1.4",
