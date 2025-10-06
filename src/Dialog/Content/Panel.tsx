@@ -131,8 +131,9 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
       onClick={onClose}
       aria-label="Close"
       {...ariaProps}
-      className={`${prefixCls}-close`}
+      className={clsx(`${prefixCls}-close`, modalClassNames?.close)}
       disabled={closeBtnIsDisabled}
+      style={modalStyles?.close}
     >
       {closableObj.closeIcon}
     </button>
