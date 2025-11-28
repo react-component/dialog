@@ -8,8 +8,8 @@ react dialog component.
 [npm-url]: https://npmjs.org/package/@rc-component/dialog
 [travis-image]: https://img.shields.io/travis/react-component/dialog/master?style=flat-square
 [travis-url]: https://travis-ci.com/react-component/dialog
-[github-actions-image]: https://github.com/react-component/dialog/actions/workflows/ci.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/dialog/actions/workflows/ci.yml
+[github-actions-image]: https://github.com/react-component/dialog/actions/workflows/react-component-ci.yml/badge.svg
+[github-actions-url]: https://github.com/react-component/dialog/actions/workflows/react-component-ci.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/dialog/master.svg?style=flat-square
 [codecov-url]: https://app.codecov.io/gh/react-component/dialog
 [david-url]: https://david-dm.org/react-component/dialog
