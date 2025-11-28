@@ -617,6 +617,7 @@ describe('dialog', () => {
           mask: 'custom-mask',
           wrapper: 'custom-wrapper',
           container: 'custom-container',
+          close: 'custom-close',
         }}
         style={{ width: 600 }}
         height={903}
@@ -631,6 +632,7 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog-footer').className).toContain('custom-footer');
     expect(document.querySelector('.rc-dialog-mask').className).toContain('custom-mask');
     expect(document.querySelector('.rc-dialog-container').className).toContain('custom-container');
+    expect(document.querySelector('.rc-dialog-close').className).toContain('custom-close');
   });
 
   it('should support styles', () => {
@@ -647,6 +649,9 @@ describe('dialog', () => {
           wrapper: { background: 'pink' },
           container: { background: 'orange' },
           title: { background: 'orange' },
+          close: {
+            color: 'red',
+          },
         }}
         style={{ width: 600 }}
         height={903}
@@ -662,6 +667,7 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog-mask')).toHaveStyle('background: yellow');
     expect(document.querySelector('.rc-dialog-container')).toHaveStyle('background: orange');
     expect(document.querySelector('.rc-dialog-title')).toHaveStyle('background: orange');
+    expect(document.querySelector('.rc-dialog-close')).toHaveStyle('color: red');
   });
 
   it('should warning', () => {
