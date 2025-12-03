@@ -169,6 +169,12 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
       if (hasMotion && !inMotion) {
         doClose();
+      } else {
+        closeTimerRef.current = setTimeout(() => {
+          if (!visible && animatedVisible) {
+            doClose();
+          }
+        }, 500);
       }
     }
 
