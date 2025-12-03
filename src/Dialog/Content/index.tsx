@@ -33,8 +33,19 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   } = props;
 
   const dialogRef = useRef<{ nativeElement: HTMLElement } & CSSMotionStateRef>(null);
-
   const panelRef = useRef<PanelRef>(null);
+
+  // Force remount CSSMotion when visible changes from false to false
+  // This handles React.Activity scenarios where component state is preserved
+  const [motionKey, setMotionKey] = React.useState(0);
+  const prevVisibleRef = useRef(visible);
+
+  React.useEffect(() => {
+    if (!visible && !prevVisibleRef.current) {
+      setMotionKey(k => k + 1);
+    }
+    prevVisibleRef.current = visible;
+  }, [visible]);
 
   // ============================== Refs ==============================
   React.useImperativeHandle(ref, () => ({
@@ -64,6 +75,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   // ============================= Render =============================
   return (
     <CSSMotion
+      key={motionKey}
       visible={visible}
       onVisibleChanged={onVisibleChanged}
       onAppearPrepare={onPrepare}
