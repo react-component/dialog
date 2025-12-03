@@ -58,7 +58,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const lastOutSideActiveElementRef = useRef<HTMLElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<ContentRef>(null);
-  const closeTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
 
@@ -158,36 +157,22 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   // ========================= Effect =========================
   useEffect(() => {
-    clearTimeout(closeTimerRef.current);
-
     if (visible) {
       setAnimatedVisible(true);
       saveLastOutSideActiveElementRef();
-    } else if (animatedVisible) {
-      const hasMotion = contentRef.current?.enableMotion?.();
-      const inMotion = contentRef.current?.inMotion?.();
-
-      if (hasMotion && !inMotion) {
-        doClose();
-      } else {
-        closeTimerRef.current = setTimeout(() => {
-          if (!visible && animatedVisible) {
-            doClose();
-          }
-        }, 500);
-      }
+    } else if (
+      animatedVisible &&
+      contentRef.current.enableMotion() &&
+      !contentRef.current.inMotion()
+    ) {
+      doClose();
     }
-
-    return () => {
-      clearTimeout(closeTimerRef.current);
-    };
   }, [visible]);
 
   // Remove direct should also check the scroll bar update
   useEffect(
     () => () => {
       clearTimeout(contentTimeoutRef.current);
-      clearTimeout(closeTimerRef.current);
     },
     [],
   );
