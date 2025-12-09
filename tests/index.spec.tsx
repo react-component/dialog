@@ -239,35 +239,6 @@ describe('dialog', () => {
     expect(document.querySelector('input')).toHaveFocus();
   });
 
-  describe('Tab should keep focus in dialog', () => {
-    it('basic tabbing', () => {
-      render(<Dialog visible />);
-      const sentinelEnd = document.querySelector<HTMLDivElement>('.rc-dialog > div:last-child');
-      sentinelEnd.focus();
-
-      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
-        keyCode: KeyCode.TAB,
-      });
-
-      const sentinelStart = document.querySelector('.rc-dialog > div:first-child');
-      expect(document.activeElement).toBe(sentinelStart);
-    });
-
-    it('trap focus after shift-tabbing', () => {
-      render(<Dialog visible />);
-
-      document.querySelector<HTMLDivElement>('.rc-dialog > div:first-child').focus();
-
-      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
-        keyCode: KeyCode.TAB,
-        key: 'Tab',
-        shiftKey: true,
-      });
-      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
-      expect(document.activeElement).toBe(sentinelEnd);
-    });
-  });
-
   describe('mousePosition', () => {
     function prepareModal(mousePosition: { x: number; y: number }) {
       const { container } = render(
