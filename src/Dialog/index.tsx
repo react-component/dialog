@@ -59,6 +59,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const contentRef = useRef<ContentRef>(null);
 
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
+  const [isFixedPos, setIsFixedPos] = React.useState(true);
 
   // ========================== Init ==========================
   const ariaId = useId();
@@ -154,6 +155,12 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     if (visible) {
       setAnimatedVisible(true);
       saveLastOutSideActiveElementRef();
+
+      // Calc the position style
+      if (wrapperRef.current) {
+        const computedWrapStyle = getComputedStyle(wrapperRef.current);
+        setIsFixedPos(computedWrapStyle.position === 'absolute');
+      }
     } else if (
       animatedVisible &&
       contentRef.current.enableMotion() &&
@@ -203,6 +210,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       >
         <Content
           {...props}
+          isFixedPos={isFixedPos}
           onMouseDown={onContentMouseDown}
           onMouseUp={onContentMouseUp}
           ref={contentRef}
