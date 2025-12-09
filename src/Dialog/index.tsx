@@ -47,7 +47,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   if (process.env.NODE_ENV !== 'production') {
     ['wrapStyle', 'bodyStyle', 'maskStyle'].forEach((prop) => {
-      // (prop in props) && console.error(`Warning: ${prop} is deprecated, please use styles instead.`)
       warning(!(prop in props), `${prop} is deprecated, please use styles instead.`);
     });
     if ('wrapClassName' in props) {
@@ -148,11 +147,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       onInternalClose(e);
       return;
     }
-
-    // keep focus inside dialog
-    if (visible && e.keyCode === KeyCode.TAB) {
-      contentRef.current.changeActive(!e.shiftKey);
-    }
   }
 
   // ========================= Effect =========================
@@ -200,7 +194,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         className={modalClassNames?.mask}
       />
       <div
-        tabIndex={-1}
         onKeyDown={onWrapperKeyDown}
         className={classNames(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
