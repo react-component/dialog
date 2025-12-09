@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
 import { offset } from '../../util';
 import type { PanelProps, PanelRef } from './Panel';
@@ -82,7 +82,7 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
           prefixCls={prefixCls}
           holderRef={motionRef}
           style={{ ...motionStyle, ...style, ...contentStyle }}
-          className={classNames(className, motionClassName)}
+          className={clsx(className, motionClassName)}
         />
       )}
     </CSSMotion>
