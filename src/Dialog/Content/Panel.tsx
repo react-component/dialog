@@ -13,6 +13,8 @@ export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   onMouseDown?: React.MouseEventHandler;
   onMouseUp?: React.MouseEventHandler;
   holderRef?: React.Ref<HTMLDivElement>;
+  /** Used for focus lock. When true and open, focus will lock into the panel */
+  isFixedPos?: boolean;
 }
 
 export type PanelRef = {
@@ -43,6 +45,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     height,
     classNames: modalClassNames,
     styles: modalStyles,
+    isFixedPos,
   } = props;
 
   // ================================= Refs =================================
@@ -50,7 +53,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
   const internalRef = useRef<HTMLDivElement>(null);
   const mergedRef = useComposeRef(holderRef, panelRef, internalRef);
 
-  useLockFocus(visible, () => internalRef.current);
+  useLockFocus(visible && isFixedPos, () => internalRef.current);
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {
