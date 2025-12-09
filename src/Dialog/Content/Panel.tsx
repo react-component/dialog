@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useComposeRef } from '@rc-component/util/lib/ref';
+import { useLockFocus } from '@rc-component/util/lib/Dom/focus';
 import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
