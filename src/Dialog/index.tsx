@@ -59,7 +59,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const contentRef = useRef<ContentRef>(null);
 
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
-  const [isFixedPos, setIsFixedPos] = React.useState(true);
+  const [isFixedPos, setIsFixedPos] = React.useState(false);
 
   // ========================== Init ==========================
   const ariaId = useId();
@@ -117,7 +117,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const contentClickRef = useRef(false);
   const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  // We need record content click incase content popup out of dialog
+  // We need record content click in case content popup out of dialog
   const onContentMouseDown: React.MouseEventHandler = () => {
     clearTimeout(contentTimeoutRef.current);
     contentClickRef.current = true;
@@ -159,7 +159,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       // Calc the position style
       if (wrapperRef.current) {
         const computedWrapStyle = getComputedStyle(wrapperRef.current);
-        setIsFixedPos(computedWrapStyle.position === 'absolute');
+        setIsFixedPos(computedWrapStyle.position === 'fixed');
       }
     } else if (
       animatedVisible &&
