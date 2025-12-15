@@ -37,9 +37,9 @@ export type IDialogPropTypes = {
   maskTransitionName?: string;
   animation?: any;
   maskAnimation?: any;
-  wrapStyle?: Record<string, any>;
-  bodyStyle?: Record<string, any>;
-  maskStyle?: Record<string, any>;
+  wrapStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
+  maskStyle?: CSSProperties;
   prefixCls?: string;
   wrapClassName?: string;
   width?: string | number;
