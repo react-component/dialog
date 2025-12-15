@@ -278,6 +278,18 @@ describe('dialog', () => {
         document.querySelector<HTMLElement>('.rc-dialog').style['transform-origin'],
       ).toBeTruthy();
     });
+
+    it('should not throw error when nativeElement is not available', () => {
+      expect(() => {
+        global.onAppearPrepare?.();
+      }).not.toThrow();
+
+      render(<Dialog visible />);
+
+      expect(() => {
+        global.onAppearPrepare?.();
+      }).not.toThrow();
+    });
   });
 
   it('can get dom element before dialog first show when forceRender is set true ', () => {
