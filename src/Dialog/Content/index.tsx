@@ -52,6 +52,8 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   }
 
   function onPrepare() {
+    if (!dialogRef.current?.nativeElement) return;
+
     const elementOffset = offset(dialogRef.current.nativeElement);
 
     setTransformOrigin(
