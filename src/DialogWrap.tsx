@@ -31,7 +31,6 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   const onEsc: PortalProps['onEsc'] = ({ top, event }) => {
     if (top && keyboard) {
       event.stopPropagation();
-      // @ts-ignore
       props.onClose?.(event);
       return;
     }
