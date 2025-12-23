@@ -1,7 +1,6 @@
 import { clsx } from 'clsx';
 import contains from '@rc-component/util/lib/Dom/contains';
 import useId from '@rc-component/util/lib/hooks/useId';
-import KeyCode from '@rc-component/util/lib/KeyCode';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
@@ -16,10 +15,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
-    keyboard = true,
     focusTriggerAfterClose = true,
-    // scrollLocker,
-    // Wrapper
     wrapStyle,
     wrapClassName,
     wrapProps,
@@ -142,14 +138,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     };
   }
 
-  function onWrapperKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    if (keyboard && e.keyCode === KeyCode.ESC) {
-      e.stopPropagation();
-      onInternalClose(e);
-      return;
-    }
-  }
-
   // ========================= Effect =========================
   useEffect(() => {
     if (visible) {
@@ -201,7 +189,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         className={modalClassNames?.mask}
       />
       <div
-        onKeyDown={onWrapperKeyDown}
         className={clsx(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
