@@ -23,6 +23,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     closable,
     panelRef,
     keyboard = true,
+    onClose,
   } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
 
@@ -31,7 +32,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   const onEsc: PortalProps['onEsc'] = ({ top, event }) => {
     if (top && keyboard) {
       event.stopPropagation();
-      props.onClose?.(event);
+      onClose?.(event);
       return;
     }
   };
@@ -58,6 +59,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
       >
         <Dialog
           {...props}
+          onClose={onClose}
           destroyOnHidden={destroyOnHidden}
           afterClose={() => {
             const closableObj = closable && typeof closable === 'object' ? closable : {};
