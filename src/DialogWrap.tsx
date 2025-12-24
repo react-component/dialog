@@ -59,7 +59,6 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
       >
         <Dialog
           {...props}
-          onClose={onClose}
           destroyOnHidden={destroyOnHidden}
           afterClose={() => {
             const closableObj = closable && typeof closable === 'object' ? closable : {};
