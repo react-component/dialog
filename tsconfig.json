@@ -17,7 +17,8 @@
       "@rc-component/dialog": [
         "src/index.ts"
       ]
-    }
+    },
+   "types": ["node", "jest", "@testing-library/jest-dom"],
   },
   "include": [
     ".dumirc.ts",

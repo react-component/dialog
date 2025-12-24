@@ -1,7 +1,6 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import { fireEvent, render, act } from '@testing-library/react';
 import { Provider } from '@rc-component/motion';
-import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
 import type { DialogProps } from '../src';
 import Dialog from '../src';
@@ -164,10 +163,8 @@ describe('dialog', () => {
   it('esc to close', () => {
     const onClose = jest.fn();
     render(<Dialog onClose={onClose} visible />);
-    jest.runAllTimers();
 
-    fireEvent.keyDown(document.querySelector('.rc-dialog'), { keyCode: KeyCode.ESC });
-    jest.runAllTimers();
+    fireEvent.keyDown(window, { key: 'Escape' });
     expect(onClose).toHaveBeenCalled();
   });
 

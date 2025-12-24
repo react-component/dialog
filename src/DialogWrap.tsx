@@ -1,4 +1,4 @@
-import Portal from '@rc-component/portal';
+import Portal, { type PortalProps } from '@rc-component/portal';
 import * as React from 'react';
 import { RefContext } from './context';
 import Dialog from './Dialog';
@@ -22,10 +22,20 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     afterClose,
     closable,
     panelRef,
+    keyboard = true,
+    onClose,
   } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
 
   const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
+
+  const onEsc: PortalProps['onEsc'] = ({ top, event }) => {
+    if (top && keyboard) {
+      event.stopPropagation();
+      onClose?.(event);
+      return;
+    }
+  };
 
   React.useEffect(() => {
     if (visible) {
@@ -42,6 +52,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     <RefContext.Provider value={refContext}>
       <Portal
         open={visible || forceRender || animatedVisible}
+        onEsc={onEsc}
         autoDestroy={false}
         getContainer={getContainer}
         autoLock={visible || animatedVisible}
