@@ -7,6 +7,7 @@ import '../../assets/index.less';
 const MyControl: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [disabled, setDisabled] = React.useState(true);
+  const nodeRef = React.useRef(null);
   const onClick = () => {
     setVisible(true);
   };
@@ -46,7 +47,7 @@ const MyControl: React.FC = () => {
             modal
           </div>
         }
-        modalRender={(modal) => <Draggable disabled={disabled}>{modal}</Draggable>}
+        modalRender={(modal) => <Draggable nodeRef={nodeRef} disabled={disabled}><div ref={nodeRef}>{modal}</div></Draggable>}
       >
         <div style={{ height: 200 }}>
           Day before yesterday I saw a rabbit, and yesterday a deer, and today, you.
