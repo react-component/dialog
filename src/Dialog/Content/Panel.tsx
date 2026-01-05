@@ -46,6 +46,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     classNames: modalClassNames,
     styles: modalStyles,
     isFixedPos,
+    focusTrap,
   } = props;
 
   // ================================= Refs =================================
@@ -53,7 +54,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
   const internalRef = useRef<HTMLDivElement>(null);
   const mergedRef = useComposeRef(holderRef, panelRef, internalRef);
 
-  useLockFocus(visible && isFixedPos, () => internalRef.current);
+  useLockFocus(visible && isFixedPos && focusTrap !== false, () => internalRef.current);
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {

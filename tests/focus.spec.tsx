@@ -64,4 +64,22 @@ describe('Dialog.Focus', () => {
 
     expect(globalThis.__useLockFocusVisible).toBe(false);
   });
+
+  it('should not lock focus when focusTrap is false', () => {
+    render(
+      <Dialog
+        visible
+        focusTrap={false}
+        styles={{
+          wrapper: { position: 'fixed' },
+        }}
+      />,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(globalThis.__useLockFocusVisible).toBe(false);
+  });
 });
