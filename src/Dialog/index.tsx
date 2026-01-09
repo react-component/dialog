@@ -132,24 +132,18 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   }
 
   function onModulesMouseDownCapture(e: React.MouseEvent) {
-    if (e.target === wrapperRef.current) {
-      mouseDownOnMaskRef.current = true;
-    } else {
-      mouseDownOnMaskRef.current = false;
-    }
+    mouseDownOnMaskRef.current = e.target === wrapperRef.current;
   }
 
   function onModulesMouseUpCapture(e: React.MouseEvent) {
-    if (e.target === wrapperRef.current) {
-      mouseUpOnMaskRef.current = true;
-    } else {
-      mouseUpOnMaskRef.current = false;
-    }
+    mouseUpOnMaskRef.current = e.target === wrapperRef.current;
   }
 
   // ========================= Effect =========================
   useEffect(() => {
     if (visible) {
+      mouseDownOnMaskRef.current = false;
+      mouseUpOnMaskRef.current = false;
       setAnimatedVisible(true);
       saveLastOutSideActiveElementRef();
 
