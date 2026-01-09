@@ -173,7 +173,10 @@ describe('dialog', () => {
     const { rerender } = render(<Dialog onClose={onClose} visible />);
 
     // Mask close
-    fireEvent.click(document.querySelector('.rc-dialog-wrap'));
+    const mask = document.querySelector('.rc-dialog-wrap');
+    fireEvent.mouseDown(mask);
+    fireEvent.mouseUp(mask);
+    fireEvent.click(mask);
     jest.runAllTimers();
     expect(onClose).toHaveBeenCalled();
     onClose.mockReset();

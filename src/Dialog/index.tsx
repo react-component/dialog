@@ -110,32 +110,41 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   }
 
   // >>> Content
-  const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const mouseDownOnMaskRef = useRef(false);
+  const mouseUpOnMaskRef = useRef(false);
 
-  // We need record content click in case content popup out of dialog
-  const onContentMouseDown: React.MouseEventHandler = () => {
-    clearTimeout(contentTimeoutRef.current);
-    contentClickRef.current = true;
-  };
 
-  const onContentMouseUp: React.MouseEventHandler = () => {
-    contentTimeoutRef.current = setTimeout(() => {
-      contentClickRef.current = false;
-    });
-  };
 
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if (contentClickRef.current) {
-        contentClickRef.current = false;
-      } else if (wrapperRef.current === e.target) {
+      if (
+        onClose &&
+        wrapperRef.current === e.target &&
+        mouseDownOnMaskRef.current &&
+        mouseUpOnMaskRef.current
+      ) {
         onInternalClose(e);
       }
     };
+  }
+
+  function onModulesMouseDownCapture(e: React.MouseEvent) {
+    if (e.target === wrapperRef.current) {
+      mouseDownOnMaskRef.current = true;
+    } else {
+      mouseDownOnMaskRef.current = false;
+    }
+  }
+
+  function onModulesMouseUpCapture(e: React.MouseEvent) {
+    if (e.target === wrapperRef.current) {
+      mouseUpOnMaskRef.current = true;
+    } else {
+      mouseUpOnMaskRef.current = false;
+    }
   }
 
   // ========================= Effect =========================
@@ -158,13 +167,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     }
   }, [visible]);
 
-  // Remove direct should also check the scroll bar update
-  useEffect(
-    () => () => {
-      clearTimeout(contentTimeoutRef.current);
-    },
-    [],
-  );
+
 
   const mergedStyle: React.CSSProperties = {
     zIndex,
@@ -192,14 +195,14 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         className={clsx(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
+        onMouseDownCapture={onModulesMouseDownCapture}
+        onMouseUpCapture={onModulesMouseUpCapture}
         style={mergedStyle}
         {...wrapProps}
       >
         <Content
           {...props}
           isFixedPos={isFixedPos}
-          onMouseDown={onContentMouseDown}
-          onMouseUp={onContentMouseUp}
           ref={contentRef}
           closable={closable}
           ariaId={ariaId}
