@@ -113,8 +113,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const mouseDownOnMaskRef = useRef(false);
   const mouseUpOnMaskRef = useRef(false);
 
-
-
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
@@ -131,11 +129,11 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     };
   }
 
-  function onModulesMouseDownCapture(e: React.MouseEvent) {
+  function onWrapperMouseDownCapture(e: React.MouseEvent) {
     mouseDownOnMaskRef.current = e.target === wrapperRef.current;
   }
 
-  function onModulesMouseUpCapture(e: React.MouseEvent) {
+  function onWrapperMouseUpCapture(e: React.MouseEvent) {
     mouseUpOnMaskRef.current = e.target === wrapperRef.current;
   }
 
@@ -160,8 +158,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       doClose();
     }
   }, [visible]);
-
-
 
   const mergedStyle: React.CSSProperties = {
     zIndex,
@@ -189,8 +185,8 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         className={clsx(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
-        onMouseDownCapture={onModulesMouseDownCapture}
-        onMouseUpCapture={onModulesMouseUpCapture}
+        onMouseDownCapture={onWrapperMouseDownCapture}
+        onMouseUpCapture={onWrapperMouseUpCapture}
         style={mergedStyle}
         {...wrapProps}
       >
