@@ -24,8 +24,7 @@
   "files": [
     "lib",
     "es",
-    "assets/*.css",
-    "dist"
+    "assets/*.css"
   ],
   "scripts": {
     "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/bootstrap.less assets/bootstrap.css",
