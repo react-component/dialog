@@ -117,11 +117,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if (
-        onClose &&
-        wrapperRef.current === e.target &&
-        mouseDownOnMaskRef.current
-      ) {
+      if (wrapperRef.current === e.target && mouseDownOnMaskRef.current) {
         onInternalClose(e);
       }
     };
