@@ -173,7 +173,10 @@ describe('dialog', () => {
     const { rerender } = render(<Dialog onClose={onClose} visible />);
 
     // Mask close
-    fireEvent.click(document.querySelector('.rc-dialog-wrap'));
+    const mask = document.querySelector('.rc-dialog-wrap');
+    fireEvent.mouseDown(mask);
+    fireEvent.mouseUp(mask);
+    fireEvent.click(mask);
     jest.runAllTimers();
     expect(onClose).toHaveBeenCalled();
     onClose.mockReset();
@@ -182,6 +185,30 @@ describe('dialog', () => {
     rerender(<Dialog onClose={onClose} visible maskClosable={false} />);
     fireEvent.click(document.querySelector('.rc-dialog-wrap'));
     jest.runAllTimers();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('should not close when dragging from content to mask', () => {
+    const onClose = jest.fn();
+    const { getByText } = render(
+      <Dialog visible maskClosable onClose={onClose}>
+        Content
+      </Dialog>
+    );
+
+    jest.runAllTimers();
+
+    const content = getByText('Content');
+    const mask = document.querySelector('.rc-dialog-wrap');
+    if (!mask) throw new Error('Mask not found');
+
+    // Simulate mouse down on content
+    fireEvent.mouseDown(content);
+    // Simulate mouse up on mask
+    fireEvent.mouseUp(mask);
+    // Simulate click on mask (since click follows mouseup)
+    fireEvent.click(mask);
+
     expect(onClose).not.toHaveBeenCalled();
   });
 

@@ -110,37 +110,27 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   }
 
   // >>> Content
-  const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
-
-  // We need record content click in case content popup out of dialog
-  const onContentMouseDown: React.MouseEventHandler = () => {
-    clearTimeout(contentTimeoutRef.current);
-    contentClickRef.current = true;
-  };
-
-  const onContentMouseUp: React.MouseEventHandler = () => {
-    contentTimeoutRef.current = setTimeout(() => {
-      contentClickRef.current = false;
-    });
-  };
+  const mouseDownOnMaskRef = useRef(false);
 
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if (contentClickRef.current) {
-        contentClickRef.current = false;
-      } else if (wrapperRef.current === e.target) {
+      if (wrapperRef.current === e.target && mouseDownOnMaskRef.current) {
         onInternalClose(e);
       }
     };
   }
 
+  function onWrapperMouseDown(e: React.MouseEvent) {
+    mouseDownOnMaskRef.current = e.target === wrapperRef.current;
+  }
+
   // ========================= Effect =========================
   useEffect(() => {
     if (visible) {
+      mouseDownOnMaskRef.current = false;
       setAnimatedVisible(true);
       saveLastOutSideActiveElementRef();
 
@@ -157,14 +147,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       doClose();
     }
   }, [visible]);
-
-  // Remove direct should also check the scroll bar update
-  useEffect(
-    () => () => {
-      clearTimeout(contentTimeoutRef.current);
-    },
-    [],
-  );
 
   const mergedStyle: React.CSSProperties = {
     zIndex,
@@ -192,14 +174,13 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         className={clsx(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
+        onMouseDown={onWrapperMouseDown}
         style={mergedStyle}
         {...wrapProps}
       >
         <Content
           {...props}
           isFixedPos={isFixedPos}
-          onMouseDown={onContentMouseDown}
-          onMouseUp={onContentMouseUp}
           ref={contentRef}
           closable={closable}
           ariaId={ariaId}
