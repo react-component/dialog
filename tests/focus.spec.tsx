@@ -1,5 +1,6 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { act, render } from '@testing-library/react';
 import Dialog from '../src';
 
@@ -9,7 +10,12 @@ jest.mock('@rc-component/util/lib/Dom/focus', () => {
 
   const useLockFocus = (visible: boolean, ...rest: any[]) => {
     globalThis.__useLockFocusVisible = visible;
-    return actual.useLockFocus(visible, ...rest);
+    const hooks = actual.useLockFocus(visible, ...rest);
+    const proxyIgnoreElement = (ele: HTMLElement) => {
+      globalThis.__ignoredElement = ele;
+      hooks[0](ele);
+    };
+    return [proxyIgnoreElement, ...hooks.slice(1)] as ReturnType<typeof actual.useLockFocus>;
   };
 
   return {
@@ -81,5 +87,24 @@ describe('Dialog.Focus', () => {
     });
 
     expect(globalThis.__useLockFocusVisible).toBe(false);
+  });
+
+  it('should call ignoreElement when input in portal is focused', () => {
+    render(
+      <Dialog visible styles={{ wrapper: { position: 'fixed' } }}>
+        {ReactDOM.createPortal(<input id="portal-input" />, document.body)}
+      </Dialog>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    const input = document.getElementById('portal-input') as HTMLElement;
+    act(() => {
+      input.focus();
+    });
+
+    expect(globalThis.__ignoredElement).toBe(input);
   });
 });

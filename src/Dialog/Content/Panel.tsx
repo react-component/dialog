@@ -54,7 +54,10 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
   const internalRef = useRef<HTMLDivElement>(null);
   const mergedRef = useComposeRef(holderRef, panelRef, internalRef);
 
-  useLockFocus(visible && isFixedPos && focusTrap !== false, () => internalRef.current);
+  const [ignoreElement] = useLockFocus(
+    visible && isFixedPos && focusTrap !== false,
+    () => internalRef.current,
+  );
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {
@@ -152,6 +155,9 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
       tabIndex={-1}
+      onFocus={(e) => {
+        ignoreElement(e.target);
+      }}
     >
       <MemoChildren shouldUpdate={visible || forceRender}>
         {modalRender ? modalRender(content) : content}
