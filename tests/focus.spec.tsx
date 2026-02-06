@@ -11,7 +11,7 @@ jest.mock('@rc-component/util/lib/Dom/focus', () => {
   const useLockFocus = (visible: boolean, ...rest: any[]) => {
     globalThis.__useLockFocusVisible = visible;
     const hooks = actual.useLockFocus(visible, ...rest);
-    const proxyIgnoreElement = (ele) => {
+    const proxyIgnoreElement = (ele: HTMLElement) => {
       globalThis.__ignoredElement = ele;
       hooks[0](ele);
     };
