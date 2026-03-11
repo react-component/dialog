@@ -1,7 +1,6 @@
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import { fireEvent, render, act } from '@testing-library/react';
 import { Provider } from '@rc-component/motion';
-import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { cloneElement, useEffect } from 'react';
 import type { DialogProps } from '../src';
 import Dialog from '../src';
@@ -164,10 +163,8 @@ describe('dialog', () => {
   it('esc to close', () => {
     const onClose = jest.fn();
     render(<Dialog onClose={onClose} visible />);
-    jest.runAllTimers();
 
-    fireEvent.keyDown(document.querySelector('.rc-dialog'), { keyCode: KeyCode.ESC });
-    jest.runAllTimers();
+    fireEvent.keyDown(window, { key: 'Escape' });
     expect(onClose).toHaveBeenCalled();
   });
 
@@ -176,7 +173,10 @@ describe('dialog', () => {
     const { rerender } = render(<Dialog onClose={onClose} visible />);
 
     // Mask close
-    fireEvent.click(document.querySelector('.rc-dialog-wrap'));
+    const mask = document.querySelector('.rc-dialog-wrap');
+    fireEvent.mouseDown(mask);
+    fireEvent.mouseUp(mask);
+    fireEvent.click(mask);
     jest.runAllTimers();
     expect(onClose).toHaveBeenCalled();
     onClose.mockReset();
@@ -185,6 +185,30 @@ describe('dialog', () => {
     rerender(<Dialog onClose={onClose} visible maskClosable={false} />);
     fireEvent.click(document.querySelector('.rc-dialog-wrap'));
     jest.runAllTimers();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('should not close when dragging from content to mask', () => {
+    const onClose = jest.fn();
+    const { getByText } = render(
+      <Dialog visible maskClosable onClose={onClose}>
+        Content
+      </Dialog>
+    );
+
+    jest.runAllTimers();
+
+    const content = getByText('Content');
+    const mask = document.querySelector('.rc-dialog-wrap');
+    if (!mask) throw new Error('Mask not found');
+
+    // Simulate mouse down on content
+    fireEvent.mouseDown(content);
+    // Simulate mouse up on mask
+    fireEvent.mouseUp(mask);
+    // Simulate click on mask (since click follows mouseup)
+    fireEvent.click(mask);
+
     expect(onClose).not.toHaveBeenCalled();
   });
 
@@ -239,35 +263,6 @@ describe('dialog', () => {
     expect(document.querySelector('input')).toHaveFocus();
   });
 
-  describe('Tab should keep focus in dialog', () => {
-    it('basic tabbing', () => {
-      render(<Dialog visible />);
-      const sentinelEnd = document.querySelector<HTMLDivElement>('.rc-dialog > div:last-child');
-      sentinelEnd.focus();
-
-      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
-        keyCode: KeyCode.TAB,
-      });
-
-      const sentinelStart = document.querySelector('.rc-dialog > div:first-child');
-      expect(document.activeElement).toBe(sentinelStart);
-    });
-
-    it('trap focus after shift-tabbing', () => {
-      render(<Dialog visible />);
-
-      document.querySelector<HTMLDivElement>('.rc-dialog > div:first-child').focus();
-
-      fireEvent.keyDown(document.querySelector('.rc-dialog-wrap'), {
-        keyCode: KeyCode.TAB,
-        key: 'Tab',
-        shiftKey: true,
-      });
-      const sentinelEnd = document.querySelector('.rc-dialog > div:last-child');
-      expect(document.activeElement).toBe(sentinelEnd);
-    });
-  });
-
   describe('mousePosition', () => {
     function prepareModal(mousePosition: { x: number; y: number }) {
       const { container } = render(
@@ -306,6 +301,18 @@ describe('dialog', () => {
       expect(
         document.querySelector<HTMLElement>('.rc-dialog').style['transform-origin'],
       ).toBeTruthy();
+    });
+
+    it('should not throw error when nativeElement is not available', () => {
+      expect(() => {
+        global.onAppearPrepare?.();
+      }).not.toThrow();
+
+      render(<Dialog visible />);
+
+      expect(() => {
+        global.onAppearPrepare?.();
+      }).not.toThrow();
     });
   });
 

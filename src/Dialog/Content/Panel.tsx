@@ -1,21 +1,11 @@
 import { clsx } from 'clsx';
 import { useComposeRef } from '@rc-component/util/lib/ref';
+import { useLockFocus } from '@rc-component/util/lib/Dom/focus';
 import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
-
-const sentinelStyle: React.CSSProperties = {
-  width: 0,
-  height: 0,
-  overflow: 'hidden',
-  outline: 'none',
-};
-
-const entityStyle: React.CSSProperties = {
-  outline: 'none',
-};
 
 export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   prefixCls: string;
@@ -23,11 +13,12 @@ export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   onMouseDown?: React.MouseEventHandler;
   onMouseUp?: React.MouseEventHandler;
   holderRef?: React.Ref<HTMLDivElement>;
+  /** Used for focus lock. When true and open, focus will lock into the panel */
+  isFixedPos?: boolean;
 }
 
 export type PanelRef = {
   focus: () => void;
-  changeActive: (next: boolean) => void;
 };
 
 const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
@@ -54,27 +45,23 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     height,
     classNames: modalClassNames,
     styles: modalStyles,
+    isFixedPos,
+    focusTrap,
   } = props;
 
   // ================================= Refs =================================
   const { panel: panelRef } = React.useContext(RefContext);
+  const internalRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useComposeRef(holderRef, panelRef, internalRef);
 
-  const mergedRef = useComposeRef(holderRef, panelRef);
-
-  const sentinelStartRef = useRef<HTMLDivElement>(null);
-  const sentinelEndRef = useRef<HTMLDivElement>(null);
+  const [ignoreElement] = useLockFocus(
+    visible && isFixedPos && focusTrap !== false,
+    () => internalRef.current,
+  );
 
   React.useImperativeHandle(ref, () => ({
     focus: () => {
-      sentinelStartRef.current?.focus({ preventScroll: true });
-    },
-    changeActive: (next) => {
-      const { activeElement } = document;
-      if (next && activeElement === sentinelEndRef.current) {
-        sentinelStartRef.current.focus({ preventScroll: true });
-      } else if (!next && activeElement === sentinelStartRef.current) {
-        sentinelEndRef.current.focus({ preventScroll: true });
-      }
+      internalRef.current?.focus({ preventScroll: true });
     },
   }));
 
@@ -168,13 +155,14 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
       className={clsx(prefixCls, className)}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      tabIndex={-1}
+      onFocus={(e) => {
+        ignoreElement(e.target);
+      }}
     >
-      <div ref={sentinelStartRef} tabIndex={0} style={entityStyle}>
-        <MemoChildren shouldUpdate={visible || forceRender}>
-          {modalRender ? modalRender(content) : content}
-        </MemoChildren>
-      </div>
-      <div tabIndex={0} ref={sentinelEndRef} style={sentinelStyle} />
+      <MemoChildren shouldUpdate={visible || forceRender}>
+        {modalRender ? modalRender(content) : content}
+      </MemoChildren>
     </div>
   );
 });

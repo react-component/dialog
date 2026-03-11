@@ -22,7 +22,7 @@ export type IDialogPropTypes = {
   children?: React.ReactNode;
   afterClose?: () => any;
   afterOpenChange?: (open: boolean) => void;
-  onClose?: (e: SyntheticEvent) => any;
+  onClose?: (e: SyntheticEvent | KeyboardEvent) => any;
   closable?: boolean | (ClosableType & React.AriaAttributes);
   maskClosable?: boolean;
   visible?: boolean;
@@ -58,6 +58,7 @@ export type IDialogPropTypes = {
   // https://github.com/ant-design/ant-design/issues/19771
   // https://github.com/react-component/dialog/issues/95
   focusTriggerAfterClose?: boolean;
+  focusTrap?: boolean;
 
   // Refs
   panelRef?: React.Ref<HTMLDivElement>;

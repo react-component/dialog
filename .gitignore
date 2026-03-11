@@ -50,3 +50,4 @@ pnpm-lock.yaml
 .dumi/tmp-production
 
 bun.lockb
+.vscode

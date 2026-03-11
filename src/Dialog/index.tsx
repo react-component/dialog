@@ -1,7 +1,6 @@
 import { clsx } from 'clsx';
 import contains from '@rc-component/util/lib/Dom/contains';
 import useId from '@rc-component/util/lib/hooks/useId';
-import KeyCode from '@rc-component/util/lib/KeyCode';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
@@ -16,10 +15,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
     prefixCls = 'rc-dialog',
     zIndex,
     visible = false,
-    keyboard = true,
     focusTriggerAfterClose = true,
-    // scrollLocker,
-    // Wrapper
     wrapStyle,
     wrapClassName,
     wrapProps,
@@ -47,7 +43,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
 
   if (process.env.NODE_ENV !== 'production') {
     ['wrapStyle', 'bodyStyle', 'maskStyle'].forEach((prop) => {
-      // (prop in props) && console.error(`Warning: ${prop} is deprecated, please use styles instead.`)
       warning(!(prop in props), `${prop} is deprecated, please use styles instead.`);
     });
     if ('wrapClassName' in props) {
@@ -60,6 +55,7 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const contentRef = useRef<ContentRef>(null);
 
   const [animatedVisible, setAnimatedVisible] = React.useState(visible);
+  const [isFixedPos, setIsFixedPos] = React.useState(false);
 
   // ========================== Init ==========================
   const ariaId = useId();
@@ -114,52 +110,35 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
   }
 
   // >>> Content
-  const contentClickRef = useRef(false);
-  const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
-
-  // We need record content click incase content popup out of dialog
-  const onContentMouseDown: React.MouseEventHandler = () => {
-    clearTimeout(contentTimeoutRef.current);
-    contentClickRef.current = true;
-  };
-
-  const onContentMouseUp: React.MouseEventHandler = () => {
-    contentTimeoutRef.current = setTimeout(() => {
-      contentClickRef.current = false;
-    });
-  };
+  const mouseDownOnMaskRef = useRef(false);
 
   // >>> Wrapper
   // Close only when element not on dialog
   let onWrapperClick: (e: React.SyntheticEvent) => void = null;
   if (maskClosable) {
     onWrapperClick = (e) => {
-      if (contentClickRef.current) {
-        contentClickRef.current = false;
-      } else if (wrapperRef.current === e.target) {
+      if (wrapperRef.current === e.target && mouseDownOnMaskRef.current) {
         onInternalClose(e);
       }
     };
   }
 
-  function onWrapperKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    if (keyboard && e.keyCode === KeyCode.ESC) {
-      e.stopPropagation();
-      onInternalClose(e);
-      return;
-    }
-
-    // keep focus inside dialog
-    if (visible && e.keyCode === KeyCode.TAB) {
-      contentRef.current.changeActive(!e.shiftKey);
-    }
+  function onWrapperMouseDown(e: React.MouseEvent) {
+    mouseDownOnMaskRef.current = e.target === wrapperRef.current;
   }
 
   // ========================= Effect =========================
   useEffect(() => {
     if (visible) {
+      mouseDownOnMaskRef.current = false;
       setAnimatedVisible(true);
       saveLastOutSideActiveElementRef();
+
+      // Calc the position style
+      if (wrapperRef.current) {
+        const computedWrapStyle = getComputedStyle(wrapperRef.current);
+        setIsFixedPos(computedWrapStyle.position === 'fixed');
+      }
     } else if (
       animatedVisible &&
       contentRef.current.enableMotion() &&
@@ -168,14 +147,6 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
       doClose();
     }
   }, [visible]);
-
-  // Remove direct should also check the scroll bar update
-  useEffect(
-    () => () => {
-      clearTimeout(contentTimeoutRef.current);
-    },
-    [],
-  );
 
   const mergedStyle: React.CSSProperties = {
     zIndex,
@@ -200,18 +171,16 @@ const Dialog: React.FC<IDialogPropTypes> = (props) => {
         className={modalClassNames?.mask}
       />
       <div
-        tabIndex={-1}
-        onKeyDown={onWrapperKeyDown}
         className={clsx(`${prefixCls}-wrap`, wrapClassName, modalClassNames?.wrapper)}
         ref={wrapperRef}
         onClick={onWrapperClick}
+        onMouseDown={onWrapperMouseDown}
         style={mergedStyle}
         {...wrapProps}
       >
         <Content
           {...props}
-          onMouseDown={onContentMouseDown}
-          onMouseUp={onContentMouseUp}
+          isFixedPos={isFixedPos}
           ref={contentRef}
           closable={closable}
           ariaId={ariaId}
