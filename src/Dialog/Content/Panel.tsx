@@ -1,11 +1,9 @@
 import { clsx } from 'clsx';
-import { useComposeRef } from '@rc-component/util/lib/ref';
-import { useLockFocus } from '@rc-component/util/lib/Dom/focus';
+import { pickAttrs, useComposeRef, useLockFocus } from '@rc-component/util';
 import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
 import MemoChildren from './MemoChildren';
-import pickAttrs from '@rc-component/util/lib/pickAttrs';
 
 export interface PanelProps extends Omit<IDialogPropTypes, 'getOpenCount'> {
   prefixCls: string;
