@@ -23,6 +23,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     closable,
     panelRef,
     keyboard = true,
+    scrollLock = true,
     onClose,
   } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
@@ -55,7 +56,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
         onEsc={onEsc}
         autoDestroy={false}
         getContainer={getContainer}
-        autoLock={visible || animatedVisible}
+        autoLock={scrollLock && (visible || animatedVisible)}
       >
         <Dialog
           {...props}

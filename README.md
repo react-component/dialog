@@ -83,6 +83,7 @@ ReactDOM.render(
 | closeIcon | ReactNode |  | specific the close icon. |  |
 | forceRender | Boolean | false | Create dialog dom node before dialog first show |  |
 | focusTriggerAfterClose | Boolean | true | focus trigger element when dialog closed |  |
+| scrollLock | Boolean | true | Control whether to lock body scroll when dialog opens |  |
 | modalRender | (node: ReactNode) => ReactNode |  | Custom modal content render | 8.3.0 |
 
 ## Development

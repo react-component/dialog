@@ -59,6 +59,8 @@ export type IDialogPropTypes = {
   // https://github.com/react-component/dialog/issues/95
   focusTriggerAfterClose?: boolean;
   focusTrap?: boolean;
+  /** Control whether to lock body scroll when modal opens. Default is true. */
+  scrollLock?: boolean;
 
   // Refs
   panelRef?: React.Ref<HTMLDivElement>;
