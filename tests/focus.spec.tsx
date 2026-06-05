@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import { act, render } from '@testing-library/react';
 import Dialog from '../src';
 
-// Mock: import { useLockFocus } from '@rc-component/util/lib/Dom/focus';
-jest.mock('@rc-component/util/lib/Dom/focus', () => {
-  const actual = jest.requireActual('@rc-component/util/lib/Dom/focus');
+// Mock: import { useLockFocus } from '@rc-component/util';
+jest.mock('@rc-component/util', () => {
+  const actual = jest.requireActual('@rc-component/util');
 
   const useLockFocus = (visible: boolean, ...rest: any[]) => {
     globalThis.__useLockFocusVisible = visible;
