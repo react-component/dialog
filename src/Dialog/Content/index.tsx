@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useRef } from 'react';
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
+import type { CSSMotionRef } from '@rc-component/motion';
 import { offset } from '../../util';
 import type { PanelProps, PanelRef } from './Panel';
 import Panel from './Panel';
-import type { CSSMotionRef } from '@rc-component/motion/es/CSSMotion';
 
 export type CSSMotionStateRef = Pick<CSSMotionRef, 'inMotion' | 'enableMotion'>;
 
