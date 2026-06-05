@@ -1,14 +1,11 @@
 import { clsx } from 'clsx';
-import contains from '@rc-component/util/lib/Dom/contains';
-import useId from '@rc-component/util/lib/hooks/useId';
-import pickAttrs from '@rc-component/util/lib/pickAttrs';
+import { contains, useId, pickAttrs, warning } from '@rc-component/util';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import type { IDialogPropTypes } from '../IDialogPropTypes';
 import { getMotionName } from '../util';
 import Content, { type ContentRef } from './Content';
 import Mask from './Mask';
-import { warning } from '@rc-component/util/lib/warning';
 
 const Dialog: React.FC<IDialogPropTypes> = (props) => {
   const {
