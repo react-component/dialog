@@ -80,7 +80,7 @@ describe('Dialog.Scroll', () => {
   });
 
   it('should not lock body scroll when scrollLock is false', () => {
-    const { unmount, rerender } = render(<Dialog visible scrollLock={false} />);
+    const { unmount } = render(<Dialog visible scrollLock={false} />);
 
     // body should not have overflow:hidden when scrollLock is false
     expect(document.body).not.toHaveStyle({
@@ -91,7 +91,7 @@ describe('Dialog.Scroll', () => {
   });
 
   it('should lock body scroll when scrollLock is true (default)', () => {
-    const { unmount, rerender } = render(<Dialog visible scrollLock={true} />);
+    const { unmount } = render(<Dialog visible scrollLock={true} />);
     expect(document.body).toHaveStyle({
       overflowY: 'hidden',
     });

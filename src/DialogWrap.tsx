@@ -26,6 +26,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
     scrollLock = true,
     onClose,
   } = props;
+  const { scrollLock: _, ...restProps } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
 
   const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
@@ -59,7 +60,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
         autoLock={scrollLock && (visible || animatedVisible)}
       >
         <Dialog
-          {...props}
+          {...restProps}
           destroyOnHidden={destroyOnHidden}
           afterClose={() => {
             const closableObj = closable && typeof closable === 'object' ? closable : {};
