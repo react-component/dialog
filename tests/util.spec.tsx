@@ -48,6 +48,33 @@ describe('Dialog.Util', () => {
         top: 1128,
       });
     });
+
+    it('returns zero offset when defaultView and parentWindow are missing', () => {
+      const element = {
+        ownerDocument: {},
+        getBoundingClientRect: () => ({ left: 0, top: 0 }),
+      } as any;
+
+      expect(offset(element)).toEqual({
+        left: 0,
+        top: 0,
+      });
+    });
+
+    it('returns zero offset when defaultView and parentWindow are null or undefined', () => {
+      const element = {
+        ownerDocument: {
+          defaultView: null,
+          parentWindow: undefined,
+        },
+        getBoundingClientRect: () => ({ left: 0, top: 0 }),
+      } as any;
+
+      expect(offset(element)).toEqual({
+        left: 0,
+        top: 0,
+      });
+    });
   });
 
   describe('getMotionName', () => {
