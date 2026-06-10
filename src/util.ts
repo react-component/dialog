@@ -9,6 +9,7 @@ export function getMotionName(prefixCls: string, transitionName?: string, animat
 
 // =============================== Offset ===============================
 function getScroll(w: Window, top?: boolean): number {
+  if (!w) return 0;
   let ret = w[`page${top ? 'Y' : 'X'}Offset`];
   const method = `scroll${top ? 'Top' : 'Left'}`;
   if (typeof ret !== 'number') {
