@@ -7,6 +7,9 @@
   </a>
 
   <p>Part of the Ant Design ecosystem.</p>
+</div>
+
+<div align="center">
 
 [![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
 
@@ -117,8 +120,8 @@ npm run build
 npm run prepublishOnly
 ```
 
-The release script compiles the package and runs `rc-np`.
+The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 
 ## License
 
-`@rc-component/dialog` is released under the MIT license.
+@rc-component/dialog is released under the [MIT](./LICENSE.md) license.
