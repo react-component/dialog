@@ -35,7 +35,6 @@
     "docs:deploy": "gh-pages -d dist",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
-    "now-build": "npm run docs:build",
     "prepare": "husky",
     "prepublishOnly": "npm run compile && rc-np",
     "prettier": "prettier --write --ignore-unknown .",
