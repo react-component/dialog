@@ -89,7 +89,7 @@ Online demo: https://dialog.react-component.vercel.app/
 | prefixCls | Component class name prefix | string | `rc-dialog` |
 | scrollLock | Whether to lock body scroll when open | boolean | true |
 | style | Root dialog style | `React.CSSProperties` | - |
-| styles | Semantic styles | `{ header?: CSSProperties; body?: CSSProperties; footer?: CSSProperties; mask?: CSSProperties; content?: CSSProperties; wrapper?: CSSProperties }` | - |
+| styles | Semantic styles | `{ header?: React.CSSProperties; body?: React.CSSProperties; footer?: React.CSSProperties; mask?: React.CSSProperties; content?: React.CSSProperties; wrapper?: React.CSSProperties }` | - |
 | title | Dialog title | `React.ReactNode` | - |
 | transitionName | Dialog transition class name | string | - |
 | visible | Whether the dialog is visible | boolean | false |
