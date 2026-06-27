@@ -56,14 +56,14 @@ export default function App() {
 
 ## 示例
 
+运行本地 dumi 站点：
+
 ```bash
 npm install
 npm start
 ```
 
 然后打开 `http://localhost:8000`。
-
-在线演示： https://dialog.react-component.vercel.app/
 
 ## API
 

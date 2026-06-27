@@ -4,6 +4,10 @@ import Draggable from 'react-draggable';
 import Dialog from '@rc-component/dialog';
 import '../../assets/index.less';
 
+const DemoDraggable = Draggable as React.ComponentType<
+  React.PropsWithChildren<{ disabled?: boolean }>
+>;
+
 const MyControl: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [disabled, setDisabled] = React.useState(true);
@@ -46,7 +50,7 @@ const MyControl: React.FC = () => {
             modal
           </div>
         }
-        modalRender={(modal) => <Draggable disabled={disabled}>{modal}</Draggable>}
+        modalRender={(modal) => <DemoDraggable disabled={disabled}>{modal}</DemoDraggable>}
       >
         <div style={{ height: 200 }}>
           Day before yesterday I saw a rabbit, and yesterday a deer, and today, you.

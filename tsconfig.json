@@ -18,7 +18,12 @@
         "src/index.ts"
       ]
     },
-   "types": ["node", "jest", "@testing-library/jest-dom"],
+    "types": [
+      "node",
+      "jest",
+      "@testing-library/jest-dom"
+    ],
+    "ignoreDeprecations": "5.0"
   },
   "include": [
     ".dumirc.ts",
