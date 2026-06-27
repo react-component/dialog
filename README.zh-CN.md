@@ -1,10 +1,10 @@
 <div align="center">
   <h1>@rc-component/dialog</h1>
-  <p><sub>Part of the Ant Design ecosystem.</sub></p>
-  <p>💬 A composable dialog component for React.</p>
+  <p><sub>Ant Design 生态的一部分。</sub></p>
+  <p>💬 可组合的 React 对话框组件。</p>
 </div>
 
-<p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
 
 <div align="center">
@@ -26,20 +26,20 @@
 [dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
 [dumi-url]: https://github.com/umijs/dumi
 
-## Highlights
+## 特性
 
-- Supports controlled visibility, mask, keyboard close, and focus restoration.
-- Allows custom title, footer, close icon, container, motion, and modal content rendering.
-- Provides semantic `classNames` and `styles` hooks for the dialog structure.
-- Ships compiled JavaScript, TypeScript definitions, and CSS assets.
+- 支持 controlled visibility, mask, keyboard close, and focus restoration.
+- 支持自定义标题、页脚、关闭图标、容器、动画和弹窗内容渲染。
+- 提供 semantic `classNames` and `styles` hooks for the dialog structure.
+- 提供编译后的 JavaScript、TypeScript 类型定义和 CSS 资源。
 
-## Install
+## 安装
 
 ```bash
 npm install @rc-component/dialog
 ```
 
-## Usage
+## 使用
 
 ```tsx | pure
 import Dialog from '@rc-component/dialog';
@@ -54,20 +54,20 @@ export default function App() {
 }
 ```
 
-## Examples
+## 示例
 
 ```bash
 npm install
 npm start
 ```
 
-Then open `http://localhost:8000`.
+然后打开 `http://localhost:8000`。
 
-Online demo: https://dialog.react-component.vercel.app/
+在线演示： https://dialog.react-component.vercel.app/
 
 ## API
 
-| Property | Description | Type | Default |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | afterClose | Callback after close animation ends | `() => void` | - |
 | animation | Dialog animation name | string | - |
@@ -97,7 +97,7 @@ Online demo: https://dialog.react-component.vercel.app/
 | zIndex | Dialog z-index | number | - |
 | onClose | Callback when close button or mask is clicked | `(event: React.SyntheticEvent) => void` | - |
 
-## Development
+## 本地开发
 
 ```bash
 npm install
@@ -112,7 +112,7 @@ npm run compile
 npm run build
 ```
 
-## Release
+## 发布
 
 ```bash
 npm run prepublishOnly
@@ -120,6 +120,6 @@ npm run prepublishOnly
 
 The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 
-## License
+## 许可证
 
 @rc-component/dialog is released under the [MIT](./LICENSE.md) license.
