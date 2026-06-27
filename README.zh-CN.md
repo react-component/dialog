@@ -1,6 +1,7 @@
 <div align="center">
   <h1>@rc-component/dialog</h1>
   <p><sub>Ant Design 生态的一部分。</sub></p>
+  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
   <p>💬 可组合的 React 对话框组件。</p>
 </div>
 
