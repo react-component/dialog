@@ -1,7 +1,6 @@
 <div align="center">
   <h1>@rc-component/dialog</h1>
-  <p><sub>Ant Design 生态的一部分。</sub></p>
-  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Ant Design 生态的一部分。</sub></p>
   <p>💬 可组合的 React 对话框组件。</p>
 </div>
 
@@ -29,9 +28,9 @@
 
 ## 特性
 
-- 支持 controlled visibility, mask, keyboard close, and focus restoration.
+- 支持受控可见性、遮罩、键盘关闭和焦点恢复。
 - 支持自定义标题、页脚、关闭图标、容器、动画和弹窗内容渲染。
-- 提供 semantic `classNames` and `styles` hooks for the dialog structure.
+- 为对话框结构提供语义 `classNames` 和 `styles` 挂钩。
 - 提供编译后的 JavaScript、TypeScript 类型定义和 CSS 资源。
 
 ## 安装
@@ -70,33 +69,33 @@ npm start
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| afterClose | Callback after close animation ends | `() => void` | - |
-| animation | Dialog animation name | string | - |
-| className | Additional dialog class name | string | - |
-| classNames | Semantic class names | `{ header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string }` | - |
-| closable | Whether to show close button, or close button props | boolean \| object | true |
-| closeIcon | Custom close icon | `React.ReactNode` | - |
-| destroyOnHidden | Unmount children after dialog closes | boolean | false |
-| focusTriggerAfterClose | Focus trigger element after close | boolean | true |
+| afterClose | 关闭动画结束后回调 | `() => void` | - |
+| 动画片 | 对话框动画名称 | string | - |
+| className | 附加对话框className | string | - |
+| classNames | 语义className | `{ header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string }` | - |
+| closable | 是否显示关闭按钮，或关闭按钮属性 | boolean \| object | true |
+| closeIcon | 自定义关闭图标 | `React.ReactNode` | - |
+| destroyOnHidden | 对话框关闭后卸载子项 | boolean | false |
+| focusTriggerAfterClose | 关闭后聚焦触发元素 | boolean | true |
 | footer | Dialog footer | `React.ReactNode` | - |
-| forceRender | Render dialog before it is first shown | boolean | false |
-| getContainer | Container where dialog is mounted | `() => HTMLElement` | - |
-| keyboard | Whether pressing Esc closes the dialog | boolean | true |
-| mask | Whether to show mask | boolean | true |
-| maskAnimation | Mask animation name | string | - |
-| maskClosable | Whether clicking mask closes the dialog | boolean | true |
-| maskTransitionName | Mask transition class name | string | - |
-| modalRender | Custom modal content renderer | `(node: React.ReactNode) => React.ReactNode` | - |
-| mousePosition | Mouse position used for transform origin | `{ x: number; y: number }` | - |
-| prefixCls | Component class name prefix | string | `rc-dialog` |
-| scrollLock | Whether to lock body scroll when open | boolean | true |
-| style | Root dialog style | `React.CSSProperties` | - |
+| forceRender | 在首次显示之前渲染对话框 | boolean | false |
+| getContainer | 装载对话框的容器 | `() => HTMLElement` | - |
+| keyboard | 按 Esc 是否关闭对话框 | boolean | true |
+| mask | 是否显示面具 | boolean | true |
+| maskAnimation | 蒙版动画名称 | string | - |
+| maskClosable | 单击蒙版是否关闭对话框 | boolean | true |
+| maskTransitionName | 掩码转换className称 | string | - |
+| modalRender | 自定义模态内容渲染器 | `(node: React.ReactNode) => React.ReactNode` | - |
+| mousePosition | 用于变换原点的鼠标位置 | `{ x: number; y: number }` | - |
+| prefixCls | 组件className前缀 | string | `rc-dialog` |
+| scrollLock | 打开时是否锁定body滚动 | boolean | true |
+| 风格 | 根对话框样式 | `React.CSSProperties` | - |
 | styles | Semantic styles | `{ header?: React.CSSProperties; body?: React.CSSProperties; footer?: React.CSSProperties; mask?: React.CSSProperties; content?: React.CSSProperties; wrapper?: React.CSSProperties }` | - |
 | title | Dialog title | `React.ReactNode` | - |
-| transitionName | Dialog transition class name | string | - |
-| visible | Whether the dialog is visible | boolean | false |
+| transitionName | 对话框转换className | string | - |
+| 可见的 | 对话框是否可见 | boolean | false |
 | zIndex | Dialog z-index | number | - |
-| onClose | Callback when close button or mask is clicked | `(event: React.SyntheticEvent) => void` | - |
+| onClose | 点击关闭按钮或遮罩时的回调 | `(event: React.SyntheticEvent) => void` | - |
 
 ## 本地开发
 
@@ -119,8 +118,8 @@ npm run build
 npm run prepublishOnly
 ```
 
-The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
+包构建完成后，发布流程由 `@rc-component/np` 通过 `rc-np` 命令处理。
 
 ## 许可证
 
-@rc-component/dialog is released under the [MIT](./LICENSE.md) license.
+@rc-component/dialog 基于 [MIT](./LICENSE.md) 许可证发布。
