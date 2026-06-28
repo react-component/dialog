@@ -81,10 +81,10 @@ npm start
 | forceRender | 在首次显示之前渲染对话框 | boolean | false |
 | getContainer | 装载对话框的容器 | `() => HTMLElement` | - |
 | keyboard | 按 Esc 是否关闭对话框 | boolean | true |
-| mask | 是否显示面具 | boolean | true |
-| maskAnimation | 蒙版动画名称 | string | - |
-| maskClosable | 单击蒙版是否关闭对话框 | boolean | true |
-| maskTransitionName | 掩码过渡 className | string | - |
+| mask | 是否显示遮罩 | boolean | true |
+| maskAnimation | 遮罩动画名称 | string | - |
+| maskClosable | 单击遮罩是否关闭对话框 | boolean | true |
+| maskTransitionName | 遮罩过渡 className | string | - |
 | modalRender | 自定义模态内容渲染器 | `(node: React.ReactNode) => React.ReactNode` | - |
 | mousePosition | 用于变换原点的鼠标位置 | `{ x: number; y: number }` | - |
 | prefixCls | 组件 className 前缀 | string | `rc-dialog` |
