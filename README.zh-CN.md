@@ -2,29 +2,18 @@
   <h1>@rc-component/dialog</h1>
   <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Ant Design 生态的一部分。</sub></p>
   <p>💬 可组合的 React 对话框组件。</p>
+
+  <p>
+    <a href="https://npmjs.org/package/@rc-component/dialog"><img alt="NPM version" src="https://img.shields.io/npm/v/@rc-component/dialog.svg?style=flat-square"></a>
+    <a href="https://npmjs.org/package/@rc-component/dialog"><img alt="npm downloads" src="https://img.shields.io/npm/dm/@rc-component/dialog.svg?style=flat-square"></a>
+    <a href="https://github.com/react-component/dialog/actions/workflows/react-component-ci.yml"><img alt="build status" src="https://github.com/react-component/dialog/actions/workflows/react-component-ci.yml/badge.svg"></a>
+    <a href="https://app.codecov.io/gh/react-component/dialog"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/react-component/dialog/master.svg?style=flat-square"></a>
+    <a href="https://bundlephobia.com/package/@rc-component/dialog"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/@rc-component/dialog?style=flat-square"></a>
+    <a href="https://github.com/umijs/dumi"><img alt="dumi" src="https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square"></a>
+  </p>
 </div>
 
 <p align="center"><a href="./README.md">English</a> | 简体中文</p>
-
-
-<div align="center">
-
-[![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
-
-</div>
-
-[npm-image]: https://img.shields.io/npm/v/@rc-component/dialog.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/@rc-component/dialog
-[github-actions-image]: https://github.com/react-component/dialog/actions/workflows/react-component-ci.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/dialog/actions/workflows/react-component-ci.yml
-[codecov-image]: https://img.shields.io/codecov/c/github/react-component/dialog/master.svg?style=flat-square
-[codecov-url]: https://app.codecov.io/gh/react-component/dialog
-[download-image]: https://img.shields.io/npm/dm/@rc-component/dialog.svg?style=flat-square
-[download-url]: https://npmjs.org/package/@rc-component/dialog
-[bundlephobia-image]: https://img.shields.io/bundlephobia/minzip/%40rc-component%2Fdialog?style=flat-square
-[bundlephobia-url]: https://bundlephobia.com/package/@rc-component/dialog
-[dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
-[dumi-url]: https://github.com/umijs/dumi
 
 ## 特性
 
