@@ -70,7 +70,7 @@ npm start
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | afterClose | 关闭动画结束后回调 | `() => void` | - |
-| 动画片 | 对话框动画名称 | string | - |
+| animation | 对话框动画名称 | string | - |
 | className | 附加对话框className | string | - |
 | classNames | 语义className | `{ header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string }` | - |
 | closable | 是否显示关闭按钮，或关闭按钮属性 | boolean \| object | true |
@@ -89,11 +89,11 @@ npm start
 | mousePosition | 用于变换原点的鼠标位置 | `{ x: number; y: number }` | - |
 | prefixCls | 组件className前缀 | string | `rc-dialog` |
 | scrollLock | 打开时是否锁定body滚动 | boolean | true |
-| 风格 | 根对话框样式 | `React.CSSProperties` | - |
+| style | 根对话框样式 | `React.CSSProperties` | - |
 | styles | Semantic styles | `{ header?: React.CSSProperties; body?: React.CSSProperties; footer?: React.CSSProperties; mask?: React.CSSProperties; content?: React.CSSProperties; wrapper?: React.CSSProperties }` | - |
 | title | Dialog title | `React.ReactNode` | - |
 | transitionName | 对话框转换className | string | - |
-| 可见的 | 对话框是否可见 | boolean | false |
+| visible | 对话框是否可见 | boolean | false |
 | zIndex | Dialog z-index | number | - |
 | onClose | 点击关闭按钮或遮罩时的回调 | `(event: React.SyntheticEvent) => void` | - |
 
