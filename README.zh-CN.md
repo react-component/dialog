@@ -47,7 +47,7 @@ import '@rc-component/dialog/assets/index.css';
 
 export default function App() {
   return (
-    <Dialog title="Dialog" visible onClose={() => {}}>
+    <Dialog title="对话框" visible onClose={() => {}}>
       <p>Dialog content</p>
     </Dialog>
   );
@@ -90,11 +90,11 @@ npm start
 | prefixCls | 组件 className 前缀 | string | `rc-dialog` |
 | scrollLock | 打开时是否锁定body滚动 | boolean | true |
 | style | 根对话框样式 | `React.CSSProperties` | - |
-| styles | Semantic styles | `{ header?: React.CSSProperties; body?: React.CSSProperties; footer?: React.CSSProperties; mask?: React.CSSProperties; content?: React.CSSProperties; wrapper?: React.CSSProperties }` | - |
-| title | Dialog title | `React.ReactNode` | - |
+| styles | 语义化样式 | `{ header?: React.CSSProperties; body?: React.CSSProperties; footer?: React.CSSProperties; mask?: React.CSSProperties; content?: React.CSSProperties; wrapper?: React.CSSProperties }` | - |
+| title | 对话框标题 | `React.ReactNode` | - |
 | transitionName | 对话框过渡 className | string | - |
 | visible | 对话框是否可见 | boolean | false |
-| zIndex | Dialog z-index | number | - |
+| zIndex | 对话框 z-index | number | - |
 | onClose | 点击关闭按钮或遮罩时的回调 | `(event: React.SyntheticEvent) => void` | - |
 
 ## 本地开发
