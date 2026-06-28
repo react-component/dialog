@@ -71,8 +71,8 @@ npm start
 | --- | --- | --- | --- |
 | afterClose | 关闭动画结束后回调 | `() => void` | - |
 | animation | 对话框动画名称 | string | - |
-| className | 附加对话框className | string | - |
-| classNames | 语义className | `{ header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string }` | - |
+| className | 附加对话框 className | string | - |
+| classNames | 语义 className | `{ header?: string; body?: string; footer?: string; mask?: string; content?: string; wrapper?: string }` | - |
 | closable | 是否显示关闭按钮，或关闭按钮属性 | boolean \| object | true |
 | closeIcon | 自定义关闭图标 | `React.ReactNode` | - |
 | destroyOnHidden | 对话框关闭后卸载子项 | boolean | false |
@@ -84,15 +84,15 @@ npm start
 | mask | 是否显示面具 | boolean | true |
 | maskAnimation | 蒙版动画名称 | string | - |
 | maskClosable | 单击蒙版是否关闭对话框 | boolean | true |
-| maskTransitionName | 掩码转换className称 | string | - |
+| maskTransitionName | 掩码过渡 className | string | - |
 | modalRender | 自定义模态内容渲染器 | `(node: React.ReactNode) => React.ReactNode` | - |
 | mousePosition | 用于变换原点的鼠标位置 | `{ x: number; y: number }` | - |
-| prefixCls | 组件className前缀 | string | `rc-dialog` |
+| prefixCls | 组件 className 前缀 | string | `rc-dialog` |
 | scrollLock | 打开时是否锁定body滚动 | boolean | true |
 | style | 根对话框样式 | `React.CSSProperties` | - |
 | styles | Semantic styles | `{ header?: React.CSSProperties; body?: React.CSSProperties; footer?: React.CSSProperties; mask?: React.CSSProperties; content?: React.CSSProperties; wrapper?: React.CSSProperties }` | - |
 | title | Dialog title | `React.ReactNode` | - |
-| transitionName | 对话框转换className | string | - |
+| transitionName | 对话框过渡 className | string | - |
 | visible | 对话框是否可见 | boolean | false |
 | zIndex | Dialog z-index | number | - |
 | onClose | 点击关闭按钮或遮罩时的回调 | `(event: React.SyntheticEvent) => void` | - |
