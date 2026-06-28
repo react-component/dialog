@@ -104,6 +104,8 @@ npm install
 npm start
 ```
 
+dumi 站点默认运行在 `http://localhost:8000`。
+
 ```bash
 npm test
 npm run tsc

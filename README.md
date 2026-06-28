@@ -104,6 +104,8 @@ npm install
 npm start
 ```
 
+The dumi site runs at `http://localhost:8000` by default.
+
 ```bash
 npm test
 npm run tsc
