@@ -48,6 +48,7 @@ pnpm-lock.yaml
 # dumi
 .dumi/tmp
 .dumi/tmp-production
+docs-dist
 
 bun.lockb
 .vscode
