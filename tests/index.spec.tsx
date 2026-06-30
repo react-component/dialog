@@ -1,6 +1,5 @@
-import { fireEvent } from '@testing-library/dom';
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
-import { render, act } from '@testing-library/react';
+import { fireEvent, render, act } from '@testing-library/react';
 import { Provider } from '@rc-component/motion';
 import React, { cloneElement, useEffect } from 'react';
 import type { DialogProps } from '../src';
