@@ -1,7 +1,8 @@
+import { fireEvent } from '@testing-library/dom';
 /* eslint-disable react/no-render-return-value, max-classes-per-file, func-names, no-console */
 import React from 'react';
 import Select from '@rc-component/select';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Dialog from '../src';
 
 /**
