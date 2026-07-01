@@ -48,7 +48,7 @@ export default function App() {
 Run the local dumi site:
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
@@ -89,7 +89,7 @@ Then open `http://localhost:8000`.
 ## Development
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
