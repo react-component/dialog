@@ -193,7 +193,7 @@ describe('dialog', () => {
     const { getByText } = render(
       <Dialog visible maskClosable onClose={onClose}>
         Content
-      </Dialog>
+      </Dialog>,
     );
 
     jest.runAllTimers();
