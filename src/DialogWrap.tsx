@@ -28,6 +28,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   } = props;
   const { scrollLock: _, ...restProps } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
+  const hasOpenedRef = React.useRef(false);
 
   const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
 
@@ -42,12 +43,13 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   React.useEffect(() => {
     if (visible) {
       setAnimatedVisible(true);
+      hasOpenedRef.current = true;
     }
   }, [visible]);
 
   // Destroy on close will remove wrapped div
-  // Use `animatedVisible` to check if component has ever been opened
-  if (destroyOnHidden && animatedVisible && !visible) {
+  // Use `hasOpenedRef` to check if component has ever been opened (after animation completes)
+  if (destroyOnHidden && hasOpenedRef.current && !visible) {
     return null;
   }
 
