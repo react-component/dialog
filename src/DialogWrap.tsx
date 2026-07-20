@@ -28,7 +28,7 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   } = props;
   const { scrollLock: _, ...restProps } = props;
   const [animatedVisible, setAnimatedVisible] = React.useState<boolean>(visible);
-  const hasOpenedRef = React.useRef(false);
+  const hasOpenedRef = React.useRef(visible);
 
   const refContext = React.useMemo(() => ({ panel: panelRef }), [panelRef]);
 
