@@ -158,6 +158,32 @@ describe('dialog', () => {
 
       expect(document.querySelector<HTMLInputElement>('.test-input')).toHaveValue('');
     });
+
+    it('should destroy even when forceRender is true', () => {
+      const Demo: React.FC<Partial<DialogProps>> = (props) => (
+        <Dialog forceRender destroyOnHidden {...props}>
+          <input className="test-force-destroy" />
+        </Dialog>
+      );
+
+      const { rerender } = render(<Demo visible={false} />);
+
+      // Force render, but not visible yet - should still render (forceRender)
+      expect(document.querySelectorAll('.test-force-destroy')).toHaveLength(1);
+
+      // Show
+      rerender(<Demo visible />);
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      // Hide - should destroy because destroyOnHidden is true
+      rerender(<Demo visible={false} />);
+      act(() => {
+        jest.runAllTimers();
+      });
+      expect(document.querySelectorAll('.test-force-destroy')).toHaveLength(0);
+    });
   });
 
   it('esc to close', () => {

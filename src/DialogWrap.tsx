@@ -46,7 +46,8 @@ const DialogWrap: React.FC<IDialogPropTypes> = (props) => {
   }, [visible]);
 
   // Destroy on close will remove wrapped div
-  if (!forceRender && destroyOnHidden && !animatedVisible) {
+  // Use `animatedVisible` to check if component has ever been opened
+  if (destroyOnHidden && animatedVisible && !visible) {
     return null;
   }
 
