@@ -73,7 +73,10 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     contentStyle.height = height;
   }
   // ================================ Render ================================
-  const footerNode = footer ? (
+  const hasFooter = !!footer || footer === 0;
+  const hasTitle = !!title || title === 0;
+
+  const footerNode = hasFooter ? (
     <div
       className={clsx(`${prefixCls}-footer`, modalClassNames?.footer)}
       style={{ ...modalStyles?.footer }}
@@ -82,7 +85,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     </div>
   ) : null;
 
-  const headerNode = title ? (
+  const headerNode = hasTitle ? (
     <div
       className={clsx(`${prefixCls}-header`, modalClassNames?.header)}
       style={{ ...modalStyles?.header }}
@@ -146,7 +149,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     <div
       key="dialog-element"
       role="dialog"
-      aria-labelledby={title ? ariaId : null}
+      aria-labelledby={hasTitle ? ariaId : null}
       aria-modal="true"
       ref={mergedRef}
       style={{ ...style, ...contentStyle }}

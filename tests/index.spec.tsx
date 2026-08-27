@@ -253,6 +253,15 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog-footer').textContent).toBe('test');
   });
 
+  it('renders numeric zero title and footer', () => {
+    render(<Dialog visible title={0} footer={0} />);
+
+    const title = document.querySelector<HTMLElement>('.rc-dialog-title');
+    expect(title).toHaveTextContent('0');
+    expect(document.querySelector('.rc-dialog-footer')).toHaveTextContent('0');
+    expect(document.querySelector('.rc-dialog')).toHaveAttribute('aria-labelledby', title!.id);
+  });
+
   // 失效了，需要修复
   it.skip('support input autoFocus', () => {
     render(
