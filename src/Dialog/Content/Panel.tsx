@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { useComposeRef, useLockFocus, pickAttrs } from '@rc-component/util';
+import { isReactRenderable, pickAttrs, useComposeRef, useLockFocus } from '@rc-component/util';
 import React, { useMemo, useRef } from 'react';
 import { RefContext } from '../../context';
 import type { IDialogPropTypes } from '../../IDialogPropTypes';
@@ -73,7 +73,10 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     contentStyle.height = height;
   }
   // ================================ Render ================================
-  const footerNode = footer ? (
+  const hasFooter = isReactRenderable(footer);
+  const hasTitle = isReactRenderable(title);
+
+  const footerNode = hasFooter ? (
     <div
       className={clsx(`${prefixCls}-footer`, modalClassNames?.footer)}
       style={{ ...modalStyles?.footer }}
@@ -82,7 +85,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     </div>
   ) : null;
 
-  const headerNode = title ? (
+  const headerNode = hasTitle ? (
     <div
       className={clsx(`${prefixCls}-header`, modalClassNames?.header)}
       style={{ ...modalStyles?.header }}
@@ -146,7 +149,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     <div
       key="dialog-element"
       role="dialog"
-      aria-labelledby={title ? ariaId : null}
+      aria-labelledby={hasTitle ? ariaId : null}
       aria-modal="true"
       ref={mergedRef}
       style={{ ...style, ...contentStyle }}
