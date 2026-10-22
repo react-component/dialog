@@ -1,7 +1,8 @@
 import type { GetContainer } from '@rc-component/util';
-import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
+import type { AriaAttributes, AriaRole, CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
-export type SemanticName = 'header' | 'body' | 'footer' | 'container' | 'title' | 'wrapper' | 'mask' | 'close';
+export type SemanticName =
+  'header' | 'body' | 'footer' | 'container' | 'title' | 'wrapper' | 'mask' | 'close';
 
 export type ModalClassNames = Partial<Record<SemanticName, string>>;
 
@@ -14,6 +15,7 @@ export type ClosableType = {
 };
 
 export type IDialogPropTypes = {
+  role?: AriaRole;
   className?: string;
   keyboard?: boolean;
   style?: CSSProperties;
@@ -64,4 +66,4 @@ export type IDialogPropTypes = {
 
   // Refs
   panelRef?: React.Ref<HTMLDivElement>;
-};
+} & AriaAttributes;
