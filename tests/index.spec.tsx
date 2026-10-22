@@ -765,4 +765,21 @@ describe('dialog', () => {
     expect(document.querySelector('.rc-dialog')).toBeTruthy();
     expect(document.querySelector('.rc-dialog-close')).toBeFalsy();
   });
+
+  it('support custom role and aria attributes', () => {
+    render(
+      <Dialog
+        visible
+        role="alertdialog"
+        aria-describedby="custom-description"
+        aria-label="custom-label"
+      />,
+    );
+    jest.runAllTimers();
+
+    const dialog = document.querySelector('.rc-dialog');
+    expect(dialog.getAttribute('role')).toBe('alertdialog');
+    expect(dialog.getAttribute('aria-describedby')).toBe('custom-description');
+    expect(dialog.getAttribute('aria-label')).toBe('custom-label');
+  });
 });

@@ -110,7 +110,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     return {};
   }, [closable, closeIcon, prefixCls]);
 
-  const ariaProps = pickAttrs(closableObj, true);
+  const closableAriaProps = pickAttrs(closableObj, true);
   const closeBtnIsDisabled = typeof closable === 'object' && closable.disabled;
 
   const closerNode = closable ? (
@@ -118,7 +118,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
       type="button"
       onClick={onClose}
       aria-label="Close"
-      {...ariaProps}
+      {...closableAriaProps}
       className={clsx(`${prefixCls}-close`, modalClassNames?.close)}
       disabled={closeBtnIsDisabled}
       style={modalStyles?.close}
@@ -145,11 +145,14 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     </div>
   );
 
+  const ariaProps = pickAttrs(props, { aria: true });
+
   return (
     <div
       key="dialog-element"
       role="dialog"
-      aria-labelledby={hasTitle ? ariaId : null}
+      {...ariaProps}
+      aria-labelledby={hasTitle ? ariaId : ariaProps['aria-labelledby'] || null}
       aria-modal="true"
       ref={mergedRef}
       style={{ ...style, ...contentStyle }}
