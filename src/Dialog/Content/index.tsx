@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
 import type { CSSMotionRef } from '@rc-component/motion';
+import useMotionAppear from '../../hooks/useMotionAppear';
 import { offset } from '../../util';
 import type { PanelProps, PanelRef } from './Panel';
 import Panel from './Panel';
@@ -67,11 +68,20 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
     );
   }
 
+  // ============================= Motion =============================
+  const [motionAppear, onAppeared] = useMotionAppear(visible);
+
+  const onInternalVisibleChanged = (nextVisible: boolean) => {
+    onAppeared();
+    onVisibleChanged(nextVisible);
+  };
+
   // ============================= Render =============================
   return (
     <CSSMotion
       visible={visible}
-      onVisibleChanged={onVisibleChanged}
+      motionAppear={motionAppear}
+      onVisibleChanged={onInternalVisibleChanged}
       onAppearPrepare={onPrepare}
       onEnterPrepare={onPrepare}
       forceRender={forceRender}

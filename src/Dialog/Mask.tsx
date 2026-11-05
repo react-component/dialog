@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
+import useMotionAppear from '../hooks/useMotionAppear';
 
 export type MaskProps = {
   prefixCls: string;
@@ -13,10 +14,14 @@ export type MaskProps = {
 
 const Mask: React.FC<MaskProps> = (props) => {
   const { prefixCls, style, visible, maskProps, motionName, className } = props;
+  const [motionAppear, onAppeared] = useMotionAppear(visible);
+
   return (
     <CSSMotion
       key="mask"
       visible={visible}
+      motionAppear={motionAppear}
+      onVisibleChanged={onAppeared}
       motionName={motionName}
       leavedClassName={`${prefixCls}-mask-hidden`}
     >
