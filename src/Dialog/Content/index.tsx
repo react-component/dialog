@@ -37,10 +37,12 @@ const Content = React.forwardRef<ContentRef, ContentProps>((props, ref) => {
   const panelRef = useRef<PanelRef>(null);
 
   // ============================== Refs ==============================
+  // Delegate lazily: the handle may be created before the panel mounts
+  // (e.g. when restored from `<Activity>`), so do not snapshot the refs.
   React.useImperativeHandle(ref, () => ({
-    ...panelRef.current,
-    inMotion: dialogRef.current.inMotion,
-    enableMotion: dialogRef.current.enableMotion,
+    focus: () => panelRef.current?.focus(),
+    inMotion: () => dialogRef.current?.inMotion(),
+    enableMotion: () => dialogRef.current?.enableMotion(),
   }));
 
   // ============================= Style ==============================
