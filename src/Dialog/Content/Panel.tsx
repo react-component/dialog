@@ -110,7 +110,7 @@ const Panel = React.forwardRef<PanelRef, PanelProps>((props, ref) => {
     return {};
   }, [closable, closeIcon, prefixCls]);
 
-  const ariaProps = pickAttrs(closableObj, true);
+  const ariaProps = pickAttrs(closableObj, { aria: true, data: true });
   const closeBtnIsDisabled = typeof closable === 'object' && closable.disabled;
 
   const closerNode = closable ? (

@@ -1,13 +1,15 @@
 import type { GetContainer } from '@rc-component/util';
 import type { CSSProperties, ReactNode, SyntheticEvent } from 'react';
 
-export type SemanticName = 'header' | 'body' | 'footer' | 'container' | 'title' | 'wrapper' | 'mask' | 'close';
+export type SemanticName =
+  'header' | 'body' | 'footer' | 'container' | 'title' | 'wrapper' | 'mask' | 'close';
 
 export type ModalClassNames = Partial<Record<SemanticName, string>>;
 
 export type ModalStyles = Partial<Record<SemanticName, CSSProperties>>;
 
 export type ClosableType = {
+  [key: `data-${string}`]: unknown;
   closeIcon?: React.ReactNode;
   disabled?: boolean;
   afterClose?: () => any;

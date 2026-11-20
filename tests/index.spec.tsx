@@ -705,13 +705,17 @@ describe('dialog', () => {
     spy.mockRestore();
   });
 
-  it('support aria-* in closable', () => {
+  it('support aria-* and data-* in closable', () => {
     const onClose = jest.fn();
-    render(
+    const onClick = jest.fn();
+    const { getByTestId } = render(
       <Dialog
         closable={{
+          ...{ role: 'button', title: 'Not a close button attribute', onClick },
           closeIcon: 'test',
           'aria-label': 'test aria-label',
+          'data-testid': 'dialog-close',
+          'data-count': 0,
         }}
         visible
         onClose={onClose}
@@ -719,13 +723,20 @@ describe('dialog', () => {
     );
     jest.runAllTimers();
 
-    const btn = document.querySelector('.rc-dialog-close');
+    const btn = getByTestId('dialog-close');
+    expect(btn).toBe(document.querySelector('button.rc-dialog-close'));
     expect(btn.textContent).toBe('test');
     expect(btn.getAttribute('aria-label')).toBe('test aria-label');
+    expect(btn).toHaveAttribute('role', 'button');
+    expect(btn).toHaveAttribute('data-count', '0');
+    expect(btn).not.toHaveAttribute('title');
+    expect(btn).not.toHaveAttribute('closeIcon');
     fireEvent.click(btn);
 
     jest.runAllTimers();
     expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }));
+    expect(onClick).not.toHaveBeenCalled();
   });
 
   it('support disable button in closable', () => {
@@ -735,6 +746,7 @@ describe('dialog', () => {
         closable={{
           closeIcon: 'test',
           disabled: true,
+          'data-testid': 'disabled-dialog-close',
         }}
         visible
         onClose={onClose}
@@ -744,6 +756,7 @@ describe('dialog', () => {
 
     const btn = document.querySelector<HTMLButtonElement>('.rc-dialog-close');
     expect(btn.disabled).toBeTruthy();
+    expect(btn).toHaveAttribute('data-testid', 'disabled-dialog-close');
     fireEvent.click(btn);
 
     jest.runAllTimers();
